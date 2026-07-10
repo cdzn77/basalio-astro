@@ -18,6 +18,7 @@ const pageTitle = "Terms of Service";
 		body{margin:0;background:#1C1917;color:#F6F4EF;font-family:'Inter',sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;}
 		a{color:#DFFF00;text-decoration:none;}
 		a:hover{color:#F6F4EF;}
+		#backToTop{position:fixed;bottom:32px;right:32px;z-index:40;width:32px;height:72px;border-radius:16px;background:#DFFF00;color:#17171A;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;opacity:0;pointer-events:none;transition:opacity .3s ease;box-shadow:0 4px 12px rgba(0,0,0,0.3);}#backToTop.show{opacity:1;pointer-events:auto;}#backToTop:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.4);}
 		@keyframes driftGrad{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
 		@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
 	</style>
@@ -147,6 +148,23 @@ const pageTitle = "Terms of Service";
 		</div>
 	</div>
 </footer>
+
+<button id="backToTop" aria-label="Back to top">↑</button>
+
+<script>
+	// Back to top button
+	const backToTopBtn = document.getElementById('backToTop');
+	window.addEventListener('scroll', () => {
+		if (window.scrollY > 300) {
+			backToTopBtn.classList.add('show');
+		} else {
+			backToTopBtn.classList.remove('show');
+		}
+	});
+	backToTopBtn.addEventListener('click', () => {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	});
+</script>
 
 </body>
 </html>

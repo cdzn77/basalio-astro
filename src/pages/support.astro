@@ -17,6 +17,13 @@
 		body{margin:0;background:#1C1917;color:#F6F4EF;font-family:'Inter',sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;}
 		a{color:inherit;text-decoration:none;}
 		a:hover{color:#F6F4EF;}
+		#backToTop{position:fixed;bottom:32px;right:32px;z-index:40;width:32px;height:72px;border-radius:16px;background:#DFFF00;color:#17171A;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;opacity:0;pointer-events:none;transition:opacity .3s ease;box-shadow:0 4px 12px rgba(0,0,0,0.3);}#backToTop.show{opacity:1;pointer-events:auto;}#backToTop:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.4);}
+		.accordion-button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;background:none;border:0;padding:20px 0;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#F6F4EF;border-bottom:1px solid #3A352E;transition:color .2s ease;}
+		.accordion-button:hover{color:#DFFF00;}
+		.accordion-button .toggle-icon{font-family:'Inter',sans-serif;font-weight:400;font-size:20px;color:#A39C8E;flex:none;transition:transform .3s ease;}
+		.accordion-button.open .toggle-icon{transform:rotate(45deg);}
+		.accordion-content{overflow:hidden;max-height:0;transition:max-height .3s ease;}
+		.accordion-content.open{max-height:1000px;}
 		@keyframes driftGrad{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
 		@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
 	</style>
@@ -65,120 +72,40 @@
 
 <section id="installation" style="padding:56px 0;border-top:1px solid #3A352E;background:#1C1917;">
 	<div style="max-width:900px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#A39C8E;margin:0;">01 Getting started</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">Installation</h2>
+		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#A39C8E;margin:0;">Installation & setup</p>
+		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">Getting it running.</h2>
 
-		<div class="faq-section">
-			<div class="faq-item">
-				<button class="faq-toggle" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;background:none;border:0;padding:20px 0;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#F6F4EF;border-bottom:1px solid #3A352E;">
-					Where do I download Basalio?
-					<span style="font-family:'Inter',sans-serif;font-weight:400;font-size:20px;color:#A39C8E;flex:none;">+</span>
-				</button>
-				<div class="faq-content" style="overflow:hidden;max-height:0;transition:max-height .3s ease;">
-					<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding-bottom:26px;">
-						<div>
-							<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p>
-							<ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;margin-bottom:6px;">You're in the closed beta</li></ul>
-						</div>
-						<div>
-							<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p>
-							<ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;margin-bottom:6px;">Join the waitlist on the homepage</li></ol>
-						</div>
-					</div>
+		<div style="display:grid;gap:0;">
+			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
+				Plugin activates but no exhibits show up on the front end
+				<span class="toggle-icon">+</span>
+			</button>
+			<div class="accordion-content" style="padding-bottom:20px;">
+				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;">Browser or page cache is still serving an old version of the page</li><li style="font-size:14px;color:#A39C8E;">The module is switched off under Basalio > Modules</li><li style="font-size:14px;color:#A39C8E;">A full-page caching plugin hasn't purged since activation</li></ul></div>
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Hard-refresh the page (Cmd/Ctrl + Shift + R)</li><li style="font-size:14px;color:#F6F4EF;">Confirm the module is toggled on in Basalio > Modules</li><li style="font-size:14px;color:#F6F4EF;">Purge your caching plugin once after activation</li></ol></div>
 				</div>
 			</div>
 
-			<div class="faq-item">
-				<button class="faq-toggle" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;background:none;border:0;padding:20px 0;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#F6F4EF;border-bottom:1px solid #3A352E;">
-					How do I activate my license on multiple sites?
-					<span style="font-family:'Inter',sans-serif;font-weight:400;font-size:20px;color:#A39C8E;flex:none;">+</span>
-				</button>
-				<div class="faq-content" style="overflow:hidden;max-height:0;transition:max-height .3s ease;">
-					<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding-bottom:26px;">
-						<div>
-							<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p>
-							<ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;margin-bottom:6px;">License tier doesn't support multiple sites</li></ul>
-						</div>
-						<div>
-							<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p>
-							<ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;margin-bottom:6px;">Upgrade to Studio (5 sites) or Agency (unlimited)</li></ol>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-
-<section id="modules" style="padding:56px 0;border-top:1px solid #3A352E;background:#1C1917;">
-	<div style="max-width:900px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#A39C8E;margin:0;">02 Using Basalio</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">Module behavior</h2>
-
-		<div class="faq-section">
-			<div class="faq-item">
-				<button class="faq-toggle" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;background:none;border:0;padding:20px 0;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#F6F4EF;border-bottom:1px solid #3A352E;">
-					Grid Reveal isn't showing captions on hover
-					<span style="font-family:'Inter',sans-serif;font-weight:400;font-size:20px;color:#A39C8E;flex:none;">+</span>
-				</button>
-				<div class="faq-content" style="overflow:hidden;max-height:0;transition:max-height .3s ease;">
-					<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding-bottom:26px;">
-						<div>
-							<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p>
-							<ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;margin-bottom:6px;">Custom CSS hiding or overriding captions</li><li style="font-size:14px;color:#A39C8E;margin-bottom:6px;">Module not initialized on page</li></ul>
-						</div>
-						<div>
-							<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p>
-							<ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;margin-bottom:6px;">Check for conflicting CSS in inspector</li><li style="font-size:14px;color:#F6F4EF;margin-bottom:6px;">Ensure Grid Reveal module is enabled in Basalio settings</li></ol>
-						</div>
-					</div>
+			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
+				The beta license key won't validate
+				<span class="toggle-icon">+</span>
+			</button>
+			<div class="accordion-content" style="padding-bottom:20px;">
+				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;">Key was pasted with a trailing space or line break</li><li style="font-size:14px;color:#A39C8E;">The site URL doesn't match the one the key was issued for</li><li style="font-size:14px;color:#A39C8E;">Keys take a few minutes to go live after signup</li></ul></div>
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Retype the key instead of pasting it</li><li style="font-size:14px;color:#F6F4EF;">Check Basalio > License for the exact domain on file</li><li style="font-size:14px;color:#F6F4EF;">Wait a few minutes after signup, then try again</li></ol></div>
 				</div>
 			</div>
 
-			<div class="faq-item">
-				<button class="faq-toggle" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;background:none;border:0;padding:20px 0;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#F6F4EF;border-bottom:1px solid #3A352E;">
-					Animations stutter on mobile
-					<span style="font-family:'Inter',sans-serif;font-weight:400;font-size:20px;color:#A39C8E;flex:none;">+</span>
-				</button>
-				<div class="faq-content" style="overflow:hidden;max-height:0;transition:max-height .3s ease;">
-					<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding-bottom:26px;">
-						<div>
-							<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p>
-							<ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;margin-bottom:6px;">Low-end device or background apps consuming CPU</li><li style="font-size:14px;color:#A39C8E;margin-bottom:6px;">Reduced motion preference enabled</li></ul>
-						</div>
-						<div>
-							<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p>
-							<ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;margin-bottom:6px;">Check Settings &gt; Accessibility for reduced motion</li><li style="font-size:14px;color:#F6F4EF;margin-bottom:6px;">Disable large image grids on mobile</li></ol>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-
-<section id="performance" style="padding:56px 0;border-top:1px solid #3A352E;background:#1C1917;">
-	<div style="max-width:900px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#A39C8E;margin:0;">03 Performance</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">Performance &amp; conflicts</h2>
-
-		<div class="faq-section">
-			<div class="faq-item">
-				<button class="faq-toggle" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;background:none;border:0;padding:20px 0;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#F6F4EF;border-bottom:1px solid #3A352E;">
-					Page loads slowly after adding Basalio
-					<span style="font-family:'Inter',sans-serif;font-weight:400;font-size:20px;color:#A39C8E;flex:none;">+</span>
-				</button>
-				<div class="faq-content" style="overflow:hidden;max-height:0;transition:max-height .3s ease;">
-					<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding-bottom:26px;">
-						<div>
-							<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p>
-							<ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;margin-bottom:6px;">Module loaded on all pages, not just where needed</li><li style="font-size:14px;color:#A39C8E;margin-bottom:6px;">Large image assets in Grid Reveal</li></ul>
-						</div>
-						<div>
-							<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p>
-							<ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;margin-bottom:6px;">Only enable Basalio on pages that use it</li><li style="font-size:14px;color:#F6F4EF;margin-bottom:6px;">Optimize images to &lt;200KB each</li></ol>
-						</div>
-					</div>
+			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
+				Basalio doesn't appear in the Plugins list after upload
+				<span class="toggle-icon">+</span>
+			</button>
+			<div class="accordion-content" style="padding-bottom:20px;">
+				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;">The uploaded file was a GitHub source snapshot, not the built release .zip</li><li style="font-size:14px;color:#A39C8E;">PHP version is below the 7.4 minimum</li></ul></div>
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Download the release build from your beta email, not a repo download</li><li style="font-size:14px;color:#F6F4EF;">Check Tools > Site Health for your PHP version and upgrade if needed</li></ol></div>
 				</div>
 			</div>
 		</div>
@@ -187,26 +114,113 @@
 
 <section id="accessibility" style="padding:56px 0;border-top:1px solid #3A352E;background:#1C1917;">
 	<div style="max-width:900px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#A39C8E;margin:0;">04 Accessibility</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">Accessibility</h2>
+		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#A39C8E;margin:0;">Accessibility</p>
+		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">Keeping every module usable for everyone.</h2>
 
-		<div class="faq-section">
-			<div class="faq-item">
-				<button class="faq-toggle" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;background:none;border:0;padding:20px 0;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#F6F4EF;border-bottom:1px solid #3A352E;">
-					Screen reader skipping captions in Grid Reveal
-					<span style="font-family:'Inter',sans-serif;font-weight:400;font-size:20px;color:#A39C8E;flex:none;">+</span>
-				</button>
-				<div class="faq-content" style="overflow:hidden;max-height:0;transition:max-height .3s ease;">
-					<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding-bottom:26px;">
-						<div>
-							<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p>
-							<ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;margin-bottom:6px;">Captions hidden from screen readers by CSS</li></ul>
-						</div>
-						<div>
-							<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p>
-							<ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;margin-bottom:6px;">Ensure aria-label attributes are present on all tiles</li></ol>
-						</div>
-					</div>
+		<div style="display:grid;gap:0;">
+			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
+				A module still animates when reduced motion is on
+				<span class="toggle-icon">+</span>
+			</button>
+			<div class="accordion-content" style="padding-bottom:20px;">
+				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;">An older browser isn't reporting the OS-level setting</li><li style="font-size:14px;color:#A39C8E;">Custom CSS is reintroducing motion the module already disabled</li></ul></div>
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Update to the latest version of your browser</li><li style="font-size:14px;color:#F6F4EF;">Confirm the override under Basalio > Settings > Accessibility</li><li style="font-size:14px;color:#F6F4EF;">Remove any custom CSS re-adding the animation</li></ol></div>
+				</div>
+			</div>
+
+			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
+				Keyboard focus disappears inside a module
+				<span class="toggle-icon">+</span>
+			</button>
+			<div class="accordion-content" style="padding-bottom:20px;">
+				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;">A theme-wide CSS reset sets outline: none globally</li><li style="font-size:14px;color:#A39C8E;">The module's focus ring color is too close to the background</li></ul></div>
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Add a focus-visible style in your theme instead of removing outlines globally</li><li style="font-size:14px;color:#F6F4EF;">Report the contrast issue so we can patch the default</li></ol></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="performance" style="padding:56px 0;border-top:1px solid #3A352E;background:#1C1917;">
+	<div style="max-width:900px;margin:0 auto;padding:0 32px;">
+		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#A39C8E;margin:0;">Performance & conflicts</p>
+		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">When something else on the site gets in the way.</h2>
+
+		<div style="display:grid;gap:0;">
+			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
+				The page feels slower after adding a module
+				<span class="toggle-icon">+</span>
+			</button>
+			<div class="accordion-content" style="padding-bottom:20px;">
+				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;">Several heavy modules stacked on one page</li><li style="font-size:14px;color:#A39C8E;">A caching plugin isn't deferring or minifying the new script</li></ul></div>
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Use two or three modules per page, not all nine at once</li><li style="font-size:14px;color:#F6F4EF;">Set your cache plugin to defer non-critical JS, Basalio already lazy-loads its own</li></ol></div>
+				</div>
+			</div>
+
+			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
+				The console shows a script error mentioning Basalio
+				<span class="toggle-icon">+</span>
+			</button>
+			<div class="accordion-content" style="padding-bottom:20px;">
+				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;">Another plugin also declares a global with the same name</li><li style="font-size:14px;color:#A39C8E;">A child theme overrides a hook that Basalio also uses</li></ul></div>
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Disable other plugins one at a time to confirm the naming conflict</li><li style="font-size:14px;color:#F6F4EF;">Compare your child theme's functions.php against the parent theme</li></ol></div>
+				</div>
+			</div>
+
+			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
+				It works locally but breaks in production
+				<span class="toggle-icon">+</span>
+			</button>
+			<div class="accordion-content" style="padding-bottom:20px;">
+				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;">Production runs an aggressive JS combiner or minifier</li><li style="font-size:14px;color:#A39C8E;">Mixed-content blocking, an asset is loading over HTTP on an HTTPS page</li></ul></div>
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Exclude Basalio's script handle from the combiner/minifier</li><li style="font-size:14px;color:#F6F4EF;">Confirm asset URLs resolve over HTTPS in Basalio > Settings</li></ol></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section id="modules" style="padding:56px 0;border-top:1px solid #3A352E;background:#1C1917;">
+	<div style="max-width:900px;margin:0 auto;padding:0 32px;">
+		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#A39C8E;margin:0;">Module behavior</p>
+		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">When a module isn't doing what it should.</h2>
+
+		<div style="display:grid;gap:0;">
+			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
+				Grid reveal doesn't trigger on hover
+				<span class="toggle-icon">+</span>
+			</button>
+			<div class="accordion-content" style="padding-bottom:20px;">
+				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;">Touch devices have no hover state to trigger</li><li style="font-size:14px;color:#A39C8E;">A theme's own hover CSS is overriding the module with !important</li><li style="font-size:14px;color:#A39C8E;">Reduced motion is enabled at the OS level, which the module respects on purpose</li></ul></div>
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">On touch, the reveal triggers on tap instead, check that first</li><li style="font-size:14px;color:#F6F4EF;">Inspect the element for a competing !important rule and raise specificity</li><li style="font-size:14px;color:#F6F4EF;">This is expected under reduced motion, not a bug</li></ol></div>
+				</div>
+			</div>
+
+			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
+				The exhibit-numbered module list shows the wrong order
+				<span class="toggle-icon">+</span>
+			</button>
+			<div class="accordion-content" style="padding-bottom:20px;">
+				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;">Order is set by position in Basalio > Modules, not by placement on the page</li><li style="font-size:14px;color:#A39C8E;">The same module block was placed twice on one page</li></ul></div>
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Drag modules into the order you want inside Basalio > Modules</li><li style="font-size:14px;color:#F6F4EF;">Remove the duplicate block from the page</li></ol></div>
+				</div>
+			</div>
+
+			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
+				A module loads but looks unstyled or broken
+				<span class="toggle-icon">+</span>
+			</button>
+			<div class="accordion-content" style="padding-bottom:20px;">
+				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;">A security plugin's HTML sanitizer is stripping inline styles</li><li style="font-size:14px;color:#A39C8E;">Another plugin enqueues a conflicting version of the same font</li></ul></div>
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Whitelist Basalio's output in your security plugin's sanitizer settings</li><li style="font-size:14px;color:#F6F4EF;">Disable the duplicate font enqueue in the conflicting plugin</li></ol></div>
 				</div>
 			</div>
 		</div>
@@ -215,141 +229,121 @@
 
 <section id="licensing" style="padding:56px 0;border-top:1px solid #3A352E;background:#1C1917;">
 	<div style="max-width:900px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#A39C8E;margin:0;">05 Licensing</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">Licensing &amp; billing</h2>
+		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#A39C8E;margin:0;">Licensing & updates</p>
+		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">Activation, transfers, and staying current.</h2>
 
-		<div class="faq-section">
-			<div class="faq-item">
-				<button class="faq-toggle" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;background:none;border:0;padding:20px 0;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#F6F4EF;border-bottom:1px solid #3A352E;">
-					Can I use my license on client sites?
-					<span style="font-family:'Inter',sans-serif;font-weight:400;font-size:20px;color:#A39C8E;flex:none;">+</span>
-				</button>
-				<div class="faq-content" style="overflow:hidden;max-height:0;transition:max-height .3s ease;">
-					<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding-bottom:26px;">
-						<div>
-							<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p>
-							<ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;margin-bottom:6px;">Personal or Studio license restrictions</li></ul>
-						</div>
-						<div>
-							<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p>
-							<ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;margin-bottom:6px;">Upgrade to Agency license for client transfer rights</li></ol>
-						</div>
-					</div>
+		<div style="display:grid;gap:0;">
+			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
+				The update button is greyed out
+				<span class="toggle-icon">+</span>
+			</button>
+			<div class="accordion-content" style="padding-bottom:20px;">
+				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;">The license isn't activated on this specific site</li><li style="font-size:14px;color:#A39C8E;">The beta build is already the newest version available</li></ul></div>
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Activate under Basalio > License</li><li style="font-size:14px;color:#F6F4EF;">Check the changelog, you may already be current</li></ol></div>
+				</div>
+			</div>
+
+			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
+				Moved to a new domain and the license won't follow
+				<span class="toggle-icon">+</span>
+			</button>
+			<div class="accordion-content" style="padding-bottom:20px;">
+				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#A39C8E;">Each activation is tied to a specific URL</li><li style="font-size:14px;color:#A39C8E;">A staging-to-production move counts as a new site</li></ul></div>
+					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Deactivate on the old URL first, inside Basalio > License</li><li style="font-size:14px;color:#F6F4EF;">Then activate on the new ones, Studio and Agency tiers can hold both without deactivating</li></ol></div>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
 
-<section id="hacks" style="padding:64px 0;border-top:1px solid #3A352E;background:#1C1917;">
-	<div style="max-width:1200px;margin:0 auto;padding:0 32px;">
+<section id="hacks" style="padding:56px 0;border-top:1px solid #3A352E;background:#1C1917;">
+	<div style="max-width:900px;margin:0 auto;padding:0 32px;">
 		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#A39C8E;margin:0;">Power-user hacks</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(26px,3.2vw,36px);margin:14px 0 12px;">Five ways to bend it, if you know where to look.</h2>
-		<p style="color:#A39C8E;font-size:16px;max-width:60ch;margin:0 0 40px;">None of this is required. It's here for the studios who want a little more control.</p>
+		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">Five ways to bend it, if you know where to look.</h2>
+		<p style="color:#A39C8E;font-size:15px;margin:0 0 32px;">None of this is required. It's here for the studios who want a little more control.</p>
 
-		<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:20px;">
-			<div style="background:#211E1A;border:1px solid rgba(223,255,0,0.16);border-radius:14px;padding:26px 28px;">
-				<span style="display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:#17171A;background:#DFFF00;border-radius:999px;padding:3px 10px;margin-bottom:14px;">Hack</span>
-				<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;margin:0 0 10px;color:#F6F4EF;">Custom reveal timing</h3>
-				<p style="font-size:14px;color:#A39C8E;margin:0 0 16px;line-height:1.5;">Override the default stagger delay for Grid Reveal by adding data attributes to your grid container.</p>
-				<pre style="margin:0;background:#17171A;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:14px 16px;overflow-x:auto;"><code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#DFFF00;white-space:pre;">data-basalio-stagger="200"</code></pre>
+		<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:28px;">
+			<div style="background:#26221E;border:1px solid #3A352E;border-radius:8px;padding:24px;">
+				<div style="display:inline-block;background:#DFFF00;color:#17171A;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:4px 10px;border-radius:3px;margin-bottom:16px;">HACK</div>
+				<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin:0 0 12px;color:#F6F4EF;">Preview reduced motion without changing your OS setting</h3>
+				<p style="color:#A39C8E;font-size:14px;margin:0 0 16px;">Forces every module into its accessible state so you can sanity-check the fallback while testing.</p>
+				<code style="font-family:'IBM Plex Mono',monospace;font-size:12px;display:block;background:#1C1917;padding:12px;border-radius:4px;color:#DFFF00;overflow-x:auto;">yoursite.com/page/?basalio_reduced_motion=1</code>
 			</div>
 
-			<div style="background:#211E1A;border:1px solid rgba(223,255,0,0.16);border-radius:14px;padding:26px 28px;">
-				<span style="display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:#17171A;background:#DFFF00;border-radius:999px;padding:3px 10px;margin-bottom:14px;">Hack</span>
-				<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;margin:0 0 10px;color:#F6F4EF;">Disable animations conditionally</h3>
-				<p style="font-size:14px;color:#A39C8E;margin:0 0 16px;line-height:1.5;">Use a data attribute to disable animations on pages where you want static behavior.</p>
-				<pre style="margin:0;background:#17171A;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:14px 16px;overflow-x:auto;"><code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#DFFF00;white-space:pre;">data-basalio-disabled="true"</code></pre>
+			<div style="background:#26221E;border:1px solid #3A352E;border-radius:8px;padding:24px;">
+				<div style="display:inline-block;background:#DFFF00;color:#17171A;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:4px 10px;border-radius:3px;margin-bottom:16px;">HACK</div>
+				<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin:0 0 12px;color:#F6F4EF;">Turn off one module on a single page</h3>
+				<p style="color:#A39C8E;font-size:14px;margin:0 0 16px;">Drop this in a site-specific plugin, not functions.php, so it survives a theme switch.</p>
+				<code style="font-family:'IBM Plex Mono',monospace;font-size:12px;display:block;background:#1C1917;padding:12px;border-radius:4px;color:#DFFF00;overflow-x:auto;">add_filter('basalio/modules/enabled', function($m){<br/>  unset($m['cursor']);<br/>  return $m;<br/>});</code>
 			</div>
 
-			<div style="background:#211E1A;border:1px solid rgba(223,255,0,0.16);border-radius:14px;padding:26px 28px;">
-				<span style="display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:#17171A;background:#DFFF00;border-radius:999px;padding:3px 10px;margin-bottom:14px;">Hack</span>
-				<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;margin:0 0 10px;color:#F6F4EF;">Hook into lifecycle events</h3>
-				<p style="font-size:14px;color:#A39C8E;margin:0 0 16px;line-height:1.5;">Trigger custom code when modules initialize or complete animations.</p>
-				<pre style="margin:0;background:#17171A;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:14px 16px;overflow-x:auto;"><code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#DFFF00;white-space:pre;">window.basalio.on('reveal-complete')</code></pre>
+			<div style="background:#26221E;border:1px solid #3A352E;border-radius:8px;padding:24px;">
+				<div style="display:inline-block;background:#DFFF00;color:#17171A;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:4px 10px;border-radius:3px;margin-bottom:16px;">HACK</div>
+				<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin:0 0 12px;color:#F6F4EF;">Retime every animation without touching PHP</h3>
+				<p style="color:#A39C8E;font-size:14px;margin:0 0 16px;">Basalio reads timing off CSS custom properties, so Additional CSS is enough, site-wide.</p>
+				<code style="font-family:'IBM Plex Mono',monospace;font-size:12px;display:block;background:#1C1917;padding:12px;border-radius:4px;color:#DFFF00;overflow-x:auto;">:root {<br/>  --basalio-duration: 180ms;<br/>}</code>
 			</div>
 
-			<div style="background:#211E1A;border:1px solid rgba(223,255,0,0.16);border-radius:14px;padding:26px 28px;">
-				<span style="display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:#17171A;background:#DFFF00;border-radius:999px;padding:3px 10px;margin-bottom:14px;">Hack</span>
-				<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;margin:0 0 10px;color:#F6F4EF;">Custom easing functions</h3>
-				<p style="font-size:14px;color:#A39C8E;margin:0 0 16px;line-height:1.5;">Replace default easing curves with your own custom bezier timing.</p>
-				<pre style="margin:0;background:#17171A;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:14px 16px;overflow-x:auto;"><code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#DFFF00;white-space:pre;">--basalio-easing: cubic-bezier()</code></pre>
+			<div style="background:#26221E;border:1px solid #3A352E;border-radius:8px;padding:24px;">
+				<div style="display:inline-block;background:#DFFF00;color:#17171A;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:4px 10px;border-radius:3px;margin-bottom:16px;">HACK</div>
+				<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin:0 0 12px;color:#F6F4EF;">Jump straight to a module's settings</h3>
+				<p style="color:#A39C8E;font-size:14px;margin:0 0 16px;">Deep-link past the dashboard's landing tab, handy for support screenshots and repeat visits.</p>
+				<code style="font-family:'IBM Plex Mono',monospace;font-size:12px;display:block;background:#1C1917;padding:12px;border-radius:4px;color:#DFFF00;overflow-x:auto;">/wp-admin/admin.php?page=basalio-modules#grid-reveal</code>
 			</div>
 
-			<div style="background:#211E1A;border:1px solid rgba(223,255,0,0.16);border-radius:14px;padding:26px 28px;grid-column: 1/-1;">
-				<span style="display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:#17171A;background:#DFFF00;border-radius:999px;padding:3px 10px;margin-bottom:14px;">Hack</span>
-				<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;margin:0 0 10px;color:#F6F4EF;">Per-module performance tuning</h3>
-				<p style="font-size:14px;color:#A39C8E;margin:0 0 16px;line-height:1.5;">Fine-tune performance by disabling expensive features on specific modules or breakpoints.</p>
-				<pre style="margin:0;background:#17171A;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:14px 16px;overflow-x:auto;"><code style="font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:#DFFF00;white-space:pre;">data-basalio-perf="balanced" | "high" | "low"</code></pre>
+			<div style="background:#26221E;border:1px solid #3A352E;border-radius:8px;padding:24px;">
+				<div style="display:inline-block;background:#DFFF00;color:#17171A;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:4px 10px;border-radius:3px;margin-bottom:16px;">HACK</div>
+				<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin:0 0 12px;color:#F6F4EF;">Preview a roadmap module before it ships</h3>
+				<p style="color:#A39C8E;font-size:14px;margin:0 0 16px;">An experimental toggle renders the planned module's settings screen, not live front-end behavior.</p>
+				<code style="font-family:'IBM Plex Mono',monospace;font-size:12px;display:block;background:#1C1917;padding:12px;border-radius:4px;color:#DFFF00;overflow-x:auto;">Basalio > Settings > Show planned modules (preview only)</code>
 			</div>
 		</div>
 	</div>
 </section>
 
-<section style="position:relative;overflow:hidden;padding:100px 0;text-align:center;background:linear-gradient(100deg,#DFFF00,#2BC7A6 55%,#FF6B4A);background-size:200% 200%;animation:driftGrad 18s ease-in-out infinite;">
-	<div style="max-width:1200px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.85);margin:0;">Still stuck?</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(28px,4vw,42px);max-width:640px;margin:14px auto 16px;color:#fff;">Beta testers get a real person, not a ticket queue.</h2>
-		<p style="color:rgba(255,255,255,0.85);max-width:44ch;margin:0 auto 32px;">Email us directly and we'll help you sort it out, usually the same day.</p>
-		<a href="mailto:hello@basalio.so" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:13px 24px;border:0;border-radius:999px;background:#17171A;color:#F6F4EF;">Email hello@basalio.so</a>
-	</div>
-</section>
-
-<footer style="position:relative;overflow:hidden;background:#1C1917;border-top:1px solid rgba(255,255,255,0.08);">
-	<div style="max-width:1200px;margin:0 auto;padding:72px 32px 40px;">
-		<div style="display:grid;grid-template-columns:1.3fr 0.8fr 0.8fr 1.1fr;gap:40px;">
-			<div>
-				<a href="/" style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;color:#F6F4EF;">
-					<svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true" style="flex:none;"><polygon points="8,56 56,56 46,44 18,44" fill="#F6F4EF"></polygon><rect x="23" y="20" width="18" height="24" fill="#DFFF00"></rect></svg>
-					Basalio
-				</a>
-				<p style="font-size:14px;color:#A39C8E;margin:16px 0 0;max-width:32ch;line-height:1.5;">Nine curated interaction modules for WordPress portfolios.</p>
-			</div>
-			<div>
-				<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 16px;">Product</p>
-				<div style="display:flex;flex-direction:column;gap:12px;">
-					<a href="/#exhibits" style="font-size:14px;color:#A39C8E;transition:color .15s ease;">Modules</a>
-					<a href="/#bench" style="font-size:14px;color:#A39C8E;transition:color .15s ease;">Performance</a>
-					<a href="/pricing" style="font-size:14px;color:#A39C8E;transition:color .15s ease;">Pricing</a>
-					<a href="/roadmap" style="font-size:14px;color:#A39C8E;transition:color .15s ease;">Roadmap</a>
-				</div>
-			</div>
-			<div>
-				<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 16px;">Legal</p>
-				<div style="display:flex;flex-direction:column;gap:12px;">
-					<a href="/terms" style="font-size:14px;color:#A39C8E;transition:color .15s ease;">Terms</a>
-					<a href="/privacy" style="font-size:14px;color:#A39C8E;transition:color .15s ease;">Privacy</a>
-				</div>
-			</div>
-			<div>
-				<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#7A756C;margin:0 0 16px;">Support</p>
-				<p style="font-size:14px;color:#A39C8E;margin:0;line-height:1.5;"><a href="mailto:hello@basalio.so">Email us</a> anytime for help.</p>
-			</div>
-		</div>
-		<div style="border-top:1px solid rgba(255,255,255,0.08);margin-top:52px;padding-top:22px;">
-			<p style="font-size:13px;color:#7A756C;margin:0;">&copy; 2026 Basalio. All rights reserved.</p>
-		</div>
-	</div>
-</footer>
+<button id="backToTop" aria-label="Back to top">↑</button>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 	// Accordion functionality
-	const toggles = document.querySelectorAll('.faq-toggle');
-	toggles.forEach(toggle => {
-		toggle.addEventListener('click', () => {
-			const content = toggle.nextElementSibling;
-			const isOpen = content.style.maxHeight !== '0px' && content.style.maxHeight !== '';
-			const span = toggle.querySelector('span');
+	const accordionButtons = document.querySelectorAll('.accordion-button');
+	accordionButtons.forEach(button => {
+		button.addEventListener('click', () => {
+			const content = button.nextElementSibling;
+			if (!content.classList.contains('accordion-content')) return;
 
-			if (isOpen) {
-				content.style.maxHeight = '0px';
-				span.style.transform = 'rotate(0deg)';
-			} else {
-				content.style.maxHeight = content.scrollHeight + 'px';
-				span.style.transform = 'rotate(45deg)';
+			const isOpen = button.classList.contains('open');
+
+			// Close other accordions in the same section
+			const section = button.closest('section');
+			if (section) {
+				section.querySelectorAll('.accordion-button.open').forEach(otherBtn => {
+					if (otherBtn !== button) {
+						otherBtn.classList.remove('open');
+						otherBtn.nextElementSibling.classList.remove('open');
+					}
+				});
 			}
+
+			// Toggle current accordion
+			button.classList.toggle('open');
+			content.classList.toggle('open');
 		});
+	});
+
+	// Back to top button
+	const backToTopBtn = document.getElementById('backToTop');
+	window.addEventListener('scroll', () => {
+		if (window.scrollY > 300) {
+			backToTopBtn.classList.add('show');
+		} else {
+			backToTopBtn.classList.remove('show');
+		}
+	});
+	backToTopBtn.addEventListener('click', () => {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
 	});
 
 	// Search functionality

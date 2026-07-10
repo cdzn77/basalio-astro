@@ -47,13 +47,35 @@ const pageTitle = "Terms of Service";
 		section {
 			padding: var(--spacing-3xl) 0 !important;
 		}
-		section > div {
+		section > div, section > div > div {
 			max-width: var(--smp-grid-width-desktop);
-			margin: 0 auto;
+			margin: 0 auto !important;
 			padding: 0 var(--smp-grid-outer-desktop) !important;
 		}
-		[style*="display:grid"][style*="gap:"] {
+		/* Grid layouts */
+		[style*="display:grid"] {
 			gap: var(--smp-grid-gap-desktop) !important;
+		}
+		/* Eyebrow text styling */
+		section p[style*="IBM Plex Mono"] {
+			font-size: var(--font-size-xs);
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			margin-bottom: var(--spacing-lg);
+		}
+		/* Section headings */
+		section h2 {
+			font-size: var(--font-size-xl);
+			line-height: 1.1;
+			margin-bottom: var(--spacing-xl);
+			letter-spacing: -0.02em;
+		}
+		/* Text content spacing */
+		section p[style*="color:#D4CABE"] {
+			font-size: var(--font-size-base);
+			line-height: 1.6;
+			margin-bottom: var(--spacing-lg);
+			max-width: 65ch;
 		}
 		header {
 			max-width: 100%;

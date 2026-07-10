@@ -37,6 +37,13 @@ const pageTitle = "Terms of Service";
 		  nav>div{padding:6px 6px 6px 14px;}
 		}
 		@keyframes driftGrad{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+		@media (max-width:768px){
+		  footer{padding:48px 16px 24px !important;}
+		}
+		@media (max-width:480px){
+		  footer{padding:40px 16px 24px !important;}
+		  footer > div{flex-direction:column;align-items:flex-start;}
+		}
 		@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
 	</style>
 </head>

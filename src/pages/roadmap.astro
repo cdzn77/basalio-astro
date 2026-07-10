@@ -34,6 +34,15 @@
 		  nav{padding:0 12px;}
 		  nav>div{padding:6px 6px 6px 14px;}
 		}
+		@media (max-width:768px){
+		  footer{padding:48px 16px 24px !important;}
+		  footer > div > div[style*="grid-template-columns"]{grid-template-columns:1fr !important;gap:32px !important;}
+		  footer form{flex-direction:column;}
+		}
+		@media (max-width:480px){
+		  footer{padding:40px 16px 24px !important;}
+		  footer > div > div[style*="grid-template-columns"]{gap:24px !important;}
+		}
 		@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
 	</style>
 </head>

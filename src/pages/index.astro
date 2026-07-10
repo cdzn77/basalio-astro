@@ -41,6 +41,26 @@ import Footer from '../components/Footer.astro';
 		a:focus,button:focus,input:focus,select:focus,textarea:focus{outline:2px solid #DFFF00;outline-offset:2px;}
 		a:focus:not(:focus-visible),button:focus:not(:focus-visible),input:focus:not(:focus-visible){outline:none;}
 		*:focus-visible{outline:2px solid #DFFF00;outline-offset:2px;}
+		/* Apply Semplice spacing system */
+		section {
+			padding: var(--spacing-3xl) 0 !important;
+		}
+		section > div {
+			max-width: var(--smp-grid-width-desktop);
+			margin: 0 auto;
+			padding: 0 var(--smp-grid-outer-desktop) !important;
+		}
+		[style*="display:grid"][style*="gap:"] {
+			gap: var(--smp-grid-gap-desktop) !important;
+		}
+		header {
+			max-width: 100%;
+		}
+		header > div {
+			max-width: var(--smp-grid-width-desktop);
+			margin: 0 auto;
+			padding: 0 var(--smp-grid-outer-desktop) !important;
+		}
 		@keyframes riseIn{to{opacity:1;transform:translateY(0);}}
 		@keyframes benchPulse{0%,100%{box-shadow:0 4px 14px rgba(0,0,0,0.4),0 0 0 0 rgba(246,244,239,0.4);}50%{box-shadow:0 4px 14px rgba(0,0,0,0.4),0 0 0 16px rgba(246,244,239,0);}}
 		@keyframes fillBar{from{width:0;}to{width:var(--bar-width);}}

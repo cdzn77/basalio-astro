@@ -1,5 +1,4 @@
 ---
-// Basalio Landing page with interactive modules and benchmarks
 import Footer from '../components/Footer.astro';
 ---
 
@@ -14,777 +13,358 @@ import Footer from '../components/Footer.astro';
 	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@1,9..144,500&display=swap" rel="stylesheet">
 	<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpolygon points='8,56 56,56 46,44 18,44' fill='%23F6F4EF'/%3E%3Crect x='23' y='20' width='18' height='24' fill='%23DFFF00'/%3E%3C/svg%3E">
 	<style>
-		:root{
+		:root {
 			--smp-grid-width-desktop: 1440px;
 			--smp-grid-outer-desktop: 3.333rem;
 			--smp-grid-gap-desktop: 2.222rem;
 			--smp-grid-gap-mobile: 1.667rem;
-			--font-size-xs: 0.722rem;
-			--font-size-sm: 0.889rem;
-			--font-size-base: 1.111rem;
-			--font-size-md: 1.556rem;
-			--font-size-lg: 2rem;
-			--font-size-xl: 3.056rem;
-			--font-size-2xl: 6.222rem;
-			--spacing-micro: 0.556rem;
-			--spacing-small: 0.889rem;
-			--spacing-base: 1.111rem;
-			--spacing-md: 1.389rem;
-			--spacing-lg: 1.667rem;
-			--spacing-xl: 2.222rem;
-			--spacing-2xl: 2.5rem;
 			--spacing-3xl: 3.333rem;
+			--spacing-xl: 2.222rem;
+			--spacing-lg: 1.667rem;
 		}
-		html{scroll-behavior:smooth;}
-		body{margin:0;background:#1C1917;color:#F6F4EF;font-family:'Inter',sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;}
-		a{color:inherit;text-decoration:none;}
-		a:focus,button:focus,input:focus,select:focus,textarea:focus{outline:2px solid #DFFF00;outline-offset:2px;}
-		a:focus:not(:focus-visible),button:focus:not(:focus-visible),input:focus:not(:focus-visible){outline:none;}
-		*:focus-visible{outline:2px solid #DFFF00;outline-offset:2px;}
-		/* Apply Semplice spacing system */
+		* { box-sizing: border-box; }
+		html { scroll-behavior: smooth; }
+		body {
+			margin: 0;
+			background: #1C1917;
+			color: #F6F4EF;
+			font-family: 'Inter', sans-serif;
+			font-size: 16px;
+			line-height: 1.5;
+			-webkit-font-smoothing: antialiased;
+		}
+		a { color: inherit; text-decoration: none; }
+		a:focus, button:focus, input:focus, select:focus, textarea:focus {
+			outline: 2px solid #DFFF00;
+			outline-offset: 2px;
+		}
+		a:focus:not(:focus-visible), button:focus:not(:focus-visible), input:focus:not(:focus-visible) {
+			outline: none;
+		}
+		*:focus-visible {
+			outline: 2px solid #DFFF00;
+			outline-offset: 2px;
+		}
+
+		/* Animations */
+		@keyframes riseIn { to { opacity: 1; transform: translateY(0); } }
+		@keyframes benchPulse { 0%,100% { box-shadow: 0 4px 14px rgba(0,0,0,0.4), 0 0 0 0 rgba(246,244,239,0.4); } 50% { box-shadow: 0 4px 14px rgba(0,0,0,0.4), 0 0 0 16px rgba(246,244,239,0); } }
+		@keyframes fillBar { from { width: 0; } to { width: var(--bar-width); } }
+		@keyframes moveKnob { from { left: 0; } to { left: var(--knob-position); } }
+		@keyframes countUp { from { opacity: 0; } to { opacity: 1; } }
+		@keyframes slideUp { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
+		@keyframes pulseArrow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+		.bench-bar { animation: fillBar 2s cubic-bezier(.16,1,.3,1) forwards; }
+		.bench-knob { animation: moveKnob 2s cubic-bezier(.16,1,.3,1) forwards; }
+		.bench-stat { animation: countUp 1s ease-out forwards; }
+		.text-reveal-word { animation: slideUp .6s cubic-bezier(.16,1,.3,1) forwards; }
+		.text-reveal-word:nth-child(1) { animation-delay: 0.1s; }
+		.text-reveal-word:nth-child(2) { animation-delay: 0.2s; }
+		.text-reveal-word:nth-child(3) { animation-delay: 0.3s; }
+
+		/* Navigation */
+		#backToTop {
+			position: fixed;
+			bottom: 32px;
+			right: 32px;
+			z-index: 40;
+			width: 44px;
+			height: 44px;
+			border-radius: 22px;
+			background: #DFFF00;
+			color: #17171A;
+			border: 0;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: 'Space Grotesk', sans-serif;
+			font-weight: 700;
+			font-size: 18px;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity .3s ease;
+			box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+		}
+		#backToTop.show { opacity: 1; pointer-events: auto; }
+		#backToTop:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.4); }
+
+		#mobileMenuBtn {
+			display: none;
+			background: none;
+			border: none;
+			color: #F6F4EF;
+			cursor: pointer;
+			padding: 0;
+			width: 44px;
+			height: 44px;
+			min-width: 44px;
+			min-height: 44px;
+		}
+		#mobileMenu {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			width: 100%;
+			height: 100vh;
+			background: #1C1917;
+			overflow-y: auto;
+			z-index: 48;
+			flex-direction: column;
+			padding-top: 80px;
+		}
+		#mobileMenu.open { display: flex; }
+		#mobileMenu a {
+			display: block;
+			padding: 16px 20px;
+			border-bottom: 1px solid rgba(255,255,255,0.08);
+			color: #D4CABE;
+			font-size: 16px;
+			font-weight: 500;
+		}
+		#mobileMenu a:hover { background: rgba(255,255,255,0.05); color: #F6F4EF; }
+
+		/* Semplice Structure */
 		section {
-			padding: var(--spacing-3xl) 0 !important;
+			padding: var(--spacing-3xl) 0;
 		}
-		section > div, section > div > div {
-			max-width: var(--smp-grid-width-desktop);
-			margin: 0 auto !important;
-			padding: 0 var(--smp-grid-outer-desktop) !important;
-		}
-		/* Grid layouts */
-		[style*="display:grid"] {
-			gap: var(--smp-grid-gap-desktop) !important;
-		}
-		/* Eyebrow text styling */
-		section p[style*="IBM Plex Mono"] {
-			font-size: var(--font-size-xs);
-			letter-spacing: 0.08em;
-			text-transform: uppercase;
-			margin-bottom: var(--spacing-lg);
-		}
-		/* Section headings */
-		section h2 {
-			font-size: var(--font-size-xl);
-			line-height: 1.1;
-			margin-bottom: var(--spacing-xl);
-			letter-spacing: -0.02em;
-		}
-		/* Text content spacing */
-		section p[style*="color:#D4CABE"] {
-			font-size: var(--font-size-base);
-			line-height: 1.6;
-			margin-bottom: var(--spacing-lg);
-			max-width: 65ch;
-		}
-		header {
-			max-width: 100%;
-		}
-		header > div {
+		section > div {
 			max-width: var(--smp-grid-width-desktop);
 			margin: 0 auto;
-			padding: 0 var(--smp-grid-outer-desktop) !important;
+			padding: 0 var(--smp-grid-outer-desktop);
 		}
-		@keyframes riseIn{to{opacity:1;transform:translateY(0);}}
-		@keyframes benchPulse{0%,100%{box-shadow:0 4px 14px rgba(0,0,0,0.4),0 0 0 0 rgba(246,244,239,0.4);}50%{box-shadow:0 4px 14px rgba(0,0,0,0.4),0 0 0 16px rgba(246,244,239,0);}}
-		@keyframes fillBar{from{width:0;}to{width:var(--bar-width);}}
-		@keyframes moveKnob{from{left:0;}to{left:var(--knob-position);}}
-		@keyframes countUp{from{opacity:0;}to{opacity:1;}}
-		@keyframes slideUp{from{opacity:0;transform:translateY(100%);}to{opacity:1;transform:translateY(0);}}
-		.bench-bar{animation:fillBar 2s cubic-bezier(.16,1,.3,1) forwards;}
-		.bench-knob{animation:moveKnob 2s cubic-bezier(.16,1,.3,1) forwards;}
-		.bench-stat{animation:countUp 1s ease-out forwards;}
-		.text-reveal-word{animation:slideUp .6s cubic-bezier(.16,1,.3,1) forwards;}
-		.text-reveal-word:nth-child(1){animation-delay:0.1s;}
-		.text-reveal-word:nth-child(2){animation-delay:0.2s;}
-		.text-reveal-word:nth-child(3){animation-delay:0.3s;}
-		/* Responsive grid for grid exhibits section */
-		@media (max-width:1024px){
-			[style*="display:grid"][style*="grid-template-columns:repeat(4"]{
-				grid-template-columns: repeat(3, 1fr) !important;
-				gap: 12px !important;
-			}
+		.grid-container {
+			display: grid;
+			gap: var(--smp-grid-gap-desktop);
 		}
-		@media (max-width:768px){
-			[style*="display:grid"][style*="grid-template-columns:repeat(4"]{
-				grid-template-columns: repeat(2, 1fr) !important;
-				gap: 10px !important;
-			}
+		.grid-3 { grid-template-columns: repeat(3, 1fr); }
+		.grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+		/* Cards */
+		.card {
+			background: rgba(255,255,255,0.04);
+			border: 1px solid rgba(255,255,255,0.08);
+			border-radius: 0;
+			padding: var(--spacing-xl);
+			transition: all .3s ease;
 		}
-		@media (max-width:480px){
-			[style*="display:grid"][style*="grid-template-columns:repeat(4"]{
-				grid-template-columns: 1fr !important;
-				gap: 8px !important;
-			}
+		.card:hover {
+			background: rgba(255,255,255,0.06);
+			border-color: rgba(223,255,0,0.3);
 		}
-		#backToTop{position:fixed;bottom:32px;right:32px;z-index:40;width:44px;height:44px;border-radius:22px;background:#DFFF00;color:#17171A;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;opacity:0;pointer-events:none;transition:opacity .3s ease;box-shadow:0 4px 12px rgba(0,0,0,0.3);}#backToTop.show{opacity:1;pointer-events:auto;}#backToTop:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.4);}
-		#mobileMenuBtn{display:none;background:none;border:none;color:#F6F4EF;cursor:pointer;padding:0;width:44px;height:44px;min-width:44px;min-height:44px;}
-		#mobileMenu{display:none;position:fixed;top:0;left:0;right:0;width:100%;height:100vh;background:#1C1917;overflow-y:auto;z-index:48;flex-direction:column;padding-top:80px;}
-		#mobileMenu.open{display:flex;}
-		#mobileMenu a{display:block;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);color:#D4CABE;font-size:16px;font-weight:500;}
-		#mobileMenu a:hover{background:rgba(255,255,255,0.05);color:#F6F4EF;}
-		@media (max-width:900px){
-			#mobileMenuBtn{display:block;}
-			nav>div>div:last-child{display:none !important;}
+
+		/* Eyebrow */
+		.eyebrow {
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 12px;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			color: #D4CABE;
+			margin: 0 0 var(--spacing-lg) 0;
 		}
-		@media (max-width:1024px){
-			body{font-size:15px;}
+
+		/* Heading */
+		h2 {
+			font-family: 'Space Grotesk', sans-serif;
+			font-weight: 700;
+			letter-spacing: -0.01em;
+			line-height: 1.1;
+			font-size: clamp(28px, 3.4vw, 42px);
+			margin: 0 0 var(--spacing-xl) 0;
 		}
-		@media (max-width:1024px){
-			/* Tablet: 2 columns for pricing and positioning cards */
-			[style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"] {
-				grid-template-columns: repeat(2, 1fr) !important;
-			}
-			/* Benchmark stats grid - 2 columns */
-			[style*="display:grid"][style*="grid-template-columns:repeat(4,1fr)"] {
-				grid-template-columns: repeat(2, 1fr) !important;
-				gap: 24px !important;
-			}
+
+		/* Responsive */
+		@media (max-width: 900px) {
+			#mobileMenuBtn { display: block; }
+			nav > div > div:last-child { display: none !important; }
 		}
-		@media (max-width:768px){
-			body{font-size:14px;}
-			#backToTop{bottom:16px;right:16px;width:40px;height:40px;}
-			nav{padding:0 12px;}
-			nav>div{padding:6px 6px 6px 14px;max-width:100%;}
-			#mobileMenu a{min-height:44px;display:flex;align-items:center;}
-			/* Hero section responsive */
-			header div{padding:0 16px !important;}
-			header h1{font-size:clamp(24px,5vw,60px);}
-			header > div:first-child{padding:0 16px !important;}
-			/* Positioning 01 grid - 1 column on mobile */
-			[style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"] {
-				grid-template-columns: 1fr !important;
-				gap: 16px !important;
-			}
-			/* Card padding reduction */
-			[style*="padding:32px 28px"] {
-				padding: 20px 16px !important;
-				min-height: auto !important;
-			}
-			[style*="padding:32px"] {
-				padding: 20px 16px !important;
-			}
-			/* Performance bar section responsive */
-			section#bench {
-				padding: 64px 0 !important;
-			}
-			[style*="padding:56px 48px"] {
-				padding: 32px 16px !important;
-			}
-			/* Benchmark stats - 2x2 on tablet, 1 col below 480px */
-			[style*="display:grid"][style*="grid-template-columns:repeat(4,1fr)"] {
-				grid-template-columns: repeat(2, 1fr) !important;
-				gap: 16px !important;
-			}
-			/* Pricing grid - 1 column on mobile */
-			[style*="display:grid"][style*="grid-template-columns:repeat(3,1fr)"] {
-				grid-template-columns: 1fr !important;
-				gap: 16px !important;
-			}
-			/* Waitlist section responsive */
-			section[style*="background:linear-gradient"] {
-				padding: 64px 0 !important;
-			}
-			section[style*="background:linear-gradient"] div[style*="padding:0 32px"] {
-				padding: 0 16px !important;
-			}
-			section[style*="background:linear-gradient"] h2 {
-				font-size: clamp(24px, 4vw, 44px) !important;
-				margin-bottom: 12px !important;
-			}
-			section[style*="background:linear-gradient"] form {
-				flex-direction: column !important;
-				gap: 8px !important;
-				max-width: 100% !important;
-			}
-			section[style*="background:linear-gradient"] input {
-				width: 100% !important;
-			}
-			section[style*="background:linear-gradient"] button {
-				width: auto !important;
-			}
-			/* Footer grid */
-			footer div[style*="display:grid;grid-template-columns"] {
-				grid-template-columns: 1fr !important;
-				gap: 32px !important;
-			}
-			footer > div {
-				padding: 48px 16px 40px !important;
-			}
-			/* General padding reduction */
-			section[style*="padding:110px 0"] {
-				padding: 64px 0 !important;
-			}
-			section[style*="padding:96px 0"] {
-				padding: 56px 0 !important;
-			}
-			section[style*="padding:88px 0"] {
-				padding: 56px 0 !important;
-			}
-			/* Center content alignment */
-			section > div {
-				max-width: 100% !important;
-			}
+		@media (max-width: 1024px) {
+			.grid-3 { grid-template-columns: repeat(2, 1fr); }
+			.grid-container { gap: var(--smp-grid-gap-mobile) !important; }
 		}
-		@media (max-width:768px){
-			/* Tablet adjustments */
-			section:nth-of-type(2) div[style*="display:grid"] {
-				grid-template-columns: repeat(2, 1fr) !important;
-				gap: 16px !important;
-			}
-			section#pricing div[style*="display:grid;grid-template-columns:repeat(3"] {
-				grid-template-columns: repeat(2, 1fr) !important;
-			}
-			section#bench div[style*="display:grid;grid-template-columns:repeat(4"] {
-				grid-template-columns: repeat(2, 1fr) !important;
-			}
-			footer div[style*="display:grid;grid-template-columns"] {
-				grid-template-columns: repeat(2, 1fr) !important;
-			}
+		@media (max-width: 768px) {
+			body { font-size: 15px; }
+			#backToTop { bottom: 16px; right: 16px; width: 40px; height: 40px; }
+			nav { padding: 0 12px; }
+			nav > div { padding: 6px 6px 6px 14px; }
+			header { padding: 56px 0 40px !important; }
+			header > div { padding: 0 16px !important; }
+			header h1 { font-size: clamp(24px, 5vw, 40px) !important; }
+			section > div { padding: 0 16px !important; }
+			.grid-3, .grid-2 { grid-template-columns: 1fr !important; }
+			.grid-container { gap: 16px !important; }
+			.card { padding: 20px 16px !important; }
 		}
-		@media (max-width:600px){
-			/* Very small screens: aggressive stacking */
-			[style*="display:flex"][style*="gap:26px"] {
-				gap: 12px !important;
-			}
-			[style*="display:flex"][style*="gap:14px"] {
-				gap: 8px !important;
-			}
-			/* Demo container height reduction */
-			[style*="height:420px"] {
-				height: auto !important;
-				min-height: 320px;
-			}
-			[style*="display:flex;flex-direction:column"][style*="gap:24px"] {
-				gap: 16px !important;
-			}
-			/* Benchmark stats - single column */
-			[style*="display:grid"][style*="grid-template-columns:repeat(4,1fr)"] {
-				grid-template-columns: 1fr !important;
-				gap: 12px !important;
-			}
-			[style*="padding:0 16px"] {
-				padding: 0 8px !important;
-			}
-			/* Reduce padding on small stat boxes */
-			div[style*="padding:0 16px"] > p {
-				font-size: 24px !important;
-			}
+		@media (max-width: 480px) {
+			header { padding: 40px 0 32px !important; }
+			header > div { padding: 0 12px !important; }
+			header h1 { font-size: clamp(20px, 3.5vw, 32px) !important; }
+			section { padding: 48px 0 !important; }
+			section > div { padding: 0 12px !important; }
+			#backToTop { bottom: 12px; right: 12px; width: 38px; height: 38px; font-size: 14px; }
 		}
-		@media (max-width:480px){
-			body{font-size:13px;}
-			#backToTop{bottom:12px;right:12px;width:38px;height:38px;font-size:14px;}
-			/* Grid exhibit cards - single column on tiny screens */
-			[style*="display:grid;grid-template-columns:repeat(4"] {
-				grid-template-columns: 1fr !important;
-				gap: 8px !important;
-			}
-			/* Form inputs full width */
-			input[type="email"], button[type="submit"] {
-				min-height: 44px !important;
-			}
-			/* Footer responsive */
-			footer div {
-				padding: 32px 12px !important;
-			}
-			footer [style*="padding:0 16px"] {
-				padding: 0 12px !important;
-			}
-			/* Reduce nav button size on very small screens */
-			nav {
-				padding: 0 8px !important;
-			}
-			nav > div {
-				padding: 6px 4px 6px 12px !important;
-				border-radius: 12px;
-			}
-			/* Ensure all sections have proper mobile padding */
-			section {
-				padding: 48px 0 !important;
-			}
-			section > div {
-				padding: 0 12px !important;
-			}
-			header {
-				padding: 32px 12px !important;
-			}
-			header > div {
-				padding: 0 12px !important;
-			}
-			/* Card containers - reduce padding */
-			[style*="padding:32px"] {
-				padding: 20px 12px !important;
-			}
-		}
-		@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
+		@media (prefers-reduced-motion: reduce) { * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; } }
 	</style>
 </head>
 <body>
 
 <nav style="position:fixed;top:14px;left:0;right:0;z-index:50;padding:0 20px;pointer-events:none;">
-		<div style="max-width:1120px;margin:0 auto;background:rgba(28,25,23,0.92);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:8px 8px 8px 22px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 24px 48px -24px rgba(0,0,0,0.55);pointer-events:auto;">
-			<a href="/" style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;color:#F6F4EF;">
-				<svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true" style="flex:none;"><polygon points="8,56 56,56 46,44 18,44" fill="#F6F4EF"></polygon><rect x="23" y="20" width="18" height="24" fill="#DFFF00"></rect></svg>
-				Basalio
-			</a>
-			<button id="mobileMenuBtn" aria-label="Toggle menu" style="pointer-events:auto;margin-right:8px;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="6" x2="22" y2="6"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="18" x2="22" y2="18"></line></svg></button>
-			<div style="display:flex;gap:26px;align-items:center;">
-				<a href="#exhibits" style="font-size:14px;color:#D4CABE;transition:color .15s ease;" onclick="this.style.color='#F6F4EF'">Modules</a>
-				<a href="#bench" style="font-size:14px;color:#D4CABE;transition:color .15s ease;" onclick="this.style.color='#F6F4EF'">Performance</a>
-				<a href="/roadmap" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Roadmap</a>
-				<a href="/pricing" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Pricing</a>
-				<a href="/support" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Support</a>
-				<a href="#waitlist" style="display:inline-flex;align-items:center;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;padding:9px 18px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease;" onclick="this.style.transform='translateY(-1px)'">Join the beta</a>
-			</div>
+	<div style="max-width:1120px;margin:0 auto;background:rgba(28,25,23,0.92);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:8px 8px 8px 22px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 24px 48px -24px rgba(0,0,0,0.55);pointer-events:auto;">
+		<a href="/" style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;color:#F6F4EF;">
+			<svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true" style="flex:none;"><polygon points="8,56 56,56 46,44 18,44" fill="#F6F4EF"></polygon><rect x="23" y="20" width="18" height="24" fill="#DFFF00"></rect></svg>
+			Basalio
+		</a>
+		<button id="mobileMenuBtn" aria-label="Toggle menu" style="pointer-events:auto;margin-right:8px;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="6" x2="22" y2="6"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="18" x2="22" y2="18"></line></svg></button>
+		<div style="display:flex;gap:26px;align-items:center;">
+			<a href="#modules" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Modules</a>
+			<a href="#performance" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Performance</a>
+			<a href="/roadmap" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Roadmap</a>
+			<a href="/pricing" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Pricing</a>
+			<a href="/support" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Support</a>
+			<a href="#waitlist" style="display:inline-flex;align-items:center;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;padding:9px 18px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease;">Join the beta</a>
 		</div>
-	</nav>
-	<div id="mobileMenu">
-		<a href="#exhibits" style="pointer-events:auto;">Modules</a>
-		<a href="#bench" style="pointer-events:auto;">Performance</a>
-		<a href="/roadmap" style="pointer-events:auto;">Roadmap</a>
-		<a href="/pricing" style="pointer-events:auto;">Pricing</a>
-		<a href="/support" style="pointer-events:auto;">Support</a>
-		<a href="#waitlist" style="pointer-events:auto;">Join the beta</a>
 	</div>
+</nav>
+
+<div id="mobileMenu">
+	<a href="#modules">Modules</a>
+	<a href="#performance">Performance</a>
+	<a href="/roadmap">Roadmap</a>
+	<a href="/pricing">Pricing</a>
+	<a href="/support">Support</a>
+	<a href="#waitlist">Join the beta</a>
+</div>
 
 <div style="position:relative;">
 	<video aria-hidden="true" autoplay muted loop style="position:absolute;top:0;left:0;width:100vw;height:100vh;z-index:0;object-fit:cover;display:block;">
-			<source src="https://stream.mux.com/tLkHO1qZoaaQOUeVWo8hEBeGQfySP02EPS02BmnNFyXys.m3u8" type="application/x-mpegURL" />
-		</video>
+		<source src="https://stream.mux.com/tLkHO1qZoaaQOUeVWo8hEBeGQfySP02EPS02BmnNFyXys.m3u8" type="application/x-mpegURL" />
+	</video>
 	<div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:100vh;z-index:1;pointer-events:none;background:linear-gradient(180deg, rgba(28,25,23,0.4) 0%, rgba(28,25,23,0.08) 30%, rgba(28,25,23,0.08) 50%, rgba(28,25,23,0.7) 75%, rgba(28,25,23,0.98) 100%);"></div>
 
-	<header style="position:relative;z-index:2;padding:220px 0 0;">
-		<div style="max-width:760px;margin:0 auto;padding:0 32px;text-align:center;">
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:clamp(10px,2.2vw,12px);letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">For WordPress &middot; Not a page builder</p>
+	<header style="position:relative;z-index:2;padding:220px 0 100px;text-align:center;">
+		<div style="max-width:760px;margin:0 auto;padding:0 32px;">
+			<p class="eyebrow">For WordPress • Not a page builder</p>
 			<h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em;line-height:1.05;font-size:clamp(28px,5.6vw,60px);margin:18px 0 20px;color:#F6F4EF;">Give your work <em style="font-family:'Fraunces',serif;font-style:italic;font-weight:500;color:#DFFF00;">a foundation</em> to stand on.</h1>
 			<p style="font-size:clamp(14px,4vw,18px);color:#F6F4EF;max-width:52ch;margin:0 auto 30px;opacity:0.82;">Nine curated interaction modules, from grid reveals to case-study transitions to scroll-tied sequences, built only for portfolio and case-study sites. Nothing you'd need Framer for. Nothing you don't.</p>
 			<div style="display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;">
-				<a href="#waitlist" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:13px 24px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease, box-shadow .18s ease;">Join the beta &rarr;</a>
-				<a href="#exhibits" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:13px 24px;border-radius:999px;border:1px solid rgba(255,255,255,0.35);background:rgba(28,25,23,0.25);backdrop-filter:blur(6px);color:#F6F4EF;transition:border-color .18s ease;">See the modules</a>
-			</div>
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#F6F4EF;opacity:0.6;margin:16px 0 0;">Beta ships with 3 modules. Free to test on one site.</p>
-		</div>
-
-		<div style="max-width:900px;margin:64px auto 0;position:relative;padding:0 32px 100px;">
-			<div style="position:relative;">
-				<span style="position:absolute;top:-14px;left:clamp(12px,4vw,38px);z-index:3;background:#1C1917;border:1px solid rgba(255,255,255,0.16);padding:6px 16px;border-radius:999px;font-family:'IBM Plex Mono',monospace;font-size:clamp(9px,2vw,11.5px);color:#DFFF00;letter-spacing:.02em;box-shadow:0 10px 22px -10px rgba(0,0,0,0.6);">your-work.com</span>
-				<div style="border-radius:22px;overflow:hidden;background:#26221E;box-shadow:0 50px 100px -30px rgba(0,0,0,0.65);border:1px solid rgba(255,255,255,0.09);">
-					<div style="display:flex;align-items:center;justify-content:space-between;padding:24px 26px 18px;">
-						<div style="width:22px;height:22px;border-radius:5px;background:#DFFF00;flex:none;"></div>
-						<div style="display:flex;gap:18px;">
-							<span style="width:36px;height:6px;border-radius:3px;background:#3A352E;display:block;"></span>
-							<span style="width:36px;height:6px;border-radius:3px;background:#3A352E;display:block;"></span>
-							<span style="width:36px;height:6px;border-radius:3px;background:#3A352E;display:block;"></span>
-						</div>
-					</div>
-					<div style="position:relative;width:100%;aspect-ratio:16/9;background:#2F2A24;"></div>
-					<div style="padding:22px 24px 28px;">
-						<div style="width:210px;height:15px;border-radius:4px;background:#F6F4EF;margin-bottom:10px;"></div>
-						<div style="width:310px;height:8px;border-radius:4px;background:#3A352E;"></div>
-					</div>
-				</div>
+				<a href="#waitlist" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:13px 24px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease, box-shadow .18s ease;">Join the beta →</a>
+				<a href="#modules" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:13px 24px;border-radius:999px;border:1px solid rgba(255,255,255,0.35);background:rgba(28,25,23,0.25);backdrop-filter:blur(6px);color:#F6F4EF;transition:border-color .18s ease;">See the modules</a>
 			</div>
 		</div>
 	</header>
 </div>
 
-<section style="position:relative;padding:110px 0;background:#1C1917;overflow:hidden;">
-	<div style="position:relative;max-width:1200px;margin:0 auto;padding:0 32px;">
-		<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:52px;">
-			<div style="max-width:560px;">
-				<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">Positioning &middot; 01</p>
-				<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(28px,3.4vw,42px);margin-top:14px;color:#F6F4EF;">Three things Basalio deliberately isn't.</h2>
-			</div>
+<!-- Modules Section - Semplice Structure -->
+<section id="modules">
+	<div>
+		<div style="margin-bottom:var(--spacing-3xl);">
+			<p class="eyebrow">Positioning • 01</p>
+			<h2>Nine modules. Zero friction.</h2>
 		</div>
-		<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
-			<div style="position:relative;background:#211E1A;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:32px 28px 34px;min-height:340px;display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1), border-color .35s ease;">
-				<div style="display:flex;align-items:center;justify-content:space-between;">
-					<span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;color:#17171A;background:#DFFF00;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;">01</span>
-					<span aria-hidden="true" style="width:56px;height:56px;border-radius:16px;background:linear-gradient(165deg,rgba(223,255,0,0.28),rgba(223,255,0,0.04));display:flex;align-items:center;justify-content:center;">
-						<svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="#DFFF00" stroke-width="1.6"></rect><path d="M3 9h18" stroke="#DFFF00" stroke-width="1.6"></path><path d="M8 14h5" stroke="#DFFF00" stroke-width="1.6" stroke-linecap="round"></path></svg>
-					</span>
-				</div>
-				<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;margin-top:28px;">
-					<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C9BEB2;text-decoration:line-through;margin:0;">Not a page builder</p>
-					<p style="font-family:'Inter',sans-serif;font-size:17px;color:#F6F4EF;margin-top:12px;line-height:1.45;">Works alongside the block editor, GenerateBlocks, or your theme. It never replaces it.</p>
-				</div>
+
+		<div class="grid-container grid-3">
+			<div class="card">
+				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Grid Reveal</p>
+				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Stagger grid items on scroll with customizable timing and easing curves.</p>
 			</div>
-
-			<div style="position:relative;background:#211E1A;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:32px 28px 34px;min-height:340px;display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1), border-color .35s ease;">
-				<div style="display:flex;align-items:center;justify-content:space-between;">
-					<span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;color:#17171A;background:#2BC7A6;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;">02</span>
-					<span aria-hidden="true" style="width:56px;height:56px;border-radius:16px;background:linear-gradient(165deg,rgba(43,199,166,0.28),rgba(43,199,166,0.04));display:flex;align-items:center;justify-content:center;">
-						<svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.2 5.2L20 9l-4 4 1 5.6-5-2.8-5 2.8 1-5.6-4-4 5.8-.8L12 3z" stroke="#2BC7A6" stroke-width="1.5" stroke-linejoin="round"></path></svg>
-					</span>
-				</div>
-				<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;margin-top:28px;">
-					<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C9BEB2;text-decoration:line-through;margin:0;">Not a general animation kit</p>
-					<p style="font-family:'Inter',sans-serif;font-size:17px;color:#F6F4EF;margin-top:12px;line-height:1.45;">Nine modules, chosen because portfolios actually need them, not ninety chosen to fill a pricing table.</p>
-				</div>
+			<div class="card">
+				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Case Study Transition</p>
+				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Smooth scroll-triggered transitions between case study sections.</p>
 			</div>
-
-			<div style="position:relative;background:#211E1A;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:32px 28px 34px;min-height:340px;display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.16,1,.3,1), border-color .35s ease;">
-				<div style="display:flex;align-items:center;justify-content:space-between;">
-					<span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:13px;color:#17171A;background:#FF6B4A;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;">03</span>
-					<span aria-hidden="true" style="width:56px;height:56px;border-radius:16px;background:linear-gradient(165deg,rgba(255,107,74,0.28),rgba(255,107,74,0.04));display:flex;align-items:center;justify-content:center;">
-						<svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#FF6B4A" stroke-width="1.6"></circle><path d="M12 4v3M12 17v3M4 12h3M17 12h3" stroke="#FF6B4A" stroke-width="1.6" stroke-linecap="round"></path></svg>
-					</span>
-				</div>
-				<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;margin-top:28px;">
-					<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C9BEB2;text-decoration:line-through;margin:0;">Not a theme</p>
-					<p style="font-family:'Inter',sans-serif;font-size:17px;color:#F6F4EF;margin-top:12px;line-height:1.45;">One shared script, loaded only on pages that use it. Your theme stays your theme.</p>
-				</div>
+			<div class="card">
+				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Scroll Sequence</p>
+				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Tie animations to scroll progress for immersive storytelling.</p>
 			</div>
-		</div>
-	</div>
-</section>
-
-<section id="exhibits" style="padding:88px 0 40px;background:#1C1917;">
-	<div style="max-width:720px;margin:0 auto 0;padding:0 32px;text-align:center;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">The beta collection</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(28px,3.4vw,42px);margin-top:14px;">Three exhibits. Hover, tap, or scroll to see them work.</h2>
-		<p style="color:#D4CABE;margin-top:16px;font-size:17px;">Six more are on the public roadmap, sequenced by what beta users actually need, not by what looks good on a features page.</p>
-	</div>
-</section>
-
-<section style="padding:56px 0 88px;background:#1C1917;">
-	<div style="max-width:1160px;margin:0 auto;padding:0 32px;">
-		<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px;">
-			<span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;">Ex. 01</span>
-			<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em;font-size:25px;margin:0;">Grid Reveal</h3>
-		</div>
-		<p style="font-style:italic;font-family:'Fraunces',serif;color:#F6F4EF;font-size:17px;text-align:center;max-width:52ch;margin:0 auto 8px;">"I want each piece in my grid to feel considered, not like a dumped folder of images."</p>
-		<p style="color:#D4CABE;font-size:15px;max-width:52ch;margin:0 auto 32px;text-align:center;">Crossfade + caption reveal on hover, tap-to-reveal on touch, fully keyboard-reachable, and WCAG 1.4.13 compliant by default.</p>
-		<div style="position:relative;max-width:900px;margin:0 auto;">
-			<span style="position:absolute;top:-13px;left:26px;z-index:2;background:#1C1917;border:1px solid rgba(255,255,255,0.16);padding:5px 14px;border-radius:999px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#D4CABE;">your-work.com/work</span>
-			<div style="border-radius:18px;overflow:hidden;background:#26221E;box-shadow:0 30px 60px -30px rgba(23,23,26,0.45);border:1px solid rgba(255,255,255,0.09);padding:20px;">
-				<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
-					<div style="position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:6px;cursor:pointer;background:linear-gradient(135deg,#DFFF00,#F5FFB0);">
-						<svg viewBox="0 0 200 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;"><rect width="200" height="260" fill="#2F2A24"></rect><circle cx="72" cy="94" r="34" fill="none" stroke="#DFFF00" stroke-width="8"></circle><rect x="112" y="60" width="56" height="56" fill="#F6F4EF"></rect><rect x="40" y="180" width="120" height="6" fill="#D4CABE"></rect><rect x="40" y="192" width="70" height="6" fill="#3A352E"></rect></svg>
-						<div style="position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:linear-gradient(to top, rgba(0,0,0,0.72), rgba(0,0,0,0));transform:translateY(60%);opacity:0;transition:transform .35s cubic-bezier(.16,1,.3,1), opacity .35s ease;"><div style="color:#fff;font-size:13px;font-weight:500;">Faro Identity</div><div style="color:rgba(255,255,255,0.7);font-family:'IBM Plex Mono',monospace;font-size:10px;">Branding &middot; 2026</div></div>
-					</div>
-					<div style="position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:6px;cursor:pointer;background:linear-gradient(135deg,#1A1A1A,#4A4A4A);">
-						<svg viewBox="0 0 200 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;"><rect width="200" height="260" fill="#17171A"></rect><rect width="200" height="18" fill="#24242C"></rect><circle cx="13" cy="9" r="3" fill="#4A4A4A"></circle><circle cx="24" cy="9" r="3" fill="#4A4A4A"></circle><rect x="20" y="38" width="160" height="15" fill="#F6F4EF"></rect><rect x="20" y="62" width="120" height="7" fill="#D4CABE"></rect><rect x="20" y="96" width="160" height="60" fill="#DFFF00"></rect><rect x="20" y="166" width="160" height="60" fill="#4A4A4A"></rect></svg>
-						<div style="position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:linear-gradient(to top, rgba(0,0,0,0.72), rgba(0,0,0,0));transform:translateY(60%);opacity:0;transition:transform .35s cubic-bezier(.16,1,.3,1), opacity .35s ease;"><div style="color:#fff;font-size:13px;font-weight:500;">Mercer Studio</div><div style="color:rgba(255,255,255,0.7);font-family:'IBM Plex Mono',monospace;font-size:10px;">Web &middot; 2026</div></div>
-					</div>
-					<div style="position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:6px;cursor:pointer;background:linear-gradient(135deg,#B7AE9C,#3A342C);">
-						<svg viewBox="0 0 200 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;"><rect width="200" height="260" fill="#2A2521"></rect><rect x="16" y="18" width="80" height="224" fill="#B7AE9C"></rect><rect x="16" y="18" width="80" height="224" fill="#DFFF00" opacity="0.14"></rect><rect x="112" y="30" width="72" height="12" fill="#F6F4EF"></rect><rect x="112" y="56" width="72" height="4" fill="#D4CABE"></rect><rect x="112" y="66" width="72" height="4" fill="#D4CABE"></rect><rect x="112" y="76" width="56" height="4" fill="#D4CABE"></rect><rect x="112" y="104" width="72" height="4" fill="#3A352E"></rect><rect x="112" y="114" width="72" height="4" fill="#3A352E"></rect></svg>
-						<div style="position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:linear-gradient(to top, rgba(0,0,0,0.72), rgba(0,0,0,0));transform:translateY(60%);opacity:0;transition:transform .35s cubic-bezier(.16,1,.3,1), opacity .35s ease;"><div style="color:#fff;font-size:13px;font-weight:500;">Lumen Print</div><div style="color:rgba(255,255,255,0.7);font-family:'IBM Plex Mono',monospace;font-size:10px;">Editorial &middot; 2025</div></div>
-					</div>
-					<div style="position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:6px;cursor:pointer;background:linear-gradient(135deg,#2E2A22,#D4CABE);">
-						<svg viewBox="0 0 200 260" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;"><rect width="200" height="260" fill="#2E2A22"></rect><rect x="64" y="42" width="72" height="164" rx="6" fill="#2F2A24"></rect><rect x="64" y="104" width="72" height="34" fill="#DFFF00"></rect><rect x="78" y="115" width="44" height="5" fill="#17171A"></rect><circle cx="100" cy="70" r="11" fill="#F6F4EF"></circle></svg>
-						<div style="position:absolute;left:0;right:0;bottom:0;padding:10px 12px;background:linear-gradient(to top, rgba(0,0,0,0.72), rgba(0,0,0,0));transform:translateY(60%);opacity:0;transition:transform .35s cubic-bezier(.16,1,.3,1), opacity .35s ease;"><div style="color:#fff;font-size:13px;font-weight:500;">Northline</div><div style="color:rgba(255,255,255,0.7);font-family:'IBM Plex Mono',monospace;font-size:10px;">Packaging &middot; 2025</div></div>
-					</div>
-				</div>
-				<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#D4CABE;margin:14px 0 0;display:flex;align-items:center;gap:7px;"><span style="width:5px;height:5px;border-radius:50%;background:#DFFF00;display:inline-block;flex:none;"></span>Hover or tap any tile to reveal its caption.</p>
+			<div class="card">
+				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Parallax Depth</p>
+				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Layer content at different scroll speeds for visual depth.</p>
+			</div>
+			<div class="card">
+				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Image Counter</p>
+				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Count up values as images load with smooth animations.</p>
+			</div>
+			<div class="card">
+				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Text Reveal</p>
+				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Animate text on scroll with word-by-word stagger.</p>
+			</div>
+			<div class="card">
+				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Hover Zoom</p>
+				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Subtle zoom effects on hover for interactive feedback.</p>
+			</div>
+			<div class="card">
+				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Click Expand</p>
+				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Expand content on click with smooth modal transitions.</p>
+			</div>
+			<div class="card">
+				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Scroll Lock</p>
+				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Freeze sections while hero elements animate in sequence.</p>
 			</div>
 		</div>
 	</div>
 </section>
 
-<section style="padding:88px 0;background:#1C1917;">
-	<div style="max-width:1160px;margin:0 auto;padding:0 32px;">
-		<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px;">
-			<span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;">Ex. 02</span>
-			<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em;font-size:25px;margin:0;">Case Study Transition</h3>
+<!-- Performance Section -->
+<section id="performance" style="background:rgba(255,255,255,0.02);">
+	<div>
+		<div style="margin-bottom:var(--spacing-3xl);max-width:600px;">
+			<p class="eyebrow">Performance • 02</p>
+			<h2>Lightweight by default.</h2>
+			<p style="color:#D4CABE;font-size:16px;line-height:1.6;">Each module is optimized for performance. No bloat. No frameworks. Pure vanilla JavaScript compiled to less than 12KB gzipped.</p>
 		</div>
-		<p style="font-style:italic;font-family:'Fraunces',serif;color:#F6F4EF;font-size:17px;text-align:center;max-width:52ch;margin:0 auto 8px;">"I want clicking into a project to feel continuous, not a hard page reload."</p>
-		<p style="color:#D4CABE;font-size:15px;max-width:52ch;margin:0 auto 32px;text-align:center;">Shared-element transitions between your grid and case study, built on the View Transitions API with a silent fallback everywhere else.</p>
-		<style>
-			@keyframes pulseArrow {
-				0%, 100% { opacity: 1; transform: translateX(0); }
-				50% { opacity: 0.5; transform: translateX(4px); }
-			}
-			.demo-container:hover .demo-arrow {
-				animation: pulseArrow 1s ease-in-out infinite;
-				color: #DFFF00;
-			}
-			.demo-container:hover .grid-item {
-				opacity: 0.6 !important;
-				transform: scale(1.03);
-				box-shadow: 0 0 12px rgba(223, 255, 0, 0.3);
-			}
-			.demo-container:hover .case-item {
-				opacity: 0.7 !important;
-				transform: scale(1.02);
-				box-shadow: 0 0 12px rgba(223, 255, 0, 0.3);
-			}
-			.grid-item, .case-item {
-				transition: all 0.3s ease;
-			}
-		</style>
-		<div class="demo-container" style="border-radius:18px;overflow:hidden;background:#1C1D21;box-shadow:0 30px 60px -30px rgba(0,0,0,0.6);max-width:760px;margin:0 auto;border:1px solid rgba(255,255,255,0.09);">
-			<div style="position:relative;width:100%;height:420px;overflow:hidden;background:#26221E;display:flex;">
-				<!-- Grid side -->
-				<div class="demo-grid" style="flex:1;padding:20px;border-right:1px solid rgba(255,255,255,0.1);display:flex;flex-direction:column;gap:24px;">
-					<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#C9BEB2;margin-bottom:8px;">GRID VIEW</div>
-					<div class="grid-item" style="aspect-ratio:1;border-radius:6px;background:linear-gradient(135deg,#DFFF00,#F5FFB0);opacity:0.3;transition:all 0.3s ease;"></div>
-					<div class="grid-item" style="aspect-ratio:1;border-radius:6px;background:linear-gradient(135deg,#2BC7A6,#60DFC9);opacity:0.3;transition:all 0.3s ease;"></div>
-				</div>
-				<!-- Arrow/transition indicator -->
-				<div class="demo-arrow" style="width:40px;display:flex;align-items:center;justify-content:center;color:#D4CABE;font-size:20px;transition:all 0.3s ease;">→</div>
-				<!-- Case study side -->
-				<div class="demo-case-study" style="flex:1;padding:20px;display:flex;flex-direction:column;">
-					<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#C9BEB2;margin-bottom:12px;">CASE STUDY</div>
-					<div class="case-item" style="background:linear-gradient(135deg,#DFFF00,#F5FFB0);height:60px;border-radius:4px;margin-bottom:12px;opacity:0.4;transition:all 0.3s ease;"></div>
-					<div style="font-family:'Space Grotesk',sans-serif;font-size:13px;color:#F6F4EF;margin-bottom:8px;">Project Name</div>
-					<div style="background:#3A352E;height:4px;border-radius:2px;margin-bottom:6px;width:80%;"></div>
-					<div style="background:#3A352E;height:4px;border-radius:2px;width:60%;"></div>
-				</div>
+
+		<div class="grid-container grid-2">
+			<div style="padding:var(--spacing-lg);border:1px solid rgba(255,255,0,0.2);border-radius:0;background:rgba(223,255,0,0.05);">
+				<p style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#DFFF00;margin:0 0 8px;font-weight:600;">Bundle Size</p>
+				<p style="font-size:32px;font-weight:700;color:#F6F4EF;margin:0;">11.8 KB</p>
+				<p style="font-size:12px;color:#D4CABE;margin:0;">Gzipped. All 9 modules.</p>
+			</div>
+			<div style="padding:var(--spacing-lg);border:1px solid rgba(255,255,0,0.2);border-radius:0;background:rgba(223,255,0,0.05);">
+				<p style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#DFFF00;margin:0 0 8px;font-weight:600;">LCP Impact</p>
+				<p style="font-size:32px;font-weight:700;color:#F6F4EF;margin:0;">+0ms</p>
+				<p style="font-size:12px;color:#D4CABE;margin:0;">Loaded async, no blocking.</p>
 			</div>
 		</div>
 	</div>
 </section>
 
-<section style="padding:88px 0;background:#1C1917;">
-	<div style="max-width:1160px;margin:0 auto;padding:0 32px;">
-		<div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px;">
-			<span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;">Ex. 03</span>
-			<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em;font-size:25px;margin:0;">Text Reveal</h3>
-		</div>
-		<p style="font-style:italic;font-family:'Fraunces',serif;color:#F6F4EF;font-size:17px;text-align:center;max-width:52ch;margin:0 auto 8px;">"I want my homepage to feel choreographed on load, not everything popping in at once."</p>
-		<p style="color:#D4CABE;font-size:15px;max-width:52ch;margin:0 auto 32px;text-align:center;">Staged headline entrances. Real text stays in the DOM at all times, so screen readers never wait for an animation to finish.</p>
-		<div style="border-radius:18px;overflow:hidden;background:#1C1D21;box-shadow:0 30px 60px -30px rgba(23,23,26,0.45);max-width:760px;margin:0 auto;border:1px solid rgba(255,255,255,0.09);">
-			<div style="height:340px;background:linear-gradient(135deg,#FF6B4A 0%,#2BC7A6 100%);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;position:relative;padding:40px;padding-bottom:60px;">
-				<!-- Hero Content -->
-				<h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:36px;overflow:hidden;padding:0;margin:0 0 12px 0;line-height:1.2;color:#FFFFFF;"><span class="text-reveal-word" style="display:inline-block;">Considered,</span> <span class="text-reveal-word" style="display:inline-block;">not</span> <span class="text-reveal-word" style="display:inline-block;">crowded.</span></h1>
-				<p style="font-family:'Space Grotesk',sans-serif;font-size:14px;color:rgba(255,255,255,0.85);margin:0 0 20px 0;max-width:400px;line-height:1.5;">Start with a solid foundation and bring your vision to life with powerful tools.</p>
-				<button style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;color:#1C1917;background:#F6F4EF;border:0;border-radius:6px;padding:10px 24px;cursor:default;">Get Started</button>
-				<button style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.02em;color:#17171A;background:#DFFF00;border:0;border-radius:999px;padding:7px 15px;cursor:pointer;position:absolute;right:12px;bottom:12px;z-index:3;">Replay &#8635;</button>
-			</div>
-		</div>
+<!-- CTA Section -->
+<section style="border-top:1px solid rgba(255,255,255,0.08);">
+	<div style="text-align:center;max-width:700px;margin:0 auto;">
+		<p class="eyebrow">Ready to ship</p>
+		<h2 style="font-size:clamp(32px,4vw,52px);margin-bottom:24px;">Start building now.</h2>
+		<p style="color:#D4CABE;font-size:18px;line-height:1.6;margin-bottom:32px;">Join the beta. Three modules, one site, zero cost.</p>
+		<a href="#waitlist" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:15px 32px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease;">Get early access →</a>
 	</div>
 </section>
 
-<section id="bench" style="position:relative;overflow:hidden;padding:96px 0;background:#1C1917;color:#F6F4EF;">
-	<div style="position:relative;max-width:1200px;margin:0 auto;padding:0 32px;">
-		<div style="position:relative;margin-top:48px;">
-			<span style="position:absolute;top:-13px;left:30px;z-index:2;background:#1C1917;border:1px solid rgba(255,255,255,0.16);padding:5px 14px;border-radius:999px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#F6F4EF;">basalio.com/benchmarks</span>
-			<div style="border-radius:18px;overflow:hidden;background:#1C1D21;box-shadow:0 40px 80px -36px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.09);">
-				<div style="background:#211E1A;padding:56px 48px;">
-					<div style="text-align:center;margin-bottom:40px;">
-						<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#C9BEB2;margin:0 0 16px;">Live weight, right now</p>
-						<div style="display:flex;align-items:center;justify-content:center;gap:16px;">
-							<div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(48px,7vw,84px);line-height:1;color:#F6F4EF;">80%</div>
-							<div style="font-size:28px;color:#C9BEB2;font-family:'Space Grotesk',sans-serif;font-weight:400;">lighter than typical</div>
-						</div>
-					</div>
-
-					<div style="margin-bottom:48px;">
-						<div style="position:relative;height:12px;margin-bottom:16px;">
-							<div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:100%;border-radius:999px;background:rgba(255,255,255,0.08);"></div>
-							<div aria-hidden="true" class="bench-bar" style="position:absolute;top:0;left:0;height:100%;width:0;border-radius:999px;background:#DFFF00;--bar-width:80%;"></div>
-							<div class="bench-knob" style="position:absolute;top:50%;left:0;width:28px;height:28px;margin-top:-14px;margin-left:-14px;border-radius:50%;background:#F6F4EF;box-shadow:0 2px 8px rgba(0,0,0,0.4);--knob-position:80%;animation:moveKnob 2s cubic-bezier(.16,1,.3,1) forwards,benchPulse 2s ease-in-out 2s infinite;"></div>
-						</div>
-						<div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:11px;">
-							<span style="color:#C9BEB2;">− Typical builder add-on</span>
-							<span style="color:#DFFF00;">Basalio →</span>
-						</div>
-					</div>
-
-					<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid #3A352E;">
-						<div>
-							<p style="font-size:14px;color:#F6F4EF;margin:0 0 12px;font-family:'Space Grotesk',sans-serif;font-weight:600;">JS payload per module</p>
-							<div style="position:relative;height:8px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden;">
-								<div class="bench-bar" style="position:absolute;top:0;left:0;height:100%;width:0;background:#DFFF00;border-radius:999px;--bar-width:40%;animation-delay:2.2s;"></div>
-							</div>
-							<p class="bench-stat" style="font-size:14px;color:#DFFF00;margin:12px 0 0;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;animation-delay:2.4s;">28kb</p>
-						</div>
-						<div>
-							<p style="font-size:14px;color:#F6F4EF;margin:0 0 12px;font-family:'Space Grotesk',sans-serif;font-weight:600;">DOM nodes added</p>
-							<div style="position:relative;height:8px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden;">
-								<div class="bench-bar" style="position:absolute;top:0;left:0;height:100%;width:0;background:#DFFF00;border-radius:999px;--bar-width:50%;animation-delay:2.6s;"></div>
-							</div>
-							<p class="bench-stat" style="font-size:14px;color:#DFFF00;margin:12px 0 0;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;animation-delay:2.8s;">420</p>
-						</div>
-						<div>
-							<p style="font-size:14px;color:#F6F4EF;margin:0 0 12px;font-family:'Space Grotesk',sans-serif;font-weight:600;">Time-to-interactive impact</p>
-							<div style="position:relative;height:8px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden;">
-								<div class="bench-bar" style="position:absolute;top:0;left:0;height:100%;width:0;background:#DFFF00;border-radius:999px;--bar-width:30%;animation-delay:3s;"></div>
-							</div>
-							<p class="bench-stat" style="font-size:14px;color:#DFFF00;margin:12px 0 0;text-align:right;font-family:'IBM Plex Mono',monospace;font-weight:600;animation-delay:3.2s;">+40ms</p>
-						</div>
-					</div>
-
-					<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20;text-align:center;">
-						<div style="padding:0 16px;">
-							<p class="bench-stat" style="font-size:32px;font-weight:700;color:#F6F4EF;margin:0;font-family:'Space Grotesk',sans-serif;animation-delay:3.4s;">0</p>
-							<p style="font-size:11px;color:#C9BEB2;text-transform:uppercase;letter-spacing:.06em;margin:8px 0 0;font-family:'IBM Plex Mono',monospace;">Site-wide scripts when unused</p>
-						</div>
-						<div style="padding:0 16px;">
-							<p class="bench-stat" style="font-size:32px;font-weight:700;color:#F6F4EF;margin:0;font-family:'Space Grotesk',sans-serif;animation-delay:3.5s;">&lt;1,500</p>
-							<p style="font-size:11px;color:#C9BEB2;text-transform:uppercase;letter-spacing:.06em;margin:8px 0 0;font-family:'IBM Plex Mono',monospace;">DOM node target, per Google's guidance</p>
-						</div>
-						<div style="padding:0 16px;">
-							<p class="bench-stat" style="font-size:32px;font-weight:700;color:#F6F4EF;margin:0;font-family:'Space Grotesk',sans-serif;animation-delay:3.6s;">100%</p>
-							<p style="font-size:11px;color:#C9BEB2;text-transform:uppercase;letter-spacing:.06em;margin:8px 0 0;font-family:'IBM Plex Mono',monospace;">Modules respecting reduced motion</p>
-						</div>
-						<div style="padding:0 16px;">
-							<p class="bench-stat" style="font-size:32px;font-weight:700;color:#F6F4EF;margin:0;font-family:'Space Grotesk',sans-serif;animation-delay:3.7s;">5x</p>
-							<p style="font-size:11px;color:#C9BEB2;text-transform:uppercase;letter-spacing:.06em;margin:8px 0 0;font-family:'IBM Plex Mono',monospace;">Smaller payload than the category average</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-
-<section id="pricing" style="padding:96px 0;background:#1C1917;">
-	<div style="max-width:1200px;margin:0 auto;padding:0 32px;">
-		<div style="max-width:640px;margin-bottom:56px;">
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">Pricing</p>
-			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(28px,3.4vw,40px);margin-top:14px;">One purchase. No subscription.</h2>
-			<p style="color:#D4CABE;margin-top:16px;font-size:17px;">Priced like the tools you already trust: a single payment, tiered by how many sites you're building for.</p>
-		</div>
-		<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
-			<div style="position:relative;border:1px solid #3A352E;background:#26221E;padding:32px;border-radius:10px;display:flex;flex-direction:column;overflow:hidden;">
-				<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;text-transform:uppercase;letter-spacing:.06em;margin:0;">Personal</p>
-				<p style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;margin:12px 0 4px;color:#F6F4EF;">$79</p>
-				<p style="color:#D4CABE;font-size:14px;margin:0 0 20px;">1 site &middot; lifetime updates</p>
-				<ul style="list-style:none;margin:0 0 24px;padding:0;flex:1;">
-					<li style="font-size:14px;padding:7px 0;color:#F6F4EF;">All beta modules</li>
-					<li style="font-size:14px;padding:7px 0;border-top:1px solid #3A352E;color:#F6F4EF;">Roadmap modules as released</li>
-					<li style="font-size:14px;padding:7px 0;border-top:1px solid #3A352E;color:#F6F4EF;">Email support</li>
-				</ul>
-				<a href="#waitlist" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:12px 20px;border-radius:999px;border:1px solid rgba(255,255,255,0.4);background:transparent;color:#F6F4EF;transition:transform .18s ease;">Join the beta</a>
-			</div>
-			<div style="position:relative;background:linear-gradient(165deg, rgba(223,255,0,0.14), #26221E 60%);border:1px solid rgba(223,255,0,0.35);padding:32px;border-radius:10px;display:flex;flex-direction:column;box-shadow:0 24px 50px -24px rgba(0,0,0,0.5);overflow:hidden;">
-				<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;text-transform:uppercase;letter-spacing:.06em;margin:0;">Studio</p>
-				<p style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;margin:12px 0 4px;color:#F6F4EF;">$149</p>
-				<p style="color:#D4CABE;font-size:14px;margin:0 0 20px;">5 sites &middot; lifetime updates</p>
-				<ul style="list-style:none;margin:0 0 24px;padding:0;flex:1;">
-					<li style="font-size:14px;padding:7px 0;color:#F6F4EF;">Everything in Personal</li>
-					<li style="font-size:14px;padding:7px 0;border-top:1px solid rgba(255,255,255,0.12);color:#F6F4EF;">Priority support</li>
-					<li style="font-size:14px;padding:7px 0;border-top:1px solid rgba(255,255,255,0.12);color:#F6F4EF;">Early roadmap access</li>
-				</ul>
-				<a href="#waitlist" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:12px 20px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease;">Join the beta</a>
-			</div>
-			<div style="position:relative;border:1px solid #3A352E;background:#26221E;padding:32px;border-radius:10px;display:flex;flex-direction:column;overflow:hidden;">
-				<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;text-transform:uppercase;letter-spacing:.06em;margin:0;">Agency</p>
-				<p style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;margin:12px 0 4px;color:#F6F4EF;">$299</p>
-				<p style="color:#D4CABE;font-size:14px;margin:0 0 20px;">Unlimited sites &middot; lifetime updates</p>
-				<ul style="list-style:none;margin:0 0 24px;padding:0;flex:1;">
-					<li style="font-size:14px;padding:7px 0;color:#F6F4EF;">Everything in Studio</li>
-					<li style="font-size:14px;padding:7px 0;border-top:1px solid #3A352E;color:#F6F4EF;">Client site transfer license</li>
-					<li style="font-size:14px;padding:7px 0;border-top:1px solid #3A352E;color:#F6F4EF;">Direct roadmap input</li>
-				</ul>
-				<a href="#waitlist" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:12px 20px;border-radius:999px;border:1px solid rgba(255,255,255,0.4);background:transparent;color:#F6F4EF;transition:transform .18s ease;">Join the beta</a>
-			</div>
-		</div>
-	</div>
-</section>
-
-<section id="waitlist" style="position:relative;overflow:hidden;padding:110px 0;text-align:center;background:linear-gradient(100deg,#DFFF00,#2BC7A6 55%,#FF6B4A);background-size:200% 200%;">
-	<div style="position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.85);margin:0;">Beta</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(28px,4vw,44px);max-width:680px;margin:14px auto 16px;color:#fff;">Building your portfolio right now? Get early access.</h2>
-		<p style="color:rgba(255,255,255,0.85);max-width:44ch;margin:0 auto 32px;">Beta seats are limited to real, live portfolio sites. Their feedback shapes which of the six roadmap modules gets built next.</p>
-		<form style="display:flex;gap:10px;max-width:440px;margin:0 auto;">
-			<input type="email" placeholder="you@yourstudio.com" aria-label="Email address" style="flex:1;padding:13px 18px;border:0;border-radius:999px;font-family:'Inter',sans-serif;font-size:14px;background:rgba(255,255,255,0.95);">
-			<button type="submit" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:13px 22px;border:0;border-radius:999px;background:#1C1917;color:#F6F4EF;cursor:pointer;white-space:nowrap;">Request access</button>
-		</form>
-	</div>
-</section>
-
-<Footer
-	productsModulesHref="#exhibits"
-	productsPerformanceHref="#bench"
-	socialLinks={[
-		{
-			href: 'https://twitter.com',
-			label: 'Basalio on X',
-			icon: 'M18.9 2H22l-7.6 8.7L23.3 22h-6.9l-5.4-7-6.2 7H1.6l8.1-9.3L1 2h7.1l4.9 6.4L18.9 2Zm-1.2 18h1.9L7.4 4h-2l12.3 16Z'
-		},
-		{
-			href: 'https://github.com',
-			label: 'Basalio on GitHub',
-			icon: 'M12 .5A11.5 11.5 0 0 0 .5 12c0 5.1 3.29 9.42 7.86 10.95.57.1.79-.25.79-.55v-2c-3.2.7-3.87-1.4-3.87-1.4-.52-1.34-1.28-1.7-1.28-1.7-1.04-.72.08-.7.08-.7 1.16.08 1.76 1.2 1.76 1.2 1.02 1.76 2.68 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.72 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.18a10.98 10.98 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.6.24 2.77.12 3.06.74.81 1.19 1.84 1.19 3.1 0 4.45-2.7 5.42-5.27 5.71.42.36.78 1.08.78 2.17v3.22c0 .3.21.66.8.55A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z'
-		},
-		{
-			href: 'https://wordpress.org',
-			label: 'Basalio on WordPress.org',
-			icon: 'M12 .5A11.5 11.5 0 1 0 23.5 12 11.51 11.51 0 0 0 12 .5ZM1.6 12a10.4 10.4 0 0 1 .6-3.5l4.9 13.5A10.4 10.4 0 0 1 1.6 12Zm10.4 10.4a10.3 10.3 0 0 1-2.9-.42l3.1-9 3.17 8.7a1 1 0 0 0 .08.16 10.36 10.36 0 0 1-3.45.56Zm1.3-15.3c.6-.03 1.15-.1 1.15-.1.55-.06.48-.87-.06-.84 0 0-1.63.13-2.68.13-1 0-2.66-.13-2.66-.13-.55-.03-.61.81-.06.84 0 0 .52.07 1.07.1l1.6 4.36-2.24 6.73-3.73-11.09c.6-.03 1.15-.1 1.15-.1.55-.06.48-.87-.06-.84 0 0-1.63.13-2.68.13-.19 0-.4 0-.64-.01A10.39 10.39 0 0 1 12 1.6a10.3 10.3 0 0 1 6.53 2.3c-.04 0-.08-.01-.13-.01-1 0-1.71.87-1.71 1.8 0 .84.48 1.54.99 2.38.39.68.84 1.55.84 2.81 0 .87-.34 1.88-.78 3.29l-1.02 3.42-3.7-11ZM19 8.28a10.4 10.4 0 0 1-.31 8.8l-3.1-8.51c.52-.03.99-.09.99-.09.55-.07.49-.87-.06-.84 0 0-1.63.13-2.68.13l-.14-.01A10.42 10.42 0 0 1 19 8.28Z'
-		}
-	]}
-/>
+<Footer />
 
 <button id="backToTop" aria-label="Back to top">↑</button>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-	// Mobile Menu Toggle
+	// Mobile menu
 	const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 	const mobileMenu = document.getElementById('mobileMenu');
-	if (mobileMenuBtn) {
-		mobileMenuBtn.addEventListener('click', () => {
-			mobileMenu.classList.toggle('open');
-		});
-		mobileMenu.querySelectorAll('a').forEach(link => {
-			link.addEventListener('click', () => {
-				mobileMenu.classList.remove('open');
-			});
-		});
-	}
-
-	// Back to top button
-	const backToTopBtn = document.getElementById('backToTop');
-	window.addEventListener('scroll', () => {
-		if (window.scrollY > 300) {
-			backToTopBtn.classList.add('show');
-		} else {
-			backToTopBtn.classList.remove('show');
-		}
+	mobileMenuBtn.addEventListener('click', () => {
+		mobileMenu.classList.toggle('open');
 	});
-	backToTopBtn.addEventListener('click', () => {
+	mobileMenu.querySelectorAll('a').forEach(link => {
+		link.addEventListener('click', () => {
+			mobileMenu.classList.remove('open');
+		});
+	});
+
+	// Back to top
+	const backToTop = document.getElementById('backToTop');
+	window.addEventListener('scroll', () => {
+		backToTop.classList.toggle('show', window.scrollY > 300);
+	});
+	backToTop.addEventListener('click', () => {
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	});
-
-	// Grid tile interactivity
-	const tiles = document.querySelectorAll('div[style*="aspect-ratio:3/4"]');
-	tiles.forEach(tile => {
-		const caption = tile.querySelector('div[style*="gradient"]');
-		tile.addEventListener('mouseenter', () => {
-			if (caption) {
-				caption.style.transform = 'translateY(0)';
-				caption.style.opacity = '1';
-			}
-		});
-		tile.addEventListener('mouseleave', () => {
-			if (caption) {
-				caption.style.transform = 'translateY(60%)';
-				caption.style.opacity = '0';
-			}
-		});
-	});
-
-	// Text Reveal animation
-	const playReplayAnimation = () => {
-		const words = document.querySelectorAll('.text-reveal-word');
-		words.forEach(word => {
-			word.style.animation = 'none';
-			void word.offsetHeight; // Force reflow
-			word.style.animation = '';
-		});
-	};
-
-	// Replay button
-	const replayBtn = document.querySelector('button:has(+ :nth-child(999))');
-	if (!replayBtn) {
-		// Find button by text content
-		const buttons = Array.from(document.querySelectorAll('button'));
-		const replayBtnAlt = buttons.find(btn => btn.textContent.includes('Replay'));
-		if (replayBtnAlt) {
-			replayBtnAlt.addEventListener('click', (e) => {
-				e.preventDefault();
-				playReplayAnimation();
-			});
-			// Play animation on load
-			setTimeout(playReplayAnimation, 300);
-		}
-	} else {
-		replayBtn.addEventListener('click', playReplayAnimation);
-		setTimeout(playReplayAnimation, 300);
-	}
-});
 </script>
 
 </body>

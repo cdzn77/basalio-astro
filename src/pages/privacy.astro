@@ -1,0 +1,172 @@
+---
+// Basalio Privacy Policy page
+const pageTitle = "Privacy Policy";
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Basalio - Privacy Policy</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@1,9..144,500&display=swap" rel="stylesheet">
+	<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpolygon points='8,56 56,56 46,44 18,44' fill='%23F6F4EF'/%3E%3Crect x='23' y='20' width='18' height='24' fill='%23DFFF00'/%3E%3C/svg%3E">
+	<style>
+		html{scroll-behavior:smooth;}
+		body{margin:0;background:#1C1917;color:#F6F4EF;font-family:'Inter',sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+		a{color:#DFFF00;text-decoration:none;}
+		a:hover{color:#F6F4EF;}
+		@keyframes driftGrad{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+		@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
+	</style>
+</head>
+<body>
+
+<nav style="position:sticky;top:14px;z-index:50;padding:0 20px;">
+	<div style="max-width:1160px;margin:0 auto;background:rgba(28,25,23,0.92);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:8px 8px 8px 22px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 24px 48px -24px rgba(0,0,0,0.55);">
+		<a href="/" style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;color:#F6F4EF;">
+			<svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true" style="flex:none;"><polygon points="8,56 56,56 46,44 18,44" fill="#F6F4EF"></polygon><rect x="23" y="20" width="18" height="24" fill="#DFFF00"></rect></svg>
+			Basalio
+		</a>
+		<div style="display:flex;gap:22px;align-items:center;">
+			<a href="/#exhibits" style="font-size:14px;color:#A39C8E;transition:color .15s ease;" style-hover="color:#F6F4EF;">Modules</a>
+			<a href="/#bench" style="font-size:14px;color:#A39C8E;transition:color .15s ease;" style-hover="color:#F6F4EF;">Performance</a>
+			<a href="/roadmap" style="font-size:14px;color:#A39C8E;transition:color .15s ease;" style-hover="color:#F6F4EF;">Roadmap</a>
+			<a href="/pricing" style="font-size:14px;color:#A39C8E;transition:color .15s ease;" style-hover="color:#F6F4EF;">Pricing</a>
+			<a href="/support" style="font-size:14px;color:#A39C8E;transition:color .15s ease;" style-hover="color:#F6F4EF;">Support</a>
+			<a href="/#waitlist" style="display:inline-flex;align-items:center;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;padding:9px 18px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease;" style-hover="transform:translateY(-1px);">Join the beta</a>
+		</div>
+	</div>
+</nav>
+
+<header style="padding:72px 0 40px;background:#1C1917;">
+	<div style="max-width:760px;margin:0 auto;padding:0 32px;">
+		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#A39C8E;margin:0;">Legal</p>
+		<h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em;line-height:1.05;font-size:clamp(30px,4vw,44px);margin:16px 0 12px;color:#F6F4EF;">Privacy Policy</h1>
+		<p style="color:#7A756C;font-size:14px;margin:0 0 24px;">Effective July 9, 2026. Applies to basalio.so and the Basalio plugin dashboard.</p>
+
+		<div style="display:flex;gap:14px;align-items:flex-start;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:16px 18px;">
+			<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:#A39C8E;border:1px solid rgba(255,255,255,0.2);border-radius:999px;padding:3px 10px;flex:none;">Scope</span>
+			<p style="font-size:13.5px;color:#A39C8E;margin:0;">This covers data we collect about you: beta testers, license holders, site visitors. It doesn't cover data your own portfolio visitors generate, Basalio's modules don't track them, and we never see your site's content.</p>
+		</div>
+
+		<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;">
+			<a href="#collect" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A39C8E;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">What we collect</a>
+			<a href="#use" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A39C8E;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">How we use it</a>
+			<a href="#dont" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A39C8E;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">What we don't do</a>
+			<a href="#thirdparty" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A39C8E;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">Third parties</a>
+			<a href="#rights" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A39C8E;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">Your rights</a>
+		</div>
+	</div>
+</header>
+
+<section style="padding:24px 0 80px;background:#1C1917;">
+	<div style="max-width:760px;margin:0 auto;padding:0 32px;">
+
+		<div id="collect" style="padding-top:24px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">01</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Information we collect</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0 0 12px;">Directly from you:</p>
+			<ul style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0 0 16px;padding-left:20px;">
+				<li style="margin-bottom:8px;">Email address, when you join the beta waitlist or the newsletter</li>
+				<li style="margin-bottom:8px;">Name and payment details, handled entirely by our checkout provider, when you buy a license</li>
+				<li style="margin-bottom:8px;">Anything you send us directly, support emails, module suggestions, bug reports</li>
+			</ul>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0 0 12px;">Automatically, from the plugin itself:</p>
+			<ul style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;padding-left:20px;">
+				<li style="margin-bottom:8px;">Your license key and the site URL it's activated on, so updates and support work</li>
+				<li>Basalio version and WordPress version, sent only when checking for updates, standard for any WordPress plugin</li>
+			</ul>
+		</div>
+
+		<div id="use" style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">02</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">How we use it</h2>
+			<ul style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;padding-left:20px;">
+				<li style="margin-bottom:8px;">To send beta invites, product updates, and, if you opt in, the newsletter</li>
+				<li style="margin-bottom:8px;">To validate your license and deliver updates to the right site</li>
+				<li style="margin-bottom:8px;">To answer support requests and fix the bugs you report</li>
+				<li>To understand which modules get requested most, from direct feedback, not from tracking your site's visitors</li>
+			</ul>
+		</div>
+
+		<div id="dont" style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">03</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">What we don't do</h2>
+			<ul style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;padding-left:20px;">
+				<li style="margin-bottom:8px;">We don't sell or rent your data to anyone</li>
+				<li style="margin-bottom:8px;">We don't run ads or ad-tracking pixels on basalio.so</li>
+				<li style="margin-bottom:8px;">Basalio's modules don't add any analytics or tracking to the portfolio sites they run on</li>
+				<li>We never see the content, images, or visitor data of the sites you build</li>
+			</ul>
+		</div>
+
+		<div id="thirdparty" style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">04</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Third-party services</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0 0 12px;">A short list, because that's all there is:</p>
+			<ul style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;padding-left:20px;">
+				<li style="margin-bottom:8px;">A checkout and licensing provider (Freemius or EDD Software Licensing) to process payments and issue license keys</li>
+				<li style="margin-bottom:8px;">A transactional email provider to send beta invites and receipts</li>
+				<li>Standard web hosting and CDN infrastructure to serve basalio.so</li>
+			</ul>
+		</div>
+
+		<div style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">05</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Data retention</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;">We keep your data for as long as you have an active beta seat or license, plus the time needed to meet tax and accounting requirements after a purchase. Ask us to delete your data sooner and we will, except where we're required to keep purchase records.</p>
+		</div>
+
+		<div id="rights" style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">06</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Your rights</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0 0 12px;">Wherever you're located, you can ask us to:</p>
+			<ul style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;padding-left:20px;">
+				<li style="margin-bottom:8px;">Send you a copy of the data we hold about you</li>
+				<li style="margin-bottom:8px;">Correct anything that's wrong</li>
+				<li style="margin-bottom:8px;">Delete your data entirely</li>
+				<li>Unsubscribe from any email, there's a link in every one we send</li>
+			</ul>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:16px 0 0;">Email <a href="mailto:hello@basalio.so">hello@basalio.so</a> for any of the above. We'll respond within 30 days.</p>
+		</div>
+
+		<div style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">07</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Cookies</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;">basalio.so uses only functional cookies, the kind that remember your waitlist form state or a dismissed banner. No advertising or third-party tracking cookies.</p>
+		</div>
+
+		<div style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">08</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Changes to this policy</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;">If this changes, we'll update the effective date above and, for anything material, email active license holders directly.</p>
+		</div>
+
+		<div style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">09</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Contact</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;">Questions about this policy: <a href="mailto:hello@basalio.so">hello@basalio.so</a>. See also our <a href="/terms">Terms of Service</a>.</p>
+		</div>
+
+	</div>
+</section>
+
+<footer style="position:relative;overflow:hidden;background:#1C1917;border-top:1px solid rgba(255,255,255,0.08);">
+	<div style="max-width:1200px;margin:0 auto;padding:56px 32px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+		<a href="/" style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px;color:#F6F4EF;">
+			<svg width="12" height="12" viewBox="0 0 64 64" aria-hidden="true" style="flex:none;"><polygon points="8,56 56,56 46,44 18,44" fill="#F6F4EF"></polygon><rect x="23" y="20" width="18" height="24" fill="#DFFF00"></rect></svg>
+			Basalio
+		</a>
+		<div style="display:flex;gap:22px;align-items:center;flex-wrap:wrap;">
+			<a href="/terms" style="font-size:13px;color:#A39C8E;transition:color .15s ease;" style-hover="color:#F6F4EF;">Terms of Service</a>
+			<a href="/privacy" style="font-size:13px;color:#F6F4EF;">Privacy Policy</a>
+			<p style="font-size:13px;color:#7A756C;margin:0;">&copy; 2026 Basalio</p>
+		</div>
+	</div>
+</footer>
+
+</body>
+</html>

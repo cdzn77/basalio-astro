@@ -1,0 +1,152 @@
+---
+// Basalio Terms of Service page
+const pageTitle = "Terms of Service";
+---
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Basalio - Terms of Service</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@1,9..144,500&display=swap" rel="stylesheet">
+	<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpolygon points='8,56 56,56 46,44 18,44' fill='%23F6F4EF'/%3E%3Crect x='23' y='20' width='18' height='24' fill='%23DFFF00'/%3E%3C/svg%3E">
+	<style>
+		html{scroll-behavior:smooth;}
+		body{margin:0;background:#1C1917;color:#F6F4EF;font-family:'Inter',sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+		a{color:#DFFF00;text-decoration:none;}
+		a:hover{color:#F6F4EF;}
+		@keyframes driftGrad{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+		@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
+	</style>
+</head>
+<body>
+
+<nav style="position:sticky;top:14px;z-index:50;padding:0 20px;">
+	<div style="max-width:1160px;margin:0 auto;background:rgba(28,25,23,0.92);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:8px 8px 8px 22px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 24px 48px -24px rgba(0,0,0,0.55);">
+		<a href="/" style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;color:#F6F4EF;">
+			<svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true" style="flex:none;"><polygon points="8,56 56,56 46,44 18,44" fill="#F6F4EF"></polygon><rect x="23" y="20" width="18" height="24" fill="#DFFF00"></rect></svg>
+			Basalio
+		</a>
+		<div style="display:flex;gap:22px;align-items:center;">
+			<a href="/#exhibits" style="font-size:14px;color:#A39C8E;transition:color .15s ease;" style-hover="color:#F6F4EF;">Modules</a>
+			<a href="/#bench" style="font-size:14px;color:#A39C8E;transition:color .15s ease;" style-hover="color:#F6F4EF;">Performance</a>
+			<a href="/roadmap" style="font-size:14px;color:#A39C8E;transition:color .15s ease;" style-hover="color:#F6F4EF;">Roadmap</a>
+			<a href="/pricing" style="font-size:14px;color:#A39C8E;transition:color .15s ease;" style-hover="color:#F6F4EF;">Pricing</a>
+			<a href="/support" style="font-size:14px;color:#A39C8E;transition:color .15s ease;" style-hover="color:#F6F4EF;">Support</a>
+			<a href="/#waitlist" style="display:inline-flex;align-items:center;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;padding:9px 18px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease;" style-hover="transform:translateY(-1px);">Join the beta</a>
+		</div>
+	</div>
+</nav>
+
+<header style="padding:72px 0 40px;background:#1C1917;">
+	<div style="max-width:760px;margin:0 auto;padding:0 32px;">
+		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#A39C8E;margin:0;">Legal</p>
+		<h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em;line-height:1.05;font-size:clamp(30px,4vw,44px);margin:16px 0 12px;color:#F6F4EF;">Terms of Service</h1>
+		<p style="color:#7A756C;font-size:14px;margin:0 0 24px;">Effective July 9, 2026. This applies to Basalio the WordPress plugin, its beta program, and basalio.so.</p>
+
+		<div style="display:flex;gap:10px;flex-wrap:wrap;">
+			<a href="#agreement" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A39C8E;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">Agreement</a>
+			<a href="#beta" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A39C8E;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">Beta program</a>
+			<a href="#license" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A39C8E;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">License</a>
+			<a href="#use" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A39C8E;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">Acceptable use</a>
+			<a href="#payments" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A39C8E;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">Payments</a>
+			<a href="#warranty" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#A39C8E;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">Warranty</a>
+		</div>
+	</div>
+</header>
+
+<section style="padding:24px 0 80px;background:#1C1917;">
+	<div style="max-width:760px;margin:0 auto;padding:0 32px;">
+
+		<div id="agreement" style="padding-top:24px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">01</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Agreement to terms</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0 0 16px;">By installing Basalio, joining the beta, or purchasing a license, you agree to these terms. If you're doing this on behalf of a studio or agency, you're confirming you have the authority to bind that organization to them.</p>
+		</div>
+
+		<div id="beta" style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">02</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">The beta program</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0 0 12px;">Beta access is free, limited to one live site per signup, and provided as-is while the product is still being built. We can change, pause, or end the beta at any time, though we'll always give existing testers advance notice before shutting it down.</p>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;">Feedback you send us, bug reports, feature requests, module ideas, can be used to improve Basalio without any obligation to credit or compensate you. Beta testers keep founding pricing when paid licenses open.</p>
+		</div>
+
+		<div id="license" style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">03</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">License grant and site activation</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0 0 12px;">A paid license grants you a non-exclusive, non-transferable right to activate and run Basalio on the number of sites your tier allows: one for Personal, five for Studio, unlimited for Agency. Agency licenses also include a site-transfer right, letting you hand a finished, licensed site to a client without deactivating it first.</p>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;">Each activation is tied to a specific site URL. Moving a site to a new domain (for example, staging to production) requires deactivating the old URL and activating the new one from your account.</p>
+		</div>
+
+		<div style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">04</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">What's included</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;">Every tier includes every module we've shipped and every module we ship in the future, for as long as the plugin exists. Nothing is held back for a higher tier. The only thing that changes between tiers is how many sites you can activate on.</p>
+		</div>
+
+		<div id="use" style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">05</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Acceptable use</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0 0 12px;">You can build, style, and ship whatever you want with Basalio. What you can't do:</p>
+			<ul style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;padding-left:20px;">
+				<li style="margin-bottom:8px;">Resell, sublicense, or redistribute the plugin itself, bundled or standalone</li>
+				<li style="margin-bottom:8px;">Remove or bypass license validation</li>
+				<li style="margin-bottom:8px;">Use the software beyond the site count your tier allows</li>
+				<li>Use Basalio in a way that disrupts the licensing service for other users</li>
+			</ul>
+		</div>
+
+		<div id="payments" style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">06</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Payments and refunds</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0 0 12px;">Paid licenses are a one-time purchase, not a subscription. Nothing rebills. Once paid licenses open, purchases come with a 14-day, no-questions-asked refund window.</p>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;">Checkout and license delivery are handled by an established third-party provider (Freemius or EDD Software Licensing). We don't store your card details ourselves.</p>
+		</div>
+
+		<div style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">07</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Intellectual property</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;">Basalio's code, name, and branding remain our property. The sites and content you build with it are entirely yours.</p>
+		</div>
+
+		<div id="warranty" style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">08</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Warranty and liability</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0 0 12px;">Basalio, and especially the beta, is provided as-is, without warranty of any kind. We test every module for accessibility and performance before release, but we can't guarantee compatibility with every theme, plugin, or hosting setup.</p>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;">To the extent allowed by law, we aren't liable for indirect or consequential damages arising from your use of the plugin. Our total liability for any claim is limited to the amount you paid for your license in the twelve months before the claim.</p>
+		</div>
+
+		<div style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">09</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Changes to these terms</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;">We'll update this page if these terms change and update the effective date at the top. Material changes affecting paid licenses will also be emailed to license holders.</p>
+		</div>
+
+		<div style="padding-top:40px;">
+			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7A756C;margin:0 0 8px;">10</p>
+			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Contact</h2>
+			<p style="color:#A39C8E;font-size:15px;line-height:1.7;margin:0;">Questions about these terms: <a href="mailto:hello@basalio.so">hello@basalio.so</a>. See also our <a href="/privacy">Privacy Policy</a>.</p>
+		</div>
+
+	</div>
+</section>
+
+<footer style="position:relative;overflow:hidden;background:#1C1917;border-top:1px solid rgba(255,255,255,0.08);">
+	<div style="max-width:1200px;margin:0 auto;padding:56px 32px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+		<a href="/" style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px;color:#F6F4EF;">
+			<svg width="12" height="12" viewBox="0 0 64 64" aria-hidden="true" style="flex:none;"><polygon points="8,56 56,56 46,44 18,44" fill="#F6F4EF"></polygon><rect x="23" y="20" width="18" height="24" fill="#DFFF00"></rect></svg>
+			Basalio
+		</a>
+		<div style="display:flex;gap:22px;align-items:center;flex-wrap:wrap;">
+			<a href="/terms" style="font-size:13px;color:#F6F4EF;">Terms of Service</a>
+			<a href="/privacy" style="font-size:13px;color:#A39C8E;transition:color .15s ease;" style-hover="color:#F6F4EF;">Privacy Policy</a>
+			<p style="font-size:13px;color:#7A756C;margin:0;">&copy; 2026 Basalio</p>
+		</div>
+	</div>
+</footer>
+
+</body>
+</html>

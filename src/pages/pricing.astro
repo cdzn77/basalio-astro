@@ -35,10 +35,28 @@
 		  #mobileMenuBtn{display:block;}
 		  nav>div>div:last-child{display:none !important;}
 		}
+		@media (max-width:1024px){
+		  #pricingCards{grid-template-columns:repeat(2,1fr) !important;}
+		}
 		@media (max-width:768px){
 		  #backToTop{bottom:16px;right:16px;width:40px;height:40px;}
 		  nav{padding:0 12px;}
 		  nav>div{padding:6px 6px 6px 14px;}
+		  header{padding:56px 0 40px !important;gap:32px !important;}
+		  header>div{padding:0 16px !important;flex:1 1 100% !important;min-width:auto !important;}
+		  header h1{font-size:clamp(28px,3.8vw,40px) !important;margin:12px 0 !important;}
+		  header>div:last-child{height:auto !important;width:100% !important;}
+		  #focalTier{width:100% !important;padding:24px 20px !important;max-width:100% !important;}
+		  #tierButtons{width:100%;}
+		  #pricingCards{grid-template-columns:1fr !important;gap:16px !important;}
+		  #pricingCards>div{padding:20px !important;}
+		  section{padding:40px 0 !important;}
+		  section>div{padding:0 16px !important;}
+		  .accordion-button{padding:16px 0;font-size:15px;}
+		  table{font-size:12px;}
+		  table th,table td{padding:12px 10px !important;}
+		  h2{font-size:clamp(22px,2.8vw,32px) !important;}
+		  footer>div{grid-template-columns:1fr !important;gap:28px !important;}
 		}
 		@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
 	</style>

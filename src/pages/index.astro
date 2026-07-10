@@ -184,8 +184,23 @@
 		<p style="font-style:italic;font-family:'Fraunces',serif;color:#F6F4EF;font-size:17px;text-align:center;max-width:52ch;margin:0 auto 8px;">"I want clicking into a project to feel continuous, not a hard page reload."</p>
 		<p style="color:#A39C8E;font-size:15px;max-width:52ch;margin:0 auto 32px;text-align:center;">Shared-element transitions between your grid and case study, built on the View Transitions API with a silent fallback everywhere else.</p>
 		<div style="border-radius:18px;overflow:hidden;background:#1C1D21;box-shadow:0 30px 60px -30px rgba(0,0,0,0.6);max-width:760px;margin:0 auto;border:1px solid rgba(255,255,255,0.09);">
-			<div style="position:relative;width:100%;height:340px;overflow:hidden;background:#26221E;">
-				<div style="display:flex;align-items:center;justify-content:center;height:100%;font-family:'IBM Plex Mono',monospace;color:#7A756C;font-size:12px;">Interactive demo (simulated)</div>
+			<div style="position:relative;width:100%;height:340px;overflow:hidden;background:#26221E;display:flex;">
+				<!-- Grid side -->
+				<div style="flex:1;padding:20px;border-right:1px solid rgba(255,255,255,0.1);display:flex;flex-direction:column;gap:12px;">
+					<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7A756C;margin-bottom:8px;">GRID VIEW</div>
+					<div style="aspect-ratio:1;border-radius:6px;background:linear-gradient(135deg,#DFFF00,#F5FFB0);opacity:0.3;"></div>
+					<div style="aspect-ratio:1;border-radius:6px;background:linear-gradient(135deg,#2BC7A6,#60DFC9);opacity:0.3;"></div>
+				</div>
+				<!-- Arrow/transition indicator -->
+				<div style="width:40px;display:flex;align-items:center;justify-content:center;color:#A39C8E;font-size:20px;">→</div>
+				<!-- Case study side -->
+				<div style="flex:1;padding:20px;display:flex;flex-direction:column;">
+					<div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7A756C;margin-bottom:12px;">CASE STUDY</div>
+					<div style="background:linear-gradient(135deg,#DFFF00,#F5FFB0);height:60px;border-radius:4px;margin-bottom:12px;opacity:0.4;"></div>
+					<div style="font-family:'Space Grotesk',sans-serif;font-size:13px;color:#F6F4EF;margin-bottom:8px;">Project Name</div>
+					<div style="background:#3A352E;height:4px;border-radius:2px;margin-bottom:6px;width:80%;"></div>
+					<div style="background:#3A352E;height:4px;border-radius:2px;width:60%;"></div>
+				</div>
 			</div>
 		</div>
 	</div>

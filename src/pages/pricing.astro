@@ -19,6 +19,10 @@
 		@keyframes driftGrad{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
 		@keyframes floatY{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
 		#backToTop{position:fixed;bottom:32px;right:32px;z-index:40;width:32px;height:72px;border-radius:16px;background:#DFFF00;color:#17171A;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;opacity:0;pointer-events:none;transition:opacity .3s ease;box-shadow:0 4px 12px rgba(0,0,0,0.3);}#backToTop.show{opacity:1;pointer-events:auto;}#backToTop:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.4);}
+		.accordion-content{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+		.accordion-content.open{max-height:1000px;}
+		.toggle-icon{transition:transform .3s ease;display:inline-block;}
+		.accordion-button.open .toggle-icon{transform:rotate(45deg);}
 		@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
 	</style>
 </head>
@@ -177,9 +181,9 @@
 		<div style="display:grid;gap:0;">
 			<button class="accordion-button open" style="border-bottom:1px solid #3A352E;padding:18px 0;display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:#F6F4EF;">
 				Is Basalio a subscription?
-				<span class="toggle-icon" style="flex-shrink:0;">−</span>
+				<span class="toggle-icon" style="flex-shrink:0;transform:rotate(45deg);">−</span>
 			</button>
-			<div class="accordion-content" style="display:block;padding:16px 0 32px;overflow:hidden;max-height:none;">
+			<div class="accordion-content open" style="padding:16px 0 32px;">
 				<p style="font-size:14px;color:#A39C8E;margin:0;line-height:1.6;">No. It's a one-time payment, and every tier includes lifetime updates. You're buying a license, not renting access. Nothing expires and nothing rebills.</p>
 			</div>
 
@@ -405,6 +409,33 @@
 
 	renderPricingCards();
 	updateTierDisplay();
+
+	// Accordion functionality
+	const accordionButtons = document.querySelectorAll('.accordion-button');
+	accordionButtons.forEach((button) => {
+		button.addEventListener('click', function() {
+			const section = this.closest('section');
+			const isOpen = this.classList.contains('open');
+			const content = this.nextElementSibling;
+
+			// Close all other accordions in this section
+			section.querySelectorAll('.accordion-button.open').forEach(otherBtn => {
+				if (otherBtn !== this) {
+					otherBtn.classList.remove('open');
+					otherBtn.nextElementSibling.classList.remove('open');
+				}
+			});
+
+			// Toggle this accordion
+			if (isOpen) {
+				this.classList.remove('open');
+				content.classList.remove('open');
+			} else {
+				this.classList.add('open');
+				content.classList.add('open');
+			}
+		});
+	});
 
 	// Back to top button
 	const backToTopBtn = document.getElementById('backToTop');

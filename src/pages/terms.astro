@@ -35,14 +35,27 @@ const pageTitle = "Terms of Service";
 		  #backToTop{bottom:16px;right:16px;width:40px;height:40px;}
 		  nav{padding:0 12px;}
 		  nav>div{padding:6px 6px 6px 14px;}
+		  header{padding:56px 16px 32px !important;}
+		  header>div{padding:0 !important;}
+		  header h1{font-size:clamp(26px,3.6vw,38px) !important;}
+		  section{padding:48px 16px !important;}
+		  section>div{padding:0 !important;}
+		  div[style*="max-width:760px"]{padding:0 !important;}
+		  a[style*="padding:6px 14px"]{padding:6px 12px !important;font-size:11px !important;}
 		}
 		@keyframes driftGrad{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
 		@media (max-width:768px){
 		  footer{padding:48px 16px 24px !important;}
 		}
 		@media (max-width:480px){
-		  footer{padding:40px 16px 24px !important;}
-		  footer > div{flex-direction:column;align-items:flex-start;}
+		  header{padding:40px 12px 24px !important;}
+		  section{padding:32px 12px !important;}
+		  div[style*="max-width:760px"]{padding:0 12px !important;}
+		  footer{padding:32px 12px 20px !important;}
+		  footer > div{flex-direction:column;align-items:flex-start;padding:0 !important;}
+		  h1{font-size:clamp(22px,3vw,32px) !important;}
+		  h2{font-size:clamp(18px,2.6vw,26px) !important;}
+		  p{font-size:13px;}
 		}
 		@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
 	</style>

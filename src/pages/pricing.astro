@@ -57,6 +57,25 @@
 		  table th,table td{padding:12px 10px !important;}
 		  h2{font-size:clamp(22px,2.8vw,32px) !important;}
 		  footer>div{grid-template-columns:1fr !important;gap:28px !important;}
+		  div[style*="padding:0 32px"]{padding:0 16px !important;}
+		}
+		@media (max-width:480px){
+		  header{padding:40px 0 32px !important;}
+		  header>div{padding:0 12px !important;}
+		  #focalTier{padding:20px 16px !important;}
+		  #tierButtons{flex-direction:column;gap:8px;}
+		  #tierButtons button{width:100%;}
+		  #pricingCards{gap:12px !important;}
+		  #pricingCards>div{padding:16px !important;}
+		  section{padding:32px 0 !important;}
+		  section>div{padding:0 12px !important;}
+		  .accordion-button{padding:12px 0;font-size:14px;}
+		  table{font-size:11px;}
+		  table th,table td{padding:10px 8px !important;}
+		  h2{font-size:clamp(18px,2.5vw,28px) !important;}
+		  h1{font-size:clamp(24px,3.5vw,36px) !important;}
+		  footer{padding:40px 12px !important;}
+		  footer>div{gap:20px !important;}
 		}
 		@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
 	</style>

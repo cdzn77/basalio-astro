@@ -13,21 +13,10 @@ import Footer from '../components/Footer.astro';
 	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@1,9..144,500&display=swap" rel="stylesheet">
 	<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpolygon points='8,56 56,56 46,44 18,44' fill='%23F6F4EF'/%3E%3Crect x='23' y='20' width='18' height='24' fill='%23DFFF00'/%3E%3C/svg%3E">
 	<style>
-		:root {
-			--smp-grid-width-desktop: 1440px;
-			--smp-grid-outer-desktop: 3.333rem;
-			--smp-grid-gap-desktop: 2.222rem;
-			--smp-grid-gap-mobile: 1.667rem;
-			--spacing-3xl: 3.333rem;
-			--spacing-xl: 2.222rem;
-			--spacing-lg: 1.667rem;
-		}
 		* { box-sizing: border-box; }
 		html { scroll-behavior: smooth; }
 		body {
 			margin: 0;
-			background: #1C1917;
-			color: #F6F4EF;
 			font-family: 'Inter', sans-serif;
 			font-size: 16px;
 			line-height: 1.5;
@@ -35,25 +24,17 @@ import Footer from '../components/Footer.astro';
 		}
 		a { color: inherit; text-decoration: none; }
 		a:focus, button:focus, input:focus, select:focus, textarea:focus {
-			outline: 2px solid #DFFF00;
-			outline-offset: 2px;
-		}
-		a:focus:not(:focus-visible), button:focus:not(:focus-visible), input:focus:not(:focus-visible) {
-			outline: none;
-		}
-		*:focus-visible {
-			outline: 2px solid #DFFF00;
+			outline: 2px solid #000;
 			outline-offset: 2px;
 		}
 
 		/* Animations */
 		@keyframes riseIn { to { opacity: 1; transform: translateY(0); } }
-		@keyframes benchPulse { 0%,100% { box-shadow: 0 4px 14px rgba(0,0,0,0.4), 0 0 0 0 rgba(246,244,239,0.4); } 50% { box-shadow: 0 4px 14px rgba(0,0,0,0.4), 0 0 0 16px rgba(246,244,239,0); } }
+		@keyframes benchPulse { 0%,100% { box-shadow: 0 4px 14px rgba(0,0,0,0.4), 0 0 0 0 rgba(0,0,0,0.4); } 50% { box-shadow: 0 4px 14px rgba(0,0,0,0.4), 0 0 0 16px rgba(0,0,0,0); } }
 		@keyframes fillBar { from { width: 0; } to { width: var(--bar-width); } }
 		@keyframes moveKnob { from { left: 0; } to { left: var(--knob-position); } }
 		@keyframes countUp { from { opacity: 0; } to { opacity: 1; } }
 		@keyframes slideUp { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
-		@keyframes pulseArrow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
 		.bench-bar { animation: fillBar 2s cubic-bezier(.16,1,.3,1) forwards; }
 		.bench-knob { animation: moveKnob 2s cubic-bezier(.16,1,.3,1) forwards; }
@@ -64,43 +45,78 @@ import Footer from '../components/Footer.astro';
 		.text-reveal-word:nth-child(3) { animation-delay: 0.3s; }
 
 		/* Navigation */
-		#backToTop {
+		nav {
 			position: fixed;
-			bottom: 32px;
-			right: 32px;
-			z-index: 40;
-			width: 44px;
-			height: 44px;
-			border-radius: 22px;
-			background: #DFFF00;
-			color: #17171A;
-			border: 0;
-			cursor: pointer;
+			top: 14px;
+			left: 0;
+			right: 0;
+			z-index: 50;
+			padding: 0 20px;
+			pointer-events: none;
+		}
+		nav > div {
+			max-width: 1120px;
+			margin: 0 auto;
+			background: rgba(255, 255, 255, 0.95);
+			backdrop-filter: blur(14px);
+			border: 1px solid rgba(0, 0, 0, 0.08);
+			border-radius: 999px;
+			padding: 8px 8px 8px 22px;
 			display: flex;
 			align-items: center;
-			justify-content: center;
-			font-family: 'Space Grotesk', sans-serif;
-			font-weight: 700;
-			font-size: 18px;
-			opacity: 0;
-			pointer-events: none;
-			transition: opacity .3s ease;
-			box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+			justify-content: space-between;
+			box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.15);
+			pointer-events: auto;
 		}
-		#backToTop.show { opacity: 1; pointer-events: auto; }
-		#backToTop:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.4); }
+		nav a {
+			font-family: 'Space Grotesk', sans-serif;
+			font-size: 18px;
+			font-weight: 700;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			color: #000;
+		}
+		nav svg { flex: none; }
+		nav > div > div {
+			display: flex;
+			gap: 26px;
+			align-items: center;
+		}
+		nav > div > div > a {
+			font-size: 14px;
+			font-weight: 500;
+			color: #666;
+			transition: color .15s ease;
+		}
+		nav > div > div > a:hover {
+			color: #000;
+		}
+		nav .btn-primary {
+			display: inline-flex;
+			align-items: center;
+			font-family: 'Space Grotesk', sans-serif;
+			font-weight: 600;
+			font-size: 13px;
+			padding: 9px 18px;
+			border-radius: 999px;
+			background: #000;
+			color: #fff;
+			transition: all .18s ease;
+		}
+		nav .btn-primary:hover {
+			transform: translateY(-2px);
+		}
 
 		#mobileMenuBtn {
 			display: none;
 			background: none;
 			border: none;
-			color: #F6F4EF;
+			color: #000;
 			cursor: pointer;
 			padding: 0;
 			width: 44px;
 			height: 44px;
-			min-width: 44px;
-			min-height: 44px;
 		}
 		#mobileMenu {
 			display: none;
@@ -110,7 +126,7 @@ import Footer from '../components/Footer.astro';
 			right: 0;
 			width: 100%;
 			height: 100vh;
-			background: #1C1917;
+			background: #fff;
 			overflow-y: auto;
 			z-index: 48;
 			flex-direction: column;
@@ -120,111 +136,278 @@ import Footer from '../components/Footer.astro';
 		#mobileMenu a {
 			display: block;
 			padding: 16px 20px;
-			border-bottom: 1px solid rgba(255,255,255,0.08);
-			color: #D4CABE;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+			color: #666;
 			font-size: 16px;
 			font-weight: 500;
 		}
-		#mobileMenu a:hover { background: rgba(255,255,255,0.05); color: #F6F4EF; }
+		#mobileMenu a:hover { background: rgba(0, 0, 0, 0.05); color: #000; }
 
-		/* Semplice Structure */
+		/* Hero Section - Yellow */
+		.hero {
+			width: 100%;
+			min-height: 100vh;
+			background: #DFFF00;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 120px 40px 60px;
+			text-align: center;
+		}
+		.hero-content {
+			max-width: 1200px;
+		}
+		.hero p {
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 12px;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			color: #000;
+			margin: 0 0 40px;
+		}
+		.hero h1 {
+			font-family: 'Space Grotesk', sans-serif;
+			font-weight: 700;
+			font-size: clamp(48px, 8vw, 96px);
+			line-height: 1.1;
+			margin: 0 0 40px;
+			color: #000;
+			letter-spacing: -0.02em;
+		}
+		.hero h1 em {
+			font-family: 'Fraunces', serif;
+			font-style: italic;
+			font-weight: 500;
+		}
+		.hero > div > p:last-of-type {
+			font-size: clamp(16px, 2.5vw, 20px);
+			color: #000;
+			max-width: 65ch;
+			margin: 0 auto 40px;
+			line-height: 1.6;
+		}
+		.hero-cta {
+			display: flex;
+			gap: 16px;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+		.btn {
+			font-family: 'Space Grotesk', sans-serif;
+			font-weight: 600;
+			font-size: 14px;
+			padding: 15px 32px;
+			border-radius: 0;
+			border: 2px solid #000;
+			cursor: pointer;
+			transition: all .2s ease;
+		}
+		.btn-dark {
+			background: #000;
+			color: #DFFF00;
+		}
+		.btn-dark:hover {
+			transform: scale(1.02);
+		}
+		.btn-light {
+			background: #DFFF00;
+			color: #000;
+			border-color: #000;
+		}
+		.btn-light:hover {
+			transform: scale(1.02);
+		}
+
+		/* Sections */
 		section {
-			padding: var(--spacing-3xl) 0;
+			width: 100%;
+			padding: 100px 40px;
 		}
 		section > div {
-			max-width: var(--smp-grid-width-desktop);
+			max-width: 1200px;
 			margin: 0 auto;
-			padding: 0 var(--smp-grid-outer-desktop);
 		}
-		.grid-container {
-			display: grid;
-			gap: var(--smp-grid-gap-desktop);
-		}
-		.grid-3 { grid-template-columns: repeat(3, 1fr); }
-		.grid-2 { grid-template-columns: repeat(2, 1fr); }
-
-		/* Cards */
-		.card {
-			background: rgba(255,255,255,0.04);
-			border: 1px solid rgba(255,255,255,0.08);
-			border-radius: 0;
-			padding: var(--spacing-xl);
-			transition: all .3s ease;
-		}
-		.card:hover {
-			background: rgba(255,255,255,0.06);
-			border-color: rgba(223,255,0,0.3);
-		}
-
-		/* Eyebrow */
 		.eyebrow {
 			font-family: 'IBM Plex Mono', monospace;
 			font-size: 12px;
 			letter-spacing: 0.08em;
 			text-transform: uppercase;
-			color: #D4CABE;
-			margin: 0 0 var(--spacing-lg) 0;
+			margin: 0 0 20px;
 		}
-
-		/* Heading */
 		h2 {
 			font-family: 'Space Grotesk', sans-serif;
 			font-weight: 700;
-			letter-spacing: -0.01em;
+			font-size: clamp(32px, 6vw, 72px);
 			line-height: 1.1;
-			font-size: clamp(28px, 3.4vw, 42px);
-			margin: 0 0 var(--spacing-xl) 0;
+			margin: 0 0 40px;
+			letter-spacing: -0.02em;
 		}
 
-		/* Responsive */
-		@media (max-width: 900px) {
-			#mobileMenuBtn { display: block; }
-			nav > div > div:last-child { display: none !important; }
+		/* Modules Section - White */
+		.modules {
+			background: #fff;
+			color: #000;
 		}
+		.modules-grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 32px;
+			margin-top: 60px;
+		}
+		.module-card {
+			padding: 32px;
+			border: 1px solid rgba(0, 0, 0, 0.1);
+			background: #f9f9f9;
+			transition: all .3s ease;
+		}
+		.module-card:hover {
+			border-color: #000;
+			background: #fff;
+		}
+		.module-card h3 {
+			font-family: 'Space Grotesk', sans-serif;
+			font-weight: 700;
+			font-size: 20px;
+			margin: 0 0 12px;
+			color: #000;
+		}
+		.module-card p {
+			font-size: 16px;
+			line-height: 1.6;
+			color: #666;
+			margin: 0;
+		}
+
+		/* Performance Section - Dark */
+		.performance {
+			background: #1C1917;
+			color: #F6F4EF;
+		}
+		.performance .eyebrow {
+			color: #D4CABE;
+		}
+		.performance h2 {
+			color: #F6F4EF;
+		}
+		.performance p {
+			color: #D4CABE;
+			font-size: 18px;
+			max-width: 65ch;
+			line-height: 1.6;
+		}
+		.stats-grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 32px;
+			margin-top: 60px;
+		}
+		.stat-box {
+			padding: 32px;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			background: rgba(255, 255, 255, 0.02);
+		}
+		.stat-box .label {
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 12px;
+			color: #DFFF00;
+			text-transform: uppercase;
+			margin: 0 0 16px;
+		}
+		.stat-box .value {
+			font-family: 'Space Grotesk', sans-serif;
+			font-size: 48px;
+			font-weight: 700;
+			color: #F6F4EF;
+			margin: 0 0 8px;
+		}
+		.stat-box .desc {
+			font-size: 14px;
+			color: #D4CABE;
+			margin: 0;
+		}
+
+		/* CTA Section - Yellow */
+		.cta-section {
+			background: #DFFF00;
+			color: #000;
+			text-align: center;
+			padding: 120px 40px;
+		}
+		.cta-section h2 {
+			color: #000;
+		}
+		.cta-section p {
+			color: #000;
+			font-size: 18px;
+			max-width: 65ch;
+			margin: 0 auto 40px;
+		}
+
+		/* Back to Top */
+		#backToTop {
+			position: fixed;
+			bottom: 32px;
+			right: 32px;
+			z-index: 40;
+			width: 44px;
+			height: 44px;
+			border-radius: 0;
+			background: #000;
+			color: #fff;
+			border: 0;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: 'Space Grotesk', sans-serif;
+			font-weight: 700;
+			opacity: 0;
+			pointer-events: none;
+			transition: opacity .3s ease;
+		}
+		#backToTop.show { opacity: 1; pointer-events: auto; }
+		#backToTop:hover { transform: scale(1.1); }
+
+		/* Responsive */
 		@media (max-width: 1024px) {
-			.grid-3 { grid-template-columns: repeat(2, 1fr); }
-			.grid-container { gap: var(--smp-grid-gap-mobile) !important; }
+			.modules-grid { grid-template-columns: repeat(2, 1fr); }
 		}
 		@media (max-width: 768px) {
-			body { font-size: 15px; }
-			#backToTop { bottom: 16px; right: 16px; width: 40px; height: 40px; }
 			nav { padding: 0 12px; }
-			nav > div { padding: 6px 6px 6px 14px; }
-			header { padding: 56px 0 40px !important; }
-			header > div { padding: 0 16px !important; }
-			header h1 { font-size: clamp(24px, 5vw, 40px) !important; }
-			section > div { padding: 0 16px !important; }
-			.grid-3, .grid-2 { grid-template-columns: 1fr !important; }
-			.grid-container { gap: 16px !important; }
-			.card { padding: 20px 16px !important; }
+			nav > div { padding: 8px; }
+			#mobileMenuBtn { display: block; }
+			nav > div > div { display: none; }
+			section { padding: 60px 20px; }
+			.hero { padding: 100px 20px 40px; }
+			.modules-grid { grid-template-columns: 1fr; gap: 16px; }
+			.stats-grid { grid-template-columns: 1fr; }
+			.cta-section { padding: 80px 20px; }
 		}
 		@media (max-width: 480px) {
-			header { padding: 40px 0 32px !important; }
-			header > div { padding: 0 12px !important; }
-			header h1 { font-size: clamp(20px, 3.5vw, 32px) !important; }
-			section { padding: 48px 0 !important; }
-			section > div { padding: 0 12px !important; }
-			#backToTop { bottom: 12px; right: 12px; width: 38px; height: 38px; font-size: 14px; }
+			.hero h1 { font-size: 32px; }
+			section { padding: 40px 16px; }
+			h2 { font-size: 28px; }
 		}
 		@media (prefers-reduced-motion: reduce) { * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; } }
 	</style>
 </head>
 <body>
 
-<nav style="position:fixed;top:14px;left:0;right:0;z-index:50;padding:0 20px;pointer-events:none;">
-	<div style="max-width:1120px;margin:0 auto;background:rgba(28,25,23,0.92);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:8px 8px 8px 22px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 24px 48px -24px rgba(0,0,0,0.55);pointer-events:auto;">
-		<a href="/" style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;color:#F6F4EF;">
-			<svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true" style="flex:none;"><polygon points="8,56 56,56 46,44 18,44" fill="#F6F4EF"></polygon><rect x="23" y="20" width="18" height="24" fill="#DFFF00"></rect></svg>
+<nav>
+	<div>
+		<a href="/">
+			<svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true"><polygon points="8,56 56,56 46,44 18,44" fill="#000"></polygon><rect x="23" y="20" width="18" height="24" fill="#DFFF00"></rect></svg>
 			Basalio
 		</a>
-		<button id="mobileMenuBtn" aria-label="Toggle menu" style="pointer-events:auto;margin-right:8px;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="6" x2="22" y2="6"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="18" x2="22" y2="18"></line></svg></button>
-		<div style="display:flex;gap:26px;align-items:center;">
-			<a href="#modules" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Modules</a>
-			<a href="#performance" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Performance</a>
-			<a href="/roadmap" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Roadmap</a>
-			<a href="/pricing" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Pricing</a>
-			<a href="/support" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Support</a>
-			<a href="#waitlist" style="display:inline-flex;align-items:center;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;padding:9px 18px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease;">Join the beta</a>
+		<button id="mobileMenuBtn" aria-label="Toggle menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+		<div>
+			<a href="#modules">Modules</a>
+			<a href="#performance">Performance</a>
+			<a href="/roadmap">Roadmap</a>
+			<a href="/pricing">Pricing</a>
+			<a href="/support">Support</a>
+			<a href="#waitlist" class="btn-primary">Join the beta</a>
 		</div>
 	</div>
 </nav>
@@ -238,105 +421,92 @@ import Footer from '../components/Footer.astro';
 	<a href="#waitlist">Join the beta</a>
 </div>
 
-<div style="position:relative;">
-	<video aria-hidden="true" autoplay muted loop style="position:absolute;top:0;left:0;width:100vw;height:100vh;z-index:0;object-fit:cover;display:block;">
-		<source src="https://stream.mux.com/tLkHO1qZoaaQOUeVWo8hEBeGQfySP02EPS02BmnNFyXys.m3u8" type="application/x-mpegURL" />
-	</video>
-	<div aria-hidden="true" style="position:absolute;top:0;left:0;right:0;height:100vh;z-index:1;pointer-events:none;background:linear-gradient(180deg, rgba(28,25,23,0.4) 0%, rgba(28,25,23,0.08) 30%, rgba(28,25,23,0.08) 50%, rgba(28,25,23,0.7) 75%, rgba(28,25,23,0.98) 100%);"></div>
-
-	<header style="position:relative;z-index:2;padding:220px 0 100px;text-align:center;">
-		<div style="max-width:760px;margin:0 auto;padding:0 32px;">
-			<p class="eyebrow">For WordPress • Not a page builder</p>
-			<h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em;line-height:1.05;font-size:clamp(28px,5.6vw,60px);margin:18px 0 20px;color:#F6F4EF;">Give your work <em style="font-family:'Fraunces',serif;font-style:italic;font-weight:500;color:#DFFF00;">a foundation</em> to stand on.</h1>
-			<p style="font-size:clamp(14px,4vw,18px);color:#F6F4EF;max-width:52ch;margin:0 auto 30px;opacity:0.82;">Nine curated interaction modules, from grid reveals to case-study transitions to scroll-tied sequences, built only for portfolio and case-study sites. Nothing you'd need Framer for. Nothing you don't.</p>
-			<div style="display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap;">
-				<a href="#waitlist" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:13px 24px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease, box-shadow .18s ease;">Join the beta →</a>
-				<a href="#modules" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:13px 24px;border-radius:999px;border:1px solid rgba(255,255,255,0.35);background:rgba(28,25,23,0.25);backdrop-filter:blur(6px);color:#F6F4EF;transition:border-color .18s ease;">See the modules</a>
-			</div>
+<!-- Hero Section -->
+<div class="hero">
+	<div class="hero-content">
+		<p>For WordPress • Not a page builder</p>
+		<h1>Give your work <em>a foundation</em> to stand on.</h1>
+		<p>Nine curated interaction modules, from grid reveals to case-study transitions to scroll-tied sequences, built only for portfolio and case-study sites. Nothing you'd need Framer for. Nothing you don't.</p>
+		<div class="hero-cta">
+			<button class="btn btn-dark" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">Join the beta →</button>
+			<button class="btn btn-light" onclick="document.getElementById('modules').scrollIntoView({behavior:'smooth'})">See the modules</button>
 		</div>
-	</header>
+	</div>
 </div>
 
-<!-- Modules Section - Semplice Structure -->
-<section id="modules">
+<!-- Modules Section -->
+<section id="modules" class="modules">
 	<div>
-		<div style="margin-bottom:var(--spacing-3xl);">
-			<p class="eyebrow">Positioning • 01</p>
-			<h2>Nine modules. Zero friction.</h2>
-		</div>
-
-		<div class="grid-container grid-3">
-			<div class="card">
-				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Grid Reveal</p>
-				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Stagger grid items on scroll with customizable timing and easing curves.</p>
+		<p class="eyebrow">Positioning • 01</p>
+		<h2>Nine modules. Zero friction.</h2>
+		<div class="modules-grid">
+			<div class="module-card">
+				<h3>Grid Reveal</h3>
+				<p>Stagger grid items on scroll with customizable timing and easing curves.</p>
 			</div>
-			<div class="card">
-				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Case Study Transition</p>
-				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Smooth scroll-triggered transitions between case study sections.</p>
+			<div class="module-card">
+				<h3>Case Study Transition</h3>
+				<p>Smooth scroll-triggered transitions between case study sections.</p>
 			</div>
-			<div class="card">
-				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Scroll Sequence</p>
-				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Tie animations to scroll progress for immersive storytelling.</p>
+			<div class="module-card">
+				<h3>Scroll Sequence</h3>
+				<p>Tie animations to scroll progress for immersive storytelling.</p>
 			</div>
-			<div class="card">
-				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Parallax Depth</p>
-				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Layer content at different scroll speeds for visual depth.</p>
+			<div class="module-card">
+				<h3>Parallax Depth</h3>
+				<p>Layer content at different scroll speeds for visual depth.</p>
 			</div>
-			<div class="card">
-				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Image Counter</p>
-				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Count up values as images load with smooth animations.</p>
+			<div class="module-card">
+				<h3>Image Counter</h3>
+				<p>Count up values as images load with smooth animations.</p>
 			</div>
-			<div class="card">
-				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Text Reveal</p>
-				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Animate text on scroll with word-by-word stagger.</p>
+			<div class="module-card">
+				<h3>Text Reveal</h3>
+				<p>Animate text on scroll with word-by-word stagger.</p>
 			</div>
-			<div class="card">
-				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Hover Zoom</p>
-				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Subtle zoom effects on hover for interactive feedback.</p>
+			<div class="module-card">
+				<h3>Hover Zoom</h3>
+				<p>Subtle zoom effects on hover for interactive feedback.</p>
 			</div>
-			<div class="card">
-				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Click Expand</p>
-				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Expand content on click with smooth modal transitions.</p>
+			<div class="module-card">
+				<h3>Click Expand</h3>
+				<p>Expand content on click with smooth modal transitions.</p>
 			</div>
-			<div class="card">
-				<p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;color:#DFFF00;margin:0 0 12px;">Scroll Lock</p>
-				<p style="color:#D4CABE;font-size:14px;line-height:1.6;margin:0;">Freeze sections while hero elements animate in sequence.</p>
+			<div class="module-card">
+				<h3>Scroll Lock</h3>
+				<p>Freeze sections while hero elements animate in sequence.</p>
 			</div>
 		</div>
 	</div>
 </section>
 
 <!-- Performance Section -->
-<section id="performance" style="background:rgba(255,255,255,0.02);">
+<section id="performance" class="performance">
 	<div>
-		<div style="margin-bottom:var(--spacing-3xl);max-width:600px;">
-			<p class="eyebrow">Performance • 02</p>
-			<h2>Lightweight by default.</h2>
-			<p style="color:#D4CABE;font-size:16px;line-height:1.6;">Each module is optimized for performance. No bloat. No frameworks. Pure vanilla JavaScript compiled to less than 12KB gzipped.</p>
-		</div>
-
-		<div class="grid-container grid-2">
-			<div style="padding:var(--spacing-lg);border:1px solid rgba(255,255,0,0.2);border-radius:0;background:rgba(223,255,0,0.05);">
-				<p style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#DFFF00;margin:0 0 8px;font-weight:600;">Bundle Size</p>
-				<p style="font-size:32px;font-weight:700;color:#F6F4EF;margin:0;">11.8 KB</p>
-				<p style="font-size:12px;color:#D4CABE;margin:0;">Gzipped. All 9 modules.</p>
+		<p class="eyebrow">Performance • 02</p>
+		<h2>Lightweight by default.</h2>
+		<p>Each module is optimized for performance. No bloat. No frameworks. Pure vanilla JavaScript compiled to less than 12KB gzipped.</p>
+		<div class="stats-grid">
+			<div class="stat-box">
+				<p class="label">Bundle Size</p>
+				<p class="value">11.8 KB</p>
+				<p class="desc">Gzipped. All 9 modules.</p>
 			</div>
-			<div style="padding:var(--spacing-lg);border:1px solid rgba(255,255,0,0.2);border-radius:0;background:rgba(223,255,0,0.05);">
-				<p style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#DFFF00;margin:0 0 8px;font-weight:600;">LCP Impact</p>
-				<p style="font-size:32px;font-weight:700;color:#F6F4EF;margin:0;">+0ms</p>
-				<p style="font-size:12px;color:#D4CABE;margin:0;">Loaded async, no blocking.</p>
+			<div class="stat-box">
+				<p class="label">LCP Impact</p>
+				<p class="value">+0ms</p>
+				<p class="desc">Loaded async, no blocking.</p>
 			</div>
 		</div>
 	</div>
 </section>
 
 <!-- CTA Section -->
-<section style="border-top:1px solid rgba(255,255,255,0.08);">
-	<div style="text-align:center;max-width:700px;margin:0 auto;">
-		<p class="eyebrow">Ready to ship</p>
-		<h2 style="font-size:clamp(32px,4vw,52px);margin-bottom:24px;">Start building now.</h2>
-		<p style="color:#D4CABE;font-size:18px;line-height:1.6;margin-bottom:32px;">Join the beta. Three modules, one site, zero cost.</p>
-		<a href="#waitlist" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:15px 32px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease;">Get early access →</a>
+<section id="waitlist" class="cta-section">
+	<div>
+		<h2>Ready to ship.</h2>
+		<p>Join the beta. Three modules, one site, zero cost.</p>
+		<button class="btn btn-dark">Get early access →</button>
 	</div>
 </section>
 
@@ -345,7 +515,6 @@ import Footer from '../components/Footer.astro';
 <button id="backToTop" aria-label="Back to top">↑</button>
 
 <script>
-	// Mobile menu
 	const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 	const mobileMenu = document.getElementById('mobileMenu');
 	mobileMenuBtn.addEventListener('click', () => {
@@ -357,7 +526,6 @@ import Footer from '../components/Footer.astro';
 		});
 	});
 
-	// Back to top
 	const backToTop = document.getElementById('backToTop');
 	window.addEventListener('scroll', () => {
 		backToTop.classList.toggle('show', window.scrollY > 300);

@@ -39,6 +39,10 @@ import Footer from '../components/Footer.astro';
 		.bench-bar { animation: fillBar 2s cubic-bezier(.16,1,.3,1) forwards; }
 		.bench-knob { animation: moveKnob 2s cubic-bezier(.16,1,.3,1) forwards; }
 		.bench-stat { animation: countUp 1s ease-out forwards; }
+		.text-reveal-word { animation: slideUp .6s cubic-bezier(.16,1,.3,1) forwards; }
+		.text-reveal-word:nth-child(1) { animation-delay: 0.1s; }
+		.text-reveal-word:nth-child(2) { animation-delay: 0.2s; }
+		.text-reveal-word:nth-child(3) { animation-delay: 0.3s; }
 
 		/* Navigation */
 		nav {
@@ -300,8 +304,6 @@ import Footer from '../components/Footer.astro';
 			max-width: 1320px;
 			padding: 0 60px;
 			margin-bottom: 0;
-			height: 600px;
-			overflow: hidden;
 		}
 		.module-row.full-bleed {
 			grid-template-columns: 1fr;
@@ -362,36 +364,6 @@ import Footer from '../components/Footer.astro';
 			background: #E8E8E8;
 			color: #0A0A0A;
 		}
-
-		/* Focus States for Accessibility */
-		button {
-			outline: none;
-		}
-		button:focus-visible {
-			outline: 2px solid #0A0A0A;
-			outline-offset: 2px;
-		}
-		.module-tile.bg-dark button:focus-visible,
-		.module-tile.bg-mid-dark button:focus-visible {
-			outline-color: #FFF;
-		}
-
-		/* Button Hover States */
-		button:hover:not(:disabled) {
-			transform: translateY(-2px);
-			box-shadow: 0 8px 20px rgba(0,0,0,0.2) !important;
-		}
-		button:active:not(:disabled) {
-			transform: translateY(0);
-		}
-
-		/* Hover Effects */
-
-		/* Animation Performance */
-		.module-image {
-			will-change: transform;
-			transition: background-color 0.3s ease, box-shadow 0.3s ease;
-		}
 		.module-full-bleed.bg-light h3,
 		.module-full-bleed.bg-light p,
 		.module-full-bleed.bg-light .module-credit {
@@ -403,8 +375,7 @@ import Footer from '../components/Footer.astro';
 
 		/* Tile Content Wrapper */
 		.module-content {
-			margin-bottom: 60px;
-			padding: 0;
+			margin-bottom: 40px;
 		}
 		.module-content h3 {
 			font-family: 'Inter', sans-serif;
@@ -417,9 +388,9 @@ import Footer from '../components/Footer.astro';
 		}
 		.module-content p {
 			font-family: 'Inter', sans-serif;
-			font-size: 18px;
+			font-size: 24px;
 			font-weight: 400;
-			line-height: 24px;
+			line-height: 33px;
 			letter-spacing: 0;
 			margin: 0;
 			color: #666;
@@ -433,12 +404,13 @@ import Footer from '../components/Footer.astro';
 
 		/* Module Image - Portrait Aspect */
 		.module-image {
-			width: calc(100% + 120px);
-			flex: 1;
+			width: 100%;
+			aspect-ratio: 660 / 750;
 			overflow: hidden;
-			margin: 0 -60px -60px -60px;
+			margin-top: auto;
 		}
 		.module-image img,
+		.module-image video,
 		.module-image svg {
 			width: 100%;
 			height: 100%;
@@ -446,14 +418,6 @@ import Footer from '../components/Footer.astro';
 			border-radius: 0;
 			box-shadow: none;
 			object-fit: cover;
-		}
-		.module-image video {
-			width: 100%;
-			height: 100%;
-			display: block;
-			border-radius: 0;
-			box-shadow: none;
-			object-fit: contain;
 		}
 
 		/* Module Interactive Demonstrations */
@@ -965,26 +929,59 @@ import Footer from '../components/Footer.astro';
 		<!-- Two-Tile-Pair Module Layout -->
 		<!-- Row 1: Grid Reveal (light) + Case Study Transition (medium grey) -->
 		<div class="module-row">
-			<div class="module-tile bg-light" style="background: #DFDCD5 !important;">
+			<div class="module-tile bg-light">
 				<div class="module-content">
 					<h3>Grid Reveal</h3>
-					<p>An image grid that comes alive on<br>hover and focus. Each tile can link out or open in a lightbox, with corner radius set to the exact pixel you want.</p>
+					<p>Stagger grid items on scroll with customizable timing and easing curves.</p>
 				</div>
-				<div class="module-image" style="background: #DFDCD5;">
-					<video autoplay loop muted playsinline>
-						<source src="/assets/basalio-grid-reveal.mp4" type="video/mp4">
-					</video>
+				<div class="module-image" style="display: flex; align-items: center; justify-content: center; position: relative;">
+					<!-- Browser window frame -->
+					<div style="width: 100%; height: 100%; display: flex; flex-direction: column; background: #F5F5F5; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.08);">
+						<!-- Browser top bar -->
+						<div style="background: #E8E8E8; border-bottom: 1px solid #D8D8D8; padding: 12px 16px; display: flex; align-items: center; gap: 8px;">
+							<div style="width: 12px; height: 12px; border-radius: 50%; background: #FF5F57;"></div>
+							<div style="width: 12px; height: 12px; border-radius: 50%; background: #FFBD2E;"></div>
+							<div style="width: 12px; height: 12px; border-radius: 50%; background: #28C840;"></div>
+							<div style="flex: 1; margin-left: 12px; padding: 6px 12px; background: #FFF; border-radius: 4px; font-size: 11px; color: #999;"></div>
+						</div>
+						<!-- Scrollable grid content -->
+						<div style="flex: 1; overflow-y: scroll; padding: 24px; display: flex; align-items: flex-start;">
+							<div style="width: 100%; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+						<div style="aspect-ratio: 1; background: linear-gradient(135deg, #DDD 0%, #D0D0D0 100%); cursor: pointer; opacity: 1; transition: all 0.3s ease; border-radius: 6px;" class="grid-reveal-item" data-index="0"></div>
+						<div style="aspect-ratio: 1; background: linear-gradient(135deg, #E5E5E5 0%, #D8D8D8 100%); cursor: pointer; opacity: 1; transition: all 0.3s ease; border-radius: 6px;" class="grid-reveal-item" data-index="1"></div>
+						<div style="aspect-ratio: 1; background: linear-gradient(135deg, #D9D9D9 0%, #CCC 100%); cursor: pointer; opacity: 1; transition: all 0.3s ease; border-radius: 6px;" class="grid-reveal-item" data-index="2"></div>
+						<div style="aspect-ratio: 1; background: linear-gradient(135deg, #E0E0E0 0%, #D3D3D3 100%); cursor: pointer; opacity: 1; transition: all 0.3s ease; border-radius: 6px;" class="grid-reveal-item" data-index="3"></div>
+						<div style="aspect-ratio: 1; background: linear-gradient(135deg, #DCDCDC 0%, #CCC 100%); cursor: pointer; opacity: 1; transition: all 0.3s ease; border-radius: 6px;" class="grid-reveal-item" data-index="4"></div>
+						<div style="aspect-ratio: 1; background: linear-gradient(135deg, #E3E3E3 0%, #D6D6D6 100%); cursor: pointer; opacity: 1; transition: all 0.3s ease; border-radius: 6px;" class="grid-reveal-item" data-index="5"></div>
+ttttttttt<div style="aspect-ratio: 1; background: linear-gradient(135deg, #DDD 0%, #D0D0D0 100%); cursor: pointer; opacity: 1; transition: all 0.3s ease; border-radius: 6px;" class="grid-reveal-item" data-index="6"></div>
+ttttttttt<div style="aspect-ratio: 1; background: linear-gradient(135deg, #E5E5E5 0%, #D8D8D8 100%); cursor: pointer; opacity: 1; transition: all 0.3s ease; border-radius: 6px;" class="grid-reveal-item" data-index="7"></div>
+ttttttttt<div style="aspect-ratio: 1; background: linear-gradient(135deg, #D9D9D9 0%, #CCC 100%); cursor: pointer; opacity: 1; transition: all 0.3s ease; border-radius: 6px;" class="grid-reveal-item" data-index="8"></div>
+ttttttttt<div style="aspect-ratio: 1; background: linear-gradient(135deg, #E0E0E0 0%, #D3D3D3 100%); cursor: pointer; opacity: 1; transition: all 0.3s ease; border-radius: 6px;" class="grid-reveal-item" data-index="9"></div>
+					</div>
+					<button onclick="triggerGridReveal()" style="position: absolute; bottom: 20px; right: 20px; padding: 12px 24px; min-height: 44px; min-width: 44px; background: #0A0A0A; color: #FFF; border: 2px solid #0A0A0A; cursor: pointer; font-size: 12px; font-weight: 500; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15);" aria-label="Trigger grid reveal animation">Trigger</button>
 				</div>
 			</div>
+			</div>
+				</div>
+			</div>
+
+		<div class="module-row">
 			<div class="module-tile bg-accent">
 				<div class="module-content">
 					<h3>Case Study Transition</h3>
-					<p>Click a project tile and watch it morph<br>into the hero of its own page.</p>
+					<p>Smooth scroll-triggered transitions between case study sections.</p>
 				</div>
-				<div class="module-image" style="background: #A0A0A0;">
-					<video autoplay loop muted playsinline>
-						<source src="/assets/basalio-case-study-transition-ink.mp4" type="video/mp4">
-					</video>
+				<div class="module-image" style="position: relative; background: #B3B3B3;">
+					<div style="display: flex; width: 100%; height: 100%; position: relative; overflow: hidden;">
+						<div class="case-slide" style="flex: 1; background: #9A9A9A; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: 500; position: absolute; width: 100%; height: 100%; left: -100%; transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1);">Project A</div>
+						<div class="case-slide" style="flex: 1; background: #A8A8A8; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: 500; position: absolute; width: 100%; height: 100%; left: 0%; transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1);">Project B</div>
+						<div class="case-slide" style="flex: 1; background: #B6B6B6; display: flex; align-items: center; justify-content: center; color: #FFF; font-weight: 500; position: absolute; width: 100%; height: 100%; left: 100%; transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1);">Project C</div>
+					</div>
+					<div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 10;">
+						<button style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); border: 2px solid rgba(255,255,255,0.3); cursor: pointer; transition: all 0.2s ease; display: block;" onclick="transitionCase(-1)" onmouseover="this.style.background='rgba(255,255,255,0.7)';this.style.transform='scale(1.3)';" onmouseout="this.style.background='rgba(255,255,255,0.5)';this.style.transform='scale(1)';" aria-label="Previous case study"></button>
+						<button style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.9); border: 2px solid rgba(255,255,255,0.9); cursor: pointer; transition: all 0.2s ease; display: block;" onclick="transitionCase(0)" aria-label="Current case study" aria-pressed="true"></button>
+						<button style="width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.5); border: 2px solid rgba(255,255,255,0.3); cursor: pointer; transition: all 0.2s ease; display: block;" onclick="transitionCase(1)" onmouseover="this.style.background='rgba(255,255,255,0.7)';this.style.transform='scale(1.3)';" onmouseout="this.style.background='rgba(255,255,255,0.5)';this.style.transform='scale(1)';" aria-label="Next case study"></button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -996,7 +993,7 @@ import Footer from '../components/Footer.astro';
 					<h3>Scroll Sequence</h3>
 					<p>Tie animations to scroll progress for immersive storytelling.</p>
 				</div>
-				<div class="module-image" style="position: relative; background: #1A1A1A; border-radius: 12px; overflow: hidden;">
+				<div class="module-image" style="position: relative; background: #1A1A1A;">
 					<div style="width: 100%; height: 100%; display: flex; flex-direction: column; gap: 20px; padding: 40px; justify-content: center;">
 						<div class="scroll-seq-bar" style="height: 40px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden;">
 							<div style="height: 100%; background: linear-gradient(90deg, #DFFF00, #B8CC00); width: 0%; transition: width 0.3s ease;" id="scrollSeqProgress"></div>
@@ -1034,7 +1031,7 @@ import Footer from '../components/Footer.astro';
 					<p>Layer content at different scroll speeds for visual depth.</p>
 				</div>
 				<div class="module-image" style="width: 660px; max-width: 100%; aspect-ratio: 660 / 750;" id="parallaxContainer" onmousemove="updateParallax(event)" onmouseleave="resetParallax()">
-					<div style="background: linear-gradient(135deg, #1A1A1A 0%, #0F0F0F 100%); width: 100%; height: 100%; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; border-radius: 12px;">
+					<div style="background: linear-gradient(135deg, #1A1A1A 0%, #0F0F0F 100%); width: 100%; height: 100%; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center;">
 						<!-- Background layer -->
 						<div class="parallax-layer" style="position: absolute; width: 120%; height: 120%; top: -10%; left: -10%; background: radial-gradient(circle at 30% 70%, rgba(223,255,0,0.08) 0%, transparent 50%); transform: translateY(0) translateX(0); transition: transform 0.1s ease;"></div>
 						<!-- Mid layer -->
@@ -1062,15 +1059,15 @@ import Footer from '../components/Footer.astro';
 				<div class="module-image" style="display: flex; align-items: center; justify-content: center; position: relative;">
 					<div style="text-align: center;">
 						<div id="textRevealContainer" style="font-size: 28px; font-weight: 500; color: #0A0A0A; line-height: 1.4; min-height: 60px;">
-							<span class="text-reveal-word" style="display: inline-block; opacity: 0; transform: translateY(10px);">Words</span>
+							<span class="text-reveal-word" style="display: inline-block; opacity: 0;">Words</span>
 							<span style="display: inline-block; width: 4px;"></span>
-							<span class="text-reveal-word" style="display: inline-block; opacity: 0; transform: translateY(10px);">animate</span>
+							<span class="text-reveal-word" style="display: inline-block; opacity: 0;">animate</span>
 							<span style="display: inline-block; width: 4px;"></span>
-							<span class="text-reveal-word" style="display: inline-block; opacity: 0; transform: translateY(10px);">one</span>
+							<span class="text-reveal-word" style="display: inline-block; opacity: 0;">one</span>
 							<span style="display: inline-block; width: 4px;"></span>
-							<span class="text-reveal-word" style="display: inline-block; opacity: 0; transform: translateY(10px);">by</span>
+							<span class="text-reveal-word" style="display: inline-block; opacity: 0;">by</span>
 							<span style="display: inline-block; width: 4px;"></span>
-							<span class="text-reveal-word" style="display: inline-block; opacity: 0; transform: translateY(10px);">one</span>
+							<span class="text-reveal-word" style="display: inline-block; opacity: 0;">one</span>
 						</div>
 					</div>
 					<button onclick="triggerTextReveal()" style="position: absolute; bottom: 20px; right: 20px; padding: 12px 24px; min-height: 44px; min-width: 44px; background: #0A0A0A; color: #FFF; border: 2px solid #0A0A0A; cursor: pointer; font-size: 12px; font-weight: 500; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15);" aria-label="Trigger text reveal animation">Reveal</button>
@@ -1082,7 +1079,7 @@ import Footer from '../components/Footer.astro';
 					<p>Subtle zoom effects on hover for interactive feedback.</p>
 				</div>
 				<div class="module-image" style="display: flex; align-items: center; justify-content: center;">
-					<div style="width: 240px; height: 240px; background: linear-gradient(135deg, #E0E0E0 0%, #D0D0D0 100%); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 500; color: #666; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease; border-radius: 12px; overflow: hidden;" onmouseenter="this.style.transform='scale(1.08)'; this.style.boxShadow='0 16px 48px rgba(0,0,0,0.12)';" onmouseleave="this.style.transform='scale(1)'; this.style.boxShadow='0 0 0 rgba(0,0,0,0)';">
+					<div style="width: 240px; height: 240px; background: linear-gradient(135deg, #E0E0E0 0%, #D0D0D0 100%); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 500; color: #666; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;" onmouseenter="this.style.transform='scale(1.08)'; this.style.boxShadow='0 16px 48px rgba(0,0,0,0.12)';" onmouseleave="this.style.transform='scale(1)'; this.style.boxShadow='0 0 0 rgba(0,0,0,0)';">
 						Hover me
 					</div>
 				</div>
@@ -1097,7 +1094,7 @@ import Footer from '../components/Footer.astro';
 					<p>Expand content on click with smooth modal transitions.</p>
 				</div>
 				<div class="module-image" style="width: 660px; max-width: 100%; aspect-ratio: 660 / 750;">
-					<div style="background: #1A1A1A; width: 100%; height: 100%; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 32px; padding: 40px; border-radius: 12px;">
+					<div style="background: #1A1A1A; width: 100%; height: 100%; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 32px; padding: 40px;">
 						<div class="expand-card" style="flex: 1; width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 32px; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #DDD;" onclick="expandCard(0)">
 							<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom: 16px; color: #DFFF00;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
 							<div style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">Reply to comment</div>
@@ -1154,7 +1151,7 @@ import Footer from '../components/Footer.astro';
 					<h3>Scroll Lock</h3>
 					<p>Freeze sections while hero elements animate in sequence.</p>
 				</div>
-				<div class="module-image" style="width: 100%; aspect-ratio: 16 / 9; position: relative; border-radius: 12px; overflow: hidden;">
+				<div class="module-image" style="width: 100%; aspect-ratio: 16 / 9; position: relative;">
 					<div style="background: linear-gradient(135deg, #E8E8E8 0%, #DDD 50%, #D0D0D0 100%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #0A0A0A; gap: 24px; padding: 60px 40px; position: relative;">
 						<div class="scroll-lock-item" style="flex: 1; padding: 48px 32px; background: rgba(100,100,100,0.15); text-align: center; font-weight: 600; opacity: 0; transform: translateX(-30px); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);">Hero Frame 1</div>
 						<div class="scroll-lock-item" style="flex: 1; padding: 48px 32px; background: rgba(100,100,100,0.1); text-align: center; font-weight: 600; opacity: 0; transform: translateX(-30px); transition: opacity 0.6s ease-out 0.15s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;">Hero Frame 2</div>
@@ -1366,7 +1363,6 @@ import Footer from '../components/Footer.astro';
 		btn.style.opacity = '0.6';
 
 		items.forEach(item => {
-			item.style.transition = 'none';
 			item.style.opacity = '0';
 			item.style.transform = 'translateX(-30px)';
 		});
@@ -1376,15 +1372,14 @@ import Footer from '../components/Footer.astro';
 				item.style.opacity = '1';
 				item.style.transform = 'translateX(0)';
 			});
-		}, 50);
+		}, 100);
 
 		// After animation completes, show replay button
-		const totalDuration = 300 + 600; // last item delay + duration
 		setTimeout(() => {
 			btn.textContent = 'Replay';
 			btn.disabled = false;
 			btn.style.opacity = '1';
-		}, totalDuration + 100);
+		}, 1000);
 	}
 
 	// Make functions globally accessible for onclick handlers

@@ -309,6 +309,18 @@ import Footer from '../components/Footer.astro';
 			padding: 0 60px;
 		}
 
+		@media (max-width: 768px) {
+			.module-row {
+				height: auto;
+				min-height: 400px;
+				grid-template-columns: 1fr;
+				padding: 0 20px;
+			}
+			.module-image {
+				min-height: 350px;
+			}
+		}
+
 		/* Individual Tile */
 		.module-tile {
 			padding: 60px;

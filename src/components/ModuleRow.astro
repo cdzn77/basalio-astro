@@ -1,0 +1,14 @@
+---
+// ModuleRow Component - Grid container for module tiles
+interface Props {
+  fullBleed?: boolean;
+  class?: string;
+}
+
+const { fullBleed = false, class: className = '' } = Astro.props;
+const rowClass = fullBleed ? 'module-row full-bleed' : 'module-row';
+---
+
+<div class={`${rowClass} ${className}`}>
+  <slot />
+</div>

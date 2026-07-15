@@ -255,11 +255,16 @@ nav > div > div > a:hover {
 .module-full-bleed {
   background: var(--color-bg-dark-gray);
   color: var(--color-light);
-  padding: var(--space-7xl) var(--space-4xl);
+  padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  height: 100%;
+}
+
+.module-full-bleed .module-content {
+  padding: var(--space-7xl) var(--space-4xl);
 }
 
 .module-full-bleed h3,

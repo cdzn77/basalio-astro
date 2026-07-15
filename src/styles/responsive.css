@@ -87,6 +87,10 @@
   }
 
   .module-tile {
+    padding: 0;
+  }
+
+  .module-content {
     padding: var(--space-2xl);
   }
 
@@ -96,6 +100,10 @@
   }
 
   .module-full-bleed {
+    padding: 0;
+  }
+
+  .module-full-bleed .module-content {
     padding: var(--space-4xl) var(--space-2xl);
   }
 

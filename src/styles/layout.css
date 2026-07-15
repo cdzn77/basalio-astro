@@ -135,14 +135,14 @@ section {
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: var(--space-4xl) var(--space-4xl) 0 var(--space-4xl);
+  padding: 0;
 }
 
 .module-content {
   display: flex;
   flex-direction: column;
   margin-bottom: var(--space-4xl);
-  padding: 0;
+  padding: var(--space-4xl) var(--space-4xl) 0 var(--space-4xl);
 }
 
 .module-content h3 {

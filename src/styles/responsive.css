@@ -1,0 +1,257 @@
+/* Responsive - Media Queries and Breakpoint Styles */
+
+/* Tablet and Large Screens (max 1024px) */
+@media (max-width: 1024px) {
+  .container,
+  .container-content {
+    padding: 0 var(--space-3xl);
+  }
+
+  section {
+    padding: var(--space-5xl) var(--space-3xl);
+  }
+
+  .module-row {
+    padding: 0 var(--space-3xl);
+  }
+
+  .module-full-bleed {
+    padding: var(--space-5xl) var(--space-3xl);
+  }
+
+  nav > div {
+    padding: var(--space-xs);
+  }
+}
+
+/* Tablet (max 768px) */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+  }
+
+  /* Navigation */
+  nav {
+    padding: 0 var(--space-sm);
+  }
+
+  nav > div {
+    padding: var(--space-xs);
+  }
+
+  nav > div > div {
+    display: none;
+  }
+
+  #mobileMenuBtn {
+    display: block;
+  }
+
+  /* Hero */
+  .hero {
+    padding: var(--space-6xl) var(--space-md) var(--space-3xl);
+  }
+
+  .hero p {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .hero > div > p:last-of-type {
+    margin-bottom: var(--space-3xl);
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 8vw, 72px);
+  }
+
+  /* Sections */
+  section {
+    padding: var(--space-4xl) var(--space-md);
+  }
+
+  h2 {
+    font-size: clamp(28px, 6vw, 52px);
+  }
+
+  /* Modules */
+  .module-row {
+    grid-template-columns: 1fr;
+    padding: 0 var(--space-md);
+    gap: 0;
+    height: auto;
+    min-height: 400px;
+  }
+
+  .module-row.full-bleed {
+    padding: 0 var(--space-md);
+  }
+
+  .module-tile {
+    padding: var(--space-2xl);
+  }
+
+  .module-image {
+    min-height: 350px;
+    aspect-ratio: 660 / 600;
+  }
+
+  .module-full-bleed {
+    padding: var(--space-4xl) var(--space-2xl);
+  }
+
+  .module-content h3 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .module-content p {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  /* Grid Items */
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Back to Top Button */
+  #backToTop {
+    bottom: var(--space-md);
+    right: var(--space-md);
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Small Mobile (max 480px) */
+@media (max-width: 480px) {
+  /* Typography */
+  h1 {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 28px;
+  }
+
+  .module-content h3 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .module-content p {
+    font-size: 18px;
+    line-height: 26px;
+  }
+
+  /* Hero */
+  .hero {
+    padding: var(--space-6xl) var(--space-md) var(--space-3xl);
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  /* Sections */
+  section {
+    padding: var(--space-3xl) var(--space-md);
+  }
+
+  /* Modules */
+  .module-row {
+    min-height: 300px;
+  }
+
+  .module-tile {
+    padding: var(--space-2xl);
+  }
+
+  .module-full-bleed {
+    padding: var(--space-2xl);
+  }
+
+  /* Navigation */
+  nav > div {
+    padding: var(--space-xs);
+  }
+
+  nav a {
+    font-size: 16px;
+  }
+
+  nav > div > div > a {
+    font-size: 14px;
+  }
+
+  /* Buttons */
+  .btn {
+    padding: 12px 24px;
+    font-size: 12px;
+  }
+
+  .hero-cta {
+    gap: var(--space-sm);
+  }
+
+  /* Container */
+  .container,
+  .container-content {
+    padding: 0 var(--space-md);
+  }
+
+  /* Back to Top Button */
+  #backToTop {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+}
+
+/* Extra Small Mobile (max 360px) */
+@media (max-width: 360px) {
+  .hero {
+    padding: var(--space-4xl) var(--space-sm) var(--space-2xl);
+  }
+
+  section {
+    padding: var(--space-3xl) var(--space-sm);
+  }
+
+  .container,
+  .container-content {
+    padding: 0 var(--space-sm);
+  }
+
+  .module-tile {
+    padding: var(--space-lg);
+  }
+
+  .module-content {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .btn {
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  nav,
+  #backToTop {
+    display: none;
+  }
+
+  section {
+    page-break-inside: avoid;
+  }
+}

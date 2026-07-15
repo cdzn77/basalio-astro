@@ -1,0 +1,174 @@
+/* Animations - Keyframes and Transitions */
+
+/* Keyframes */
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes benchPulse {
+  0%, 100% {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), 0 0 0 0 rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), 0 0 0 16px rgba(0, 0, 0, 0);
+  }
+}
+
+@keyframes fillBar {
+  from {
+    width: 0;
+  }
+  to {
+    width: var(--bar-width);
+  }
+}
+
+@keyframes moveKnob {
+  from {
+    left: 0;
+  }
+  to {
+    left: var(--knob-position);
+  }
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes revealStagger {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slideWord {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes countUpNumber {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation Classes */
+.animate-rise {
+  animation: riseIn 0.6s var(--transition-normal) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.8s var(--transition-normal) forwards;
+}
+
+.animate-fade {
+  animation: fadeIn 0.4s var(--transition-fast) forwards;
+}
+
+.bench-bar {
+  animation: fillBar 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.bench-knob {
+  animation: moveKnob 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.bench-stat {
+  animation: countUp 1s ease-out forwards;
+}
+
+.grid-item {
+  animation: revealStagger 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-word {
+  display: inline-block;
+  margin-right: 6px;
+  animation: slideWord 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.counter-display {
+  animation: countUpNumber 1s ease-out forwards;
+}
+
+/* Hover Animations */
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2) !important;
+  transition: all var(--transition-normal);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

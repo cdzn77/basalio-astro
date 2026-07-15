@@ -1,0 +1,193 @@
+/* Layout - Grids, Flexbox, Containers */
+
+/* Main Container */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-4xl);
+}
+
+.container-content {
+  width: 100%;
+  max-width: var(--container-content);
+  margin: 0 auto;
+}
+
+/* Sections */
+section {
+  width: 100%;
+  padding: var(--space-6xl) var(--space-4xl);
+}
+
+/* Grid System */
+.grid {
+  display: grid;
+  gap: 0;
+  width: 100%;
+}
+
+.grid-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Flex Utilities */
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-stretch {
+  align-items: stretch;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+/* Gaps */
+.gap-0 {
+  gap: 0;
+}
+
+.gap-xs {
+  gap: var(--space-xs);
+}
+
+.gap-sm {
+  gap: var(--space-sm);
+}
+
+.gap-md {
+  gap: var(--space-md);
+}
+
+.gap-lg {
+  gap: var(--space-lg);
+}
+
+.gap-xl {
+  gap: var(--space-xl);
+}
+
+/* Overflow */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+/* Module Grid System */
+.module-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  width: 100%;
+  height: var(--module-height);
+  overflow: hidden;
+  align-items: stretch;
+  margin: 0 auto;
+}
+
+.module-row.full-bleed {
+  grid-template-columns: 1fr;
+}
+
+.module-tile {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-4xl) var(--space-4xl) 0 var(--space-4xl);
+}
+
+.module-content {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--space-4xl);
+  padding: 0;
+}
+
+.module-content h3 {
+  font-size: var(--text-3xl);
+  font-weight: 400;
+  margin-bottom: var(--space-sm);
+}
+
+.module-content p {
+  font-size: var(--text-lg);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  max-width: 55ch;
+}
+
+.module-image {
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
+  margin: 0;
+  min-height: 0;
+  will-change: transform;
+  transition: background-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.module-image video {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  object-fit: cover !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+.module-image img,
+.module-image svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 0;
+  box-shadow: none;
+  object-fit: cover;
+}

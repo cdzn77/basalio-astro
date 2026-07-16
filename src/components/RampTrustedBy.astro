@@ -1,0 +1,135 @@
+---
+// Ramp Trusted By - EXACT SPECIFICATIONS
+// Background: #FFEA00, Logo carousel, repeating logos
+
+interface Logo {
+  name: string;
+}
+
+interface Props {
+  logos?: Logo[];
+}
+
+const {
+  logos = [
+    { name: "Logo 1" },
+    { name: "Logo 2" },
+    { name: "Logo 3" },
+    { name: "Logo 4" },
+    { name: "Logo 5" },
+    { name: "Logo 6" }
+  ]
+} = Astro.props;
+---
+
+<section class="trusted-by" id="trusted-by">
+  <div class="container">
+    <p class="trusted-label">TRUSTED BY</p>
+
+    <div class="logos-carousel">
+      <div class="logos-track">
+        {[...logos, ...logos].map((logo, index) => (
+          <div class="logo-item" key={index}>
+            <span>{logo.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const track = document.querySelector('.logos-track');
+  const items = document.querySelectorAll('.logo-item');
+
+  if (items.length > 0) {
+    const itemWidth = items[0].offsetWidth + 24; // width + gap
+    let position = 0;
+    const speed = 0.5;
+
+    function animate() {
+      position -= speed;
+
+      if (Math.abs(position) >= itemWidth * (items.length / 2)) {
+        position = 0;
+      }
+
+      if (track) {
+        track.style.transform = `translateX(${position}px)`;
+      }
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  }
+</script>
+
+<style>
+  .trusted-by {
+    background: #FFEA00;
+    padding: 60px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .trusted-label {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #999999;
+    text-align: center;
+    margin: 0 0 40px;
+  }
+
+  .logos-carousel {
+    overflow: hidden;
+    background: #FFEA00;
+  }
+
+  .logos-track {
+    display: flex;
+    gap: 24px;
+    width: max-content;
+  }
+
+  .logo-item {
+    flex: 0 0 150px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-size: 12px;
+    color: #999999;
+    font-weight: 500;
+  }
+
+  @media (max-width: 768px) {
+    .trusted-by {
+      padding: 40px 0;
+    }
+
+    .container {
+      padding: 0 20px;
+    }
+
+    .logos-track {
+      gap: 16px;
+    }
+
+    .logo-item {
+      flex: 0 0 120px;
+      height: 50px;
+      font-size: 11px;
+    }
+  }
+</style>

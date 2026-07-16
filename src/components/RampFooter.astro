@@ -1,0 +1,230 @@
+---
+// Ramp Footer - EXACT SPECIFICATIONS
+// Background: #FFEA00, Address left, links grid right, large headings bottom
+// Curved transition from black FAQ section
+
+interface Props {
+  address?: string;
+}
+
+const {
+  address = "Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark"
+} = Astro.props;
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-left">
+        <p class="footer-address">{address}</p>
+      </div>
+
+      <div class="footer-right">
+        <nav class="footer-nav">
+          <a href="#" class="nav-link">
+            <span class="nav-label">Courses</span>
+            <span class="nav-text">Courses</span>
+          </a>
+          <a href="#" class="nav-link">
+            <span class="nav-label">Subscription</span>
+            <span class="nav-text">Subscription</span>
+          </a>
+          <a href="#" class="nav-link">
+            <span class="nav-label">About</span>
+            <span class="nav-text">About</span>
+          </a>
+          <a href="#" class="nav-link">
+            <span class="nav-label">Contact</span>
+            <span class="nav-text">Contact</span>
+          </a>
+          <a href="#" class="nav-link">
+            <span class="nav-label">404</span>
+            <span class="nav-text">404</span>
+          </a>
+          <a href="#" class="nav-link">
+            <span class="nav-label">Terms &amp; Conditions</span>
+            <span class="nav-text">Terms &amp; Conditions</span>
+          </a>
+          <a href="#" class="nav-link">
+            <span class="nav-label">Privacy Policy</span>
+            <span class="nav-text">Privacy Policy</span>
+          </a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <h3 class="footer-heading">Ramp</h3>
+      <h3 class="footer-heading">Studio.</h3>
+      <h3 class="footer-heading">Creative.</h3>
+      <h3 class="footer-heading">Collective.</h3>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: #FFEA00;
+    padding: 80px 0;
+    position: relative;
+  }
+
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, #000000, #FFEA00);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-bottom: 80px;
+    align-items: start;
+  }
+
+  .footer-left {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footer-address {
+    font-size: 16px;
+    line-height: 1.7;
+    color: #000000;
+    margin: 0;
+  }
+
+  .footer-right {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footer-nav {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 60px;
+  }
+
+  .nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: opacity 0.2s ease;
+  }
+
+  .nav-link:hover {
+    opacity: 0.6;
+  }
+
+  .nav-label {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #999999;
+  }
+
+  .nav-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000000;
+  }
+
+  .footer-bottom {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding-top: 60px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .footer-heading {
+    font-family: 'Manrope', sans-serif;
+    font-size: clamp(36px, 6vw, 72px);
+    font-weight: 400;
+    color: #000000;
+    margin: 0;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .footer-heading:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+
+  .footer-heading:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .footer-heading:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  .footer-heading:nth-child(4) {
+    animation-delay: 0.4s;
+  }
+
+  @media (max-width: 1024px) {
+    .footer-nav {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .footer-top {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer {
+      padding: 60px 0;
+    }
+
+    .container {
+      padding: 0 20px;
+    }
+
+    .footer-top {
+      margin-bottom: 40px;
+    }
+
+    .footer-bottom {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      padding-top: 40px;
+    }
+
+    .footer-heading {
+      font-size: clamp(24px, 5vw, 40px);
+    }
+  }
+</style>

@@ -1,0 +1,284 @@
+---
+// Ramp Testimonials - EXACT SPECIFICATIONS
+// Background: White, Carousel layout, images 140x160px with warm filter
+// Quote styling, client name, results
+
+interface Testimonial {
+  image: string;
+  quote: string;
+  name: string;
+  title: string;
+  results: string;
+}
+
+interface Props {
+  testimonials?: Testimonial[];
+}
+
+const {
+  testimonials = [
+    {
+      image: "https://via.placeholder.com/140x160",
+      quote: "Template helped us launch a polished website that feels premium and scales with you.",
+      name: "Maya Thompson",
+      title: "Wellness Coach",
+      results: "18x email sign ups"
+    },
+    {
+      image: "https://via.placeholder.com/140x160",
+      quote: "Every resource feels intentional, from free step-by-step workflows to paid resources.",
+      name: "Priya Desai",
+      title: "Shopify Store Owner",
+      results: "2x quaterly revenue"
+    },
+    {
+      image: "https://via.placeholder.com/140x160",
+      quote: "We saved weeks of design time and launched a high-end website that feels premium.",
+      name: "Lucas Martinez",
+      title: "Café Owner",
+      results: "20% increased conversion"
+    }
+  ]
+} = Astro.props;
+---
+
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="testimonials-header">
+      <p class="testimonials-label">TESTIMONIALS</p>
+      <h2>Learner Stories</h2>
+    </div>
+
+    <div class="carousel-wrapper">
+      <button class="carousel-arrow prev" aria-label="Previous">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 4L6 10L12 16"></path>
+        </svg>
+      </button>
+
+      <div class="carousel-container">
+        <div class="carousel-track">
+          {testimonials.map((testimonial) => (
+            <div class="testimonial-card">
+              <div class="testimonial-image">
+                <img src={testimonial.image} alt={testimonial.name} />
+              </div>
+              <p class="testimonial-quote">"{testimonial.quote}"</p>
+              <p class="testimonial-name">{testimonial.name}</p>
+              <p class="testimonial-title">{testimonial.title}</p>
+              <div class="testimonial-results">
+                <span class="results-label">RESULTS</span>
+                <span class="results-value">{testimonial.results}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <button class="carousel-arrow next" aria-label="Next">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M8 4L14 10L8 16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const carousel = document.querySelector('.carousel-track');
+  const cards = document.querySelectorAll('.testimonial-card');
+  const prevBtn = document.querySelector('.carousel-arrow.prev');
+  const nextBtn = document.querySelector('.carousel-arrow.next');
+
+  let currentIndex = 0;
+  const cardWidth = 380;
+  const gap = 24;
+  const visibleCards = 2;
+
+  function updateCarousel() {
+    const offset = -(currentIndex * (cardWidth + gap));
+    carousel.style.transform = `translateX(${offset}px)`;
+  }
+
+  prevBtn?.addEventListener('click', () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateCarousel();
+    }
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    if (currentIndex < cards.length - visibleCards) {
+      currentIndex++;
+      updateCarousel();
+    }
+  });
+</script>
+
+<style>
+  .testimonials {
+    background: #FFFFFF;
+    padding: 80px 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .testimonials-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .testimonials-label {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #999999;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .testimonials-header h2 {
+    margin: 0;
+  }
+
+  .carousel-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .carousel-arrow {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: #F0F0F0;
+    color: #000000;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .carousel-arrow:hover {
+    background: #E0E0E0;
+  }
+
+  .carousel-container {
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: 24px;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .testimonial-card {
+    flex: 0 0 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .testimonial-image {
+    width: 140px;
+    height: 160px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #F0F0F0;
+  }
+
+  .testimonial-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(0.2) saturate(1.2);
+  }
+
+  .testimonial-quote {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #000000;
+    margin: 0;
+    font-style: italic;
+  }
+
+  .testimonial-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+    margin: 0;
+  }
+
+  .testimonial-title {
+    font-size: 14px;
+    color: #575757;
+    margin: 0;
+  }
+
+  .testimonial-results {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #E0E0E0;
+  }
+
+  .results-label {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #999999;
+  }
+
+  .results-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000;
+  }
+
+  @media (max-width: 1024px) {
+    .testimonial-card {
+      flex: 0 0 340px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .testimonials {
+      padding: 60px 0;
+    }
+
+    .container {
+      padding: 0 20px;
+    }
+
+    .testimonials-header {
+      margin-bottom: 40px;
+    }
+
+    .carousel-wrapper {
+      gap: 16px;
+    }
+
+    .carousel-arrow {
+      width: 40px;
+      height: 40px;
+    }
+
+    .testimonial-card {
+      flex: 0 0 300px;
+    }
+  }
+</style>

@@ -1,271 +1,1422 @@
 ---
-import Layout from '../components/Layout.astro';
-import Navigation from '../components/Navigation.astro';
-import Hero from '../components/Hero.astro';
-import Section from '../components/Section.astro';
 import Footer from '../components/Footer.astro';
-import Animations from '../components/Animations.astro';
 ---
 
-<Layout title="Basalio - WordPress Portfolio Modules" description="Nine curated interaction modules for portfolio and case-study sites.">
-  <Navigation />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Basalio - WordPress Portfolio Modules</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@1,9..144,500&display=swap" rel="stylesheet">
+	<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpolygon points='8,56 56,56 46,44 18,44' fill='%23F6F4EF'/%3E%3Crect x='23' y='20' width='18' height='24' fill='%23DFFF00'/%3E%3C/svg%3E">
+	<style>
+		* { box-sizing: border-box; }
+		html { scroll-behavior: smooth; }
+		body {
+			margin: 0;
+			font-family: 'Inter', sans-serif;
+			font-size: 16px;
+			line-height: 1.5;
+			-webkit-font-smoothing: antialiased;
+		}
+		a { color: inherit; text-decoration: none; }
+		a:focus, button:focus, input:focus, select:focus, textarea:focus {
+			outline: 2px solid #000;
+			outline-offset: 2px;
+		}
 
-  <!-- Hero Section -->
-  <Hero
-    eyebrow="FOR WORDPRESS · NOT A PAGE BUILDER"
-    title="Give your work a <em>foundation</em><br>to stand on."
-    subtitle="NINE CURATED INTERACTION MODULES, FROM GRID REVEALS TO CASE-STUDY TRANSITIONS TO SCROLL-TIED SEQUENCES, BUILT ONLY FOR PORTFOLIO AND CASE-STUDY SITES. NOTHING YOU'D NEED FRAMER FOR. NOTHING YOU DON'T."
-    cta_primary={{ text: 'Get early access →', href: '#beta' }}
-  />
+		/* Animations */
+		@keyframes riseIn { to { opacity: 1; transform: translateY(0); } }
+		@keyframes benchPulse { 0%,100% { box-shadow: 0 4px 14px rgba(0,0,0,0.4), 0 0 0 0 rgba(0,0,0,0.4); } 50% { box-shadow: 0 4px 14px rgba(0,0,0,0.4), 0 0 0 16px rgba(0,0,0,0); } }
+		@keyframes fillBar { from { width: 0; } to { width: var(--bar-width); } }
+		@keyframes moveKnob { from { left: 0; } to { left: var(--knob-position); } }
+		@keyframes countUp { from { opacity: 0; } to { opacity: 1; } }
+		@keyframes slideUp { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
 
-  <!-- Modules Section -->
-  <Section id="modules" title="Nine modules. Zero friction." class="modules">
-    <!-- Row 1: Grid Reveal + Case Study Transition -->
-    <div class="module-row">
-      <div class="module-tile bg-light" style="background: #DFDCD5 !important;">
-        <div class="module-content">
-          <h3>Grid Reveal</h3>
-          <p>An image grid that comes alive on hover and focus. Each tile can link out or open in a lightbox, with corner radius set to the exact pixel you want.</p>
-        </div>
-        <div class="module-image" style="background: #DFDCD5;">
-          <video autoplay loop muted playsinline>
-            <source src="/assets/basalio-grid-reveal.mp4" type="video/mp4" />
-          </video>
-        </div>
-      </div>
-      <div class="module-tile bg-accent">
-        <div class="module-content">
-          <h3>Case Study Transition</h3>
-          <p>Click a project tile and watch it morph into the hero of its own page.</p>
-        </div>
-        <div class="module-image" style="background: #A0A0A0;">
-          <video autoplay loop muted playsinline>
-            <source src="/assets/basalio-case-study-transition-ink.mp4" type="video/mp4" />
-          </video>
-        </div>
-      </div>
-    </div>
+		.bench-bar { animation: fillBar 2s cubic-bezier(.16,1,.3,1) forwards; }
+		.bench-knob { animation: moveKnob 2s cubic-bezier(.16,1,.3,1) forwards; }
+		.bench-stat { animation: countUp 1s ease-out forwards; }
 
-    <!-- Row 2: Scroll Sequence + Image Counter -->
-    <div class="module-row">
-      <div class="module-tile bg-mid-dark">
-        <div class="module-content">
-          <h3>Scroll Sequence</h3>
-          <p>Tie animations to scroll progress for immersive storytelling.</p>
-        </div>
-        <div class="module-image" style="position: relative; background: #1A1A1A; border-radius: 12px; overflow: hidden;">
-          <div style="width: 100%; height: 100%; display: flex; flex-direction: column; gap: 20px; padding: 40px; justify-content: center;">
-            <div class="scroll-seq-bar" style="height: 40px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden;">
-              <div style="height: 100%; background: linear-gradient(90deg, #DFFF00, #B8CC00); width: 0%; transition: width 0.3s ease;" id="scrollSeqProgress"></div>
-            </div>
-            <div class="scroll-seq-bar" style="height: 40px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden;">
-              <div style="height: 100%; background: linear-gradient(90deg, #DFFF00, #B8CC00); width: 0%; transition: width 0.3s ease;" id="scrollSeqProgress2"></div>
-            </div>
-            <div class="scroll-seq-bar" style="height: 40px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden;">
-              <div style="height: 100%; background: linear-gradient(90deg, #DFFF00, #B8CC00); width: 0%; transition: width 0.3s ease;" id="scrollSeqProgress3"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="module-tile bg-light">
-        <div class="module-content">
-          <h3>Image Counter</h3>
-          <p>Count up values as images load with smooth animations.</p>
-        </div>
-        <div class="module-image" style="display: flex; align-items: center; justify-content: center; position: relative;">
-          <div style="text-align: center;">
-            <div style="font-size: 72px; font-weight: 600; color: #0A0A0A; margin-bottom: 12px;" class="counter-display">0</div>
-            <p style="color: #999; font-size: 14px; margin: 0;">images loaded</p>
-          </div>
-        </div>
-      </div>
-    </div>
+		/* Navigation */
+		nav {
+			position: fixed;
+			top: 14px;
+			left: 0;
+			right: 0;
+			z-index: 50;
+			padding: 0 20px;
+			pointer-events: none;
+		}
+		nav > div {
+			max-width: 1120px;
+			margin: 0 auto;
+			background: rgba(255, 255, 255, 0.95);
+			backdrop-filter: blur(14px);
+			border: 1px solid rgba(0, 0, 0, 0.08);
+			border-radius: 999px;
+			padding: 8px 8px 8px 22px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.15);
+			pointer-events: auto;
+		}
+		nav a {
+			font-family: 'Space Grotesk', sans-serif;
+			font-size: 18px;
+			font-weight: 700;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			color: #000;
+		}
+		nav svg { flex: none; }
+		nav > div > div {
+			display: flex;
+			gap: 26px;
+			align-items: center;
+		}
+		nav > div > div > a {
+			font-size: 14px;
+			font-weight: 500;
+			color: #666;
+			transition: color .15s ease;
+		}
+		nav > div > div > a:hover {
+			color: #000;
+		}
+		nav .btn-primary {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			font-family: 'Space Grotesk', sans-serif;
+			font-weight: 600;
+			font-size: 13px;
+			padding: 12px 24px;
+			min-height: 44px;
+			border-radius: 999px;
+			background: #000;
+			color: #fff;
+			border: 2px solid #000;
+			cursor: pointer;
+			transition: all 0.2s ease;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		}
+		nav .btn-primary:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+		}
+		nav .btn-primary:focus {
+			outline: 2px solid #DFFF00;
+			outline-offset: 2px;
+		}
 
-    <!-- Row 3: Parallax Depth (Full-bleed) -->
-    <div class="module-row full-bleed">
-      <div class="module-full-bleed">
-        <div class="module-content">
-          <h3>Parallax Depth</h3>
-          <p>Layer content at different scroll speeds for visual depth.</p>
-        </div>
-        <div class="module-image" style="width: 660px; max-width: 100%; aspect-ratio: 660 / 750;" id="parallaxContainer">
-          <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%); display: flex; align-items: center; justify-content: center; color: #999;">
-            Parallax effect region
-          </div>
-        </div>
-      </div>
-    </div>
+		#mobileMenuBtn {
+			display: none;
+			background: none;
+			border: none;
+			color: #000;
+			cursor: pointer;
+			padding: 0;
+			width: 44px;
+			height: 44px;
+		}
+		#mobileMenu {
+			display: none;
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			width: 100%;
+			height: 100vh;
+			background: #fff;
+			overflow-y: auto;
+			z-index: 48;
+			flex-direction: column;
+			padding-top: 80px;
+		}
+		#mobileMenu.open { display: flex; }
+		#mobileMenu a {
+			display: block;
+			padding: 16px 20px;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+			color: #666;
+			font-size: 16px;
+			font-weight: 500;
+		}
+		#mobileMenu a:hover { background: rgba(0, 0, 0, 0.05); color: #000; }
 
-    <!-- Row 4: Text Stagger + Zoom Item -->
-    <div class="module-row">
-      <div class="module-tile bg-accent">
-        <div class="module-content">
-          <h3>Text Stagger</h3>
-          <p>Words animate in one by one for dramatic emphasis.</p>
-        </div>
-        <div class="module-image" style="display: flex; align-items: center; justify-content: center; position: relative;">
-          <div class="text-reveal-demo">
-            <span class="reveal-word">Reveal</span>
-            <span class="reveal-word">your</span>
-            <span class="reveal-word">words</span>
-            <span class="reveal-word">beautifully</span>
-          </div>
-        </div>
-      </div>
-      <div class="module-tile bg-light">
-        <div class="module-content">
-          <h3>Zoom Item</h3>
-          <p>Hover to scale and highlight content with smooth easing.</p>
-        </div>
-        <div class="module-image" style="display: flex; align-items: center; justify-content: center;">
-          <div class="zoom-item">Hover to zoom</div>
-        </div>
-      </div>
-    </div>
+		/* Hero Section - Yellow */
+		.hero {
+			width: 100%;
+			min-height: 100vh;
+			background: #DFFF00;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 120px 40px 60px;
+			text-align: center;
+		}
+		.hero-content {
+			max-width: 1200px;
+		}
+		.hero p {
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 12px;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			color: #000;
+			margin: 0 0 40px;
+		}
+		.hero h1 {
+			font-family: 'Space Grotesk', sans-serif;
+			font-weight: 700;
+			font-size: clamp(48px, 8vw, 96px);
+			line-height: 1.1;
+			margin: 0 0 40px;
+			color: #000;
+			letter-spacing: -0.02em;
+		}
+		.hero h1 em {
+			font-family: 'Fraunces', serif;
+			font-style: italic;
+			font-weight: 500;
+		}
+		.hero > div > p:last-of-type {
+			font-size: clamp(16px, 2.5vw, 20px);
+			color: #000;
+			max-width: 65ch;
+			margin: 0 auto 40px;
+			line-height: 1.6;
+		}
+		.hero-cta {
+			display: flex;
+			gap: 16px;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+		.btn {
+			font-family: 'Space Grotesk', sans-serif;
+			font-weight: 600;
+			font-size: 14px;
+			padding: 15px 32px;
+			min-height: 44px;
+			border-radius: 0;
+			border: 2px solid #000;
+			cursor: pointer;
+			transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			user-select: none;
+		}
+		.btn:active {
+			transform: scale(0.98);
+		}
+		.btn:focus {
+			outline: 2px solid #000;
+			outline-offset: 2px;
+		}
+		.btn-dark {
+			background: #000;
+			color: #DFFF00;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		}
+		.btn-dark:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+		}
+		.btn-dark:active {
+			transform: translateY(0);
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		}
+		.btn-light {
+			background: #DFFF00;
+			color: #000;
+			border-color: #000;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+		}
+		.btn-light:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+		}
+		.btn-light:active {
+			transform: translateY(0);
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+		}
 
-    <!-- Row 5: Click Expand Demo (Full-bleed) -->
-    <div class="module-row full-bleed">
-      <div class="module-full-bleed">
-        <div class="module-content">
-          <h3>Click Expand</h3>
-          <p>Click boxes to reveal hidden content with smooth height transitions.</p>
-        </div>
-        <div class="module-image" style="width: 660px; max-width: 100%; aspect-ratio: 660 / 750;">
-          <div class="click-expand-demo">
-            <div class="expand-box">Expandable item 1</div>
-            <div class="expand-box">Expandable item 2</div>
-            <div class="expand-box">Expandable item 3</div>
-          </div>
-        </div>
-      </div>
-    </div>
+		/* Sections */
+		section {
+			width: 100%;
+			padding: 100px 40px;
+		}
+		section > div {
+			max-width: 1200px;
+			margin: 0 auto;
+		}
+		.eyebrow {
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 12px;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			margin: 0 0 20px;
+		}
+		h2 {
+			font-family: 'Space Grotesk', sans-serif;
+			font-weight: 700;
+			font-size: clamp(32px, 6vw, 72px);
+			line-height: 1.1;
+			margin: 0 0 40px;
+			letter-spacing: -0.02em;
+		}
 
-    <!-- Row 6: Scroll Lock (Full-bleed) -->
-    <div class="module-row full-bleed">
-      <div class="module-full-bleed">
-        <div class="module-content">
-          <h3>Scroll Lock</h3>
-          <p>Lock scroll position while animating a sequence of frames.</p>
-        </div>
-        <div class="module-image" style="width: 100%; aspect-ratio: 16 / 9; position: relative; border-radius: 12px; overflow: hidden;">
-          <video autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
-            <source src="/assets/basalio-scroll-lock.mp4" type="video/mp4" />
-          </video>
-        </div>
-      </div>
-    </div>
+		/* Modules Section - Two-Tile-Pair Pattern */
+		.modules {
+			background: #fff;
+			color: #0A0A0A;
+		}
+		.modules > div {
+			max-width: 100%;
+		}
+		.modules .eyebrow {
+			padding-left: 60px;
+		}
+		.modules h2 {
+			margin-bottom: 150px;
+			padding-left: 60px;
+		}
 
-    <!-- CTA Section -->
-    <div style="text-align: center; padding: var(--space-6xl) 0; margin-top: var(--space-4xl);">
-      <h2>Ready to ship.</h2>
-      <p class="text-lg text-secondary mb-3xl">Join the beta. Three modules, one site, zero cost.</p>
-      <button class="btn btn-dark">Get early access →</button>
-    </div>
-  </Section>
+		/* Tile Pair Row Container */
+		.module-row {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 0;
+			margin: 0 auto;
+			width: 100%;
+			max-width: 1440px;
+			padding: 0 60px;
+			margin-bottom: 0;
+			height: 600px;
+			overflow: hidden;
+			align-items: stretch;
+		}
+		.module-row.full-bleed {
+			grid-template-columns: 1fr;
+			max-width: 1440px;
+			padding: 0 60px;
+		}
 
-  <Footer />
-  <Animations />
-</Layout>
+		@media (max-width: 768px) {
+			.module-row {
+				height: auto;
+				min-height: 400px;
+				grid-template-columns: 1fr;
+				padding: 0 20px;
+			}
+			.module-image {
+				min-height: 350px;
+			}
+		}
 
-<style>
-  /* Module Grid Reveal Items */
-  .grid-reveal {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    padding: 40px;
-    background: #D0D0D0;
-  }
+		/* Individual Tile */
+		.module-tile {
+			padding: 60px 60px 0 60px;
+			display: flex;
+			flex-direction: column;
+			height: 100%;
+		}
+		.module-tile.bg-dark {
+			background: #2D2D2D;
+			color: #fff;
+		}
+		.module-tile.bg-dark h3,
+		.module-tile.bg-dark p,
+		.module-tile.bg-dark .module-credit {
+			color: #fff;
+		}
+		.module-tile.bg-light {
+			background: #E8E8E8;
+			color: #0A0A0A;
+		}
+		.module-tile.bg-accent {
+			background: #B3B3B3;
+			color: #0A0A0A;
+		}
+		.module-tile.bg-mid-dark {
+			background: #2D2D2D;
+			color: #fff;
+		}
+		.module-tile.bg-mid-dark h3,
+		.module-tile.bg-mid-dark p,
+		.module-tile.bg-mid-dark .module-credit {
+			color: #fff;
+		}
 
-  .grid-item {
-    aspect-ratio: 1;
-    background: #999;
-    border-radius: 0;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
+		/* Full-Bleed Single Module */
+		.module-full-bleed {
+			background: #2D2D2D;
+			color: #fff;
+			padding: 120px 60px;
+			margin: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-start;
+		}
+		.module-full-bleed h3,
+		.module-full-bleed p,
+		.module-full-bleed .module-credit {
+			color: #fff;
+		}
+		.module-full-bleed.bg-light {
+			background: #E8E8E8;
+			color: #0A0A0A;
+		}
 
-  .grid-item:hover {
-    background: #888;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
+		/* Focus States for Accessibility */
+		button {
+			outline: none;
+		}
+		button:focus-visible {
+			outline: 2px solid #0A0A0A;
+			outline-offset: 2px;
+		}
+		.module-tile.bg-dark button:focus-visible,
+		.module-tile.bg-mid-dark button:focus-visible {
+			outline-color: #FFF;
+		}
 
-  .grid-item:focus {
-    outline: 2px solid #DFFF00;
-    outline-offset: -2px;
-  }
+		/* Button Hover States */
+		button:hover:not(:disabled) {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 20px rgba(0,0,0,0.2) !important;
+		}
+		button:active:not(:disabled) {
+			transform: translateY(0);
+		}
 
-  /* Text Reveal Demo */
-  .text-reveal-demo {
-    padding: 60px 40px;
-    background: #E8E8E8;
-    font-size: 32px;
-    font-weight: 400;
-    line-height: 1.4;
-    color: #0A0A0A;
-    min-height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+		/* Hover Effects */
 
-  /* Zoom Item */
-  .zoom-item {
-    padding: 60px 40px;
-    background: linear-gradient(135deg, #E0E0E0 0%, #D0D0D0 100%);
-    font-size: 20px;
-    color: #0A0A0A;
-    min-height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    border-radius: 0;
-    box-shadow: inset 0 0 0 0 rgba(0, 0, 0, 0.05);
-  }
+		/* Animation Performance */
+		.module-image {
+			will-change: transform;
+			transition: background-color 0.3s ease, box-shadow 0.3s ease;
+		}
+		.module-full-bleed.bg-light h3,
+		.module-full-bleed.bg-light p,
+		.module-full-bleed.bg-light .module-credit {
+			color: #0A0A0A;
+		}
+		.module-full-bleed.bg-light .module-content p {
+			color: #666;
+		}
 
-  .zoom-item:hover {
-    transform: scale(1.08);
-    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1);
-  }
+		/* Tile Content Wrapper */
+		.module-content {
+			margin: 0;
+			margin-bottom: 60px;
+			padding: 0;
+		}
+		.module-content h3 {
+			font-family: 'Inter', sans-serif;
+			font-size: 32px;
+			font-weight: 400;
+			line-height: 42px;
+			letter-spacing: 0;
+			margin: 0 0 16px;
+			color: inherit;
+		}
+		.module-content p {
+			font-family: 'Inter', sans-serif;
+			font-size: 18px;
+			font-weight: 400;
+			line-height: 24px;
+			letter-spacing: 0;
+			margin: 0;
+			color: #666;
+			max-width: 55ch;
+		}
+		.module-tile.bg-dark .module-content p,
+		.module-tile.bg-mid-dark .module-content p,
+		.module-full-bleed .module-content p {
+			color: #AAA;
+		}
 
-  .zoom-item:focus {
-    outline: 2px solid #0A0A0A;
-    outline-offset: -2px;
-  }
+		/* Module Image - Portrait Aspect */
+		.module-image {
+			width: 100%;
+			flex: 1;
+			overflow: hidden;
+			margin: 0;
+			min-height: 0;
+		}
+		.module-image img,
+		.module-image svg {
+			width: 100%;
+			height: 100%;
+			display: block;
+			border-radius: 0;
+			box-shadow: none;
+			object-fit: cover;
+		}
+		.module-image video {
+			width: 100%;
+			height: 100%;
+			display: block;
+			border-radius: 0;
+			box-shadow: none;
+			object-fit: cover;
+		}
+		.case-study-video {
+			object-fit: contain !important;
+		}
 
-  .zoom-item:active {
-    transform: scale(1.04);
-  }
+		/* Module Interactive Demonstrations */
+		@keyframes revealStagger {
+			0% { opacity: 0; transform: scale(0.9); }
+			100% { opacity: 1; transform: scale(1); }
+		}
+		@keyframes slideUp {
+			0% { opacity: 0; transform: translateY(20px); }
+			100% { opacity: 1; transform: translateY(0); }
+		}
+		.grid-reveal {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 16px;
+			padding: 40px;
+			background: #D0D0D0;
+		}
+		.grid-item {
+			aspect-ratio: 1;
+			background: #999;
+			border-radius: 0;
+			animation: revealStagger 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+			cursor: pointer;
+			transition: all 0.2s ease;
+		}
+		.grid-item:hover {
+			background: #888;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		}
+		.grid-item:focus {
+			outline: 2px solid #DFFF00;
+			outline-offset: -2px;
+		}
+		.grid-item:nth-child(1) { animation-delay: 0s; }
+		.grid-item:nth-child(2) { animation-delay: 0.08s; }
+		.grid-item:nth-child(3) { animation-delay: 0.16s; }
+		.grid-item:nth-child(4) { animation-delay: 0.24s; }
+		.grid-item:nth-child(5) { animation-delay: 0.32s; }
+		.grid-item:nth-child(6) { animation-delay: 0.4s; }
 
-  /* Click Expand Demo */
-  .click-expand-demo {
-    padding: 40px;
-    background: #2D2D2D;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-  }
+		@keyframes slideWord {
+			0% { opacity: 0; transform: translateY(8px); }
+			100% { opacity: 1; transform: translateY(0); }
+		}
+		.text-reveal-demo {
+			padding: 60px 40px;
+			background: #E8E8E8;
+			font-size: 32px;
+			font-weight: 400;
+			line-height: 1.4;
+			color: #0A0A0A;
+			min-height: 300px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.reveal-word {
+			display: inline-block;
+			margin-right: 6px;
+			animation: slideWord 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+		}
+		.reveal-word:nth-child(1) { animation-delay: 0s; }
+		.reveal-word:nth-child(2) { animation-delay: 0.06s; }
+		.reveal-word:nth-child(3) { animation-delay: 0.12s; }
+		.reveal-word:nth-child(4) { animation-delay: 0.18s; }
 
-  .expand-box {
-    padding: 32px 24px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    text-align: center;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  }
+		@keyframes countUpNumber {
+			0% { opacity: 0; transform: translateY(20px); }
+			100% { opacity: 1; transform: translateY(0); }
+		}
+		.counter-display {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 80px 40px;
+			background: #D0D0D0;
+			font-size: 72px;
+			font-weight: 600;
+			color: #0A0A0A;
+			min-height: 300px;
+			animation: countUpNumber 1s ease-out forwards;
+		}
 
-  .expand-box:hover {
-    background: rgba(255, 255, 255, 0.15);
-  }
+		.zoom-item {
+			padding: 60px 40px;
+			background: linear-gradient(135deg, #E0E0E0 0%, #D0D0D0 100%);
+			font-size: 20px;
+			color: #0A0A0A;
+			min-height: 300px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+			border-radius: 0;
+			box-shadow: inset 0 0 0 0 rgba(0, 0, 0, 0.05);
+		}
+		.zoom-item:hover {
+			transform: scale(1.08);
+			box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.1);
+		}
+		.zoom-item:focus {
+			outline: 2px solid #0A0A0A;
+			outline-offset: -2px;
+		}
+		.zoom-item:active {
+			transform: scale(1.04);
+		}
 
-  .expand-box:focus {
-    outline: 2px solid #DFFF00;
-    outline-offset: -2px;
-  }
-</style>
+		.click-expand-demo {
+			padding: 40px;
+			background: #2D2D2D;
+			min-height: 300px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			gap: 20px;
+		}
+		.expand-box {
+			padding: 32px 24px;
+			background: rgba(255, 255, 255, 0.1);
+			color: #fff;
+			text-align: center;
+			font-size: 16px;
+			cursor: pointer;
+			transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+			border-radius: 0;
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			min-height: 120px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+		.expand-box:hover {
+			background: rgba(255, 255, 255, 0.15);
+			border-color: rgba(255, 255, 255, 0.25);
+			transform: translateY(-4px);
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+		}
+		.expand-box:focus {
+			outline: 2px solid #DFFF00;
+			outline-offset: -2px;
+		}
+		.expand-box:active {
+			transform: translateY(-2px);
+		}
+		.expand-box.active {
+			background: rgba(255, 255, 255, 0.25);
+			border-color: rgba(255, 255, 255, 0.4);
+		}
+
+		.scroll-lock-demo {
+			padding: 60px 40px;
+			background: linear-gradient(90deg, #D0D0D0 0%, #C0C0C0 100%);
+			min-height: 300px;
+			display: flex;
+			gap: 30px;
+			align-items: center;
+			justify-content: center;
+		}
+		.lock-sequence {
+			flex: 1;
+			padding: 30px;
+			background: rgba(255, 255, 255, 0.3);
+			text-align: center;
+			font-size: 16px;
+			color: #0A0A0A;
+			border-radius: 0;
+			animation: slideWord 0.6s ease-out forwards;
+		}
+		.lock-sequence:nth-child(1) { animation-delay: 0s; }
+		.lock-sequence:nth-child(2) { animation-delay: 0.15s; }
+		.lock-sequence:nth-child(3) { animation-delay: 0.3s; }
+
+		/* Module Credit Line */
+		.module-credit {
+			font-family: 'Inter', sans-serif;
+			font-size: 14px;
+			font-weight: 400;
+			line-height: 32px;
+			letter-spacing: 0;
+			color: inherit;
+			margin: 20px 0 0 0;
+		}
+
+		/* Learn More Link */
+		.module-link {
+			display: inline-block;
+			font-family: 'Inter', sans-serif;
+			font-size: 12px;
+			font-weight: 400;
+			letter-spacing: 0.8px;
+			text-transform: uppercase;
+			text-decoration: none;
+			color: #DFFE02;
+			margin-top: 20px;
+			transition: all 0.2s ease;
+			cursor: pointer;
+			padding: 8px 0;
+			position: relative;
+		}
+		.module-tile.bg-dark .module-link,
+		.module-tile.bg-mid-dark .module-link,
+		.module-full-bleed .module-link {
+			color: #fff;
+		}
+		.module-link:hover {
+			opacity: 0.8;
+			transform: translateX(4px);
+		}
+		.module-link:focus {
+			outline: 2px solid currentColor;
+			outline-offset: 2px;
+		}
+
+		/* Performance Section - Dark */
+		.performance {
+			background: #1C1917;
+			color: #F6F4EF;
+		}
+		.performance .eyebrow {
+			color: #D4CABE;
+		}
+		.performance h2 {
+			color: #F6F4EF;
+		}
+		.performance p {
+			color: #D4CABE;
+			font-size: 18px;
+			max-width: 65ch;
+			line-height: 1.6;
+		}
+		.stats-grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 32px;
+			margin-top: 60px;
+		}
+		.stat-box {
+			padding: 32px;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			background: rgba(255, 255, 255, 0.02);
+		}
+		.stat-box .label {
+			font-family: 'IBM Plex Mono', monospace;
+			font-size: 12px;
+			color: #DFFF00;
+			text-transform: uppercase;
+			margin: 0 0 16px;
+		}
+		.stat-box .value {
+			font-family: 'Space Grotesk', sans-serif;
+			font-size: 48px;
+			font-weight: 700;
+			color: #F6F4EF;
+			margin: 0 0 8px;
+		}
+		.stat-box .desc {
+			font-size: 14px;
+			color: #D4CABE;
+			margin: 0;
+		}
+
+		/* CTA Section - Yellow */
+		.cta-section {
+			background: #DFFF00;
+			color: #000;
+			text-align: center;
+			padding: 120px 40px;
+		}
+		.cta-section h2 {
+			color: #000;
+		}
+		.cta-section p {
+			color: #000;
+			font-size: 18px;
+			max-width: 65ch;
+			margin: 0 auto 40px;
+		}
+
+		/* Back to Top */
+		#backToTop {
+			position: fixed;
+			bottom: 32px;
+			right: 32px;
+			z-index: 40;
+			width: 48px;
+			height: 48px;
+			border-radius: 0;
+			background: #000;
+			color: #fff;
+			border: 2px solid #000;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: 'Space Grotesk', sans-serif;
+			font-weight: 700;
+			font-size: 18px;
+			opacity: 0;
+			pointer-events: none;
+			transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		}
+		#backToTop.show {
+			opacity: 1;
+			pointer-events: auto;
+		}
+		#backToTop:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+		}
+		#backToTop:focus {
+			outline: 2px solid #DFFF00;
+			outline-offset: 2px;
+		}
+		#backToTop:active {
+			transform: translateY(-2px);
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+		}
+
+		/* Responsive */
+		@media (max-width: 1024px) {
+			.module-row {
+				padding: 0 40px;
+			}
+			.module-full-bleed {
+				padding: 80px 40px;
+			}
+		}
+
+		@media (max-width: 768px) {
+			nav { padding: 0 12px; }
+			nav > div { padding: 8px; }
+			#mobileMenuBtn { display: block; }
+			nav > div > div { display: none; }
+			section { padding: 60px 20px; }
+			.hero { padding: 100px 20px 40px; }
+			.module-row {
+				grid-template-columns: 1fr;
+				padding: 0 20px;
+				gap: 0;
+			}
+			.module-row.full-bleed {
+				padding: 0 20px;
+			}
+			.module-tile {
+				padding: 40px;
+			}
+			.module-full-bleed {
+				padding: 60px 40px;
+			}
+			.module-content h3 { font-size: 28px; line-height: 36px; }
+			.module-content p { font-size: 20px; line-height: 28px; }
+			.module-image {
+				aspect-ratio: 660 / 600;
+			}
+			.stats-grid { grid-template-columns: 1fr; }
+			.cta-section { padding: 80px 20px; }
+		}
+
+		@media (max-width: 480px) {
+			.module-tile {
+				padding: 30px;
+			}
+			.module-full-bleed {
+				padding: 40px 30px;
+			}
+			.module-content h3 { font-size: 24px; line-height: 32px; }
+			.module-content p { font-size: 18px; line-height: 26px; }
+		}
+		@media (max-width: 480px) {
+			.hero h1 { font-size: 32px; }
+			section { padding: 40px 16px; }
+			h2 { font-size: 28px; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			* {
+				animation-duration: 0.001ms !important;
+				animation-iteration-count: 1 !important;
+				transition-duration: 0.001ms !important;
+			}
+		}
+
+		/* Input & Interactive Enhancements */
+		input[type="range"] {
+			cursor: pointer;
+			width: 100%;
+			height: 6px;
+			-webkit-appearance: none;
+			appearance: none;
+			background: linear-gradient(to right, #DFFF00 0%, #B8CC00 100%);
+			border-radius: 3px;
+			outline: none;
+			transition: all 0.2s ease;
+		}
+		input[type="range"]:focus {
+			box-shadow: 0 0 0 3px rgba(223, 255, 0, 0.2);
+		}
+		input[type="range"]::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 18px;
+			height: 18px;
+			background: #DFFF00;
+			cursor: pointer;
+			border-radius: 50%;
+			transition: all 0.2s ease;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+		}
+		input[type="range"]::-webkit-slider-thumb:hover {
+			width: 22px;
+			height: 22px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+		}
+		input[type="range"]::-moz-range-thumb {
+			width: 18px;
+			height: 18px;
+			background: #DFFF00;
+			cursor: pointer;
+			border-radius: 50%;
+			border: none;
+			transition: all 0.2s ease;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+		}
+		input[type="range"]::-moz-range-thumb:hover {
+			width: 22px;
+			height: 22px;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+		}
+
+		/* Textarea & Text Input Enhancements */
+		textarea, input[type="text"] {
+			transition: all 0.2s ease;
+			box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+		}
+		textarea:focus, input[type="text"]:focus {
+			box-shadow: inset 0 0 0 2px rgba(223, 255, 0, 0.3);
+		}
+
+		/* Button Reset Utility */
+		button {
+			background: none;
+			border: none;
+			padding: 0;
+			font-family: inherit;
+		}
+
+		/* Button Hover States via CSS */
+		button:hover:not(:disabled) {
+			transform: translateY(-2px);
+			box-shadow: 0 4px 12px rgba(0,0,0,0.25) !important;
+		}
+		button:active:not(:disabled) {
+			transform: translateY(0);
+			box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+		}
+	</style>
+</head>
+<body>
+
+<nav>
+	<div>
+		<a href="/">
+			<svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true"><polygon points="8,56 56,56 46,44 18,44" fill="#000"></polygon><rect x="23" y="20" width="18" height="24" fill="#DFFF00"></rect></svg>
+			Basalio
+		</a>
+		<button id="mobileMenuBtn" aria-label="Toggle menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
+		<div>
+			<a href="#modules">Modules</a>
+			<a href="#performance">Performance</a>
+			<a href="/roadmap">Roadmap</a>
+			<a href="/pricing">Pricing</a>
+			<a href="/support">Support</a>
+			<a href="#waitlist" class="btn-primary">Join the beta</a>
+		</div>
+	</div>
+</nav>
+
+<div id="mobileMenu">
+	<a href="#modules">Modules</a>
+	<a href="#performance">Performance</a>
+	<a href="/roadmap">Roadmap</a>
+	<a href="/pricing">Pricing</a>
+	<a href="/support">Support</a>
+	<a href="#waitlist">Join the beta</a>
+</div>
+
+<!-- Hero Section -->
+<div class="hero">
+	<div class="hero-content">
+		<p>For WordPress • Not a page builder</p>
+		<h1>Give your work <em>a foundation</em> to stand on.</h1>
+		<p>Nine curated interaction modules, from grid reveals to case-study transitions to scroll-tied sequences, built only for portfolio and case-study sites. Nothing you'd need Framer for. Nothing you don't.</p>
+		<div class="hero-cta">
+			<button class="btn btn-dark" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">Join the beta →</button>
+		</div>
+	</div>
+</div>
+
+<!-- Modules Section -->
+<section id="modules" class="modules">
+	<div>
+		<p class="eyebrow">Positioning • 01</p>
+		<h2>Nine modules. Zero friction.</h2>
+
+		<!-- Two-Tile-Pair Module Layout -->
+		<!-- Row 1: Grid Reveal (light) + Case Study Transition (black) -->
+		<div class="module-row">
+			<div class="module-tile bg-light" style="background: #DFDCD5 !important;">
+				<div class="module-content">
+					<h3>Grid Reveal</h3>
+					<p>An image grid that comes alive on hover and focus. Each tile can link out or open in a lightbox, with corner radius set to the exact pixel you want.</p>
+				</div>
+				<div class="module-image" style="background: #DFDCD5; margin: 0 -60px -60px -60px; width: calc(100% + 120px);">
+					<video autoplay loop muted playsinline>
+						<source src="/assets/basalio-grid-reveal.mp4" type="video/mp4" />
+					</video>
+				</div>
+			</div>
+			<div class="module-tile" style="background: #0B0B0A !important;">
+				<div class="module-content" style="color: #ffffff;">
+					<h3 style="color: #ffffff;">Case Study Transition</h3>
+					<p style="color: #ffffff;">Click a project tile and watch it morph into<br />the hero of its own page.</p>
+				</div>
+				<div class="module-image" style="background: #0B0B0A; margin: 0 -60px -60px -60px; width: calc(100% + 120px);" id="case-study-video">
+					<video autoplay loop muted playsinline class="case-study-video">
+						<source src="/assets/basalio-case-study-transition-ink.mp4" type="video/mp4" />
+					</video>
+				</div>
+			</div>
+		</div>
+
+		<!-- Row 2: Scroll Sequence (dark) + Image Counter (light) -->
+		<div class="module-row">
+			<div class="module-tile bg-mid-dark">
+				<div class="module-content">
+					<h3>Scroll Sequence</h3>
+					<p>Tie animations to scroll progress for immersive storytelling.</p>
+				</div>
+				<div class="module-image" style="position: relative; background: #1A1A1A; border-radius: 12px; overflow: hidden;">
+					<div style="width: 100%; height: 100%; display: flex; flex-direction: column; gap: 20px; padding: 40px; justify-content: center;">
+						<div class="scroll-seq-bar" style="height: 40px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden;">
+							<div style="height: 100%; background: linear-gradient(90deg, #DFFF00, #B8CC00); width: 0%; transition: width 0.3s ease;" id="scrollSeqProgress"></div>
+						</div>
+						<div class="scroll-seq-bar" style="height: 40px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden;">
+							<div style="height: 100%; background: linear-gradient(90deg, #DFFF00, #B8CC00); width: 0%; transition: width 0.3s ease;" id="scrollSeqProgress2"></div>
+						</div>
+						<div class="scroll-seq-bar" style="height: 40px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden;">
+							<div style="height: 100%; background: linear-gradient(90deg, #DFFF00, #B8CC00); width: 0%; transition: width 0.3s ease;" id="scrollSeqProgress3"></div>
+						</div>
+					</div>
+					<input type="range" min="0" max="100" value="0" style="position: absolute; bottom: 20px; left: 20px; right: 20px; cursor: pointer; width: calc(100% - 40px);" oninput="updateScrollSequence(this.value)">
+				</div>
+			</div>
+			<div class="module-tile bg-light">
+				<div class="module-content">
+					<h3>Image Counter</h3>
+					<p>Count up values as images load with smooth animations.</p>
+				</div>
+				<div class="module-image" style="display: flex; align-items: center; justify-content: center; position: relative;">
+					<div style="text-align: center;">
+						<div id="counterValue" style="font-size: 64px; font-weight: 700; color: #0A0A0A; line-height: 1; background: #F0F0F0; padding: 16px 24px; border-radius: 12px; display: inline-block;">0</div>
+						<div style="font-size: 14px; color: #666; margin-top: 8px;">images loaded</div>
+					</div>
+					<button onclick="triggerCounterAnimation()" style="position: absolute; bottom: 20px; right: 20px; padding: 12px 24px; min-height: 44px; min-width: 44px; background: #0A0A0A; color: #FFF; border: 2px solid #0A0A0A; cursor: pointer; font-size: 12px; font-weight: 500; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15);" aria-label="Trigger counter animation">Count</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Row 3: Parallax Depth (full-bleed dark single) -->
+		<div class="module-row full-bleed">
+			<div class="module-full-bleed">
+				<div class="module-content">
+					<h3>Parallax Depth</h3>
+					<p>Layer content at different scroll speeds for visual depth.</p>
+				</div>
+				<div class="module-image" style="width: 660px; max-width: 100%; aspect-ratio: 660 / 750;" id="parallaxContainer" onmousemove="updateParallax(event)" onmouseleave="resetParallax()">
+					<div style="background: linear-gradient(135deg, #1A1A1A 0%, #0F0F0F 100%); width: 100%; height: 100%; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; border-radius: 12px;">
+						<!-- Background layer -->
+						<div class="parallax-layer" style="position: absolute; width: 120%; height: 120%; top: -10%; left: -10%; background: radial-gradient(circle at 30% 70%, rgba(223,255,0,0.08) 0%, transparent 50%); transform: translateY(0) translateX(0); transition: transform 0.1s ease;"></div>
+						<!-- Mid layer -->
+						<div class="parallax-layer" style="position: absolute; width: 110%; height: 110%; top: -5%; left: -5%; background: radial-gradient(circle at 70% 30%, rgba(223,255,0,0.12) 0%, transparent 60%); transform: translateY(0) translateX(0); transition: transform 0.1s ease;"></div>
+						<!-- Front layer with visual element -->
+						<div class="parallax-layer" style="position: absolute; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform: translateY(0) translateX(0); transition: transform 0.1s ease; z-index: 5;">
+							<div style="width: 200px; height: 200px; background: linear-gradient(135deg, rgba(223,255,0,0.15) 0%, rgba(223,255,0,0.05) 100%); border: 2px solid rgba(223,255,0,0.3); transform: rotate(45deg); display: flex; align-items: center; justify-content: center;">
+								<div style="transform: rotate(-45deg); color: #DFFF00; font-weight: 600; font-size: 12px; letter-spacing: 1px;">DEPTH</div>
+							</div>
+						</div>
+						<!-- Info text -->
+						<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, 60%); color: #666; font-size: 13px; text-align: center; z-index: 10; font-weight: 500; pointer-events: none;">Move mouse to see parallax</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Row 4: Text Reveal (medium grey) + Hover Zoom (light) -->
+		<div class="module-row">
+			<div class="module-tile bg-accent">
+				<div class="module-content">
+					<h3>Text Reveal</h3>
+					<p>Animate text on scroll with word-by-word stagger.</p>
+				</div>
+				<div class="module-image" style="display: flex; align-items: center; justify-content: center; position: relative;">
+					<div style="text-align: center;">
+						<div id="textRevealContainer" style="font-size: 28px; font-weight: 500; color: #0A0A0A; line-height: 1.4; min-height: 60px;">
+							<span class="text-reveal-word" style="display: inline-block; opacity: 0; transform: translateY(10px);">Words</span>
+							<span style="display: inline-block; width: 4px;"></span>
+							<span class="text-reveal-word" style="display: inline-block; opacity: 0; transform: translateY(10px);">animate</span>
+							<span style="display: inline-block; width: 4px;"></span>
+							<span class="text-reveal-word" style="display: inline-block; opacity: 0; transform: translateY(10px);">one</span>
+							<span style="display: inline-block; width: 4px;"></span>
+							<span class="text-reveal-word" style="display: inline-block; opacity: 0; transform: translateY(10px);">by</span>
+							<span style="display: inline-block; width: 4px;"></span>
+							<span class="text-reveal-word" style="display: inline-block; opacity: 0; transform: translateY(10px);">one</span>
+						</div>
+					</div>
+					<button onclick="triggerTextReveal()" style="position: absolute; bottom: 20px; right: 20px; padding: 12px 24px; min-height: 44px; min-width: 44px; background: #0A0A0A; color: #FFF; border: 2px solid #0A0A0A; cursor: pointer; font-size: 12px; font-weight: 500; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15);" aria-label="Trigger text reveal animation">Reveal</button>
+				</div>
+			</div>
+			<div class="module-tile bg-light">
+				<div class="module-content">
+					<h3>Hover Zoom</h3>
+					<p>Subtle zoom effects on hover for interactive feedback.</p>
+				</div>
+				<div class="module-image" style="display: flex; align-items: center; justify-content: center;">
+					<div style="width: 240px; height: 240px; background: linear-gradient(135deg, #E0E0E0 0%, #D0D0D0 100%); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 500; color: #666; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease; border-radius: 12px; overflow: hidden;" onmouseenter="this.style.transform='scale(1.08)'; this.style.boxShadow='0 16px 48px rgba(0,0,0,0.12)';" onmouseleave="this.style.transform='scale(1)'; this.style.boxShadow='0 0 0 rgba(0,0,0,0)';">
+						Hover me
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Row 5: Click Expand (full-bleed dark single) -->
+		<div class="module-row full-bleed">
+			<div class="module-full-bleed">
+				<div class="module-content">
+					<h3>Click Expand</h3>
+					<p>Expand content on click with smooth modal transitions.</p>
+				</div>
+				<div class="module-image" style="width: 660px; max-width: 100%; aspect-ratio: 660 / 750;">
+					<div style="background: #1A1A1A; width: 100%; height: 100%; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 32px; padding: 40px; border-radius: 12px;">
+						<div class="expand-card" style="flex: 1; width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 32px; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #DDD;" onclick="expandCard(0)">
+							<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom: 16px; color: #DFFF00;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+							<div style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">Reply to comment</div>
+							<div style="font-size: 11px; color: #999;">Click to expand</div>
+						</div>
+						<div class="expand-card" style="flex: 1; width: 100%; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 32px; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #DDD;" onclick="expandCard(1)">
+							<svg width="48" height="48" viewBox="0 0 24 24" fill="currentColor" style="margin-bottom: 16px; color: #DFFF00;"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"></path><path d="M20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"></path></svg>
+							<div style="font-weight: 600; margin-bottom: 8px; font-size: 14px;">Edit portfolio item</div>
+							<div style="font-size: 12px; color: #999;">Click to expand</div>
+						</div>
+					</div>
+
+					<!-- Expanded Card Modals -->
+					<div id="expandedModal0" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000;" onclick="closeExpandCard(event)">
+						<div style="background: #2D2D2D; padding: 32px; max-width: 400px; width: 90%; border-radius: 0; color: #FFF; animation: slideUp 0.3s ease;" onclick="event.stopPropagation()">
+							<h4 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 600;">Reply to Comment</h4>
+							<div style="background: rgba(255,255,255,0.08); padding: 16px; margin-bottom: 16px; border-radius: 0; border-left: 3px solid #DFFF00;">
+								<div style="font-size: 13px; color: #BBB; line-height: 1.5;">Great work on this project! Would love to hear more about your process.</div>
+								<div style="font-size: 12px; color: #888; margin-top: 8px;">by Sarah Chen</div>
+							</div>
+							<textarea style="width: 100%; padding: 12px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #FFF; font-family: inherit; font-size: 13px; resize: none; height: 80px; margin-bottom: 16px;" placeholder="Write your reply..."></textarea>
+							<div style="display: flex; gap: 12px;">
+								<button onclick="closeExpandCard()" style="flex: 1; padding: 12px 16px; min-height: 44px; background: #DFFF00; color: #000; border: 2px solid #DFFF00; cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">Reply</button>
+								<button onclick="closeExpandCard()" style="flex: 1; padding: 12px 16px; min-height: 44px; background: rgba(255,255,255,0.1); color: #FFF; border: 2px solid rgba(255,255,255,0.2); cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.2s ease;">Cancel</button>
+							</div>
+						</div>
+					</div>
+
+					<div id="expandedModal1" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 1000;" onclick="closeExpandCard(event)">
+						<div style="background: #2D2D2D; padding: 32px; max-width: 400px; width: 90%; border-radius: 0; color: #FFF; animation: slideUp 0.3s ease;" onclick="event.stopPropagation()">
+							<h4 style="margin: 0 0 16px 0; font-size: 18px; font-weight: 600;">Edit Portfolio Item</h4>
+							<div style="margin-bottom: 16px;">
+								<label style="display: block; font-size: 12px; color: #BBB; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Title</label>
+								<input type="text" value="Brand Identity System" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #FFF; font-family: inherit; font-size: 13px;" />
+							</div>
+							<div style="margin-bottom: 16px;">
+								<label style="display: block; font-size: 12px; color: #BBB; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;">Description</label>
+								<textarea style="width: 100%; padding: 10px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #FFF; font-family: inherit; font-size: 13px; resize: none; height: 80px;">A comprehensive brand system including logo, typography, and color guidelines.</textarea>
+							</div>
+							<div style="display: flex; gap: 12px;">
+								<button onclick="closeExpandCard()" style="flex: 1; padding: 12px 16px; min-height: 44px; background: #DFFF00; color: #000; border: 2px solid #DFFF00; cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.2s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">Save</button>
+								<button onclick="closeExpandCard()" style="flex: 1; padding: 12px 16px; min-height: 44px; background: rgba(255,255,255,0.1); color: #FFF; border: 2px solid rgba(255,255,255,0.2); cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.2s ease;">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Row 6: Scroll Lock (full-bleed light single) -->
+		<div class="module-row full-bleed">
+			<div class="module-full-bleed bg-light">
+				<div class="module-content">
+					<h3>Scroll Lock</h3>
+					<p>Freeze sections while hero elements animate in sequence.</p>
+				</div>
+				<div class="module-image" style="width: 100%; aspect-ratio: 16 / 9; position: relative; border-radius: 12px; overflow: hidden;">
+					<div style="background: linear-gradient(135deg, #E8E8E8 0%, #DDD 50%, #D0D0D0 100%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #0A0A0A; gap: 24px; padding: 60px 40px; position: relative;">
+						<div class="scroll-lock-item" style="flex: 1; padding: 48px 32px; background: rgba(100,100,100,0.15); text-align: center; font-weight: 600; opacity: 0; transform: translateX(-30px); transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);">Hero Frame 1</div>
+						<div class="scroll-lock-item" style="flex: 1; padding: 48px 32px; background: rgba(100,100,100,0.1); text-align: center; font-weight: 600; opacity: 0; transform: translateX(-30px); transition: opacity 0.6s ease-out 0.15s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;">Hero Frame 2</div>
+						<div class="scroll-lock-item" style="flex: 1; padding: 48px 32px; background: rgba(100,100,100,0.05); text-align: center; font-weight: 600; opacity: 0; transform: translateX(-30px); transition: opacity 0.6s ease-out 0.3s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;">Hero Frame 3</div>
+					</div>
+					<button id="scrollLockBtn" onclick="triggerScrollLock()" style="position: absolute; bottom: 20px; right: 20px; padding: 12px 24px; min-height: 44px; min-width: 44px; background: #0A0A0A; color: #FFF; border: 2px solid #0A0A0A; cursor: pointer; font-size: 12px; font-weight: 600; z-index: 10; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.15);" aria-label="Play scroll lock sequence animation">Play Sequence</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- Performance Section -->
+<section id="performance" class="performance">
+	<div>
+		<p class="eyebrow">Performance • 02</p>
+		<h2>Lightweight by default.</h2>
+		<p>Each module is optimized for performance. No bloat. No frameworks. Pure vanilla JavaScript compiled to less than 12KB gzipped.</p>
+		<div class="stats-grid">
+			<div class="stat-box">
+				<p class="label">Bundle Size</p>
+				<p class="value">11.8 KB</p>
+				<p class="desc">Gzipped. All 9 modules.</p>
+			</div>
+			<div class="stat-box">
+				<p class="label">LCP Impact</p>
+				<p class="value">+0ms</p>
+				<p class="desc">Loaded async, no blocking.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- CTA Section -->
+<section id="waitlist" class="cta-section">
+	<div>
+		<h2>Ready to ship.</h2>
+		<p>Join the beta. Three modules, one site, zero cost.</p>
+		<button class="btn btn-dark">Get early access →</button>
+	</div>
+</section>
+
+<Footer />
+
+<button id="backToTop" aria-label="Back to top">↑</button>
+
+<script>
+	const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+	const mobileMenu = document.getElementById('mobileMenu');
+	mobileMenuBtn.addEventListener('click', () => {
+		mobileMenu.classList.toggle('open');
+	});
+	mobileMenu.querySelectorAll('a').forEach(link => {
+		link.addEventListener('click', () => {
+			mobileMenu.classList.remove('open');
+		});
+	});
+
+	const backToTop = document.getElementById('backToTop');
+	window.addEventListener('scroll', () => {
+		backToTop.classList.toggle('show', window.scrollY > 300);
+	});
+	backToTop.addEventListener('click', () => {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	});
+
+	// Grid Reveal
+	function triggerGridReveal() {
+		const items = document.querySelectorAll('.grid-reveal-item');
+		items.forEach((item, i) => {
+			item.style.opacity = '0';
+			item.style.transform = 'scale(0.8)';
+			setTimeout(() => {
+				item.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+				item.style.opacity = '1';
+				item.style.transform = 'scale(1)';
+			}, i * 80);
+		});
+	}
+
+	// Keyboard support for grid items
+	document.querySelectorAll('.grid-reveal-item').forEach(item => {
+		item.addEventListener('keydown', e => {
+			if (e.key === 'Enter' || e.key === ' ') {
+				e.preventDefault();
+				triggerGridReveal();
+			}
+		});
+	});
+
+	// Case Study Transition
+	let currentCase = 1;
+	function transitionCase(direction) {
+		const slides = document.querySelectorAll('.case-slide');
+		const dots = document.querySelectorAll('.case-slide').parentElement?.querySelectorAll('button') || [];
+		currentCase = Math.max(0, Math.min(2, currentCase + direction));
+		slides.forEach((slide, i) => {
+			if (i === currentCase - 1) slide.style.left = '-100%';
+			else if (i === currentCase) slide.style.left = '0%';
+			else slide.style.left = '100%';
+		});
+	}
+
+	// Scroll Sequence
+	function updateScrollSequence(value) {
+		const percent = (value / 100) * 100;
+		document.getElementById('scrollSeqProgress').style.width = percent + '%';
+		document.getElementById('scrollSeqProgress2').style.width = Math.max(0, percent - 20) + '%';
+		document.getElementById('scrollSeqProgress3').style.width = Math.max(0, percent - 40) + '%';
+	}
+
+	// Counter Animation
+	function triggerCounterAnimation() {
+		const counterValue = document.getElementById('counterValue');
+		let count = 0;
+		const target = 2847;
+		const duration = 1000;
+		const steps = 60;
+		const increment = target / steps;
+		const stepDuration = duration / steps;
+
+		const interval = setInterval(() => {
+			count += increment;
+			if (count >= target) {
+				counterValue.textContent = target.toLocaleString();
+				clearInterval(interval);
+			} else {
+				counterValue.textContent = Math.floor(count).toLocaleString();
+			}
+		}, stepDuration);
+	}
+
+	// Parallax Effect
+	function updateParallax(event) {
+		const container = event.currentTarget;
+		const rect = container.getBoundingClientRect();
+		const x = event.clientX - rect.left;
+		const y = event.clientY - rect.top;
+		const centerX = rect.width / 2;
+		const centerY = rect.height / 2;
+		const rotateX = ((y - centerY) / centerY) * 15;
+		const rotateY = ((centerX - x) / centerX) * 15;
+
+		const layers = container.querySelectorAll('.parallax-layer');
+		layers.forEach((layer, i) => {
+			const offset = (i + 1) * 5;
+			layer.style.transform = `translateY(${rotateX * (i + 1) * 0.5}px) translateX(${rotateY * (i + 1) * 0.5}px)`;
+		});
+	}
+
+	function resetParallax() {
+		const layers = document.querySelectorAll('.parallax-layer');
+		layers.forEach(layer => {
+			layer.style.transform = 'translateY(0) translateX(0)';
+		});
+	}
+
+	// Text Reveal
+	function triggerTextReveal() {
+		const words = document.querySelectorAll('.text-reveal-word');
+		words.forEach(word => {
+			word.style.transition = 'none';
+			word.style.opacity = '0';
+			word.style.transform = 'translateY(10px)';
+		});
+		setTimeout(() => {
+			words.forEach((word, i) => {
+				setTimeout(() => {
+					word.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+					word.style.opacity = '1';
+					word.style.transform = 'translateY(0)';
+				}, i * 100);
+			});
+		}, 50);
+	}
+
+	// Click Expand
+	let currentModal = null;
+	function expandCard(index) {
+		currentModal = index;
+		const modal = document.getElementById(`expandedModal${index}`);
+		modal.style.display = 'flex';
+		document.body.style.overflow = 'hidden';
+		// Focus the first input in the modal for better accessibility
+		const firstInput = modal.querySelector('input, textarea');
+		if (firstInput) setTimeout(() => firstInput.focus(), 100);
+	}
+
+	function closeExpandCard(event) {
+		if (event && event.target.id && !event.target.id.startsWith('expandedModal')) return;
+		const modals = document.querySelectorAll('[id^="expandedModal"]');
+		modals.forEach(modal => modal.style.display = 'none');
+		document.body.style.overflow = 'auto';
+		currentModal = null;
+	}
+
+	// ESC key support for closing modals
+	document.addEventListener('keydown', e => {
+		if (e.key === 'Escape' && currentModal !== null) {
+			closeExpandCard();
+		}
+	});
+
+	// Scroll Lock
+	function triggerScrollLock() {
+		const items = document.querySelectorAll('.scroll-lock-item');
+		const btn = document.getElementById('scrollLockBtn');
+		btn.disabled = true;
+		btn.style.opacity = '0.6';
+
+		items.forEach(item => {
+			item.style.transition = 'none';
+			item.style.opacity = '0';
+			item.style.transform = 'translateX(-30px)';
+		});
+		setTimeout(() => {
+			items.forEach((item, i) => {
+				item.style.transition = `opacity 0.6s ease-out ${i * 0.15}s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.15}s`;
+				item.style.opacity = '1';
+				item.style.transform = 'translateX(0)';
+			});
+		}, 50);
+
+		// After animation completes, show replay button
+		const totalDuration = 300 + 600; // last item delay + duration
+		setTimeout(() => {
+			btn.textContent = 'Replay';
+			btn.disabled = false;
+			btn.style.opacity = '1';
+		}, totalDuration + 100);
+	}
+
+	// Make functions globally accessible for onclick handlers
+	window.triggerGridReveal = triggerGridReveal;
+	window.transitionCase = transitionCase;
+	window.updateScrollSequence = updateScrollSequence;
+	window.triggerCounterAnimation = triggerCounterAnimation;
+	window.updateParallax = updateParallax;
+	window.resetParallax = resetParallax;
+	window.triggerTextReveal = triggerTextReveal;
+	window.expandCard = expandCard;
+	window.closeExpandCard = closeExpandCard;
+	window.triggerScrollLock = triggerScrollLock;
+</script>
+
+</body>
+</html>

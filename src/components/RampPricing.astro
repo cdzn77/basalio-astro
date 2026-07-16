@@ -1,0 +1,233 @@
+---
+// Ramp Pricing - EXACT SPECIFICATIONS
+// Background: White, Two cards: Essentials (white), Premium (yellow #FFEA00)
+// Premium card features bold styling
+
+interface PricingPlan {
+  name: string;
+  price: string;
+  currency?: string;
+  features: string[];
+  highlight?: boolean;
+}
+
+interface Props {
+  plans?: PricingPlan[];
+}
+
+const {
+  plans = [
+    {
+      name: "Essentials",
+      price: "1750",
+      currency: "€",
+      features: [
+        "4 design/content updates per month",
+        "5 weekly social posts",
+        "Month strategy calls",
+        "48-hour email support"
+      ],
+      highlight: false
+    },
+    {
+      name: "Premium",
+      price: "2750",
+      currency: "€",
+      features: [
+        "12 design/content updates per month",
+        "20 weekly social posts",
+        "Weekly strategy call",
+        "24-hour email support"
+      ],
+      highlight: true
+    }
+  ]
+} = Astro.props;
+---
+
+<section class="pricing" id="retainer">
+  <div class="container">
+    <div class="pricing-header">
+      <p class="pricing-label">MONTHLY RETAINER</p>
+      <h2>Endless Support</h2>
+      <a href="#" class="btn">Contact us</a>
+    </div>
+
+    <div class="pricing-cards">
+      {plans.map((plan) => (
+        <div class={`pricing-card ${plan.highlight ? 'highlight' : ''}`}>
+          <h3 class="plan-name">{plan.name}</h3>
+
+          <div class="plan-features">
+            {plan.features.map((feature) => (
+              <div class="feature-item">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 6L8 15L3 10"></path>
+                </svg>
+                <span>{feature}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="plan-pricing">
+            <span class="price">{plan.currency}{plan.price}/mo</span>
+          </div>
+
+          <a href="#" class="btn btn-subscribe">Subscribe</a>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing {
+    background: #FFFFFF;
+    padding: 80px 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .pricing-header {
+    text-align: center;
+    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .pricing-label {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #999999;
+    margin: 0;
+  }
+
+  .pricing-header h2 {
+    margin: 0;
+  }
+
+  .pricing-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .pricing-card {
+    background: #FFFFFF;
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 48px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    transition: all 0.3s ease;
+  }
+
+  .pricing-card.highlight {
+    background: #FFEA00;
+    border-color: #FFEA00;
+    transform: scale(1.05);
+  }
+
+  .pricing-card:hover {
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .plan-name {
+    font-size: 28px;
+    font-weight: 600;
+    color: #000000;
+    margin: 0;
+  }
+
+  .plan-features {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex-grow: 1;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #575757;
+  }
+
+  .feature-item svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .plan-pricing {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: 24px;
+  }
+
+  .price {
+    font-size: 28px;
+    font-weight: 600;
+    color: #000000;
+  }
+
+  .btn-subscribe {
+    background: #000000;
+    color: #FFFFFF;
+  }
+
+  .pricing-card.highlight .btn-subscribe {
+    background: #000000;
+    color: #FFEA00;
+  }
+
+  @media (max-width: 1024px) {
+    .pricing-cards {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .pricing-card.highlight {
+      transform: scale(1);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .pricing {
+      padding: 60px 0;
+    }
+
+    .container {
+      padding: 0 20px;
+    }
+
+    .pricing-header {
+      margin-bottom: 40px;
+    }
+
+    .pricing-card {
+      padding: 32px 24px;
+      gap: 24px;
+    }
+
+    .plan-name {
+      font-size: 24px;
+    }
+
+    .price {
+      font-size: 24px;
+    }
+  }
+</style>

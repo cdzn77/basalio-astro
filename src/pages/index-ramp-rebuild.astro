@@ -1,0 +1,186 @@
+---
+// Ramp Studio Homepage - Complete rebuild in Astro
+// Exact replica of the Ramp Studio template
+
+import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
+import RampHeader from '../components/RampHeader.astro';
+import RampHero from '../components/RampHero.astro';
+import RampWhatWeDo from '../components/RampWhatWeDo.astro';
+import RampCourses from '../components/RampCourses.astro';
+import RampResources from '../components/RampResources.astro';
+import RampPricing from '../components/RampPricing.astro';
+import RampTrustedBy from '../components/RampTrustedBy.astro';
+import RampTestimonials from '../components/RampTestimonials.astro';
+import RampFAQ from '../components/RampFAQ.astro';
+import RampFooter from '../components/RampFooter.astro';
+
+const title = "Ramp Marketing Systems, Courses & Resources for Modern Teams";
+const description = "Ramp helps marketers, founders, and creators build scalable marketing systems through practical courses, curated resources, and ongoing education.";
+---
+
+<RampTemplateLayout title={title} description={description}>
+  <Fragment slot="header">
+    <RampHeader brand="Ramp Studio." />
+  </Fragment>
+
+  <!-- Hero Section -->
+  <RampHero
+    heading="We turn strategy into growth"
+    heroImage="https://via.placeholder.com/600x500?text=Ramp+Hero"
+    featuredCourseLabel="Coaching Offers 101"
+    featuredCourseDescription="This course helps you design clear, compelling offers that people actually understand and want to buy."
+    featuredCourseTitle="View course"
+    featuredCourseLink="#courses"
+  />
+
+  <!-- What We Do Section -->
+  <RampWhatWeDo
+    services={[
+      { name: "Marketing", percentage: 30 },
+      { name: "Social Media", percentage: 50 },
+      { name: "Coaching", percentage: 20 }
+    ]}
+  />
+
+  <!-- Courses Section -->
+  <RampCourses
+    courses={[
+      {
+        title: "Social Media Growth",
+        description: "Learn the fundamentals of building a strong social media presence",
+        image: "https://via.placeholder.com/400x300?text=Social+Media",
+        link: "#"
+      },
+      {
+        title: "Content Creation 101",
+        description: "Teaches you how to create content that feels intentional and on-brand",
+        image: "https://via.placeholder.com/400x300?text=Content+Creation",
+        link: "#"
+      },
+      {
+        title: "Branding 101",
+        description: "Focus on positioning, messaging, and consistency across every touchpoint",
+        image: "https://via.placeholder.com/400x300?text=Branding",
+        link: "#"
+      },
+      {
+        title: "Email Marketing 101",
+        description: "Learn how to use email lists to actually support and grow your business",
+        image: "https://via.placeholder.com/400x300?text=Email+Marketing",
+        link: "#"
+      }
+    ]}
+  />
+
+  <!-- Resources Section -->
+  <RampResources
+    resources={[
+      { title: "Client Onboarding", description: "Complete onboarding templates and checklists for new clients" },
+      { title: "Branding Framework", description: "Step-by-step framework for building a cohesive brand identity" },
+      { title: "AI Prompts for Marketing", description: "Ready-to-use prompts for content creation and strategy" }
+    ]}
+  />
+
+  <!-- Pricing Section -->
+  <RampPricing
+    plans={[
+      {
+        name: "Essentials",
+        price: "1750",
+        currency: "€",
+        features: [
+          "4 design/content updates per month",
+          "5 weekly social posts",
+          "Month strategy calls",
+          "48-hour email support"
+        ],
+        highlight: false
+      },
+      {
+        name: "Premium",
+        price: "2750",
+        currency: "€",
+        features: [
+          "12 design/content updates per month",
+          "20 weekly social posts",
+          "Weekly strategy call",
+          "24-hour email support"
+        ],
+        highlight: true
+      }
+    ]}
+  />
+
+  <!-- Trusted By Section -->
+  <RampTrustedBy
+    logos={[
+      { name: "Logo 1" },
+      { name: "Logo 2" },
+      { name: "Logo 3" },
+      { name: "Logo 4" },
+      { name: "Logo 5" },
+      { name: "Logo 6" }
+    ]}
+  />
+
+  <!-- Testimonials Section -->
+  <RampTestimonials
+    testimonials={[
+      {
+        image: "https://via.placeholder.com/400x300?text=Maya",
+        quote: "Template helped us launch a polished website that feels premium and scales with you.",
+        name: "Maya Thompson",
+        title: "Wellness Coach",
+        results: "18x email sign ups"
+      },
+      {
+        image: "https://via.placeholder.com/400x300?text=Priya",
+        quote: "Every resource feels intentional, from free step-by-step workflows to paid resources.",
+        name: "Priya Desai",
+        title: "Shopify Store Owner",
+        results: "2x quaterly revenue"
+      },
+      {
+        image: "https://via.placeholder.com/400x300?text=Lucas",
+        quote: "We saved weeks of design time and launched a high-end website that feels premium.",
+        name: "Lucas Martinez",
+        title: "Café Owner",
+        results: "20% increased conversion"
+      }
+    ]}
+  />
+
+  <!-- FAQ Section -->
+  <RampFAQ
+    faqs={[
+      {
+        question: "What does Ramp Studio do?",
+        answer: "Ramp Studio helps brands build momentum through practical marketing education, hands-on execution, and ongoing support. We offer courses, resources, and retainer services designed specifically for digital creatives and entrepreneurs."
+      },
+      {
+        question: "Who is Ramp Studio for?",
+        answer: "We serve marketers, founders, content creators, and small business owners who want to build scalable marketing systems without feeling overwhelmed. Our content is accessible to beginners while remaining valuable for experienced professionals."
+      },
+      {
+        question: "How do your courses work?",
+        answer: "Our courses are self-paced, comprehensive programs that combine video lessons, worksheets, templates, and community support. You get lifetime access to course materials and can work through them at your own pace."
+      },
+      {
+        question: "What is the subscription marketing retainer?",
+        answer: "Our retainer service provides ongoing support including design updates, content creation, strategy calls, and email support. We offer Essentials and Premium tiers depending on your needs."
+      },
+      {
+        question: "Do I need to choose between courses, resources, or the retainer?",
+        answer: "No! Many clients use a combination of our offerings. You might take a course to learn fundamentals, use resources to accelerate your work, and hire us for retainer support for ongoing execution."
+      },
+      {
+        question: "What makes Ramp Studio different from other marketing agencies?",
+        answer: "We combine education with execution. Rather than just doing the work for you, we teach you how to build sustainable systems. Plus, we're transparent about our pricing and focused on serving creative entrepreneurs specifically."
+      }
+    ]}
+  />
+
+  <Fragment slot="footer">
+    <RampFooter address="Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark" />
+  </Fragment>
+</RampTemplateLayout>

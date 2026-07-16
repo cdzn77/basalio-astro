@@ -104,17 +104,10 @@ nav > div > div > a:hover {
   color: var(--color-text);
 }
 
-/* Hero Section */
-.hero {
-  width: 100%;
-  min-height: 100vh;
-  background: var(--color-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-7xl) var(--space-4xl) var(--space-3xl);
-  text-align: center;
-}
+/* Hero Section - REMOVED: Global rules conflict with component scoped styles
+ * Each component (RampHero, RampWhatWeDo, etc.) has its own scoped CSS
+ * Do NOT add generic .hero rules here - they will override component specifications
+ */
 
 .hero-content {
   max-width: 1200px;

@@ -31,14 +31,12 @@ const {
   </div>
 
   <div class="hero-container">
-    <!-- LEFT: Heading -->
+    <!-- CENTERED IMAGE with overlay (absolute positioning) -->
+    <img src={heroImage} alt="Hero" class="hero-image-bg" />
+
+    <!-- LEFT: Heading (overlaid on top of image) -->
     <div class="hero-left">
       <h1 class="hero-heading">We turn<br/>strategy<br/>into growth</h1>
-    </div>
-
-    <!-- RIGHT: Image -->
-    <div class="hero-right">
-      <img src={heroImage} alt="Hero" class="hero-image" />
     </div>
   </div>
 
@@ -130,9 +128,27 @@ const {
     height: 760px;
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 0;
     margin: 0 auto;
     box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* CENTERED HERO IMAGE with yellow overlay */
+  .hero-image-bg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: sepia(0.15) saturate(1.3);
+    opacity: 0.95;
+    z-index: 0;
   }
 
   .hero-left {
@@ -142,6 +158,8 @@ const {
     flex-direction: column;
     justify-content: center;
     box-sizing: border-box;
+    position: relative;
+    z-index: 1;
   }
 
   .hero-heading {
@@ -155,21 +173,6 @@ const {
     padding: 0;
   }
 
-  .hero-right {
-    width: 50%;
-    padding: 80px 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-  }
-
-  .hero-image {
-    width: 326px;
-    height: 434px;
-    object-fit: cover;
-    display: block;
-  }
 
   /* COURSE TEASER CARD - Exact 74px height */
   .course-teaser {

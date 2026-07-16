@@ -3,7 +3,6 @@
 // Exact replica of the Ramp Studio template
 
 import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
-import RampHeader from '../components/RampHeader.astro';
 import RampHero from '../components/RampHero.astro';
 import RampWhatWeDo from '../components/RampWhatWeDo.astro';
 import RampCourses from '../components/RampCourses.astro';
@@ -19,11 +18,7 @@ const description = "Ramp helps marketers, founders, and creators build scalable
 ---
 
 <RampTemplateLayout title={title} description={description}>
-  <Fragment slot="header">
-    <RampHeader brand="Ramp Studio." />
-  </Fragment>
-
-  <!-- Hero Section -->
+  <!-- Hero Section (includes header/logo) -->
   <RampHero
     courseLabel="COACHING OFFERS 101"
     courseText="This course helps you design clear, compelling offers that people actually understand and want to buy."

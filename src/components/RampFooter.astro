@@ -1,7 +1,6 @@
 ---
-// Ramp Footer - EXACT SPECIFICATIONS
-// Background: #FFEA00, Address left, links grid right, large headings bottom
-// Curved transition from black FAQ section
+// Ramp Footer - 1:1 PIXEL-PERFECT REPLICA
+// Exact dimensions: 1791×500px, padding 0
 
 interface Props {
   address?: string;
@@ -42,8 +41,8 @@ const {
             <span class="nav-text">404</span>
           </a>
           <a href="#" class="nav-link">
-            <span class="nav-label">Terms &amp; Conditions</span>
-            <span class="nav-text">Terms &amp; Conditions</span>
+            <span class="nav-label">Terms & Conditions</span>
+            <span class="nav-text">Terms & Conditions</span>
           </a>
           <a href="#" class="nav-link">
             <span class="nav-label">Privacy Policy</span>
@@ -63,9 +62,13 @@ const {
 </footer>
 
 <style>
+  /* EXACT PIXEL SPECIFICATIONS */
   .footer {
-    background: #FFEA00;
+    background: #FAFAFA;
+    width: 1791px;
+    height: 500px;
     padding: 80px 0;
+    margin: 0;
     position: relative;
   }
 
@@ -76,16 +79,19 @@ const {
     left: 0;
     right: 0;
     height: 40px;
-    background: linear-gradient(to bottom, #000000, #FFEA00);
+    background: linear-gradient(to bottom, #000000, #FAFAFA);
     border-radius: 50% 50% 0 0 / 100% 100% 0 0;
   }
 
   .container {
-    max-width: 1200px;
+    max-width: 1711px;
     margin: 0 auto;
     padding: 0 40px;
     position: relative;
     z-index: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   .footer-top {
@@ -94,6 +100,7 @@ const {
     gap: 60px;
     margin-bottom: 80px;
     align-items: start;
+    flex: 1;
   }
 
   .footer-left {
@@ -124,6 +131,8 @@ const {
     flex-direction: column;
     gap: 4px;
     transition: opacity 0.2s ease;
+    text-decoration: none;
+    color: #000000;
   }
 
   .nav-link:hover {
@@ -155,7 +164,7 @@ const {
 
   .footer-heading {
     font-family: 'Manrope', sans-serif;
-    font-size: clamp(36px, 6vw, 72px);
+    font-size: 72px;
     font-weight: 400;
     color: #000000;
     margin: 0;
@@ -206,11 +215,8 @@ const {
 
   @media (max-width: 768px) {
     .footer {
-      padding: 60px 0;
-    }
-
-    .container {
-      padding: 0 20px;
+      width: 100%;
+      padding: 60px 20px;
     }
 
     .footer-top {
@@ -224,7 +230,7 @@ const {
     }
 
     .footer-heading {
-      font-size: clamp(24px, 5vw, 40px);
+      font-size: 40px;
     }
   }
 </style>

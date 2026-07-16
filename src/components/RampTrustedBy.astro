@@ -65,17 +65,20 @@ const {
 </script>
 
 <style>
+  /* EXACT PIXEL SPECIFICATIONS */
   .trusted-by {
     background: #FFEA00;
-    padding: 60px 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    width: 1791px;
+    height: 227px;
+    padding: 60px 40px;
+    margin: 0;
   }
 
   .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 40px;
+    max-width: 1711px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   .trusted-label {
@@ -101,25 +104,28 @@ const {
   }
 
   .logo-item {
-    flex: 0 0 150px;
-    height: 60px;
+    flex: 0 0 180px;
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.08);
     border-radius: 8px;
     font-size: 12px;
     color: #999999;
     font-weight: 500;
   }
 
+  @media (max-width: 1024px) {
+    .trusted-by {
+      width: 100%;
+    }
+  }
+
   @media (max-width: 768px) {
     .trusted-by {
-      padding: 40px 0;
-    }
-
-    .container {
-      padding: 0 20px;
+      width: 100%;
+      padding: 40px 20px;
     }
 
     .logos-track {
@@ -127,8 +133,8 @@ const {
     }
 
     .logo-item {
-      flex: 0 0 120px;
-      height: 50px;
+      flex: 0 0 140px;
+      height: 60px;
       font-size: 11px;
     }
   }

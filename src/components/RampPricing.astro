@@ -1,7 +1,6 @@
 ---
-// Ramp Pricing - EXACT SPECIFICATIONS
-// Background: White, Two cards: Essentials (white), Premium (yellow #FFEA00)
-// Premium card features bold styling
+// Ramp Pricing - 1:1 PIXEL-PERFECT REPLICA
+// Exact dimensions: 1791×667px, padding 40px 40px 100px
 
 interface PricingPlan {
   name: string;
@@ -48,7 +47,6 @@ const {
 <section class="pricing" id="retainer">
   <div class="container">
     <div class="pricing-header">
-      <p class="pricing-label">MONTHLY RETAINER</p>
       <h2>Endless Support</h2>
       <a href="#" class="btn">Contact us</a>
     </div>
@@ -73,7 +71,7 @@ const {
             <span class="price">{plan.currency}{plan.price}/mo</span>
           </div>
 
-          <a href="#" class="btn btn-subscribe">Subscribe</a>
+          <a href="#" class="btn-subscribe">Subscribe</a>
         </div>
       ))}
     </div>
@@ -81,15 +79,22 @@ const {
 </section>
 
 <style>
+  /* EXACT PIXEL SPECIFICATIONS */
   .pricing {
-    background: #FFFFFF;
-    padding: 80px 0;
+    background: #FAFAFA;
+    width: 1791px;
+    height: 667px;
+    padding: 40px 40px 100px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
   }
 
   .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 40px;
+    max-width: 1711px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   .pricing-header {
@@ -101,18 +106,28 @@ const {
     gap: 20px;
   }
 
-  .pricing-label {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #999999;
+  .pricing-header h2 {
+    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 48px;
+    font-weight: 400;
     margin: 0;
   }
 
-  .pricing-header h2 {
-    margin: 0;
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    background: #000000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    text-decoration: none;
   }
 
   .pricing-cards {
@@ -131,17 +146,12 @@ const {
     display: flex;
     flex-direction: column;
     gap: 32px;
-    transition: all 0.3s ease;
   }
 
   .pricing-card.highlight {
     background: #FFEA00;
     border-color: #FFEA00;
     transform: scale(1.05);
-  }
-
-  .pricing-card:hover {
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
   }
 
   .plan-name {
@@ -186,6 +196,18 @@ const {
   .btn-subscribe {
     background: #000000;
     color: #FFFFFF;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
   }
 
   .pricing-card.highlight .btn-subscribe {
@@ -196,7 +218,6 @@ const {
   @media (max-width: 1024px) {
     .pricing-cards {
       grid-template-columns: 1fr;
-      gap: 32px;
     }
 
     .pricing-card.highlight {
@@ -206,28 +227,12 @@ const {
 
   @media (max-width: 768px) {
     .pricing {
-      padding: 60px 0;
-    }
-
-    .container {
-      padding: 0 20px;
-    }
-
-    .pricing-header {
-      margin-bottom: 40px;
+      width: 100%;
+      padding: 60px 20px;
     }
 
     .pricing-card {
       padding: 32px 24px;
-      gap: 24px;
-    }
-
-    .plan-name {
-      font-size: 24px;
-    }
-
-    .price {
-      font-size: 24px;
     }
   }
 </style>

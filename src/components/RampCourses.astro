@@ -1,12 +1,10 @@
 ---
-// Ramp Courses - EXACT SPECIFICATIONS
-// Background: White, Yellow course cards, carousel layout
-// Card background: #FFEA00, border-radius: 16px, width: ~280px
+// Ramp Courses - 1:1 PIXEL-PERFECT REPLICA
+// Exact dimensions: 1791×971px, padding 200px 40px
 
 interface Course {
   title: string;
   description: string;
-  icon?: string;
 }
 
 interface Props {
@@ -24,113 +22,87 @@ const {
 ---
 
 <section class="courses" id="courses">
-  <div class="container">
-    <div class="courses-header">
-      <h2>Courses for Digital Creatives</h2>
-      <a href="#" class="btn">View all</a>
-    </div>
+  <div class="courses-header">
+    <h2>Courses for Digital Creatives</h2>
+    <a href="#" class="view-all">View all</a>
+  </div>
 
-    <div class="carousel-wrapper">
-      <button class="carousel-arrow prev" aria-label="Previous">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 4L6 10L12 16"></path>
-        </svg>
-      </button>
+  <div class="carousel-wrapper">
+    <button class="carousel-arrow prev" aria-label="Previous">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 4L6 10L12 16"></path>
+      </svg>
+    </button>
 
-      <div class="carousel-container">
-        <div class="carousel-track">
-          {courses.map((course) => (
-            <div class="course-card">
-              <div class="course-icon"></div>
-              <h3 class="course-title">{course.title}</h3>
-              <p class="course-description">{course.description}</p>
-            </div>
-          ))}
-        </div>
+    <div class="carousel-container">
+      <div class="carousel-track">
+        {courses.map((course) => (
+          <div class="course-card">
+            <div class="course-icon"></div>
+            <h3 class="course-title">{course.title}</h3>
+            <p class="course-description">{course.description}</p>
+          </div>
+        ))}
       </div>
-
-      <button class="carousel-arrow next" aria-label="Next">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M8 4L14 10L8 16"></path>
-        </svg>
-      </button>
     </div>
 
-    <div class="carousel-dots">
-      <span class="dot active"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-    </div>
+    <button class="carousel-arrow next" aria-label="Next">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M8 4L14 10L8 16"></path>
+      </svg>
+    </button>
   </div>
 </section>
 
-<script>
-  const carousel = document.querySelector('.carousel-track');
-  const cards = document.querySelectorAll('.course-card');
-  const prevBtn = document.querySelector('.carousel-arrow.prev');
-  const nextBtn = document.querySelector('.carousel-arrow.next');
-
-  let currentIndex = 0;
-  const cardWidth = 280;
-  const gap = 24;
-  const visibleCards = 3;
-
-  function updateCarousel() {
-    const offset = -(currentIndex * (cardWidth + gap));
-    carousel.style.transform = `translateX(${offset}px)`;
-  }
-
-  prevBtn?.addEventListener('click', () => {
-    if (currentIndex > 0) {
-      currentIndex--;
-      updateCarousel();
-    }
-  });
-
-  nextBtn?.addEventListener('click', () => {
-    if (currentIndex < cards.length - visibleCards) {
-      currentIndex++;
-      updateCarousel();
-    }
-  });
-</script>
-
 <style>
+  /* EXACT PIXEL SPECIFICATIONS */
   .courses {
     background: #FFFFFF;
-    padding: 80px 0;
-  }
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 40px;
+    width: 1791px;
+    height: 971px;
+    padding: 200px 40px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
   }
 
   .courses-header {
+    width: 1711px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 60px;
-    gap: 20px;
-  }
-
-  .courses-header h2 {
-    margin: 0;
-    flex: 1;
-  }
-
-  .carousel-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 20px;
     margin-bottom: 40px;
   }
 
+  .courses-header h2 {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    color: #000000;
+    margin: 0;
+  }
+
+  .view-all {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0000EE;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .carousel-wrapper {
+    width: 1711px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
   .carousel-arrow {
-    flex-shrink: 0;
-    width: 48px;
-    height: 48px;
+    width: 70px;
+    height: 70px;
     border-radius: 8px;
     background: #F0F0F0;
     color: #000000;
@@ -139,7 +111,8 @@ const {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease;
+    flex-shrink: 0;
   }
 
   .carousel-arrow:hover {
@@ -158,24 +131,25 @@ const {
   }
 
   .course-card {
-    flex: 0 0 280px;
+    flex: 0 0 500px;
+    height: 571px;
     background: #FFEA00;
-    border-radius: 16px;
-    padding: 24px;
+    border-radius: 12px;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     gap: 16px;
   }
 
   .course-icon {
-    width: 100%;
-    height: 80px;
+    width: 420px;
+    height: 300px;
     background: #000000;
     border-radius: 8px;
   }
 
   .course-title {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
     color: #000000;
     margin: 0;
@@ -183,59 +157,37 @@ const {
 
   .course-description {
     font-size: 14px;
-    line-height: 1.5;
-    color: #575757;
+    font-weight: 400;
+    color: #000000;
+    line-height: 1.6;
     margin: 0;
+    flex-grow: 1;
   }
 
-  .carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-  }
-
-  .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #E0E0E0;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-
-  .dot.active {
-    background: #000000;
-  }
-
+  /* RESPONSIVE OVERRIDES */
   @media (max-width: 1024px) {
-    .course-card {
-      flex: 0 0 250px;
+    .courses {
+      width: 100%;
+      height: auto;
+    }
+
+    .carousel-wrapper {
+      width: 100%;
     }
   }
 
   @media (max-width: 768px) {
     .courses {
-      padding: 60px 0;
+      width: 100%;
+      padding: 80px 20px;
     }
 
-    .container {
-      padding: 0 20px;
-    }
-
-    .courses-header {
+    .carousel-wrapper {
       flex-direction: column;
-      align-items: flex-start;
-      margin-bottom: 40px;
-    }
-
-    .carousel-arrow {
-      width: 40px;
-      height: 40px;
     }
 
     .course-card {
-      flex: 0 0 220px;
-      padding: 20px;
+      width: 100%;
     }
   }
 </style>

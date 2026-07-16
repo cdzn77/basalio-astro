@@ -1,0 +1,127 @@
+---
+// Ramp What We Do - EXACT SPECIFICATIONS
+// Background: #F5F5F5, Service list with percentages
+
+interface Service {
+  name: string;
+  percentage: number;
+}
+
+interface Props {
+  services?: Service[];
+}
+
+const {
+  services = [
+    { name: "Marketing", percentage: 30 },
+    { name: "Social Media", percentage: 50 },
+    { name: "Coaching", percentage: 20 }
+  ]
+} = Astro.props;
+---
+
+<section class="what-we-do" id="what-we-do">
+  <div class="container">
+    <div class="section-intro">
+      <h2>What we do</h2>
+      <p class="intro-text">We believe marketing doesn't have to be complicated. That's why we've built a creative hub filled with practical resources, hands-on courses, and personalized support to help you build sustainable marketing systems.</p>
+    </div>
+
+    <div class="services-list">
+      {services.map((service) => (
+        <div class="service-item">
+          <div class="service-row">
+            <span class="service-name">{service.name}</span>
+            <span class="service-percent">{service.percentage}%</span>
+          </div>
+          <div class="service-divider"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .what-we-do {
+    background: #FAFAFA;
+    padding: 40px 0;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .section-intro {
+    margin-bottom: 60px;
+  }
+
+  .section-intro h2 {
+    margin-bottom: 16px;
+  }
+
+  .intro-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #575757;
+    max-width: 700px;
+  }
+
+  .services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .service-item {
+    padding: 24px 0;
+  }
+
+  .service-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .service-name {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+  }
+
+  .service-percent {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000000;
+  }
+
+  .service-divider {
+    height: 1px;
+    background: #E0E0E0;
+  }
+
+  .service-item:last-child .service-divider {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .what-we-do {
+      padding: 60px 0;
+    }
+
+    .container {
+      padding: 0 20px;
+    }
+
+    .intro-text {
+      font-size: 14px;
+    }
+
+    .service-name,
+    .service-percent {
+      font-size: 14px;
+    }
+  }
+</style>

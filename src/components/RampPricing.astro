@@ -44,13 +44,8 @@ const {
 } = Astro.props;
 ---
 
-<section class="pricing" id="retainer">
+<section class="pricing" id="pricing">
   <div class="container">
-    <div class="pricing-header">
-      <h2>Endless Support</h2>
-      <a href="#" class="btn">Contact us</a>
-    </div>
-
     <div class="pricing-cards">
       {plans.map((plan) => (
         <div class={`pricing-card ${plan.highlight ? 'highlight' : ''}`}>
@@ -96,39 +91,6 @@ const {
     width: 100%;
     margin: 0 auto;
     padding: 0;
-  }
-
-  .pricing-header {
-    text-align: center;
-    margin-bottom: 60px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .pricing-header h2 {
-    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 48px;
-    font-weight: 400;
-    margin: 0 auto;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 24px;
-    background: #000000;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    cursor: pointer;
-    text-decoration: none;
   }
 
   .pricing-cards {

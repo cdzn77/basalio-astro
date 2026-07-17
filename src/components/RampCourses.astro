@@ -73,14 +73,20 @@ const {
       <!-- PAGINATION CONTROLS: Below the button on the left side -->
       <div class="pagination-controls">
         <button class="carousel-button carousel-button-prev" aria-label="Previous courses" data-direction="prev">
-          <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M10 2L4 8L10 14"></path>
-          </svg>
+          <div class="button-icon-wrapper">
+            <svg width="100%" height="100%" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <line x1="2.5" y1="12" x2="23.5" y2="12" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></line>
+              <polyline points="10.14 4.36 2.5 12 10.14 19.64" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></polyline>
+            </svg>
+          </div>
         </button>
         <button class="carousel-button carousel-button-next" aria-label="Next courses" data-direction="next">
-          <svg width="24" height="24" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M6 2L12 8L6 14"></path>
-          </svg>
+          <div class="button-icon-wrapper">
+            <svg width="100%" height="100%" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <line x1="21.5" y1="12" x2="0.5" y2="12" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></line>
+              <polyline points="13.86 4.36 21.5 12 13.86 19.64" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></polyline>
+            </svg>
+          </div>
         </button>
       </div>
     </div>
@@ -224,6 +230,15 @@ const {
     flex-direction: row;
     gap: 12px;
     margin-top: auto;
+  }
+
+  /* Icon wrapper for SVG centering */
+  .button-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
   }
 
   /* Visible navigation buttons (white by default, invert on hover) */

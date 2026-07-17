@@ -1,6 +1,5 @@
 ---
-// Ramp FAQ - 1:1 PIXEL-PERFECT REPLICA
-// Exact dimensions: 1791×966px, padding 40px 40px 200px
+// Ramp FAQ - Multi-open accordion with black cards, 35%/65% header layout
 
 interface FAQItem {
   question: string;
@@ -13,32 +12,63 @@ interface Props {
 
 const {
   faqs = [
-    { question: "What does Ramp Studio do?", answer: "Ramp Studio helps brands build momentum through practical marketing education, hands-on execution, and ongoing support." },
-    { question: "Who is Ramp Studio for?", answer: "We serve marketers, founders, content creators, and small business owners who want to build scalable marketing systems." },
-    { question: "How do your courses work?", answer: "Our courses are self-paced, comprehensive programs that combine video lessons, worksheets, templates, and community support." },
-    { question: "What is the subscription marketing retainer?", answer: "Our retainer service provides ongoing support including design updates, content creation, strategy calls, and email support." },
-    { question: "Do I need to choose between courses, resources, or the retainer?", answer: "No! Many clients use a combination of our offerings." },
-    { question: "What makes Ramp Studio different?", answer: "We combine education with execution. Rather than just doing the work for you, we teach you how to build sustainable systems." }
+    {
+      question: "What does Ramp Studio do?",
+      answer: "Ramp Studio helps brands build momentum through practical marketing education, hands-on execution, and reusable resources.  We offer self-paced courses, a subscription-based marketing retainer, and tools designed to help teams move faster, stay consistent, and make smarter decisions without overcomplicating things."
+    },
+    {
+      question: "Who is Ramp Studio for?",
+      answer: "Ramp is built for founders, small teams, and growing companies who want marketing that actually works—not just looks good.  If you're tired of one-off projects, unclear strategy, or starting from scratch every month, Ramp is for you."
+    },
+    {
+      question: "How do your courses work?",
+      answer: "Our courses are self-paced, practical, and designed to be applied immediately.  They focus on real-world marketing problems—systems, content, positioning, and execution—so you can learn once and reuse the knowledge across campaigns, clients, or teams."
+    },
+    {
+      question: "What is the subscription marketing retainer?",
+      answer: "The subscription retainer gives you ongoing access to marketing support without the friction of traditional contracts.  Instead of hiring full-time or briefing a new agency every month, you get consistent execution, iterative improvement, and a long-term partner who understands your business."
+    },
+    {
+      question: "Do I need to choose between courses, resources, or the retainer?",
+      answer: "Not at all.  Many clients start with courses or resources to build internal clarity, then move into a subscription when they want execution support. Others use everything together—learning, doing, and scaling at the same time."
+    },
+    {
+      question: "What makes Ramp Studio different from other marketing agencies?",
+      answer: "Ramp Studio is built around momentum.  We focus on clarity, systems, and repeatable outcomes—not buzzwords or one-off wins. Everything we offer is designed to reduce friction, save time, and help marketing compound over time."
+    }
   ]
 } = Astro.props;
 ---
 
-<section class="faq" id="faq">
-  <div class="container">
-    <div class="faq-header">
-      <h2>FAQ</h2>
-      <p class="faq-intro">Explore our most commonly asked questions about our agency, podcast, and product launch resources.</p>
-    </div>
+<section class="faq">
+  <!-- HEADER ROW: eyebrow (35%) + description (65%) -->
+  <div class="faq-header">
+    <!-- LEFT: Eyebrow label -->
+    <p class="faq-eyebrow">FAQ</p>
 
+    <!-- RIGHT: Description -->
+    <div class="faq-header-right">
+      <p class="faq-description">Explore our most commonly asked questions about our agency, podcast, and product launch resources.</p>
+    </div>
+  </div>
+
+  <!-- FAQ LIST WRAPPER: Spacer + List aligned to right column -->
+  <div class="faq-list-wrapper">
+    <!-- Spacer matching eyebrow column width (35%) -->
+    <div class="faq-list-spacer"></div>
+
+    <!-- FAQ list aligned under header-right (65%) -->
     <div class="faq-list">
       {faqs.map((item, index) => (
-        <div class="faq-item" data-index={index} data-expanded={index === 0}>
-          <button class="faq-toggle" aria-expanded={index === 0}>
-            <span class="faq-question">{item.question}</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-answer-wrapper">
-            <p class="faq-answer">{item.answer}</p>
+        <div class="faq-item" data-index={index}>
+          <div class="faq-card">
+            <!-- Question row: entire div is clickable -->
+            <div class="faq-question-row" data-index={index}>
+              <span class="faq-question-text">{item.question}</span>
+              <span class="faq-icon">+</span>
+            </div>
+
+            <!-- Answer: conditionally rendered when open -->
           </div>
         </div>
       ))}
@@ -46,166 +76,179 @@ const {
   </div>
 </section>
 
-<script>
-  document.querySelectorAll('.faq-toggle').forEach(button => {
-    button.addEventListener('click', () => {
-      const item = button.closest('.faq-item');
-      const isExpanded = button.getAttribute('aria-expanded') === 'true';
-
-      document.querySelectorAll('.faq-item').forEach(el => {
-        if (el !== item) {
-          el.classList.remove('expanded');
-          el.querySelector('.faq-toggle').setAttribute('aria-expanded', 'false');
-        }
-      });
-
-      button.setAttribute('aria-expanded', !isExpanded);
-      item.classList.toggle('expanded');
-    });
-  });
-
-  document.querySelector('.faq-item')?.classList.add('expanded');
-</script>
-
 <style>
-  /* EXACT PIXEL SPECIFICATIONS */
+  /* SECTION SHELL */
   .faq {
-    background: #000000;
-    color: #FFFFFF;
-    width: 100%;
-    max-width: 1791px;
-    padding: 80px 40px 200px;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
+    gap: 40px;
+    padding: 0 40px 200px 40px;
+    background: var(--basalio-paper, #FFFFFF);
+    width: 100%;
     box-sizing: border-box;
   }
 
-  .container {
-    max-width: 1711px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0;
-  }
-
+  /* HEADER ROW: 35%/65% split */
   .faq-header {
-    text-align: center;
-    margin-bottom: 60px;
-  }
-
-  .faq-header h2 {
-    color: #FFFFFF;
-    font-size: 48px;
-    font-weight: 400;
-    margin: 0 0 16px;
-  }
-
-  .faq-intro {
-    font-size: 18px;
-    line-height: 1.6;
-    color: #CCCCCC;
-    max-width: 700px;
-    margin: 0 auto;
-  }
-
-  .faq-list {
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .faq-item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-  }
-
-  .faq-item:first-child {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .faq-toggle {
-    width: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: row;
     justify-content: space-between;
-    gap: 20px;
-    padding: 28px 0;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.2s ease;
+    align-items: flex-start;
+    width: 100%;
+    gap: 40px;
   }
 
-  .faq-toggle:hover {
-    opacity: 0.8;
+  /* Eyebrow label (left, 35%) */
+  .faq-eyebrow {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 19.6px;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+    flex: 1 1 0%;
+    max-width: 35%;
   }
 
-  .faq-question {
-    font-size: 18px;
-    font-weight: 600;
-    color: #FFFFFF;
+  /* Description (right, 65%) */
+  .faq-header-right {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
     flex: 1;
+    max-width: 65%;
+    gap: 40px;
   }
 
+  .faq-description {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22.4px;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+  }
+
+  /* FAQ LIST WRAPPER: Spacer + List aligned to right column */
+  .faq-list-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 40px;
+  }
+
+  /* Spacer: matches eyebrow column width (35%) */
+  .faq-list-spacer {
+    flex: 1 1 0%;
+    max-width: 35%;
+  }
+
+  /* FAQ LIST: flex column, gap 12px, aligned under header-right (65%) */
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0%;
+    max-width: 65%;
+    gap: 12px;
+  }
+
+  /* FAQ ITEM: wrapper */
+  .faq-item {
+    width: 100%;
+  }
+
+  /* FAQ CARD: black background, rounded corners, padding */
+  .faq-card {
+    background: #000000;
+    border-radius: 6px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* QUESTION ROW: flex row, entire row clickable */
+  .faq-question-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  /* Question text: flex-grow, white */
+  .faq-question-text {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 25.2px;
+    letter-spacing: -0.36px;
+    color: #FFFFFF;
+    flex-grow: 1;
+  }
+
+  /* Icon: fixed 40x40px, white, centered, no rotation */
   .faq-icon {
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 400;
-    transition: transform 0.3s ease;
-    flex-shrink: 0;
+    color: #FFFFFF;
+    flex: 0 0 40px;
   }
 
-  .faq-item.expanded .faq-icon {
-    transform: rotate(45deg);
-  }
-
-  .faq-answer-wrapper {
-    display: grid;
-    grid-template-rows: 0fr;
-    overflow: hidden;
-    transition: grid-template-rows 0.3s ease;
-  }
-
-  .faq-item.expanded .faq-answer-wrapper {
-    grid-template-rows: 1fr;
-  }
-
+  /* Answer: appears when open */
   .faq-answer {
     font-size: 16px;
-    line-height: 1.7;
-    color: #AAAAAA;
-    margin: 0 auto;
-    padding: 0 0 28px 0;
-    min-height: 0;
-  }
-
-  @media (max-width: 1024px) {
-    .faq {
-      width: 100%;
-      height: auto;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .faq {
-      width: 100%;
-      padding: 40px 20px 100px;
-    }
-
-    .faq-toggle {
-      padding: 20px 0;
-    }
-
-    .faq-question {
-      font-size: 16px;
-    }
-
-    .faq-answer {
-      font-size: 14px;
-    }
+    font-weight: 400;
+    line-height: 22.4px;
+    color: #FFFFFF;
+    margin: 0;
+    max-width: 750px;
+    padding-top: 8px;
   }
 </style>
+
+<script>
+  // Multi-open accordion: track each item's open state independently
+  const openItems = new Set();
+
+  document.querySelectorAll('.faq-question-row').forEach((row) => {
+    row.addEventListener('click', () => {
+      const index = parseInt(row.getAttribute('data-index'));
+      const card = row.closest('.faq-card');
+      const item = row.closest('.faq-item');
+
+      if (openItems.has(index)) {
+        // Close this item
+        openItems.delete(index);
+        // Remove answer if it exists
+        const existingAnswer = card.querySelector('.faq-answer');
+        if (existingAnswer) {
+          existingAnswer.remove();
+        }
+      } else {
+        // Open this item
+        openItems.add(index);
+        // Add answer to DOM
+        const faqData = {
+          0: "Ramp Studio helps brands build momentum through practical marketing education, hands-on execution, and reusable resources.  We offer self-paced courses, a subscription-based marketing retainer, and tools designed to help teams move faster, stay consistent, and make smarter decisions without overcomplicating things.",
+          1: "Ramp is built for founders, small teams, and growing companies who want marketing that actually works—not just looks good.  If you're tired of one-off projects, unclear strategy, or starting from scratch every month, Ramp is for you.",
+          2: "Our courses are self-paced, practical, and designed to be applied immediately.  They focus on real-world marketing problems—systems, content, positioning, and execution—so you can learn once and reuse the knowledge across campaigns, clients, or teams.",
+          3: "The subscription retainer gives you ongoing access to marketing support without the friction of traditional contracts.  Instead of hiring full-time or briefing a new agency every month, you get consistent execution, iterative improvement, and a long-term partner who understands your business.",
+          4: "Not at all.  Many clients start with courses or resources to build internal clarity, then move into a subscription when they want execution support. Others use everything together—learning, doing, and scaling at the same time.",
+          5: "Ramp Studio is built around momentum.  We focus on clarity, systems, and repeatable outcomes—not buzzwords or one-off wins. Everything we offer is designed to reduce friction, save time, and help marketing compound over time."
+        };
+
+        const answerDiv = document.createElement('p');
+        answerDiv.className = 'faq-answer';
+        answerDiv.textContent = faqData[index] || '';
+        card.appendChild(answerDiv);
+      }
+    });
+  });
+</script>

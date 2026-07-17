@@ -241,9 +241,9 @@ const {
 
   /* SVG icon styling */
   .faq-icon svg {
-    width: 24px;
-    height: 24px;
-    display: block;
+    width: auto;
+    height: auto;
+    display: inline;
     cursor: pointer;
     box-sizing: border-box;
     overflow-x: hidden;
@@ -251,6 +251,8 @@ const {
     fill: rgb(255, 255, 255);
     font-family: sans-serif;
     font-size: 12px;
+    fill-rule: evenodd;
+    transform-origin: 0px 0px;
     -webkit-font-smoothing: antialiased;
   }
 

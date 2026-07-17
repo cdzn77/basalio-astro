@@ -213,17 +213,26 @@ const {
     flex-grow: 1;
   }
 
-  /* Icon: fixed 40x40px, white, centered, no rotation */
+  /* Icon button: 40x40px square */
   .faq-icon {
+    aspect-ratio: 1 / 1;
     width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transform: none;
+    transform-origin: 20px 20px;
+    box-sizing: border-box;
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
     font-size: 24px;
     font-weight: 400;
     color: #FFFFFF;
-    flex: 0 0 40px;
+    -webkit-font-smoothing: antialiased;
   }
 
 </style>

@@ -27,20 +27,23 @@ const {
       <h2>What we do</h2>
     </div>
 
-    <!-- RIGHT: Content -->
+    <!-- RIGHT: Content (554px flex column) -->
     <div class="section-content">
       <p class="intro-text">We believe marketing doesn't have to be complicated. That's why we've built a creative hub filled with website templates, brand kits, free digital downloads and monthly support.</p>
 
-      <div class="services-list">
-        {services.map((service) => (
-          <div class="service-item">
-            <div class="service-row">
-              <span class="service-name">{service.name}</span>
-              <span class="service-percent">{service.percentage}%</span>
-            </div>
-            <div class="service-divider"></div>
-          </div>
-        ))}
+      <div class="breakdown">
+        <ul class="services-list">
+          {services.map((service, index) => (
+            <>
+              {index > 0 && <li class="service-divider"></li>}
+              <li class="service-item">
+                <span class="service-name">{service.name}</span>
+                <span class="service-percent">{service.percentage}%</span>
+              </li>
+            </>
+          ))}
+          <li class="service-divider"></li>
+        </ul>
       </div>
     </div>
   </div>
@@ -103,27 +106,26 @@ const {
     margin: 0;
   }
 
+  .breakdown {
+    width: 100%;
+  }
+
   .services-list {
     display: flex;
     flex-direction: column;
     gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
   }
 
   .service-item {
-    padding: 32px 0;
-    border-bottom: 1px solid #E0E0E0;
-  }
-
-  .service-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-
-  .service-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0;
+    padding: 20px 0;
+    list-style: none;
   }
 
   .service-name {
@@ -139,7 +141,11 @@ const {
   }
 
   .service-divider {
-    display: none;
+    height: 1px;
+    background: #E0E0E0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
   /* RESPONSIVE OVERRIDES */

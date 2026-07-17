@@ -150,7 +150,7 @@ const {
     overflow: hidden;
   }
 
-  /* Image wrapper that constrains and expands the image */
+  /* Image wrapper that expands beyond frame bounds */
   .hero-image-wrapper {
     position: absolute;
     left: 50%;
@@ -158,7 +158,7 @@ const {
     transform: translate(-50%, -50%);
     width: 35%;
     height: 60%;
-    overflow: hidden;
+    overflow: visible;
     z-index: 0;
     pointer-events: none;
     will-change: width, height;
@@ -461,14 +461,14 @@ const {
       const distanceTraveled = -heroRect.top;
       const viewportHeight = window.innerHeight;
 
-      // Normalize: 0 at top, 1 when hero top reaches middle of viewport
-      const scrollProgress = Math.max(0, Math.min(1, distanceTraveled / (viewportHeight * 0.5)));
+      // Normalize: 0 at top, reaches 1 faster to fill entire hero
+      const scrollProgress = Math.max(0, Math.min(1, distanceTraveled / (viewportHeight * 0.35)));
 
       // Expand width from 35% to 100%
       const width = 35 + (scrollProgress * 65);
 
-      // Expand height from 60% to 100%
-      const height = 60 + (scrollProgress * 40);
+      // Expand height from 60% to 140% - can overflow to fill completely
+      const height = 60 + (scrollProgress * 80);
 
       imageWrapper.style.width = `${width}%`;
       imageWrapper.style.height = `${height}%`;

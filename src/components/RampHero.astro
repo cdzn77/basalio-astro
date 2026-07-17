@@ -44,8 +44,10 @@ const {
   </div>
 
   <div class="hero-container">
-    <!-- CENTERED IMAGE with overlay (absolute positioning) -->
-    <img src={heroImage} alt="Hero" class="hero-image-bg" />
+    <!-- IMAGE WRAPPER: Portrait to landscape expansion container -->
+    <div class="hero-image-wrapper">
+      <img src={heroImage} alt="Hero" class="hero-image-bg" />
+    </div>
 
     <!-- LEFT: Heading (overlaid on top of image) -->
     <div class="hero-left">
@@ -148,22 +150,29 @@ const {
     overflow: hidden;
   }
 
-  /* CENTERED HERO IMAGE with yellow overlay - scroll-driven expansion */
-  .hero-image-bg {
+  /* Image wrapper that constrains and expands the image */
+  .hero-image-wrapper {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    width: auto;
+    transform: translate(-50%, -50%);
+    width: 35%;
+    height: 60%;
+    overflow: hidden;
+    z-index: 0;
+    pointer-events: none;
+    will-change: width, height;
+  }
+
+  /* CENTERED HERO IMAGE with yellow overlay - portrait to landscape expansion */
+  .hero-image-bg {
+    width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
     filter: sepia(0.15) saturate(1.3);
     opacity: 0.95;
-    z-index: 0;
-    pointer-events: none;
-    will-change: transform;
-    transition: transform 0.016s linear;
+    display: block;
   }
 
   .hero-left {
@@ -436,39 +445,45 @@ const {
     });
   }
 
-  // Scroll-driven image expansion animation
+  // Scroll-driven image expansion animation (portrait to full screen)
   const heroSection = document.getElementById('hero');
-  const heroImage = document.querySelector('.hero-image-bg');
+  const imageWrapper = document.querySelector('.hero-image-wrapper');
 
-  if (heroImage && heroSection) {
+  if (imageWrapper && heroSection) {
     let animationFrameId;
 
-    const updateImageScale = () => {
+    const updateImageSize = () => {
       const heroRect = heroSection.getBoundingClientRect();
-      const heroHeight = heroSection.offsetHeight;
 
-      // Calculate how far through the hero section the user has scrolled
-      // When hero is at top of viewport: scrollProgress = 0
-      // When hero is at bottom of viewport: scrollProgress = 1
-      const scrollProgress = Math.max(0, Math.min(1, (window.innerHeight - heroRect.top) / (window.innerHeight + heroHeight)));
+      // Simple calculation: as hero moves up on screen, image expands
+      // When hero top is at viewport bottom (scrolled past): full expansion
+      // When hero top is at viewport top: no expansion
+      const distanceTraveled = -heroRect.top;
+      const viewportHeight = window.innerHeight;
 
-      // Scale from 1 (original) to approximately 1.4 (expanded to full width)
-      // The scale factor depends on the original image size - we'll use a responsive approach
-      const scale = 1 + (scrollProgress * 0.4);
+      // Normalize: 0 at top, 1 when hero top reaches middle of viewport
+      const scrollProgress = Math.max(0, Math.min(1, distanceTraveled / (viewportHeight * 0.5)));
 
-      heroImage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+      // Expand width from 35% to 100%
+      const width = 35 + (scrollProgress * 65);
+
+      // Expand height from 60% to 100%
+      const height = 60 + (scrollProgress * 40);
+
+      imageWrapper.style.width = `${width}%`;
+      imageWrapper.style.height = `${height}%`;
     };
 
     const handleScroll = () => {
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
       }
-      animationFrameId = requestAnimationFrame(updateImageScale);
+      animationFrameId = requestAnimationFrame(updateImageSize);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     // Initial call
-    updateImageScale();
+    updateImageSize();
   }
 </script>

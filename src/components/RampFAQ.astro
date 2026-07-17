@@ -65,7 +65,11 @@ const {
             <!-- Question row: entire div is clickable -->
             <div class="faq-question-row" data-index={index}>
               <span class="faq-question-text">{item.question}</span>
-              <span class="faq-icon">+</span>
+              <div class="faq-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="rgb(255, 255, 255)">
+                  <path fill-rule="evenodd" d="M 8 2 A 0.5 0.5 0 0 1 8.5 2.5 V 7.5 H 13.5 A 0.5 0.5 0 0 1 13.5 8.5 H 8.5 V 13.5 A 0.5 0.5 0 0 1 7.5 13.5 V 8.5 H 2.5 A 0.5 0.5 0 0 1 2.5 7.5 H 7.5 V 2.5 A 0.5 0.5 0 0 1 8 2"/>
+                </svg>
+              </div>
             </div>
 
             <!-- Answer: conditionally rendered when open -->

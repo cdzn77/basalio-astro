@@ -497,8 +497,8 @@ const {
       // Scroll progress: 0 at top, 1 when hero exits
       const scrollProgress = Math.max(0, Math.min(1, distanceTraveled / (viewportHeight * 0.25)));
 
-      // Expand width from 20% to 120% (portrait to full width + overflow)
-      const width = 20 + (scrollProgress * 100);
+      // Expand width from 20% to 100% (portrait to full landscape), then lock
+      const width = Math.min(100, 20 + (scrollProgress * 80));
       imageWrapper.style.width = `${width}%`;
 
       // Carousel effect: show different layers as expansion progresses

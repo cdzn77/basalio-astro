@@ -148,12 +148,12 @@ const {
     overflow: hidden;
   }
 
-  /* CENTERED HERO IMAGE with yellow overlay */
+  /* CENTERED HERO IMAGE with yellow overlay - scroll-driven expansion */
   .hero-image-bg {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(1);
     width: auto;
     height: 100%;
     object-fit: cover;
@@ -162,6 +162,8 @@ const {
     opacity: 0.95;
     z-index: 0;
     pointer-events: none;
+    will-change: transform;
+    transition: transform 0.016s linear;
   }
 
   .hero-left {
@@ -432,5 +434,41 @@ const {
         menuDropdown.classList.remove('active');
       }
     });
+  }
+
+  // Scroll-driven image expansion animation
+  const heroSection = document.getElementById('hero');
+  const heroImage = document.querySelector('.hero-image-bg');
+
+  if (heroImage && heroSection) {
+    let animationFrameId;
+
+    const updateImageScale = () => {
+      const heroRect = heroSection.getBoundingClientRect();
+      const heroHeight = heroSection.offsetHeight;
+
+      // Calculate how far through the hero section the user has scrolled
+      // When hero is at top of viewport: scrollProgress = 0
+      // When hero is at bottom of viewport: scrollProgress = 1
+      const scrollProgress = Math.max(0, Math.min(1, (window.innerHeight - heroRect.top) / (window.innerHeight + heroHeight)));
+
+      // Scale from 1 (original) to approximately 1.4 (expanded to full width)
+      // The scale factor depends on the original image size - we'll use a responsive approach
+      const scale = 1 + (scrollProgress * 0.4);
+
+      heroImage.style.transform = `translate(-50%, -50%) scale(${scale})`;
+    };
+
+    const handleScroll = () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+      animationFrameId = requestAnimationFrame(updateImageScale);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Initial call
+    updateImageScale();
   }
 </script>

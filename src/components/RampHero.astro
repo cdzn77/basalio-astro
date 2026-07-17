@@ -461,14 +461,14 @@ const {
       const distanceTraveled = -heroRect.top;
       const viewportHeight = window.innerHeight;
 
-      // Normalize: 0 at top, reaches 1 faster to fill entire hero
-      const scrollProgress = Math.max(0, Math.min(1, distanceTraveled / (viewportHeight * 0.35)));
+      // Normalize: 0 at top, reaches 1 very fast to fill entire hero height
+      const scrollProgress = Math.max(0, Math.min(1, distanceTraveled / (viewportHeight * 0.25)));
 
-      // Expand width from 35% to 100%
-      const width = 35 + (scrollProgress * 65);
+      // Expand width from 35% to 75% (secondary)
+      const width = 35 + (scrollProgress * 40);
 
-      // Expand height from 60% to 140% - can overflow to fill completely
-      const height = 60 + (scrollProgress * 80);
+      // Expand height from 60% to 150% - PRIMARY expansion for full height fill
+      const height = 60 + (scrollProgress * 90);
 
       imageWrapper.style.width = `${width}%`;
       imageWrapper.style.height = `${height}%`;

@@ -226,12 +226,12 @@ const {
     margin-top: auto;
   }
 
-  /* Visible navigation buttons (light background, dark arrows) */
+  /* Visible navigation buttons (white by default, invert on hover) */
   .carousel-button {
     width: 70px;
     height: 70px;
     border-radius: 8px;
-    background: #F5F5F5;
+    background: #FFFFFF;
     color: var(--basalio-ink, #000000);
     border: 1px solid #E8E8E8;
     cursor: pointer;
@@ -246,12 +246,12 @@ const {
   .carousel-button:disabled {
     pointer-events: none;
     opacity: 0.5;
-    background: #FAFAFA;
   }
 
   .carousel-button:hover:not(:disabled) {
-    background: #FFFFFF;
-    border-color: #D0D0D0;
+    background: #000000;
+    color: #FFFFFF;
+    border-color: #000000;
   }
 
   /* RIGHT COLUMN: Carousel (1109px wide, or fill remaining space) */

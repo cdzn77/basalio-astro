@@ -60,14 +60,19 @@ const {
     <!-- FAQ list aligned under header-right (65%) -->
     <div class="faq-list">
       {faqs.map((item, index) => (
-        <div class="faq-item" data-index={index}>
+        <div class="faq-item" data-index={index} data-open="false">
           <div class="faq-card">
             <!-- Question row: entire div is clickable -->
             <div class="faq-question-row" data-index={index}>
               <span class="faq-question-text">{item.question}</span>
               <div class="faq-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="rgb(255, 255, 255)">
+                <!-- Plus icon (shown when closed) -->
+                <svg class="faq-icon-plus" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="rgb(255, 255, 255)">
                   <path fill-rule="evenodd" d="M 8 2 A 0.5 0.5 0 0 1 8.5 2.5 V 7.5 H 13.5 A 0.5 0.5 0 0 1 13.5 8.5 H 8.5 V 13.5 A 0.5 0.5 0 0 1 7.5 13.5 V 8.5 H 2.5 A 0.5 0.5 0 0 1 2.5 7.5 H 7.5 V 2.5 A 0.5 0.5 0 0 1 8 2"/>
+                </svg>
+                <!-- X icon (shown when open) -->
+                <svg class="faq-icon-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="rgb(255, 255, 255)" style="display: none;">
+                  <path fill-rule="evenodd" d="M 13.854 2.854 a 0.5 0.5 0 0 0 -0.708 0 L 8 8.293 L 2.854 2.854 a 0.5 0.5 0 1 0 -0.708 0.708 L 7.293 9 l -5.147 5.146 a 0.5 0.5 0 0 0 0.708 0.708 L 8 9.707 l 5.146 5.147 a 0.5 0.5 0 0 0 0.708 -0.708 L 8.707 9 l 5.147 -5.146 a 0.5 0.5 0 0 0 0 -0.708 Z"/>
                 </svg>
               </div>
             </div>
@@ -261,6 +266,17 @@ const {
     fill-rule: evenodd;
     transform-origin: 0px 0px;
     -webkit-font-smoothing: antialiased;
+    transition: fill 0.2s ease;
+  }
+
+  /* Icon button hover state */
+  .faq-icon:hover {
+    background-color: #FFED4E !important;
+    border-radius: 4px;
+  }
+
+  .faq-icon:hover svg {
+    fill: rgb(0, 0, 0);
   }
 
 </style>
@@ -274,18 +290,25 @@ const {
       const index = parseInt(row.getAttribute('data-index'));
       const card = row.closest('.faq-card');
       const item = row.closest('.faq-item');
+      const iconPlus = item.querySelector('.faq-icon-plus');
+      const iconClose = item.querySelector('.faq-icon-close');
 
       if (openItems.has(index)) {
         // Close this item
         openItems.delete(index);
+        item.setAttribute('data-open', 'false');
         // Remove answer if it exists
         const existingAnswer = card.querySelector('.faq-answer');
         if (existingAnswer) {
           existingAnswer.remove();
         }
+        // Swap icons: show +, hide X
+        iconPlus.style.display = 'block';
+        iconClose.style.display = 'none';
       } else {
         // Open this item
         openItems.add(index);
+        item.setAttribute('data-open', 'true');
         // Add answer to DOM
         const faqData = {
           0: "Ramp Studio helps brands build momentum through practical marketing education, hands-on execution, and reusable resources.  We offer self-paced courses, a subscription-based marketing retainer, and tools designed to help teams move faster, stay consistent, and make smarter decisions without overcomplicating things.",
@@ -317,6 +340,9 @@ const {
           user-select: none;
         `;
         card.appendChild(answerDiv);
+        // Swap icons: hide +, show X
+        iconPlus.style.display = 'none';
+        iconClose.style.display = 'block';
       }
     });
   });

@@ -502,21 +502,29 @@ const {
       imageLayers.forEach((layer, index) => {
         const layerStart = index * 0.2;
         const layerEnd = (index + 1) * 0.2;
+        const layerMid = (layerStart + layerEnd) / 2;
 
         // Calculate opacity for smooth fade transition
         let opacity = 0;
-        if (scrollProgress >= layerStart && scrollProgress < layerEnd) {
-          // Fade in at start, fade out at end
-          if (scrollProgress < layerStart + 0.1) {
-            opacity = (scrollProgress - layerStart) / 0.1;
-          } else if (scrollProgress > layerEnd - 0.1) {
-            opacity = (layerEnd - scrollProgress) / 0.1;
-          } else {
+
+        // Layer 1 (index 0) starts fully visible
+        if (index === 0) {
+          if (scrollProgress < layerEnd - 0.1) {
             opacity = 1;
+          } else if (scrollProgress < layerEnd) {
+            opacity = (layerEnd - scrollProgress) / 0.1;
           }
-        } else if (scrollProgress >= layerEnd) {
-          // Already passed this layer
-          opacity = 0;
+        } else {
+          // Other layers fade in and out
+          if (scrollProgress >= layerStart && scrollProgress < layerEnd) {
+            if (scrollProgress < layerStart + 0.1) {
+              opacity = (scrollProgress - layerStart) / 0.1;
+            } else if (scrollProgress > layerEnd - 0.1) {
+              opacity = (layerEnd - scrollProgress) / 0.1;
+            } else {
+              opacity = 1;
+            }
+          }
         }
 
         layer.style.opacity = Math.max(0, Math.min(1, opacity));

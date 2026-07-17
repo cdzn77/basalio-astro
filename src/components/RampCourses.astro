@@ -219,38 +219,40 @@ const {
     transform: translateX(4px);
   }
 
-  /* PAGINATION CONTROLS: Below the button on left side */
+  /* PAGINATION CONTROLS: At bottom of left column with spacing */
   .pagination-controls {
     display: flex;
     flex-direction: row;
     gap: 12px;
-    margin-top: 40px;
+    margin-top: auto;
   }
 
-  /* Visible navigation buttons (repositioned to left column) */
+  /* Visible navigation buttons (light background, dark arrows) */
   .carousel-button {
     width: 40px;
-    height: 44px;
+    height: 40px;
     border-radius: 8px;
-    background: var(--basalio-ink, #000000);
-    color: var(--basalio-paper, #FFFFFF);
-    border: none;
+    background: #F5F5F5;
+    color: var(--basalio-ink, #000000);
+    border: 1px solid #E8E8E8;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 20;
-    transition: opacity 200ms ease;
+    transition: all 200ms ease;
     flex: 0 0 40px;
   }
 
   .carousel-button:disabled {
     pointer-events: none;
     opacity: 0.5;
+    background: #FAFAFA;
   }
 
   .carousel-button:hover:not(:disabled) {
-    opacity: 0.8;
+    background: #FFFFFF;
+    border-color: #D0D0D0;
   }
 
   /* RIGHT COLUMN: Carousel (1109px wide, or fill remaining space) */

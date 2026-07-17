@@ -1,12 +1,12 @@
 ---
-// Ramp Resources - Structural skeleton
+// Ramp Resources - Functional accordion with expandable rows
 // Two-part header: LEFT (eyebrow) | RIGHT (description + View All link)
-// Resource list with dividers and icon buttons
+// Resource rows with height-animated expansion, description, and "learn more" link
 
 interface Resource {
   title: string;
-  description?: string;
-  link?: string;
+  description: string;
+  slug: string;
 }
 
 interface Props {
@@ -19,9 +19,21 @@ interface Props {
 
 const {
   resources = [
-    { title: "[RESOURCE_TITLE_1]", description: "Placeholder description" },
-    { title: "[RESOURCE_TITLE_2]", description: "Placeholder description" },
-    { title: "[RESOURCE_TITLE_3]", description: "Placeholder description" }
+    {
+      title: "Client Onboarding",
+      description: "[RESOURCE_DESCRIPTION_1] - A comprehensive guide to streamline client intake and setup processes.",
+      slug: "client-onboarding"
+    },
+    {
+      title: "Branding Framework",
+      description: "[RESOURCE_DESCRIPTION_2] - Essential principles and templates for building consistent brand identity.",
+      slug: "branding-framework"
+    },
+    {
+      title: "AI Prompts for Marketing",
+      description: "[RESOURCE_DESCRIPTION_3] - Ready-to-use prompts to accelerate content creation and strategy.",
+      slug: "ai-prompts-marketing"
+    }
   ],
   sectionLabel = "OUR RESOURCES",
   sectionDescription = "Kickstart your campaigns with free templates and resources because smart marketing should be accessible to everyone.",
@@ -53,23 +65,38 @@ const {
     </div>
   </div>
 
-  <!-- RESOURCE LIST: dividers + rows -->
-  <div class="resources-list">
-    <div class="divider"></div>
-    {resources.map((resource) => (
-      <>
-        <div class="resource-row">
-          <h3 class="resource-title">{resource.title}</h3>
-          <button class="resource-icon-button" aria-label="View resource" type="button">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14"></path>
-              <path d="M12 5v14"></path>
-            </svg>
-          </button>
-        </div>
-        <div class="divider"></div>
-      </>
-    ))}
+  <!-- RESOURCE LIST WRAPPER: Spacer + List aligned to right column -->
+  <div class="resources-list-wrapper">
+    <!-- Spacer matching eyebrow column width (35%) -->
+    <div class="resources-list-spacer"></div>
+
+    <!-- Resource list aligned under header-right (65%) -->
+    <div class="resources-list">
+      <div class="divider"></div>
+      {resources.map((resource, index) => (
+        <>
+          <div class="resource-item" data-index={index} data-open="false">
+            <div class="resource-row">
+              <h3 class="resource-title">{resource.title}</h3>
+              <button class="resource-icon-button" aria-label="View resource" type="button">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14"></path>
+                  <path d="M12 5v14"></path>
+                </svg>
+              </button>
+            </div>
+            <!-- Expanded content container -->
+            <div class="resource-content" style="height: 0; overflow: hidden;">
+              <div class="resource-content-inner">
+                <p class="resource-body">{resource.description}</p>
+                <a href={`/resources/${resource.slug}`} class="resource-link">learn more</a>
+              </div>
+            </div>
+          </div>
+          <div class="divider"></div>
+        </>
+      ))}
+    </div>
   </div>
 </section>
 
@@ -106,7 +133,8 @@ const {
     text-transform: uppercase;
     color: var(--basalio-ink, #000000);
     margin: 0;
-    flex: 0 0 auto;
+    flex: 1 1 0%;
+    max-width: 35%;
   }
 
   /* Right side: description + View All */
@@ -116,6 +144,7 @@ const {
     justify-content: space-between;
     align-items: flex-start;
     flex: 1;
+    max-width: 65%;
     gap: 40px;
   }
 
@@ -170,11 +199,26 @@ const {
     transform: translateX(4px);
   }
 
-  /* RESOURCE LIST: dividers + rows */
+  /* RESOURCE LIST WRAPPER: Spacer + List aligned to right column */
+  .resources-list-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 40px;
+  }
+
+  /* Spacer: matches eyebrow column width (35%) */
+  .resources-list-spacer {
+    flex: 1 1 0%;
+    max-width: 35%;
+  }
+
+  /* RESOURCE LIST: dividers + rows, aligned under header-right (65%) */
   .resources-list {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    flex: 1 1 0%;
+    max-width: 65%;
     gap: 0;
   }
 
@@ -224,4 +268,86 @@ const {
   .resource-icon-button:hover {
     opacity: 0.8;
   }
+
+  /* Resource item: accordion wrapper with expanded content */
+  .resource-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Expanded content container: animated height */
+  .resource-content {
+    transition: height 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+  }
+
+  /* Inner wrapper for content sizing */
+  .resource-content-inner {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Resource body text: 16px, weight 400, line-height 22.4px, rgb(87,87,87) */
+  .resource-body {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22.4px;
+    color: rgb(87, 87, 87);
+    margin: 0;
+    padding: 0;
+  }
+
+  /* "Learn more" link: Azeret Mono, 14px, weight 500, black, no underline default */
+  .resource-link {
+    font-family: "Azeret Mono", monospace;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--basalio-ink, #000000);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-bottom-color 200ms ease;
+    width: fit-content;
+    cursor: pointer;
+  }
+
+  .resource-link:hover {
+    border-bottom-color: var(--basalio-ink, #000000);
+  }
 </style>
+
+<script>
+  // Multi-open accordion: track each resource's open state independently
+  const openResources = new Set();
+
+  document.querySelectorAll('.resource-row').forEach((row) => {
+    const button = row.querySelector('.resource-icon-button');
+
+    if (button) {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const item = row.closest('.resource-item');
+        const index = parseInt(item.getAttribute('data-index'));
+        const contentContainer = item.querySelector('.resource-content');
+        const contentInner = item.querySelector('.resource-content-inner');
+
+        if (openResources.has(index)) {
+          // Close this resource
+          openResources.delete(index);
+          item.setAttribute('data-open', 'false');
+          contentContainer.style.height = '0px';
+        } else {
+          // Open this resource
+          openResources.add(index);
+          item.setAttribute('data-open', 'true');
+          // Calculate actual height of content
+          const height = contentInner.getBoundingClientRect().height;
+          contentContainer.style.height = `${height}px`;
+        }
+      });
+    }
+  });
+</script>

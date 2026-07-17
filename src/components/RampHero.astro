@@ -49,10 +49,12 @@ const {
       <p class="course-description">{courseText}</p>
     </div>
     <a href={courseLink} class="btn-view-course">
-      {courseButton}
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M1 8H15M15 8L8 1M15 8L8 15"></path>
-      </svg>
+      <span class="btn-text">{courseButton}</span>
+      <span class="btn-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M1 8H15M15 8L8 1M15 8L8 15"></path>
+        </svg>
+      </span>
     </a>
   </div>
 </section>
@@ -223,15 +225,15 @@ const {
   .btn-view-course {
     background: #000000;
     color: #FFFFFF;
-    padding: 14px 24px;
-    border-radius: 10px;
+    padding: 0;
+    border-radius: 0;
     font-size: 12px;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0;
     white-space: nowrap;
     text-decoration: none;
     cursor: pointer;
@@ -239,6 +241,29 @@ const {
     height: 48px;
     transition: opacity 0.3s ease;
     font-family: 'Manrope', sans-serif;
+    overflow: hidden;
+  }
+
+  .btn-text {
+    display: flex;
+    align-items: center;
+    padding: 14px 24px;
+    border-radius: 10px 0 0 10px;
+    background: #000000;
+  }
+
+  .btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 24px;
+    border-radius: 0 10px 10px 0;
+    background: #000000;
+    transition: transform 0.3s ease;
+  }
+
+  .btn-view-course:hover .btn-icon {
+    transform: translateX(4px);
   }
 
   .btn-view-course:hover {

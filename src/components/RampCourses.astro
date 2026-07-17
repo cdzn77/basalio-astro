@@ -1,6 +1,6 @@
 ---
-// Ramp Courses - 1:1 PIXEL-PERFECT REPLICA
-// Exact dimensions: 1791×971px, padding 200px 40px
+// Ramp Courses - Structural skeleton with page-based carousel navigation
+// Two-column layout: LEFT (500px text/button) | RIGHT (carousel 1109px)
 
 interface Course {
   title: string;
@@ -11,177 +11,258 @@ interface Course {
 
 interface Props {
   courses?: Course[];
+  sectionLabel?: string;
+  sectionHeading?: string;
+  ctaLabel?: string;
+  ctaLink?: string;
 }
 
 const {
   courses = [
     {
-      title: "Social Media Growth",
-      description: "Learn the fundamentals of building a strong social media presence",
-      image: "https://via.placeholder.com/420x300?text=Social+Media",
+      title: "Course 1",
+      description: "Placeholder description",
+      image: "https://via.placeholder.com/500x500?text=Course+1",
       link: "#"
     },
     {
-      title: "Content Creation 101",
-      description: "Teaches you how to create content that feels intentional and on-brand",
-      image: "https://via.placeholder.com/420x300?text=Content+Creation",
+      title: "Course 2",
+      description: "Placeholder description",
+      image: "https://via.placeholder.com/500x500?text=Course+2",
       link: "#"
     },
     {
-      title: "Branding 101",
-      description: "Focus on positioning, messaging, and consistency across every touchpoint",
-      image: "https://via.placeholder.com/420x300?text=Branding",
+      title: "Course 3",
+      description: "Placeholder description",
+      image: "https://via.placeholder.com/500x500?text=Course+3",
       link: "#"
     },
     {
-      title: "Email Marketing 101",
-      description: "Learn how to use email lists to actually support and grow your business",
-      image: "https://via.placeholder.com/420x300?text=Email+Marketing",
+      title: "Course 4",
+      description: "Placeholder description",
+      image: "https://via.placeholder.com/500x500?text=Course+4",
       link: "#"
     }
-  ]
+  ],
+  sectionLabel = "OUR COURSES",
+  sectionHeading = "Courses for Digital Creatives",
+  ctaLabel = "View all",
+  ctaLink = "#"
 } = Astro.props;
 ---
 
 <section class="courses" id="courses">
-  <div class="courses-header">
-    <div class="header-left">
-      <p class="courses-label">OUR COURSES</p>
-      <h2>Courses for Digital Creatives</h2>
-    </div>
-    <a href="#" class="view-all">View all</a>
-  </div>
-
-  <div class="carousel-wrapper">
-    <button class="carousel-arrow prev" aria-label="Previous">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M12 4L6 10L12 16"></path>
-      </svg>
-    </button>
-
-    <div class="carousel-container">
-      <div class="carousel-track">
-        {courses.map((course) => (
-          <a href={course.link || "#"} class="course-card">
-            <div class="course-icon">
-              {course.image && <img src={course.image} alt={course.title} class="course-image" />}
-            </div>
-            <h3 class="course-title">{course.title}</h3>
-            <p class="course-description">{course.description}</p>
-          </a>
-        ))}
+  <div class="courses-inner">
+    <!-- LEFT COLUMN: 500px, eyebrow + heading + button -->
+    <div class="courses-left">
+      <div class="courses-header">
+        <p class="courses-eyebrow">{sectionLabel}</p>
+        <h2 class="courses-heading">{sectionHeading}</h2>
       </div>
+
+      <!-- VIEW ALL BUTTON: Link with two pills (text + icon) -->
+      <a href={ctaLink} class="view-all-link">
+        <span class="view-all-text">{ctaLabel}</span>
+        <span class="view-all-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L12 8L6 14"></path>
+          </svg>
+        </span>
+      </a>
     </div>
 
-    <button class="carousel-arrow next" aria-label="Next">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M8 4L14 10L8 16"></path>
-      </svg>
-    </button>
+    <!-- RIGHT COLUMN: Carousel (1109px, or fill remaining) -->
+    <div class="courses-right">
+      <!-- Invisible left hover zone -->
+      <div class="carousel-zone carousel-zone-left" data-direction="prev"></div>
+
+      <!-- Carousel viewport (overflow clip) -->
+      <div class="carousel-viewport">
+        <!-- Track: position absolute, flex row, gap 20px, overflowing -->
+        <div class="carousel-track">
+          {courses.map((course) => (
+            <a href={course.link || "#"} class="course-card">
+              <div class="course-image-wrapper">
+                {course.image && <img src={course.image} alt={course.title} class="course-image" />}
+              </div>
+              <h3 class="course-card-title">{course.title}</h3>
+              <p class="course-card-description">{course.description}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Visible navigation buttons -->
+      <button class="carousel-button carousel-button-prev" aria-label="Previous courses" data-direction="prev">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10 2L4 8L10 14"></path>
+        </svg>
+      </button>
+      <button class="carousel-button carousel-button-next" aria-label="Next courses" data-direction="next">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L12 8L6 14"></path>
+        </svg>
+      </button>
+
+      <!-- Invisible right hover zone -->
+      <div class="carousel-zone carousel-zone-right" data-direction="next"></div>
+    </div>
   </div>
 </section>
 
 <style>
-  /* EXACT PIXEL SPECIFICATIONS - RESPONSIVE VERSION */
+  /* SECTION SHELL: flex column, center alignment, padding 200px 40px, gap 40px */
   .courses {
-    background: #FFFFFF;
-    width: 100%;
-    max-width: 1791px;
-    padding: 200px 40px;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 200px 40px;
     gap: 40px;
+    background: var(--basalio-paper, #FFFFFF);
+    width: 100%;
     box-sizing: border-box;
   }
 
-  .courses-header {
-    width: 100%;
-    max-width: 1711px;
+  /* INNER ROW: flex row, space-between, align-items flex-start, two columns */
+  .courses-inner {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-    margin: 0 auto 40px;
-    box-sizing: border-box;
-    gap: 60px;
+    width: 100%;
+    gap: 40px;
   }
 
-  .header-left {
+  /* LEFT COLUMN: 500px wide, flex column, space-between (no gap between children) */
+  .courses-left {
+    flex: 0 0 500px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    justify-content: space-between;
+    height: 100%;
   }
 
-  .courses-label {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 2.4px;
-    text-transform: uppercase;
-    color: #999999;
-    margin: 0;
-  }
-
-  .courses-header h2 {
-    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 48px;
-    font-weight: 400;
-    line-height: 1.2;
-    color: #000000;
-    margin: 0;
-  }
-
-  .view-all {
-    font-size: 14px;
-    font-weight: 600;
-    color: #0000EE;
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  .carousel-wrapper {
-    width: 100%;
-    max-width: 1711px;
+  /* Eyebrow + heading block (natural document flow spacing) */
+  .courses-header {
     display: flex;
-    align-items: center;
-    gap: 20px;
-    margin: 0 auto;
-    box-sizing: border-box;
+    flex-direction: column;
   }
 
-  .carousel-arrow {
-    width: 70px;
-    height: 70px;
+  .courses-eyebrow {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 19.6px;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    color: var(--basalio-ink, #000000);
+    margin: 0 0 12px 0;
+  }
+
+  .courses-heading {
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 48px;
+    letter-spacing: -0.8px;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+  }
+
+  /* VIEW ALL BUTTON: Link with two pills (text + icon) */
+  .view-all-link {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  .view-all-text {
+    background: var(--basalio-ink, #000000);
+    color: var(--basalio-paper, #FFFFFF);
     border-radius: 8px;
-    background: #F0F0F0;
-    color: #000000;
-    border: none;
-    cursor: pointer;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.3s ease;
-    flex-shrink: 0;
   }
 
-  .carousel-arrow:hover {
-    background: #E0E0E0;
-  }
-
-  .carousel-container {
-    flex: 1;
-    overflow: hidden;
-  }
-
-  .carousel-track {
+  .view-all-icon {
+    background: var(--basalio-ink, #000000);
+    color: var(--basalio-paper, #FFFFFF);
+    border-radius: 8px;
+    width: 40px;
+    height: 44px;
     display: flex;
-    gap: 24px;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 40px;
+    transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
+  .view-all-link:hover .view-all-icon {
+    transform: translateX(4px);
+  }
+
+  /* RIGHT COLUMN: Carousel (1109px wide, or fill remaining space) */
+  .courses-right {
+    flex: 1;
+    position: relative;
+    overflow: clip;
+    min-height: 571px;
+  }
+
+  /* Invisible hover zones (left and right edges) */
+  .carousel-zone {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 15%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .carousel-zone-left {
+    left: 0;
+  }
+
+  .carousel-zone-right {
+    right: 0;
+  }
+
+  .carousel-zone:disabled,
+  .carousel-zone[data-disabled] {
+    pointer-events: none;
+  }
+
+  /* Carousel viewport (overflow clip, position relative for absolute track) */
+  .carousel-viewport {
+    position: relative;
+    overflow: clip;
+    width: 100%;
+    height: 571px;
+  }
+
+  /* Track: position absolute, flex row, gap 20px, width = sum of cards + gaps */
+  .carousel-track {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Course cards: mapped from array, placeholder solid color with icon */
   .course-card {
     flex: 0 0 500px;
-    height: 571px;
+    aspect-ratio: 1;
     background: #FFEA00;
     border-radius: 12px;
     padding: 40px;
@@ -190,20 +271,18 @@ const {
     gap: 16px;
     text-decoration: none;
     color: inherit;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
   }
 
-  .course-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  }
-
-  .course-icon {
-    width: 420px;
-    height: 300px;
+  .course-image-wrapper {
+    width: 100%;
+    flex: 1;
     background: #000000;
     border-radius: 8px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .course-image {
@@ -213,75 +292,144 @@ const {
     object-position: center;
   }
 
-  .course-title {
-    font-size: 20px;
-    font-weight: 600;
+  .course-card-title {
+    font-size: 18px;
+    font-weight: 500;
     color: #000000;
     margin: 0;
   }
 
-  .course-description {
+  .course-card-description {
     font-size: 14px;
     font-weight: 400;
     color: #000000;
-    line-height: 1.6;
+    line-height: 1.5;
     margin: 0;
-    flex-grow: 1;
   }
 
-  /* RESPONSIVE OVERRIDES */
-  @media (max-width: 1024px) {
-    .courses {
-      width: 100%;
-      height: auto;
-    }
-
-    .carousel-wrapper {
-      width: 100%;
-    }
+  /* Visible navigation buttons (positioned over carousel) */
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 44px;
+    border-radius: 8px;
+    background: var(--basalio-ink, #000000);
+    color: var(--basalio-paper, #FFFFFF);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    transition: opacity 200ms ease;
   }
 
-  @media (max-width: 768px) {
-    .courses {
-      width: 100%;
-      padding: 80px 20px;
-    }
+  .carousel-button:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
 
-    .carousel-wrapper {
-      flex-direction: column;
-    }
+  .carousel-button-prev {
+    left: 12px;
+  }
 
-    .course-card {
-      width: 100%;
-    }
+  .carousel-button-next {
+    right: 12px;
+  }
+
+  .carousel-button:hover:not(:disabled) {
+    opacity: 0.8;
   }
 </style>
 
 <script>
+  // PAGE-BASED CAROUSEL NAVIGATION
+  // Paging logic: calculate how many cards fit in viewport, advance by one page per action
+
   const track = document.querySelector('.carousel-track');
-  const prevBtn = document.querySelector('.carousel-arrow.prev');
-  const nextBtn = document.querySelector('.carousel-arrow.next');
+  const viewport = document.querySelector('.carousel-viewport');
   const cards = document.querySelectorAll('.course-card');
+  const prevBtn = document.querySelector('.carousel-button-prev');
+  const nextBtn = document.querySelector('.carousel-button-next');
+  const leftZone = document.querySelector('.carousel-zone-left');
+  const rightZone = document.querySelector('.carousel-zone-right');
 
-  if (track && prevBtn && nextBtn && cards.length > 0) {
-    let currentScroll = 0;
-    const cardWidth = 500; // flex: 0 0 500px
-    const gap = 24;
-    const stepSize = cardWidth + gap;
-    const maxScroll = (cards.length - 2) * stepSize;
+  if (track && viewport && cards.length > 0) {
+    const CARD_WIDTH = 500; // flex: 0 0 500px
+    const GAP = 20;
+    const CARD_PLUS_GAP = CARD_WIDTH + GAP;
 
-    const updateCarousel = () => {
-      track.style.transform = `translateX(-${currentScroll}px)`;
+    let currentPage = 0;
+    let totalPages = 1;
+
+    // Calculate how many cards fit in viewport width
+    const calculatePaging = () => {
+      const viewportWidth = viewport.clientWidth;
+      const cardsPerView = Math.floor(viewportWidth / CARD_PLUS_GAP);
+      totalPages = Math.max(1, Math.ceil(cards.length / cardsPerView));
+      return cardsPerView;
     };
 
-    prevBtn.addEventListener('click', () => {
-      currentScroll = Math.max(0, currentScroll - stepSize);
-      updateCarousel();
-    });
+    // Update track position based on current page
+    const updateTrackPosition = () => {
+      const offset = currentPage * (CARD_WIDTH + GAP);
+      track.style.transform = `translateX(-${offset}px)`;
+      updateButtonStates();
+    };
 
-    nextBtn.addEventListener('click', () => {
-      currentScroll = Math.min(maxScroll, currentScroll + stepSize);
-      updateCarousel();
+    // Enable/disable buttons based on boundary logic
+    const updateButtonStates = () => {
+      const isFirstPage = currentPage === 0;
+      const isLastPage = currentPage === totalPages - 1;
+
+      prevBtn.disabled = isFirstPage;
+      nextBtn.disabled = isLastPage;
+      leftZone.style.pointerEvents = isFirstPage ? 'none' : 'auto';
+      rightZone.style.pointerEvents = isLastPage ? 'none' : 'auto';
+
+      if (isFirstPage) {
+        leftZone.setAttribute('data-disabled', 'true');
+      } else {
+        leftZone.removeAttribute('data-disabled');
+      }
+
+      if (isLastPage) {
+        rightZone.setAttribute('data-disabled', 'true');
+      } else {
+        rightZone.removeAttribute('data-disabled');
+      }
+    };
+
+    // Navigate to next or previous page
+    const navigate = (direction) => {
+      if (direction === 'next' && currentPage < totalPages - 1) {
+        currentPage++;
+        updateTrackPosition();
+      } else if (direction === 'prev' && currentPage > 0) {
+        currentPage--;
+        updateTrackPosition();
+      }
+    };
+
+    // Initialize paging
+    calculatePaging();
+    updateButtonStates();
+
+    // Attach click handlers to visible buttons
+    prevBtn?.addEventListener('click', () => navigate('prev'));
+    nextBtn?.addEventListener('click', () => navigate('next'));
+
+    // Attach mouseenter handlers to invisible hover zones
+    leftZone?.addEventListener('mouseenter', () => navigate('prev'));
+    rightZone?.addEventListener('mouseenter', () => navigate('next'));
+
+    // Recalculate paging on window resize
+    window.addEventListener('resize', () => {
+      calculatePaging();
+      currentPage = Math.min(currentPage, totalPages - 1);
+      updateTrackPosition();
     });
   }
 </script>

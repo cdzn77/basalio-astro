@@ -49,10 +49,7 @@ const {
   </div>
 
   <div class="hero-container">
-    <!-- LEFT: Heading (overlaid on top of image) -->
-    <div class="hero-left">
-      <h1 class="hero-heading">We turn<br/>strategy<br/>into growth</h1>
-    </div>
+    <!-- Empty container - image fills the space -->
   </div>
 
   <!-- BOTTOM: Course Teaser (74px height) -->
@@ -97,6 +94,8 @@ const {
     justify-content: space-between;
     background: #FFEA00;
     box-sizing: border-box;
+    position: relative;
+    z-index: 3;
   }
 
   .brand-logo {
@@ -148,6 +147,7 @@ const {
     box-sizing: border-box;
     position: relative;
     overflow: hidden;
+    z-index: 1;
   }
 
   /* Image wrapper - positioned to cover entire hero, image expands from center */
@@ -216,7 +216,7 @@ const {
     margin: 0 auto;
     box-sizing: border-box;
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 
   .course-left {

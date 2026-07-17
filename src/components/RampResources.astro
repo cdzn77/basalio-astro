@@ -299,21 +299,49 @@ const {
     padding: 0;
   }
 
-  /* "Learn more" link: Azeret Mono, 14px, weight 500, black, no underline default */
+  /* "Learn more" button: styled to match Ramp template button specs */
   .resource-link {
-    font-family: "Azeret Mono", monospace;
-    font-size: 14px;
+    /* Button dimensions and positioning */
+    width: 151px;
+    height: 41px;
+    display: block;
+    position: relative;
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+
+    /* Typography */
+    font-family: sans-serif;
+    font-size: 12px;
     font-weight: 500;
     color: var(--basalio-ink, #000000);
     text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-bottom-color 200ms ease;
-    width: fit-content;
+
+    /* Box model */
+    box-sizing: border-box;
+    padding: 0 16px;
+    border: 1px solid var(--basalio-ink, #000000);
+    border-radius: 4px;
+    background: transparent;
+
+    /* Interaction */
     cursor: pointer;
+    transition: all 200ms ease;
+
+    /* Display */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Transform */
+    transform: none;
+    transform-origin: 75.5px 20.5px;
+    -webkit-font-smoothing: antialiased;
   }
 
   .resource-link:hover {
-    border-bottom-color: var(--basalio-ink, #000000);
+    background: var(--basalio-ink, #000000);
+    color: var(--basalio-paper, #FFFFFF);
   }
 </style>
 

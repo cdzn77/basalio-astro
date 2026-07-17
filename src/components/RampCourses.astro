@@ -53,7 +53,7 @@ const {
 
 <section class="courses" id="courses">
   <div class="courses-inner">
-    <!-- LEFT COLUMN: 500px, eyebrow + heading + button -->
+    <!-- LEFT COLUMN: 500px, eyebrow + heading + button + pagination -->
     <div class="courses-left">
       <div class="courses-header">
         <p class="courses-eyebrow">{sectionLabel}</p>
@@ -69,6 +69,20 @@ const {
           </svg>
         </span>
       </a>
+
+      <!-- PAGINATION CONTROLS: Below the button on the left side -->
+      <div class="pagination-controls">
+        <button class="carousel-button carousel-button-prev" aria-label="Previous courses" data-direction="prev">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10 2L4 8L10 14"></path>
+          </svg>
+        </button>
+        <button class="carousel-button carousel-button-next" aria-label="Next courses" data-direction="next">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L12 8L6 14"></path>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <!-- RIGHT COLUMN: Carousel (1109px, or fill remaining) -->
@@ -99,18 +113,6 @@ const {
           })}
         </div>
       </div>
-
-      <!-- Visible navigation buttons -->
-      <button class="carousel-button carousel-button-prev" aria-label="Previous courses" data-direction="prev">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M10 2L4 8L10 14"></path>
-        </svg>
-      </button>
-      <button class="carousel-button carousel-button-next" aria-label="Next courses" data-direction="next">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M6 2L12 8L6 14"></path>
-        </svg>
-      </button>
 
       <!-- Invisible right hover zone -->
       <div class="carousel-zone carousel-zone-right" data-direction="next"></div>
@@ -215,6 +217,40 @@ const {
 
   .view-all-link:hover .view-all-icon {
     transform: translateX(4px);
+  }
+
+  /* PAGINATION CONTROLS: Below the button on left side */
+  .pagination-controls {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    margin-top: 40px;
+  }
+
+  /* Visible navigation buttons (repositioned to left column) */
+  .carousel-button {
+    width: 40px;
+    height: 44px;
+    border-radius: 8px;
+    background: var(--basalio-ink, #000000);
+    color: var(--basalio-paper, #FFFFFF);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    transition: opacity 200ms ease;
+    flex: 0 0 40px;
+  }
+
+  .carousel-button:disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .carousel-button:hover:not(:disabled) {
+    opacity: 0.8;
   }
 
   /* RIGHT COLUMN: Carousel (1109px wide, or fill remaining space) */
@@ -322,41 +358,6 @@ const {
     margin: 0;
   }
 
-  /* Visible navigation buttons (positioned over carousel) */
-  .carousel-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 44px;
-    border-radius: 8px;
-    background: var(--basalio-ink, #000000);
-    color: var(--basalio-paper, #FFFFFF);
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 20;
-    transition: opacity 200ms ease;
-  }
-
-  .carousel-button:disabled {
-    pointer-events: none;
-    opacity: 0.5;
-  }
-
-  .carousel-button-prev {
-    left: 12px;
-  }
-
-  .carousel-button-next {
-    right: 12px;
-  }
-
-  .carousel-button:hover:not(:disabled) {
-    opacity: 0.8;
-  }
 </style>
 
 <script>

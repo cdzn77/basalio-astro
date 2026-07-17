@@ -24,12 +24,23 @@ const {
   <!-- HEADER: Logo + Menu Button -->
   <div class="hero-header">
     <a href="/" class="brand-logo">Ramp Studio.</a>
-    <button class="menu-btn">
-      <span>MENU</span>
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" fill="currentColor" class="plus-icon">
-        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
-      </svg>
-    </button>
+    <div class="menu-wrapper">
+      <button class="menu-btn" id="menu-toggle">
+        <span>MENU</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" fill="currentColor" class="plus-icon">
+          <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+        </svg>
+      </button>
+
+      <!-- Menu Dropdown -->
+      <div class="menu-dropdown" id="menu-dropdown">
+        <a href="#courses" class="menu-item">COURSES</a>
+        <a href="#subscription" class="menu-item">SUBSCRIPTION</a>
+        <a href="#resources" class="menu-item">RESOURCES</a>
+        <a href="#about" class="menu-item">ABOUT</a>
+        <a href="#contact" class="menu-item">CONTACT</a>
+      </div>
+    </div>
   </div>
 
   <div class="hero-container">
@@ -318,4 +329,98 @@ const {
       height: auto;
     }
   }
+
+  /* MENU DROPDOWN */
+  .menu-wrapper {
+    position: relative;
+  }
+
+  .menu-dropdown {
+    position: absolute;
+    top: 41px;
+    right: 0;
+    width: 182px;
+    height: 218px;
+    background: #000000;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 20px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    padding: 8px 16px;
+    box-sizing: border-box;
+    row-gap: 1px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 10;
+  }
+
+  .menu-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .menu-item {
+    width: 150px;
+    height: 40px;
+    background: rgba(255, 222, 222, 0);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+    padding: 10px 0px;
+    column-gap: 15px;
+    row-gap: 15px;
+    font-family: 'Azeret Mono', monospace;
+    font-size: 12px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #FFFFFF;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    white-space: nowrap;
+    transition: opacity 0.2s ease;
+  }
+
+  .menu-item:hover {
+    opacity: 0.7;
+  }
 </style>
+
+<script>
+  // Menu toggle functionality
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuDropdown = document.getElementById('menu-dropdown');
+
+  if (menuToggle && menuDropdown) {
+    // Toggle menu on button click
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menuDropdown.classList.toggle('active');
+    });
+
+    // Close menu when clicking on a menu item
+    menuDropdown.querySelectorAll('.menu-item').forEach(item => {
+      item.addEventListener('click', () => {
+        menuDropdown.classList.remove('active');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!menuToggle.contains(e.target) && !menuDropdown.contains(e.target)) {
+        menuDropdown.classList.remove('active');
+      }
+    });
+  }
+</script>

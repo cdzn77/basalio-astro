@@ -264,12 +264,15 @@ const {
     background: #000000;
     width: 40px;
     height: 44px;
-    transition: transform 0.3s ease;
     flex: 0 0 auto;
   }
 
-  .btn-view-course:hover .btn-icon {
-    transform: translateX(12px);
+  .btn-icon svg {
+    transition: transform 0.3s ease;
+  }
+
+  .btn-view-course:hover .btn-icon svg {
+    transform: translateX(4px);
   }
 
   .btn-view-course:hover {

@@ -1,0 +1,15 @@
+import { t as e } from "./rolldown-runtime.blwatvxf.mjs";
+import { A as t, D as n, I as r, M as i, N as a, l as o, s, v as c, x as l } from "./react.p9wvsw7c.mjs";
+import { S as u, a as d, r as f, t as p } from "./motion.dmld-do.mjs";
+import { Ct as m, D as h, O as g, St as _, at as v, j as y, mt as b, o as x, q as S } from "./framer.ce8ktlrq.mjs";
+
+function C(e, ...t) { let n = {}; return t?.forEach(t => t && Object.assign(n, e[t])), n }
+var w, T, E, D, O, k, A, j, M, N, P, F = e((() => { s(), S(), p(), n(), w = [`wu5_OhCE3`, `XnIdWadDp`], T = `framer-39ErQ`, E = { wu5_OhCE3: `framer-v-1bpobh8`, XnIdWadDp: `framer-v-wiokxl` }, D = { bounce: .2, delay: 0, duration: .4, type: `spring` }, O = ({ value: e, children: t }) => { let n = i(d),
+			r = e ?? n.transition,
+			s = a(() => ({ ...n, transition: r }), [JSON.stringify(r)]); return o(d.Provider, { value: s, children: t }) }, k = { Black: `wu5_OhCE3`, Yellow: `XnIdWadDp` }, A = u.create(r), j = ({ height: e, id: t, width: n, ...r }) => ({ ...r, variant: k[r.variant] ?? r.variant ?? `wu5_OhCE3` }), M = (e, t) => e.layoutDependency ? t.join(`-`) + e.layoutDependency : t.join(`-`), N = m(c(function(e, n) { let r = t(null),
+			i = n ?? r,
+			a = l(),
+			{ activeLocale: s, setLocale: c } = b();
+		v(); let { style: d, className: p, layoutId: m, variant: h, ...g } = j(e), { baseVariant: x, classNames: S, clearLoadingGesture: k, gestureHandlers: N, gestureVariant: P, isLoading: F, setGestureState: I, setVariant: L, variants: R } = _({ cycleOrder: w, defaultVariant: `wu5_OhCE3`, ref: i, variant: h, variantClassNames: E }), z = M(e, R), B = y(T); return o(f, { id: m ?? a, children: o(A, { animate: R, initial: !1, children: o(O, { value: D, children: o(u.div, { ...g, ...N, className: y(B, `framer-1bpobh8`, p, S), "data-framer-name": `Black`, layoutDependency: z, layoutId: `wu5_OhCE3`, ref: i, style: { backgroundColor: `var(--token-2071f887-a813-449a-b145-01e2e3b7c695, rgb(0, 0, 0))`, borderBottomLeftRadius: 100, borderBottomRightRadius: 100, borderTopLeftRadius: 100, borderTopRightRadius: 100, ...d }, variants: { XnIdWadDp: { backgroundColor: `var(--token-05c4fbba-3569-4702-b1ae-1f67b9f5bf64, rgb(255, 234, 0))` } }, ...C({ XnIdWadDp: { "data-framer-name": `Yellow` } }, x, P) }) }) }) }) }), [`@supports (aspect-ratio: 1) { body { --framer-aspect-ratio-supported: auto; } }`, `.framer-39ErQ.framer-jm5wn5, .framer-39ErQ .framer-jm5wn5 { display: block; }`, `.framer-39ErQ.framer-1bpobh8 { height: 16px; overflow: var(--overflow-clip-fallback, clip); position: relative; width: 16px; will-change: var(--framer-will-change-override, transform); }`], `framer-39ErQ`), P = N, N.displayName = `Cursor`, N.defaultProps = { height: 16, width: 16 }, g(N, { variant: { options: [`wu5_OhCE3`, `XnIdWadDp`], optionTitles: [`Black`, `Yellow`], title: `Variant`, type: x.Enum } }), h(N, [{ explicitInter: !0, fonts: [] }], { supportsExplicitInterCodegen: !0 }) }));
+export { P as n, F as t };
+//# sourceMappingURL=nLGrK4TwK._qZlkt2B.mjs.map

@@ -1,0 +1,5 @@
+import { t as e } from "./rolldown-runtime.blwatvxf.mjs";
+import { M as t, q as n } from "./framer.ce8ktlrq.mjs";
+var r, i, a, o = e((() => { n(), t.loadFonts([]), r = [{ explicitInter: !0, fonts: [] }], i = [`.framer-5PorC .framer-styles-preset-1vwyv0z:not(.rich-text-wrapper), .framer-5PorC .framer-styles-preset-1vwyv0z.rich-text-wrapper a { --framer-link-hover-text-color: var(--token-2071f887-a813-449a-b145-01e2e3b7c695, #000000); --framer-link-text-color: var(--token-599d3e0d-43b0-4ec4-9734-27455028333f, rgba(0, 0, 0, 0.5)); --framer-link-text-decoration: none; transition-delay: 0s; transition-duration: 0.4s; transition-property: color; transition-timing-function: cubic-bezier(0.44, 0, 0.56, 1); }`], a = `framer-5PorC` }));
+export { o as i, i as n, r, a as t };
+//# sourceMappingURL=NG39jbidF.GLpITRDB.mjs.map

@@ -1,0 +1,11 @@
+import { t as e } from "./rolldown-runtime.blwatvxf.mjs";
+import { S as t, U as n, q as r } from "./framer.ce8ktlrq.mjs";
+import { i, t as a } from "./w2owxlnsj.cyilt5v8.mjs";
+
+function o(e, t) { let n = e?.tAjbkzrn0; return { breakpoints: [{ hash: `e46xy1`, mediaQuery: `(min-width: 1200px)` }, { hash: `142884y`, mediaQuery: `(min-width: 810px) and (max-width: 1199.98px)` }, { hash: `4vkrmn`, mediaQuery: `(max-width: 809.98px)` }], description: `Review Ramp’s legal information, including terms of service, privacy policy, and other important disclosures.`, elements: { QOEf0UJHC: `content` }, framerSearch: { index: !0 }, robots: `max-image-preview:large`, serializationId: `framer-WN6PO`, socialImage: `../images/wwm2waimiwnvahhxgmjc07jgew.jpg`, title: `${n===void 0?`{{tAjbkzrn0}}`:l(n)} - Ramp Marketing`, viewport: `width=device-width` } } async function s(e, r) { let i = new t,
+		s = { from: { alias: `NFBxNXd2l`, data: a, type: `Collection` }, select: [{ collection: `NFBxNXd2l`, name: `tAjbkzrn0`, type: `Identifier` }], where: n(e, `NFBxNXd2l`) },
+		c = await i.query(s, r); if (c.length === 0) throw Error(`No data matches pathVariables`); let l = c[0]; return o(l, r) } async function c(e, n) { let r = new t,
+		i = { from: { alias: `NFBxNXd2l`, data: a, type: `Collection` }, select: [{ collection: `NFBxNXd2l`, name: `tAjbkzrn0`, type: `Identifier` }] }; for (let t of e) i.select.push({ collection: `NFBxNXd2l`, name: t, type: `Identifier` }); return (await r.query(i, n)).map(t => ({ metadata: o(t, n), pathVariables: Object.fromEntries(e.map(e => [e, t[e]])) })) }
+var l, u, d, f = e((() => { r(), i(), l = e => typeof e == `string` ? e : String(e), u = 1, d = { exports: { metadataVersion: { type: `variable`, annotations: { framerContractVersion: `1` } }, fetchAllMetadata: { type: `function`, annotations: { framerContractVersion: `1` } }, default: { type: `function`, annotations: { framerContractVersion: `1` } }, fetchMetadata: { type: `function`, annotations: { framerContractVersion: `1` } }, __FramerMetadata__: { type: `variable` } } } }));
+export { o as a, f as i, c as n, u as o, s as r, d as t };
+//# sourceMappingURL=NFBxNXd2l.DIzsRYSF.mjs.map

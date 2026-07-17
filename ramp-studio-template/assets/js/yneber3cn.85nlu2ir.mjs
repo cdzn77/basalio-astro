@@ -1,0 +1,6 @@
+import { t as e } from "./rolldown-runtime.blwatvxf.mjs";
+
+function t(e, t) { return { breakpoints: [{ hash: `r8d2qh`, mediaQuery: `(min-width: 1200px)` }, { hash: `1so3h3t`, mediaQuery: `(min-width: 810px) and (max-width: 1199.98px)` }, { hash: `1q03wuw`, mediaQuery: `(max-width: 809.98px)` }], description: `Browse self-paced marketing courses focused on real-world strategy, execution, and systems you can apply immediately to your business or team.`, elements: { OCutgXrqv: `explore` }, framerSearch: { index: !0 }, robots: `max-image-preview:large`, serializationId: `framer-qkFIa`, socialImage: `../images/wwm2waimiwnvahhxgmjc07jgew.jpg`, title: `Courses - Learn Practical Skills with Ramp Marketing`, viewport: `width=device-width` } }
+var n, r, i = e((() => { n = 1, r = { exports: { default: { type: `function`, annotations: { framerContractVersion: `1` } }, metadataVersion: { type: `variable`, annotations: { framerContractVersion: `1` } }, __FramerMetadata__: { type: `variable` } } } }));
+export { n as i, i as n, t as r, r as t };
+//# sourceMappingURL=ynEbeR3cn.85nLU2IR.mjs.map

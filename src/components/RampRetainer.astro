@@ -1,0 +1,307 @@
+---
+// Ramp Monthly Retainer - Two pricing cards with shared two-pill button component
+// Layout: LEFT (35%, eyebrow+heading+CTA) | RIGHT (65%, two cards side-by-side)
+
+interface PricingCard {
+  title: string;
+  background: string;
+  featureTextColor: string;
+  price: string;
+  features: string[];
+}
+
+interface Props {
+  sectionLabel?: string;
+  sectionHeading?: string;
+  ctaLabel?: string;
+  ctaLink?: string;
+}
+
+const {
+  sectionLabel = "Monthly Retainer",
+  sectionHeading = "Endless Support",
+  ctaLabel = "Contact us",
+  ctaLink = "./contact"
+} = Astro.props;
+
+const pricingCards: PricingCard[] = [
+  {
+    title: "Essentials",
+    background: "#FFFFFF",
+    featureTextColor: "rgb(87,87,87)",
+    price: "€1750/mo",
+    features: [
+      "4 design/content updates per month",
+      "5 weekly social posts",
+      "Month strategy calls",
+      "48-hour email support"
+    ]
+  },
+  {
+    title: "Premium",
+    background: "rgb(255,234,0)",
+    featureTextColor: "rgba(0,0,0,0.65)",
+    price: "€2750/mo",
+    features: [
+      "12 design/content updates per month",
+      "20 weekly social posts",
+      "Weekly strategy call",
+      "24-hour email support"
+    ]
+  }
+];
+---
+
+<section class="retainer">
+  <div class="retainer-inner">
+    <!-- LEFT COLUMN (35%): eyebrow + heading + CTA button -->
+    <div class="retainer-left">
+      <div class="retainer-header">
+        <p class="retainer-eyebrow">{sectionLabel}</p>
+        <h3 class="retainer-heading">{sectionHeading}</h3>
+      </div>
+
+      <!-- VIEW ALL BUTTON: Reused two-pill component -->
+      <a href={ctaLink} class="view-all-link">
+        <span class="view-all-text">{ctaLabel}</span>
+        <span class="view-all-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L12 8L6 14"></path>
+          </svg>
+        </span>
+      </a>
+    </div>
+
+    <!-- RIGHT COLUMN (65%): Two pricing cards side-by-side -->
+    <div class="retainer-right">
+      <div class="cards-grid">
+        {pricingCards.map((card) => (
+          <div class="pricing-card" style={`background-color: ${card.background};`}>
+            <!-- BLOCK 1: Plan info (name + features) -->
+            <div class="card-plan-info">
+              <h4 class="card-title">{card.title}</h4>
+
+              <!-- Features list with alternating dividers (no divider after last item) -->
+              <div class="features-list">
+                {card.features.map((feature, index) => (
+                  <>
+                    <p class="feature-text" style={`color: ${card.featureTextColor};`}>{feature}</p>
+                    {index < card.features.length - 1 && (
+                      <div class="feature-divider"></div>
+                    )}
+                  </>
+                ))}
+              </div>
+            </div>
+
+            <!-- BLOCK 2: Price + Subscribe button -->
+            <div class="card-price-section">
+              <p class="card-price">{card.price}</p>
+
+              <!-- SUBSCRIBE BUTTON: Reused two-pill component -->
+              <a href="./contact" class="view-all-link subscribe-button">
+                <span class="view-all-text">Subscribe</span>
+                <span class="view-all-icon">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M6 2L12 8L6 14"></path>
+                  </svg>
+                </span>
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* SECTION SHELL: flex column, center, background #FAFAFA (not white) */
+  .retainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 40px 100px 40px;
+    gap: 40px;
+    background: #FAFAFA;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* INNER ROW: flex row, space-between, two columns */
+  .retainer-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    gap: 40px;
+  }
+
+  /* LEFT COLUMN (35%): eyebrow + heading + CTA */
+  .retainer-left {
+    flex: 1 1 0%;
+    max-width: 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* Header block: eyebrow + heading */
+  .retainer-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Eyebrow: 14px/500/uppercase/2.8px letter-spacing */
+  .retainer-eyebrow {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 19.6px;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    color: var(--basalio-ink, #000000);
+    margin: 0 0 12px 0;
+  }
+
+  /* Heading: h3, 40px/400/line-height 48px/letter-spacing -0.8px */
+  .retainer-heading {
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 48px;
+    letter-spacing: -0.8px;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+  }
+
+  /* VIEW ALL BUTTON: Reused two-pill component */
+  .view-all-link {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    text-decoration: none;
+    width: fit-content;
+  }
+
+  .view-all-text {
+    background: var(--basalio-ink, #000000);
+    color: var(--basalio-paper, #FFFFFF);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .view-all-icon {
+    background: var(--basalio-ink, #000000);
+    color: var(--basalio-paper, #FFFFFF);
+    border-radius: 8px;
+    width: 40px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 40px;
+    transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .view-all-link:hover .view-all-icon {
+    transform: translateX(4px);
+  }
+
+  /* RIGHT COLUMN (65%): Two cards side-by-side */
+  .retainer-right {
+    flex: 1 1 0%;
+    max-width: 65%;
+    width: 100%;
+  }
+
+  /* Cards grid: flex row, gap 20px, two equal cards */
+  .cards-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+  }
+
+  /* PRICING CARD: border-radius 6px, padding 20px, flex column */
+  .pricing-card {
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+    border-radius: 6px;
+    padding: 20px;
+    box-sizing: border-box;
+    background: #FFFFFF;
+  }
+
+  /* BLOCK 1: Plan info (title + features) */
+  .card-plan-info {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* Plan title: 28px/400/black */
+  .card-title {
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Features list: flex column, gap 12px */
+  .features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* Feature text: 14px/400/line-height 19.6px */
+  .feature-text {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19.6px;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Feature divider: 1px line, rgba(0,0,0,0.1) */
+  .feature-divider {
+    height: 1px;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  /* BLOCK 2: Price + Subscribe button */
+  .card-price-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+  }
+
+  /* Price text: 20px/500/black */
+  .card-price {
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Subscribe button: Reused two-pill component */
+  .subscribe-button {
+    flex: 0 0 auto;
+  }
+</style>

@@ -101,6 +101,7 @@ const {
     flex-direction: column;
     box-sizing: border-box;
     overflow: hidden;
+    position: relative;
   }
 
   /* HEADER: Logo + Menu Button - Positioned at top of hero */
@@ -232,12 +233,12 @@ const {
   }
 
 
-  /* COURSE TEASER CARD - Positioned at bottom of hero */
+  /* COURSE TEASER CARD - Positioned at bottom of hero with semi-transparent background */
   .course-teaser {
     width: 100%;
     max-width: 1791px;
     padding: 40px 40px;
-    background: #FFEA00;
+    background: rgba(255, 234, 0, 0.85);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -246,6 +247,7 @@ const {
     box-sizing: border-box;
     position: relative;
     z-index: 2;
+    backdrop-filter: blur(2px);
   }
 
   .course-left {

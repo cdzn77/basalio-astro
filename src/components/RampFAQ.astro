@@ -247,7 +247,10 @@ const {
   .faq-icon svg {
     width: 24px !important;
     height: 24px !important;
-    display: inline-block;
+    min-width: 24px;
+    max-width: 24px;
+    flex-shrink: 0;
+    display: block;
     cursor: pointer;
     box-sizing: border-box;
     overflow-x: hidden;

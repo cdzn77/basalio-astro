@@ -343,9 +343,9 @@ const {
           // Open this resource
           openResources.add(index);
           item.setAttribute('data-open', 'true');
-          // Calculate actual height of content
+          // Calculate actual height of content with buffer for proper display
           const height = contentInner.getBoundingClientRect().height;
-          contentContainer.style.height = `${height}px`;
+          contentContainer.style.height = `${height + 4}px`;
         }
       });
     }

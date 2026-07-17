@@ -21,6 +21,11 @@ const {
 ---
 
 <section class="hero" id="hero">
+  <!-- IMAGE WRAPPER: Portrait to landscape expansion container - covers entire hero -->
+  <div class="hero-image-wrapper">
+    <img src={heroImage} alt="Hero" class="hero-image-bg" />
+  </div>
+
   <!-- HEADER: Logo + Menu Button -->
   <div class="hero-header">
     <a href="/" class="brand-logo">Ramp Studio.</a>
@@ -44,11 +49,6 @@ const {
   </div>
 
   <div class="hero-container">
-    <!-- IMAGE WRAPPER: Portrait to landscape expansion container -->
-    <div class="hero-image-wrapper">
-      <img src={heroImage} alt="Hero" class="hero-image-bg" />
-    </div>
-
     <!-- LEFT: Heading (overlaid on top of image) -->
     <div class="hero-left">
       <h1 class="hero-heading">We turn<br/>strategy<br/>into growth</h1>
@@ -150,29 +150,32 @@ const {
     overflow: hidden;
   }
 
-  /* Image wrapper that expands beyond frame bounds */
+  /* Image wrapper - positioned to cover entire hero, image expands from center */
   .hero-image-wrapper {
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 35%;
-    height: 60%;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
     overflow: visible;
     z-index: 0;
     pointer-events: none;
-    will-change: width, height;
+    will-change: auto;
   }
 
-  /* CENTERED HERO IMAGE with yellow overlay - portrait to landscape expansion */
+  /* CENTERED HERO IMAGE - expands from center */
   .hero-image-bg {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 35%;
+    height: 60%;
+    transform: translate(-50%, -50%);
     object-fit: cover;
     object-position: center;
     filter: sepia(0.15) saturate(1.3);
     opacity: 0.95;
-    display: block;
+    will-change: width, height;
   }
 
   .hero-left {
@@ -447,9 +450,9 @@ const {
 
   // Scroll-driven image expansion animation (portrait to full screen)
   const heroSection = document.getElementById('hero');
-  const imageWrapper = document.querySelector('.hero-image-wrapper');
+  const heroImage = document.querySelector('.hero-image-bg');
 
-  if (imageWrapper && heroSection) {
+  if (heroImage && heroSection) {
     let animationFrameId;
 
     const updateImageSize = () => {
@@ -470,8 +473,8 @@ const {
       // Expand height from 60% to 150% - PRIMARY expansion for full height fill
       const height = 60 + (scrollProgress * 90);
 
-      imageWrapper.style.width = `${width}%`;
-      imageWrapper.style.height = `${height}%`;
+      heroImage.style.width = `${width}%`;
+      heroImage.style.height = `${height}%`;
     };
 
     const handleScroll = () => {

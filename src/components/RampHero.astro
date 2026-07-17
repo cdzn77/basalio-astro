@@ -233,12 +233,12 @@ const {
   }
 
 
-  /* COURSE TEASER CARD - Positioned at bottom of hero with semi-transparent background */
+  /* COURSE TEASER CARD - Transparent, shows image behind */
   .course-teaser {
     width: 100%;
     max-width: 1791px;
     padding: 40px 40px;
-    background: rgba(255, 234, 0, 0.65);
+    background: transparent;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -247,7 +247,6 @@ const {
     box-sizing: border-box;
     position: relative;
     z-index: 2;
-    backdrop-filter: blur(3px);
   }
 
   .course-left {

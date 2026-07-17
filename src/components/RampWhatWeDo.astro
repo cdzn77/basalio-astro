@@ -32,18 +32,16 @@ const {
       <p class="intro-text">We believe marketing doesn't have to be complicated. That's why we've built a creative hub filled with website templates, brand kits, free digital downloads and monthly support.</p>
 
       <div class="breakdown">
-        <ul class="services-list">
-          {services.map((service, index) => (
-            <>
-              {index > 0 && <li class="service-divider"></li>}
-              <li class="service-item">
-                <span class="service-name">{service.name}</span>
-                <span class="service-percent">{service.percentage}%</span>
-              </li>
-            </>
-          ))}
-          <li class="service-divider"></li>
-        </ul>
+        <div class="divider-line top-divider"></div>
+        {services.map((service) => (
+          <>
+            <ul class="service-row">
+              <li class="service-name">{service.name}</li>
+              <li class="service-percent">{service.percentage}%</li>
+            </ul>
+            <div class="divider-line"></div>
+          </>
+        ))}
       </div>
     </div>
   </div>
@@ -108,44 +106,50 @@ const {
 
   .breakdown {
     width: 100%;
-  }
-
-  .services-list {
     display: flex;
     flex-direction: column;
     gap: 0;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
   }
 
-  .service-item {
+  .divider-line {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+    width: 100%;
+    flex-shrink: 0;
+  }
+
+  .top-divider {
+    margin-bottom: 0;
+  }
+
+  .service-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
     list-style: none;
+    margin: 0;
+    padding: 20px 0;
+    width: 100%;
   }
 
-  .service-name {
-    font-size: 16px;
-    font-weight: 400;
-    color: #000000;
-  }
-
-  .service-percent {
-    font-size: 16px;
-    font-weight: 400;
-    color: #000000;
-  }
-
-  .service-divider {
-    height: 1px;
-    background: #E0E0E0;
+  .service-row li {
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+
+  .service-row .service-name {
+    font-size: 16px;
+    font-weight: 400;
+    color: #5C5C5C;
+  }
+
+  .service-row .service-percent {
+    font-size: 18px;
+    font-weight: 400;
+    color: #000000;
+    font-family: 'Azeret Mono', monospace;
+    letter-spacing: -0.04em;
   }
 
   /* RESPONSIVE OVERRIDES */

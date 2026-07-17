@@ -1,6 +1,6 @@
 ---
-// Ramp What We Do - 1:1 PIXEL-PERFECT REPLICA
-// Exact dimensions: 1791×485px, padding 40px
+// Ramp What We Do - 1:1 PIXEL-PERFECT SPEC MATCH
+// Two-column layout: LEFT (35%, eyebrow) | RIGHT (65%, paragraph + stats)
 
 interface Service {
   name: string;
@@ -20,160 +20,135 @@ const {
 } = Astro.props;
 ---
 
-<section class="what-we-do" id="what-we-do">
-  <div class="container">
-    <!-- LEFT: Label -->
-    <div class="section-label">
-      <h2>What we do</h2>
+<section class="what-we-do">
+  <!-- LEFT COLUMN: Eyebrow label (35%) -->
+  <div class="column-left">
+    <p class="eyebrow">What we do</p>
+  </div>
+
+  <!-- RIGHT COLUMN: Paragraph + Stats (65%) -->
+  <div class="column-right">
+    <!-- Block 1: Intro paragraph (max-width 800px) -->
+    <div class="paragraph-block">
+      <p class="intro-text">We believe marketing doesn't have to be complicated. That's why we've built a creative hub filled with website templates, brand kits, free digital downloads and monthly support.</p>
     </div>
 
-    <!-- RIGHT: Content (554px flex column) -->
-    <div class="section-content">
-      <p class="intro-text">We believe marketing doesn't have to be complicated. That's why we've built a creative hub filled with website templates, brand kits, free digital downloads and monthly support.</p>
-
-      <div class="breakdown">
-        {services.map((service) => (
-          <ul class="service-row">
-            <li class="service-name">{service.name}</li>
-            <li class="service-percent">{service.percentage}%</li>
-          </ul>
-        ))}
-      </div>
+    <!-- Block 2: Stats list (width 554px, with dividers) -->
+    <div class="stats-block">
+      <div class="divider"></div>
+      {services.map((service) => (
+        <>
+          <div class="stat-row">
+            <span class="stat-label">{service.name}</span>
+            <span class="stat-percent">{service.percentage}%</span>
+          </div>
+          <div class="divider"></div>
+        </>
+      ))}
     </div>
   </div>
 </section>
 
 <style>
-  /* EXACT PIXEL SPECIFICATIONS - TWO COLUMN LAYOUT */
+  /* SECTION: flex row, 40px padding, #FAFAFA background */
   .what-we-do {
-    background: #FFFFFF;
-    width: 100%;
-    max-width: 1791px;
-    padding: 80px 40px;
-    margin: 0 auto;
-    box-sizing: border-box;
-  }
-
-  .container {
-    margin: 0 auto;
-    width: 100%;
-    max-width: 1711px;
     display: flex;
     flex-direction: row;
+    padding: 40px;
+    background-color: #FAFAFA;
+    width: 100%;
     box-sizing: border-box;
-    gap: 80px;
-    align-items: flex-start;
   }
 
-  .section-label {
-    flex: 0 0 auto;
-    width: auto;
+  /* LEFT COLUMN: max-width 35%, flex: 1 1 0% */
+  .column-left {
+    flex: 1 1 0%;
+    max-width: 35%;
   }
 
-  .section-label h2 {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 12px;
+  /* Eyebrow label */
+  .eyebrow {
+    font-family: 'Azeret Mono', 'Courier New', monospace;
+    font-size: 14px;
     font-weight: 500;
-    letter-spacing: 2.4px;
+    line-height: 19.6px;
+    letter-spacing: 2.8px;
     text-transform: uppercase;
     color: #000000;
     margin: 0;
-    line-height: 1.4;
   }
 
-  .section-content {
+  /* RIGHT COLUMN: max-width 65%, flex: 1 1 0%, flex column, align-items flex-start, gap 100px */
+  .column-right {
+    flex: 1 1 0%;
+    max-width: 65%;
     display: flex;
     flex-direction: column;
-    gap: 60px;
-    width: 554px;
-    box-sizing: border-box;
     align-items: flex-start;
-    align-content: flex-start;
-    justify-content: center;
-    padding: 0;
+    gap: 100px;
+  }
+
+  /* Block 1: Paragraph (max-width 800px) */
+  .paragraph-block {
+    max-width: 800px;
   }
 
   .intro-text {
+    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 22px;
-    line-height: 1.6;
-    color: #575757;
+    font-weight: 400;
+    line-height: 26.4px;
+    letter-spacing: -0.22px;
+    color: #000000;
     margin: 0;
   }
 
-  .breakdown {
-    width: 100%;
+  /* Block 2: Stats (flex column, gap 20px, width 554px) */
+  .stats-block {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 20px;
+    width: 554px;
   }
 
-  .service-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    list-style: none;
-    margin: 0;
-    padding: 32px 0;
+  /* Divider: 1px, light gray to match original template */
+  .divider {
+    height: 1px;
     width: 100%;
-    border-bottom: 1px solid #E8E8E8;
+    background-color: #E8E8E8;
   }
 
-  .service-row:first-child {
-    border-top: 1px solid #E8E8E8;
+  /* Stat row: flex row, align-items center, width 100% */
+  .stat-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
   }
 
-  .service-row li {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .service-row .service-name {
+  /* Stat label: flex-grow 1, flex-shrink 0, flex-basis 0 (pushes percentage to far right) */
+  .stat-label {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 0;
+    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 16px;
     font-weight: 400;
-    color: #5C5C5C;
+    line-height: 22.4px;
+    letter-spacing: normal;
+    color: rgb(87, 87, 87);
   }
 
-  .service-row .service-percent {
+  /* Stat percent: flex-grow 0, flex-shrink 0, width auto */
+  .stat-percent {
+    flex-grow: 0;
+    flex-shrink: 0;
+    width: auto;
+    font-family: 'Azeret Mono', 'Courier New', monospace;
     font-size: 18px;
     font-weight: 400;
+    line-height: 18px;
+    letter-spacing: -0.72px;
     color: #000000;
-    font-family: 'Azeret Mono', monospace;
-    letter-spacing: -0.04em;
-  }
-
-  /* RESPONSIVE OVERRIDES */
-  @media (max-width: 1024px) {
-    .what-we-do {
-      padding: 60px 40px;
-    }
-
-    .container {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-
-    .section-label {
-      display: none;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .what-we-do {
-      padding: 40px 20px;
-    }
-
-    .container {
-      gap: 30px;
-    }
-
-    .intro-text {
-      font-size: 14px;
-    }
-
-    .service-name,
-    .service-percent {
-      font-size: 14px;
-    }
   }
 </style>

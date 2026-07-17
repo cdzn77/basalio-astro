@@ -223,7 +223,7 @@ const {
   }
 
   .btn-view-course {
-    background: #000000;
+    background: transparent;
     color: #FFFFFF;
     padding: 0;
     border-radius: 0;
@@ -238,28 +238,32 @@ const {
     text-decoration: none;
     cursor: pointer;
     border: none;
-    height: 48px;
+    height: 44px;
     transition: opacity 0.3s ease;
     font-family: 'Manrope', sans-serif;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .btn-text {
     display: flex;
     align-items: center;
-    padding: 14px 24px;
-    border-radius: 6px 0 0 6px;
+    padding: 12px 16px;
+    border-radius: 8px;
     background: #000000;
+    flex: 0 0 auto;
   }
 
   .btn-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 14px 24px;
-    border-radius: 0 6px 6px 0;
+    padding: 0px;
+    border-radius: 8px;
     background: #000000;
+    width: 40px;
+    height: 44px;
     transition: transform 0.3s ease;
+    flex: 0 0 auto;
   }
 
   .btn-view-course:hover .btn-icon {

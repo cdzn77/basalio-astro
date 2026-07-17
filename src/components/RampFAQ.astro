@@ -201,16 +201,6 @@ const {
     flex: 0 0 40px;
   }
 
-  /* Answer: appears when open */
-  .faq-answer {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 22.4px;
-    color: #FFFFFF;
-    margin: 0;
-    max-width: 750px;
-    padding-top: 8px;
-  }
 </style>
 
 <script>
@@ -247,6 +237,17 @@ const {
         const answerDiv = document.createElement('p');
         answerDiv.className = 'faq-answer';
         answerDiv.textContent = faqData[index] || '';
+        // Apply inline styles since scoped CSS doesn't apply to dynamically created elements
+        answerDiv.style.cssText = `
+          font-size: 16px;
+          font-weight: 400;
+          line-height: 22.4px;
+          color: #FFFFFF;
+          margin: 0;
+          padding: 16px;
+          margin-top: 16px;
+          display: block;
+        `;
         card.appendChild(answerDiv);
       }
     });

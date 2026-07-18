@@ -379,14 +379,11 @@ const descriptionWords = description.split(' ');
     transform: scale(0.98);
   }
 
-  /* Testimonials section: allow rounded corners to clip content */
+  /* Testimonials section: rounded bottom corners matching homepage */
   .testimonials-rounded {
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
     overflow: hidden;
-    border-radius: 0 0 40px 40px;
-    margin-bottom: -100px;
-    padding-bottom: 100px;
-    position: relative;
-    z-index: 1;
   }
 
   /* RESPONSIVE */

@@ -1,0 +1,435 @@
+---
+// Courses Page - Reuses Nav, Testimonials, Footer from homepage
+// Page-load animations based on confirmed Framer spring config
+
+import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
+import RampTestimonials from '../components/RampTestimonials.astro';
+import RampFooter from '../components/RampFooter.astro';
+
+const title = "Courses — Ramp Studio";
+const description = "Explore courses built to strengthen strategy, execution & long-term growth for any team.";
+
+const courses = [
+  {
+    title: "Social Media Growth",
+    description: "Learn the fundamentals of building a strong social media presence",
+    tag: "Beginner Friendly",
+    slug: "social-media"
+  },
+  {
+    title: "Content Creation 101",
+    description: "Teaches you how to create content that feels intentional and on-brand",
+    tag: "Beginner Friendly",
+    slug: "content-101"
+  },
+  {
+    title: "Branding 101",
+    description: "Focus on positioning, messaging, and consistency across every touchpoint.",
+    tag: "Self Paced",
+    slug: "branding-101"
+  },
+  {
+    title: "Email Marketing 101",
+    description: "Learn how to use email lists to actually support and grow your business",
+    tag: "Self Paced",
+    slug: "best-practices"
+  },
+  {
+    title: "Marketing Funnels 101",
+    description: "Teaches you how to guide people from discovery to decision with intention.",
+    tag: "Self Paced",
+    slug: "marketing-funnels"
+  },
+  {
+    title: "Coaching Offers 101",
+    description: "This course helps you design clear, compelling offers that people actually understand and want to buy.",
+    tag: "Self Paced",
+    slug: "campaign-planning"
+  }
+];
+
+// Split description text into words for per-word animation
+const descriptionWords = description.split(' ');
+---
+
+<RampTemplateLayout title={title} description={description}>
+  <!-- HERO SECTION: Dot indicator + Title + Description -->
+  <section class="courses-hero">
+    <div class="hero-container">
+      <!-- LEFT: Dot indicator + Title -->
+      <div class="hero-left">
+        <div class="dot-indicator" aria-hidden="true"></div>
+        <h1 class="hero-title">Our courses</h1>
+      </div>
+
+      <!-- RIGHT: Description with per-word spans -->
+      <div class="hero-right">
+        <p class="hero-description">
+          {descriptionWords.map((word, index) => (
+            <span key={index} class="word-span" style={`--word-index: ${index}`}>
+              {word}
+            </span>
+          ))}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSES GRID -->
+  <section class="courses-grid-section">
+    <div class="courses-grid">
+      {courses.map((course) => (
+        <a href={`/courses/${course.slug}`} class="course-card">
+          <!-- Course Image Placeholder -->
+          <div class="course-image-placeholder">
+            <img
+              src={`/assets/course-${course.slug}.png`}
+              alt={course.title}
+              class="course-image"
+            />
+          </div>
+
+          <!-- Course Info -->
+          <div class="course-info">
+            <h2 class="course-title">{course.title}</h2>
+            <p class="course-description">{course.description}</p>
+
+            <!-- Tag Pill -->
+            <div class="course-tag">{course.tag}</div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <!-- LOAD MORE BUTTON -->
+    <div class="load-more-wrapper">
+      <button class="load-more-button" data-action="load-more">Load More</button>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS SECTION: Reused from homepage -->
+  <RampTestimonials />
+
+  <!-- FOOTER: Reused from homepage -->
+  <Fragment slot="footer">
+    <RampFooter address="Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark" />
+  </Fragment>
+</RampTemplateLayout>
+
+<style>
+  /* HERO SECTION */
+  .courses-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 200px 40px;
+    background: var(--basalio-paper, #FFFFFF);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .hero-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    gap: 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* LEFT: Dot + Title */
+  .hero-left {
+    flex: 0 0 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .dot-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #FFEA00;
+    flex: 0 0 auto;
+    /* Animation: opacity 0→1, scale 0.5→1 */
+    opacity: 0;
+    transform: scale(0.5);
+    animation: dotIndicatorIn 0.6s ease-out forwards;
+  }
+
+  @keyframes dotIndicatorIn {
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .hero-title {
+    font-size: 72px;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+    padding: 0;
+  }
+
+  /* RIGHT: Description */
+  .hero-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .hero-description {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 28px;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+    padding: 0;
+    max-width: 600px;
+  }
+
+  /* Per-word span animation */
+  .word-span {
+    display: inline-block;
+    margin-right: 0.3em;
+    opacity: 0;
+    filter: blur(8px);
+    /* Staggered animation: ~60-80ms per word (FLAGGED AS ESTIMATE - verify against live source) */
+    animation: wordBlurIn 0.8s ease-out forwards;
+    animation-delay: calc(var(--word-index) * 70ms);
+  }
+
+  @keyframes wordBlurIn {
+    to {
+      opacity: 1;
+      filter: blur(0px);
+    }
+  }
+
+  /* COURSES GRID SECTION */
+  .courses-grid-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 100px 40px;
+    background: var(--basalio-paper, #FFFFFF);
+    width: 100%;
+    box-sizing: border-box;
+    gap: 60px;
+  }
+
+  /* COURSES GRID: 3 columns, 2 rows */
+  .courses-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* COURSE CARD */
+  .course-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: transform 200ms ease, opacity 200ms ease;
+  }
+
+  .course-card:hover {
+    transform: translateY(-4px);
+    opacity: 0.9;
+  }
+
+  /* Course Image Placeholder */
+  .course-image-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #F5F5F5;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .course-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .course-image:not([src]),
+  .course-image[src=""] {
+    display: none;
+  }
+
+  /* Course Info */
+  .course-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .course-title {
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 26px;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+    padding: 0;
+  }
+
+  .course-description {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    color: rgb(87, 87, 87);
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Tag Pill */
+  .course-tag {
+    display: inline-flex;
+    width: fit-content;
+    padding: 6px 12px;
+    background: rgb(245, 245, 245);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: var(--basalio-ink, #000000);
+    text-transform: uppercase;
+  }
+
+  /* LOAD MORE BUTTON */
+  .load-more-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .load-more-button {
+    padding: 14px 32px;
+    background: rgb(235, 235, 235);
+    border-radius: 6px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #000000;
+    cursor: pointer;
+    transition: all 200ms ease;
+  }
+
+  .load-more-button:hover {
+    background: rgb(220, 220, 220);
+  }
+
+  .load-more-button:active {
+    transform: scale(0.98);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .courses-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+
+    .hero-container {
+      gap: 60px;
+    }
+
+    .hero-left {
+      flex: 0 1 auto;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .courses-hero {
+      padding: 120px 20px;
+    }
+
+    .hero-container {
+      flex-direction: column;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .hero-left {
+      flex: 1;
+      width: 100%;
+    }
+
+    .hero-title {
+      font-size: 48px;
+    }
+
+    .hero-description {
+      font-size: 18px;
+      line-height: 24px;
+    }
+
+    .courses-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .courses-grid-section {
+      padding: 80px 20px;
+    }
+  }
+</style>
+
+<script>
+  // NAV BAR ENTRANCE ANIMATION
+  // opacity: 0→1, y: -50→0, spring, 1000ms, bounce: 0, delay: 0
+  const navHeader = document.querySelector('.ramp-header');
+  if (navHeader) {
+    navHeader.style.opacity = '0';
+    navHeader.style.transform = 'translateY(-50px)';
+
+    // Use CSS animation for spring effect
+    navHeader.style.animation = 'navBarIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
+  }
+
+  // MENU BUTTON LABEL ENTRANCE ANIMATION
+  // opacity: 0→1, y: 10→0, spring, 600ms, bounce: 0, delay: 0
+  // (Applied via CSS with .menu-label class if it exists in nav component)
+
+  // LOAD MORE BUTTON HANDLER (TODO: wire up to actual pagination)
+  const loadMoreBtn = document.querySelector('[data-action="load-more"]');
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', () => {
+      console.log('TODO: Load more courses - implement pagination logic');
+      // Future: load additional courses via API or pre-loaded data
+    });
+  }
+</script>
+
+<style>
+  /* Spring animation for nav bar */
+  @keyframes navBarIn {
+    from {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

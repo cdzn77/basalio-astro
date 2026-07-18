@@ -9,23 +9,21 @@ interface Props {
 const { brand = "Ramp Studio." } = Astro.props;
 ---
 
-<header class="ramp-header">
-  <div class="header-container">
-    <a href="/" class="brand-logo">{brand}</a>
-    <button id="menu-toggle" class="menu-btn" aria-label="Toggle menu">
-      <span>MENU</span>
-      <span class="plus">+</span>
-    </button>
-  </div>
+<div class="header-container">
+  <a href="/" class="brand-logo">{brand}</a>
+  <button id="menu-toggle" class="menu-btn" aria-label="Toggle menu">
+    <span>MENU</span>
+    <span class="plus">+</span>
+  </button>
+</div>
 
-  <nav id="mobile-menu" class="mobile-menu">
-    <a href="#courses">Courses</a>
-    <a href="#resources">Resources</a>
-    <a href="#retainer">Retainer</a>
-    <a href="#testimonials">Testimonials</a>
-    <a href="#faq">FAQ</a>
-  </nav>
-</header>
+<nav id="mobile-menu" class="mobile-menu">
+  <a href="#courses">Courses</a>
+  <a href="#resources">Resources</a>
+  <a href="#retainer">Retainer</a>
+  <a href="#testimonials">Testimonials</a>
+  <a href="#faq">FAQ</a>
+</nav>
 
 <style>
   .ramp-header {

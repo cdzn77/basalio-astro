@@ -3,6 +3,7 @@
 // Page-load animations based on confirmed Framer spring config
 
 import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
+import RampHeader from '../components/RampHeader.astro';
 import RampTestimonials from '../components/RampTestimonials.astro';
 import RampFooter from '../components/RampFooter.astro';
 
@@ -53,6 +54,11 @@ const descriptionWords = description.split(' ');
 ---
 
 <RampTemplateLayout title={title} description={description}>
+  <!-- HEADER: Navigation bar -->
+  <Fragment slot="header">
+    <RampHeader />
+  </Fragment>
+
   <!-- HERO SECTION: Left sidebar (dot + label) + Right (description) -->
   <section class="courses-hero">
     <!-- LEFT SIDEBAR: Dot indicator + "OUR COURSES" label -->
@@ -123,6 +129,7 @@ const descriptionWords = description.split(' ');
     flex-direction: row;
     align-items: flex-start;
     padding: 120px 40px;
+    padding-top: 160px;
     background: var(--basalio-paper, #FFFFFF);
     width: 100%;
     box-sizing: border-box;

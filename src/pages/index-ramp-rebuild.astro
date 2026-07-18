@@ -7,7 +7,6 @@ import RampHero from '../components/RampHero.astro';
 import RampWhatWeDo from '../components/RampWhatWeDo.astro';
 import RampCourses from '../components/RampCourses.astro';
 import RampResources from '../components/RampResources.astro';
-import RampPricing from '../components/RampPricing.astro';
 import RampRetainer from '../components/RampRetainer.astro';
 import RampTrustedBy from '../components/RampTrustedBy.astro';
 import RampTestimonials from '../components/RampTestimonials.astro';
@@ -73,36 +72,6 @@ const description = "Ramp helps marketers, founders, and creators build scalable
       { title: "Client Onboarding", description: "Complete onboarding templates and checklists for new clients" },
       { title: "Branding Framework", description: "Step-by-step framework for building a cohesive brand identity" },
       { title: "AI Prompts for Marketing", description: "Ready-to-use prompts for content creation and strategy" }
-    ]}
-  />
-
-  <!-- Pricing Section -->
-  <RampPricing
-    plans={[
-      {
-        name: "Essentials",
-        price: "1750",
-        currency: "€",
-        features: [
-          "4 design/content updates per month",
-          "5 weekly social posts",
-          "Month strategy calls",
-          "48-hour email support"
-        ],
-        highlight: false
-      },
-      {
-        name: "Premium",
-        price: "2750",
-        currency: "€",
-        features: [
-          "12 design/content updates per month",
-          "20 weekly social posts",
-          "Weekly strategy call",
-          "24-hour email support"
-        ],
-        highlight: true
-      }
     ]}
   />
 

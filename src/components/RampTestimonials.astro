@@ -1,6 +1,6 @@
 ---
-// Ramp Testimonials - 1:1 PIXEL-PERFECT REPLICA
-// Exact dimensions: 1791×492px, padding 100px 40px
+// Ramp Testimonials - COMPLETE REDESIGN
+// Reference-accurate styling: typography, layout, spacing, card design, navigation
 
 interface Testimonial {
   image: string;
@@ -16,9 +16,9 @@ interface Props {
 
 const {
   testimonials = [
-    { image: "https://via.placeholder.com/140x160", quote: "Template helped us launch a polished website that feels premium and scales with you.", name: "Maya Thompson", title: "Wellness Coach", results: "18x email sign ups" },
-    { image: "https://via.placeholder.com/140x160", quote: "Every resource feels intentional, from free step-by-step workflows to paid resources.", name: "Priya Desai", title: "Shopify Store Owner", results: "2x quarterly revenue" },
-    { image: "https://via.placeholder.com/140x160", quote: "We saved weeks of design time and launched a high-end website that feels premium.", name: "Lucas Martinez", title: "Café Owner", results: "20% increased conversion" }
+    { image: "/assets/mtgtbdnjaof929atjpy1noqquia.jpeg", quote: "Template helped us launch a polished website that feels premium and scales with you.", name: "Maya Thompson", title: "Wellness Coach", results: "18x email sign ups" },
+    { image: "/assets/mtgtbdnjaof929atjpy1noqquia.jpeg", quote: "Every resource feels intentional, from free step-by-step workflows to paid resources.", name: "Priya Desai", title: "Shopify Store Owner", results: "2x quarterly revenue" },
+    { image: "/assets/mtgtbdnjaof929atjpy1noqquia.jpeg", quote: "We saved weeks of design time and launched a high-end website that feels premium.", name: "Lucas Martinez", title: "Café Owner", results: "20% increased conversion" }
   ]
 } = Astro.props;
 ---
@@ -27,13 +27,13 @@ const {
   <div class="container">
     <div class="testimonials-header">
       <p class="testimonials-label">TESTIMONIALS</p>
-      <h2>Learner Stories</h2>
+      <h2 class="testimonials-title">Learner Stories</h2>
     </div>
 
     <div class="carousel-wrapper">
-      <button class="carousel-arrow prev" aria-label="Previous">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M12 4L6 10L12 16"></path>
+      <button class="carousel-arrow prev" aria-label="Previous testimonial">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 19L8 12L15 5"></path>
         </svg>
       </button>
 
@@ -42,11 +42,13 @@ const {
           {testimonials.map((testimonial) => (
             <div class="testimonial-card">
               <div class="testimonial-image">
-                <img src={testimonial.image} alt={testimonial.name} />
+                <img src={testimonial.image} alt={testimonial.name} loading="lazy" />
               </div>
-              <p class="testimonial-quote">"{testimonial.quote}"</p>
-              <p class="testimonial-name">{testimonial.name}</p>
-              <p class="testimonial-title">{testimonial.title}</p>
+              <p class="testimonial-quote">{testimonial.quote}</p>
+              <div class="testimonial-info">
+                <p class="testimonial-name">{testimonial.name}</p>
+                <p class="testimonial-title">{testimonial.title}</p>
+              </div>
               <div class="testimonial-results">
                 <span class="results-label">RESULTS</span>
                 <span class="results-value">{testimonial.results}</span>
@@ -56,9 +58,9 @@ const {
         </div>
       </div>
 
-      <button class="carousel-arrow next" aria-label="Next">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M8 4L14 10L8 16"></path>
+      <button class="carousel-arrow next" aria-label="Next testimonial">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 5L16 12L9 19"></path>
         </svg>
       </button>
     </div>
@@ -66,132 +68,166 @@ const {
 </section>
 
 <style>
-  /* EXACT PIXEL SPECIFICATIONS */
+  /* TESTIMONIALS SECTION - REFERENCE DESIGN */
   .testimonials {
-    background: #FFFFFF;
     width: 100%;
-    max-width: 1791px;
+    max-width: 1792px;
     padding: 100px 40px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
     box-sizing: border-box;
   }
 
   .container {
-    max-width: 1711px;
-    margin: 0 auto;
-    padding: 0;
     width: 100%;
+    margin: 0 auto;
   }
 
+  /* HEADER SECTION */
   .testimonials-header {
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 80px;
   }
 
   .testimonials-label {
     font-family: 'Azeret Mono', monospace;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 2px;
     color: #999999;
     display: block;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
   }
 
-  .testimonials-header h2 {
-    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 48px;
+  .testimonials-title {
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 64px;
     font-weight: 400;
-    margin: 0 auto;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+    padding: 0;
   }
 
+  /* CAROUSEL WRAPPER */
   .carousel-wrapper {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 32px;
+    justify-content: center;
   }
 
+  /* NAVIGATION ARROWS */
   .carousel-arrow {
     flex-shrink: 0;
-    width: 70px;
-    height: 70px;
-    border-radius: 8px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
     background: #F0F0F0;
-    color: #000000;
+    color: var(--basalio-ink, #000000);
     border: none;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background 0.3s ease;
+    transition: all 200ms ease;
+    padding: 0;
   }
 
   .carousel-arrow:hover {
     background: #E0E0E0;
+    transform: scale(1.05);
   }
 
+  .carousel-arrow:active {
+    transform: scale(0.98);
+  }
+
+  /* CAROUSEL CONTAINER */
   .carousel-container {
     flex: 1;
     overflow: hidden;
+    min-width: 0;
   }
 
   .carousel-track {
     display: flex;
-    gap: 24px;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 40px;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
+  /* TESTIMONIAL CARD */
   .testimonial-card {
-    flex: 0 0 380px;
+    flex: 0 0 420px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 24px;
   }
 
+  /* IMAGE STYLING */
   .testimonial-image {
-    width: 140px;
+    width: 160px;
     height: 160px;
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
-    background: #F0F0F0;
+    background: #F5F5F5;
+    flex-shrink: 0;
   }
 
   .testimonial-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: sepia(0.2) saturate(1.2);
+    object-position: center;
+    display: block;
   }
 
+  /* QUOTE STYLING */
   .testimonial-quote {
-    font-size: 18px;
-    line-height: 1.5;
-    color: #000000;
-    margin: 0 auto;
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+    padding: 0;
     font-style: italic;
   }
 
+  /* NAME & TITLE */
+  .testimonial-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
   .testimonial-name {
+    font-family: 'Manrope', sans-serif;
     font-size: 16px;
     font-weight: 600;
-    color: #000000;
-    margin: 0 auto;
+    line-height: 1.4;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+    padding: 0;
   }
 
   .testimonial-title {
+    font-family: 'Manrope', sans-serif;
     font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
     color: #575757;
-    margin: 0 auto;
+    margin: 0;
+    padding: 0;
   }
 
+  /* RESULTS SECTION */
   .testimonial-results {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-top: 12px;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 20px;
     border-top: 1px solid #E0E0E0;
   }
 
@@ -200,26 +236,48 @@ const {
     font-size: 10px;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 1.5px;
     color: #999999;
   }
 
   .results-value {
-    font-size: 14px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px;
     font-weight: 600;
-    color: #000000;
+    line-height: 1.4;
+    color: var(--basalio-ink, #000000);
   }
 
+  /* RESPONSIVE DESIGN */
   @media (max-width: 1024px) {
+    .testimonials {
+      padding: 80px 40px;
+    }
+
+    .testimonials-title {
+      font-size: 48px;
+    }
+
     .testimonial-card {
-      flex: 0 0 340px;
+      flex: 0 0 380px;
+    }
+
+    .carousel-wrapper {
+      gap: 24px;
     }
   }
 
   @media (max-width: 768px) {
     .testimonials {
-      width: 100%;
       padding: 60px 20px;
+    }
+
+    .testimonials-header {
+      margin-bottom: 60px;
+    }
+
+    .testimonials-title {
+      font-size: 36px;
     }
 
     .carousel-wrapper {
@@ -227,12 +285,18 @@ const {
     }
 
     .carousel-arrow {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
     }
 
     .testimonial-card {
-      flex: 0 0 300px;
+      flex: 0 0 320px;
+      gap: 20px;
+    }
+
+    .testimonial-image {
+      width: 120px;
+      height: 120px;
     }
   }
 </style>

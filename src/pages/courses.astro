@@ -82,12 +82,21 @@ const descriptionWords = description.split(' ');
   <!-- COURSES GRID -->
   <section class="courses-grid-section">
     <div class="courses-grid">
-      {courses.map((course) => (
-        <a href={`/courses/${course.slug}`} class="course-card">
+      {courses.map((course, index) => {
+        const imageMap = [
+          '9bpva91suvfr4lge2gq1mbfumds.jpg',
+          'jhgtxfj0wkecazxfyfe5psl1pbc.jpg',
+          'k54odknaj7dnpcqlcqviskrrxay.jpg',
+          'jjmc0ozsfy0hhnmbr8w4de17pw.jpg',
+          'l4gfk0yuorz9j7rwu2ebwwxpw.jpg',
+          'erxlbse1bkcc5yz5gaapayb51k.png'
+        ];
+        return (
+        <div class="course-card">
           <!-- Course Image Placeholder -->
           <div class="course-image-placeholder">
             <img
-              src={`/assets/course-${course.slug}.png`}
+              src={`/assets/${imageMap[index]}`}
               alt={course.title}
               class="course-image"
             />
@@ -98,11 +107,12 @@ const descriptionWords = description.split(' ');
             <h2 class="course-title">{course.title}</h2>
             <p class="course-description">{course.description}</p>
 
-            <!-- Tag Pill -->
-            <div class="course-tag">{course.tag}</div>
+            <!-- Tag Pill - Only clickable element -->
+            <a href={`/courses/${course.slug}`} class="course-tag">{course.tag}</a>
           </div>
-        </a>
-      ))}
+        </div>
+      );
+      })}
     </div>
 
     <!-- LOAD MORE BUTTON -->
@@ -218,11 +228,11 @@ const descriptionWords = description.split(' ');
     }
   }
 
-  /* COURSES GRID SECTION: 65% width, centered */
+  /* COURSES GRID SECTION: Full width container, content stays in right 65% */
   .courses-grid-section {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     padding: 80px 40px;
     background: var(--basalio-paper, #FFFFFF);
     width: 100%;
@@ -231,16 +241,17 @@ const descriptionWords = description.split(' ');
     gap: 80px;
     overflow-x: hidden;
     margin: 0 auto;
+    margin-left: auto;
+    margin-right: 0;
+    padding-left: calc(35% + 40px);
   }
 
-  /* COURSES GRID: 2 columns (65% width of section) */
+  /* COURSES GRID: 2 columns, full width of right container */
   .courses-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 40px 60px;
-    width: 65%;
-    max-width: 1112px;
-    margin: 0 auto;
+    width: 100%;
     overflow: hidden;
   }
 
@@ -249,16 +260,8 @@ const descriptionWords = description.split(' ');
     display: flex;
     flex-direction: column;
     gap: 20px;
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-    transition: transform 200ms ease;
     min-width: 0;
-    overflow: hidden;
-  }
-
-  .course-card:hover {
-    transform: translateY(-8px);
+    overflow: visible;
   }
 
   /* Course Image Placeholder - Yellow background with black icon */
@@ -266,11 +269,12 @@ const descriptionWords = description.split(' ');
     width: 100%;
     aspect-ratio: 2/1;
     background: #FFEA00;
-    border-radius: 0;
+    border-radius: 6px;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
   }
 
   .course-image {
@@ -279,7 +283,12 @@ const descriptionWords = description.split(' ');
     object-fit: cover;
     object-position: center;
     display: block;
-    filter: brightness(0);
+    border-radius: 6px;
+    transition: transform 300ms ease;
+  }
+
+  .course-card:hover .course-image {
+    transform: scale(1.08);
   }
 
   .course-image:not([src]),
@@ -312,25 +321,35 @@ const descriptionWords = description.split(' ');
     padding: 0;
   }
 
-  /* Tag Pill */
+  /* Tag Pill - Only clickable element */
   .course-tag {
     display: inline-flex;
     width: fit-content;
-    padding: 8px 14px;
-    background: rgb(230, 230, 230);
-    border-radius: 4px;
-    font-size: 11px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    font-family: "Azeret Mono", monospace;
+    font-size: 14px;
     font-weight: 500;
-    letter-spacing: 1px;
+    letter-spacing: 2.8px;
     color: rgb(87, 87, 87);
     text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 200ms ease;
+  }
+
+  .course-tag:hover {
+    background: rgb(87, 87, 87);
+    color: #FFFFFF;
   }
 
   /* LOAD MORE BUTTON */
   .load-more-wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     width: 100%;
+    padding-right: 40px;
   }
 
   .load-more-button {
@@ -338,11 +357,18 @@ const descriptionWords = description.split(' ');
     background: rgb(235, 235, 235);
     border-radius: 6px;
     border: none;
-    font-size: 16px;
+    color: rgb(0, 0, 0);
+    font-family: "Azeret Mono", monospace;
+    font-size: 14px;
     font-weight: 500;
-    color: #000000;
+    letter-spacing: 2.8px;
+    line-height: 19.6px;
+    text-align: start;
+    text-decoration: none;
+    text-transform: uppercase;
     cursor: pointer;
     transition: all 200ms ease;
+    -webkit-font-smoothing: antialiased;
   }
 
   .load-more-button:hover {
@@ -356,27 +382,10 @@ const descriptionWords = description.split(' ');
   /* Testimonials wrapper: white rounded bottom over yellow footer */
   .testimonials-rounded {
     border-radius: 0 0 40px 40px;
-    overflow: visible;
-    background: var(--basalio-paper, #FFFFFF);
-    position: relative;
-    z-index: 2;
+    overflow: hidden;
+    padding-bottom: 80px;
   }
 
-  /* Rounded corners actually apply to the content inside */
-  .testimonials-rounded :global(.testimonials) {
-    border-radius: 0 0 40px 40px;
-  }
-
-  .testimonials-rounded::after {
-    content: '';
-    position: absolute;
-    bottom: -40px;
-    left: 0;
-    right: 0;
-    height: 40px;
-    background: var(--basalio-paper, #FFFFFF);
-    z-index: 2;
-  }
 
   /* RESPONSIVE */
   @media (max-width: 1024px) {

@@ -350,6 +350,11 @@ const descriptionWords = description.split(' ');
     z-index: 2;
   }
 
+  /* Rounded corners actually apply to the content inside */
+  .testimonials-rounded :global(.testimonials) {
+    border-radius: 0 0 40px 40px;
+  }
+
   .testimonials-rounded::after {
     content: '';
     position: absolute;

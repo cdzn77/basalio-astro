@@ -115,6 +115,23 @@ const {
       --color-text-gray: #575757;
     }
 
+    /* LAYOUT STRUCTURE */
+    .ramp-main {
+      position: relative;
+      z-index: 2;
+    }
+
+    .ramp-footer {
+      position: sticky;
+      bottom: 0;
+      z-index: 1;
+    }
+
+    /* Last content section before footer: rounded bottom corners for curtain reveal effect */
+    .ramp-main > section:last-child {
+      border-radius: 0 0 40px 40px;
+    }
+
     /* CONTAINER */
     .container {
       max-width: 1200px;

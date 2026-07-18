@@ -127,7 +127,7 @@ const descriptionWords = description.split(' ');
     width: 100%;
     box-sizing: border-box;
     gap: 60px;
-    max-width: 1440px;
+    max-width: 100%;
     margin: 0 auto;
   }
 
@@ -216,6 +216,7 @@ const descriptionWords = description.split(' ');
     width: 100%;
     box-sizing: border-box;
     gap: 80px;
+    overflow-x: hidden;
   }
 
   /* COURSES GRID: 2 columns, 3 rows */
@@ -224,7 +225,7 @@ const descriptionWords = description.split(' ');
     grid-template-columns: repeat(2, 1fr);
     gap: 40px;
     width: 100%;
-    max-width: 100%;
+    max-width: calc(100vw - 80px);
     margin: 0 auto;
     overflow: hidden;
   }

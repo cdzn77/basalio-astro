@@ -123,7 +123,7 @@ const descriptionWords = description.split(' ');
 </RampTemplateLayout>
 
 <style>
-  /* HERO SECTION: 2-column layout with left sidebar */
+  /* HERO SECTION: 2-column layout (35% left + 65% right) */
   .courses-hero {
     display: flex;
     flex-direction: row;
@@ -132,19 +132,21 @@ const descriptionWords = description.split(' ');
     padding-top: 160px;
     background: var(--basalio-paper, #FFFFFF);
     width: 100%;
+    max-width: 1792px;
     box-sizing: border-box;
-    gap: 60px;
-    max-width: 100%;
+    gap: 40px;
     margin: 0 auto;
   }
 
-  /* LEFT SIDEBAR: Dot indicator + "OUR COURSES" label */
+  /* LEFT SIDEBAR: Dot indicator + "OUR COURSES" label (35%) */
   .hero-left {
-    flex: 0 0 200px;
+    flex: 0 1 35%;
+    max-width: 35%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 20px;
     align-items: flex-start;
+    padding-right: 40px;
   }
 
   .dot-indicator {
@@ -176,9 +178,10 @@ const descriptionWords = description.split(' ');
     line-height: 1.6;
   }
 
-  /* RIGHT: Description */
+  /* RIGHT: Description (65%) */
   .hero-right {
-    flex: 1;
+    flex: 0 1 65%;
+    max-width: 65%;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -215,7 +218,7 @@ const descriptionWords = description.split(' ');
     }
   }
 
-  /* COURSES GRID SECTION */
+  /* COURSES GRID SECTION: 65% width, centered */
   .courses-grid-section {
     display: flex;
     flex-direction: column;
@@ -223,18 +226,20 @@ const descriptionWords = description.split(' ');
     padding: 80px 40px;
     background: var(--basalio-paper, #FFFFFF);
     width: 100%;
+    max-width: 1792px;
     box-sizing: border-box;
     gap: 80px;
     overflow-x: hidden;
+    margin: 0 auto;
   }
 
-  /* COURSES GRID: 2 columns, 3 rows */
+  /* COURSES GRID: 2 columns (65% width of section) */
   .courses-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 40px 60px;
-    width: 100%;
-    max-width: calc(100vw - 80px);
+    width: 65%;
+    max-width: 1112px;
     margin: 0 auto;
     overflow: hidden;
   }

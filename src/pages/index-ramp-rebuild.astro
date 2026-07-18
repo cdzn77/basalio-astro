@@ -8,6 +8,7 @@ import RampWhatWeDo from '../components/RampWhatWeDo.astro';
 import RampCourses from '../components/RampCourses.astro';
 import RampResources from '../components/RampResources.astro';
 import RampRetainer from '../components/RampRetainer.astro';
+import RampTestimonials from '../components/RampTestimonials.astro';
 import RampFAQ from '../components/RampFAQ.astro';
 import RampFooter from '../components/RampFooter.astro';
 
@@ -75,6 +76,33 @@ const description = "Ramp helps marketers, founders, and creators build scalable
 
   <!-- Monthly Retainer Section -->
   <RampRetainer />
+
+  <!-- Testimonials Section -->
+  <RampTestimonials
+    testimonials={[
+      {
+        image: "https://framerusercontent.com/images/fBIg9iVSKmEHt9d5b8ZhZs7gvFA.jpg",
+        quote: "Template helped us launch a polished website that feels premium and scales with you.",
+        name: "Elena Rodriguez",
+        title: "Marketing Director",
+        results: "18x email sign ups"
+      },
+      {
+        image: "https://framerusercontent.com/images/8JVHS9z8Iw1dBHKF3vLhIFh9E2k.jpg",
+        quote: "Every resource feels intentional, from free step-by-step workflows to paid resources.",
+        name: "Priya Desai",
+        title: "Shopify Store Owner",
+        results: "2x quarterly revenue"
+      },
+      {
+        image: "https://framerusercontent.com/images/L9jK4vN2pOiRsDfH5xZmCe7qB1A.jpg",
+        quote: "We saved weeks of design time and launched a high-end website that feels premium.",
+        name: "Lucas Chen",
+        title: "Café Owner",
+        results: "20% increased conversion"
+      }
+    ]}
+  />
 
   <!-- FAQ Section -->
   <RampFAQ

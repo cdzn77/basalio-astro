@@ -1,5 +1,20 @@
 # Basalio marketing-site — Standing Instructions
 
+## Required reading at session start
+
+Also read `LAYOUT_PATTERNS.md` in this same directory at the start of every session — it defines canonical structural patterns (header splits, lists, buttons, grids) used throughout this site. Check it before writing any layout CSS/JSX; if a section's structure matches a named pattern there, implement that pattern's canonical CSS rather than deriving structure from prose alone.
+
+## Layout clarity protocol (added 2026-07-17 after repeated layout mismatches on Resources and Courses page)
+
+Prose descriptions of layout ("flex row, 35% left column...") are ambiguous enough that they've caused real mismatches — sections built stacked instead of split, grids built as 1 column instead of 2. Prose alone is not sufficient input for layout work going forward.
+
+Before writing layout CSS/JSX for any section, require ALL of the following to be present:
+1. An ASCII wireframe box diagram in the prompt showing nesting and column splits — if one isn't provided, ask for it rather than inferring structure from prose alone.
+2. A reference to LAYOUT_PATTERNS.md for any pattern that matches an existing canonical definition (header-split-35-65, divider-list, two-pill-button, accordion, card-grid-2col, sticky-footer-reveal) — implement the canonical CSS from that file, don't re-derive it from a paragraph.
+3. If a reference screenshot file exists in /reference/, open and look at it directly before writing code — don't rely solely on the text description of what it shows.
+
+After building, compare your screenshot output against the reference screenshot side by side and describe any visual differences explicitly — don't just confirm the code compiles or that elements are present.
+
 ## Verification protocol (non-negotiable)
 
 Do NOT report any UI/styling task as "working," "verified," "rendering correctly," or similar until you have done ALL of the following in the SAME turn:

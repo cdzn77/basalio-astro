@@ -33,9 +33,10 @@ const { brand = "Ramp Studio." } = Astro.props;
     top: 0;
     left: 0;
     right: 0;
-    background: transparent;
+    background: var(--color-primary, #FFEA00);
     z-index: 1000;
-    padding: 16px 40px;
+    padding: 14px 40px;
+    border-bottom: none;
   }
 
   .header-container {

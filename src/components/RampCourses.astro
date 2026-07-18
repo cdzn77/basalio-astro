@@ -145,12 +145,12 @@ const {
     gap: 40px;
   }
 
-  /* LEFT COLUMN: 500px wide, flex column, match carousel height (571px) */
+  /* LEFT COLUMN: 500px wide, flex column, match carousel height (450px) */
   .courses-left {
     flex: 0 0 500px;
     display: flex;
     flex-direction: column;
-    height: 571px;
+    height: 450px;
   }
 
   /* Eyebrow + heading block (natural document flow spacing) */
@@ -233,7 +233,7 @@ const {
     flex: 1;
     position: relative;
     overflow: clip;
-    min-height: 571px;
+    min-height: 450px;
   }
 
   /* Invisible hover zones (left and right edges) */
@@ -265,7 +265,7 @@ const {
     position: relative;
     overflow: clip;
     width: 100%;
-    height: 571px;
+    height: 450px;
   }
 
   /* Track: position absolute, flex row, gap 20px, width = sum of cards + gaps */
@@ -279,10 +279,10 @@ const {
     transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  /* Course cards: mapped from array, placeholder solid color with icon */
+  /* Course cards: 2-column carousel (2 cards visible at once) */
   .course-card {
-    flex: 0 0 500px;
-    height: 571px;
+    flex: 0 0 calc(50% - 10px);
+    height: 400px;
     background: #FFEA00;
     border-radius: 6px;
     padding: 40px;
@@ -375,17 +375,19 @@ const {
   const rightZone = document.querySelector('.carousel-zone-right');
 
   if (track && viewport && cards.length > 0) {
-    const CARD_WIDTH = 500; // flex: 0 0 500px
     const GAP = 20;
-    const CARD_PLUS_GAP = CARD_WIDTH + GAP;
+    let CARD_WIDTH = 0; // Will be calculated based on viewport
+    let CARD_PLUS_GAP = 0;
 
     let currentPage = 0;
     let totalPages = 1;
 
-    // Calculate how many cards fit in viewport width
+    // Calculate card width to show 2 cards per view
     const calculatePaging = () => {
       const viewportWidth = viewport.clientWidth;
-      const cardsPerView = Math.floor(viewportWidth / CARD_PLUS_GAP);
+      CARD_WIDTH = (viewportWidth - GAP) / 2; // 2 cards per view
+      CARD_PLUS_GAP = CARD_WIDTH + GAP;
+      const cardsPerView = 2; // Always show 2 cards
       totalPages = Math.max(1, Math.ceil(cards.length / cardsPerView));
       return cardsPerView;
     };

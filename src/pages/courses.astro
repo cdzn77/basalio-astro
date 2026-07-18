@@ -379,11 +379,14 @@ const descriptionWords = description.split(' ');
     transform: scale(0.98);
   }
 
-  /* Testimonials section: rounded bottom corners matching homepage */
+  /* Testimonials section: rounded bottom corners matching homepage FAQ pattern */
   .testimonials-rounded {
     border-bottom-left-radius: 40px;
     border-bottom-right-radius: 40px;
-    overflow: hidden;
+    overflow: visible;
+    position: relative;
+    z-index: 2;
+    margin-bottom: -40px;
   }
 
   /* RESPONSIVE */

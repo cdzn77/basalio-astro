@@ -8,8 +8,6 @@ import RampWhatWeDo from '../components/RampWhatWeDo.astro';
 import RampCourses from '../components/RampCourses.astro';
 import RampResources from '../components/RampResources.astro';
 import RampRetainer from '../components/RampRetainer.astro';
-import RampTrustedBy from '../components/RampTrustedBy.astro';
-import RampTestimonials from '../components/RampTestimonials.astro';
 import RampFAQ from '../components/RampFAQ.astro';
 import RampFooter from '../components/RampFooter.astro';
 
@@ -77,45 +75,6 @@ const description = "Ramp helps marketers, founders, and creators build scalable
 
   <!-- Monthly Retainer Section -->
   <RampRetainer />
-
-  <!-- Trusted By Section -->
-  <RampTrustedBy
-    logos={[
-      { name: "Logo 1" },
-      { name: "Logo 2" },
-      { name: "Logo 3" },
-      { name: "Logo 4" },
-      { name: "Logo 5" },
-      { name: "Logo 6" }
-    ]}
-  />
-
-  <!-- Testimonials Section -->
-  <RampTestimonials
-    testimonials={[
-      {
-        image: "https://via.placeholder.com/400x300?text=Maya",
-        quote: "Template helped us launch a polished website that feels premium and scales with you.",
-        name: "Maya Thompson",
-        title: "Wellness Coach",
-        results: "18x email sign ups"
-      },
-      {
-        image: "https://via.placeholder.com/400x300?text=Priya",
-        quote: "Every resource feels intentional, from free step-by-step workflows to paid resources.",
-        name: "Priya Desai",
-        title: "Shopify Store Owner",
-        results: "2x quaterly revenue"
-      },
-      {
-        image: "https://via.placeholder.com/400x300?text=Lucas",
-        quote: "We saved weeks of design time and launched a high-end website that feels premium.",
-        name: "Lucas Martinez",
-        title: "Café Owner",
-        results: "20% increased conversion"
-      }
-    ]}
-  />
 
   <!-- FAQ Section -->
   <RampFAQ

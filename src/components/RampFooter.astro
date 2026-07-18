@@ -1,237 +1,237 @@
 ---
-// Ramp Footer - 1:1 PIXEL-PERFECT REPLICA
-// Exact dimensions: 1791×500px, padding 0
+// Ramp Footer - Structural skeleton
+// Row 1: Address (26px, 35% left) + Navigation (16px, 65% right)
+// Row 2: Four brand words (170px, -8.5px letter-spacing, static - no marquee animation yet)
+
+interface NavLink {
+  label: string;
+  href: string;
+}
 
 interface Props {
   address?: string;
+  column1Links?: NavLink[];
+  column2Links?: NavLink[];
+  brandWords?: string[];
 }
 
 const {
-  address = "Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark"
+  address = "Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark",
+  column1Links = [
+    { label: "Courses", href: "/courses" },
+    { label: "Subscription", href: "/subscription" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" }
+  ],
+  column2Links = [
+    { label: "404", href: "/404" },
+    { label: "Terms & Conditions", href: "/legal/terms-of-service" },
+    { label: "Privacy Policy", href: "/legal/privacy-policy" }
+  ],
+  brandWords = ["Ramp", "Studio.", "Creative.", "Collective."]
 } = Astro.props;
 ---
 
 <footer class="footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-left">
+  <div class="footer-inner">
+    <!-- ROW 1: Address + Navigation -->
+    <div class="footer-row-1">
+      <!-- LEFT: Address (35%) -->
+      <div class="footer-address-block">
         <p class="footer-address">{address}</p>
       </div>
 
-      <div class="footer-right">
-        <nav class="footer-nav">
-          <a href="#" class="nav-link">
-            <span class="nav-label">Courses</span>
-            <span class="nav-text">Courses</span>
-          </a>
-          <a href="#" class="nav-link">
-            <span class="nav-label">Subscription</span>
-            <span class="nav-text">Subscription</span>
-          </a>
-          <a href="#" class="nav-link">
-            <span class="nav-label">About</span>
-            <span class="nav-text">About</span>
-          </a>
-          <a href="#" class="nav-link">
-            <span class="nav-label">Contact</span>
-            <span class="nav-text">Contact</span>
-          </a>
-          <a href="#" class="nav-link">
-            <span class="nav-label">404</span>
-            <span class="nav-text">404</span>
-          </a>
-          <a href="#" class="nav-link">
-            <span class="nav-label">Terms & Conditions</span>
-            <span class="nav-text">Terms & Conditions</span>
-          </a>
-          <a href="#" class="nav-link">
-            <span class="nav-label">Privacy Policy</span>
-            <span class="nav-text">Privacy Policy</span>
-          </a>
+      <!-- RIGHT: Navigation (65%) -->
+      <div class="footer-nav-block">
+        <!-- Nav Column 1 -->
+        <nav class="footer-nav-column">
+          {column1Links.map((link) => (
+            <a href={link.href} class="footer-link">{link.label}</a>
+          ))}
+        </nav>
+
+        <!-- Nav Column 2 -->
+        <nav class="footer-nav-column">
+          {column2Links.map((link) => (
+            <a href={link.href} class="footer-link">{link.label}</a>
+          ))}
         </nav>
       </div>
     </div>
 
-    <div class="footer-bottom">
-      <h3 class="footer-heading">Ramp</h3>
-      <h3 class="footer-heading">Studio.</h3>
-      <h3 class="footer-heading">Creative.</h3>
-      <h3 class="footer-heading">Collective.</h3>
+    <!-- ROW 2: Brand Statement (Static - No Animation Yet) -->
+    <div class="footer-row-2">
+      <div class="footer-brand-container">
+        <div class="footer-brand-row">
+          {brandWords.map((word) => (
+            <h2 class="footer-brand-word">{word}</h2>
+          ))}
+        </div>
+      </div>
     </div>
   </div>
 </footer>
 
 <style>
-  /* EXACT PIXEL SPECIFICATIONS */
+  /* FOOTER SHELL */
   .footer {
-    background: #FFEA00;
+    background: #FAFAFA;
     width: 100%;
-    max-width: 1791px;
-    padding: 80px 0;
-    margin: 0 auto;
-    position: relative;
     box-sizing: border-box;
+    position: relative;
+    z-index: 1;
   }
 
+  /* Gradient curve transition for FAQ overlay (40px height, positioned 40px above footer) */
   .footer::before {
     content: '';
     position: absolute;
     top: -40px;
     left: 0;
-    right: 0;
+    width: 100%;
     height: 40px;
     background: linear-gradient(to bottom, #000000, #FAFAFA);
     border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    pointer-events: none;
   }
 
-  .container {
-    max-width: 1711px;
+  /* FOOTER INNER: Padding wrapper, two rows with 40px gap */
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 80px 40px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 40px;
+    box-sizing: border-box;
     position: relative;
     z-index: 1;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
   }
 
-  .footer-top {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    margin-bottom: 80px;
-    align-items: start;
-    flex: 1;
+  /* ROW 1: Address + Navigation */
+  .footer-row-1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 40px;
+    align-items: flex-start;
   }
 
-  .footer-left {
-    display: flex;
-    flex-direction: column;
+  /* LEFT: Address (35%) */
+  .footer-address-block {
+    flex: 0 1 35%;
+    min-width: 0;
   }
 
   .footer-address {
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 32.5px;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+    padding: 0;
+  }
+
+  /* RIGHT: Navigation (65%) */
+  .footer-nav-block {
+    flex: 0 1 65%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 60px;
+  }
+
+  /* Navigation Column */
+  .footer-nav-column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Navigation Links - SIMPLE HOVER STATE: opacity shift (not crossfade) */
+  .footer-link {
     font-size: 16px;
-    line-height: 1.7;
-    color: #000000;
-    margin: 0 auto;
-  }
-
-  .footer-right {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .footer-nav {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px 60px;
-  }
-
-  .nav-link {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    transition: opacity 0.2s ease;
+    font-weight: 400;
+    line-height: 22.4px;
+    color: var(--basalio-ink, #000000);
     text-decoration: none;
-    color: #000000;
+    cursor: pointer;
+    transition: opacity 200ms ease;
   }
 
-  .nav-link:hover {
+  .footer-link:hover {
     opacity: 0.6;
   }
 
-  .nav-label {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #999999;
-  }
-
-  .nav-text {
-    font-size: 16px;
-    font-weight: 500;
-    color: #000000;
-  }
-
-  .footer-bottom {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+  /* ROW 2: Brand Statement Container */
+  .footer-row-2 {
+    display: flex;
+    flex-direction: column;
     gap: 20px;
-    padding-top: 60px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
 
-  .footer-heading {
-    font-family: 'Manrope', sans-serif;
-    font-size: 72px;
+  /* Brand Statement Container (overflow: hidden for marquee preparation) */
+  .footer-brand-container {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  /* Brand Word Row (STATIC VERSION - no animation/scroll yet) */
+  .footer-brand-row {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    white-space: nowrap;
+    width: fit-content;
+  }
+
+  /* Brand Words: 170px, weight 400, -8.5px letter-spacing */
+  .footer-brand-word {
+    font-size: 170px;
     font-weight: 400;
-    color: #000000;
-    margin: 0 auto;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-    animation: fadeInUp 0.8s ease-out forwards;
-    opacity: 0;
+    letter-spacing: -8.5px;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    white-space: nowrap;
+    line-height: 1;
   }
 
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .footer-heading:nth-child(1) {
-    animation-delay: 0.1s;
-  }
-
-  .footer-heading:nth-child(2) {
-    animation-delay: 0.2s;
-  }
-
-  .footer-heading:nth-child(3) {
-    animation-delay: 0.3s;
-  }
-
-  .footer-heading:nth-child(4) {
-    animation-delay: 0.4s;
-  }
-
-  @media (max-width: 1024px) {
-    .footer-nav {
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-
-    .footer-top {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-  }
-
+  /* Responsive: mobile stacking and scaled-down branding */
   @media (max-width: 768px) {
-    .footer {
-      width: 100%;
+    .footer-inner {
       padding: 60px 20px;
     }
 
-    .footer-top {
-      margin-bottom: 40px;
+    .footer-row-1 {
+      flex-direction: column;
+      gap: 40px;
     }
 
-    .footer-bottom {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      padding-top: 40px;
+    .footer-address-block,
+    .footer-nav-block {
+      flex: 1;
+      max-width: 100%;
     }
 
-    .footer-heading {
-      font-size: 40px;
+    .footer-nav-block {
+      justify-content: flex-start;
+    }
+
+    .footer-address {
+      font-size: 18px;
+      line-height: 24px;
+    }
+
+    .footer-link {
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .footer-brand-word {
+      font-size: 80px;
+      letter-spacing: -4px;
     }
   }
 </style>

@@ -1,7 +1,9 @@
 ---
-// Ramp Resources - Functional accordion with expandable rows
+// Ramp Resources - Accordion with click-triggered expansion
 // Two-part header: LEFT (eyebrow) | RIGHT (description + View All link)
-// Resource rows with height-animated expansion, description, and "learn more" link
+// Resource rows: icon-button click triggers height animation, multi-open independent state
+
+import TwoPillButton from './TwoPillButton.astro';
 
 interface Resource {
   title: string;
@@ -53,15 +55,8 @@ const {
       <!-- Description paragraph -->
       <p class="resources-description">{sectionDescription}</p>
 
-      <!-- View All link (reused component styling) -->
-      <a href={ctaLink} class="view-all-link">
-        <span class="view-all-text">{ctaLabel}</span>
-        <span class="view-all-icon">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M6 2L12 8L6 14"></path>
-          </svg>
-        </span>
-      </a>
+      <!-- View All link: Shared two-pill component -->
+      <TwoPillButton label={ctaLabel} href={ctaLink} />
     </div>
   </div>
 
@@ -158,45 +153,9 @@ const {
     max-width: 750px;
   }
 
-  /* View All link (reused from Courses section) */
-  .view-all-link {
-    display: flex;
-    flex-direction: row;
-    gap: 0;
-    text-decoration: none;
-    width: fit-content;
+  /* TwoPillButton component handles styling */
+  :global(.two-pill-button) {
     flex: 0 0 auto;
-  }
-
-  .view-all-text {
-    background: var(--basalio-ink, #000000);
-    color: var(--basalio-paper, #FFFFFF);
-    border-radius: 8px;
-    padding: 12px 16px;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 2.8px;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .view-all-icon {
-    background: var(--basalio-ink, #000000);
-    color: var(--basalio-paper, #FFFFFF);
-    border-radius: 8px;
-    width: 40px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 40px;
-    transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .view-all-link:hover .view-all-icon {
-    transform: translateX(4px);
   }
 
   /* RESOURCE LIST WRAPPER: Spacer + List aligned to right column */

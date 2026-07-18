@@ -122,9 +122,9 @@ const descriptionWords = description.split(' ');
   </section>
 
   <!-- TESTIMONIALS SECTION: Reused from homepage, with rounded bottom -->
-  <div class="testimonials-rounded">
+  <section class="testimonials-rounded">
     <RampTestimonials />
-  </div>
+  </section>
 
   <!-- FOOTER: Reused from homepage -->
   <Fragment slot="footer">
@@ -379,13 +379,11 @@ const descriptionWords = description.split(' ');
     transform: scale(0.98);
   }
 
-  /* Testimonials wrapper: white rounded bottom over yellow footer */
+  /* Testimonials section: allow rounded corners to clip content */
   .testimonials-rounded {
-    border-radius: 0 0 40px 40px;
     overflow: hidden;
-    padding-bottom: 80px;
+    border-radius: 0 0 40px 40px;
   }
-
 
   /* RESPONSIVE */
   @media (max-width: 1024px) {

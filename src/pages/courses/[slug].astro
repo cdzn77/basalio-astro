@@ -857,6 +857,10 @@ const description = course.fullDescription;
     mask-origin:border-box;
     mask-repeat:repeat;
     mask-size:auto;
+    will-change:transform;
+    opacity:0;
+    transform:translateX(-20px);
+    animation:slideInLeft 0.6s ease-out forwards;
   }
 
   .instructor-image {
@@ -876,6 +880,11 @@ const description = course.fullDescription;
     bottom:40px;
     left:40px;
     z-index:2;
+    will-change:transform;
+    opacity:0;
+    transform:translateX(-20px);
+    animation:slideInLeft 0.6s ease-out forwards;
+    animation-delay:0.1s;
   }
 
   .instructor-details {
@@ -887,6 +896,10 @@ const description = course.fullDescription;
     gap:32px;
     width:auto;
     max-width:400px;
+    will-change:transform;
+    opacity:0;
+    transform:translateX(20px);
+    animation:slideInRight 0.6s ease-out forwards;
   }
 
   .instructor-dot {
@@ -1007,6 +1020,29 @@ const description = course.fullDescription;
     text-decoration:none;
     text-transform:none;
     -webkit-font-smoothing:antialiased;
+  }
+
+  /* ENTRANCE ANIMATIONS */
+  @keyframes slideInLeft {
+    from {
+      opacity:0;
+      transform:translateX(-20px);
+    }
+    to {
+      opacity:1;
+      transform:translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity:0;
+      transform:translateX(20px);
+    }
+    to {
+      opacity:1;
+      transform:translateX(0);
+    }
   }
 
   /* RESPONSIVE DESIGN */

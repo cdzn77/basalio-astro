@@ -421,7 +421,7 @@ const description = course.fullDescription;
   .highlights {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 40px;
   }
 
   .highlight-item {
@@ -431,24 +431,43 @@ const description = course.fullDescription;
   }
 
   .highlight-title {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: #000000;
+    background-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: block;
+    font-family: Switzer, "Switzer Placeholder", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 22.4px;
     margin: 0;
     padding: 0;
+    text-align: start;
+    text-decoration: none;
+    text-wrap-mode: wrap;
+    text-wrap-style: auto;
+    width: 300px;
+    -webkit-font-smoothing: antialiased;
   }
 
   .highlight-description {
-    font-family: Switzer, sans-serif;
+    background-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.65);
+    display: block;
+    font-family: Switzer, "Switzer Placeholder", sans-serif;
     font-size: 14px;
     font-weight: 400;
+    letter-spacing: normal;
     line-height: 19.6px;
-    color: #000000;
     margin: 0;
     padding: 0;
+    text-align: start;
+    text-decoration: none;
+    text-wrap-mode: wrap;
+    text-wrap-style: auto;
+    width: 300px;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* HERO IMAGE */

@@ -79,9 +79,10 @@ const description = course.fullDescription;
 
   <!-- WHO IS THIS FOR SECTION -->
   <section class="who-is-this-for-section">
-    <div class="who-is-this-for-container">
+    <div class="who-is-this-for-left">
       <h2 class="section-heading">WHO IS THIS FOR</h2>
-
+    </div>
+    <div class="who-is-this-for-container">
       <div class="audience-grid">
         {course.whoIsThisFor.map(audience => (
           <div class="audience-card">
@@ -95,9 +96,11 @@ const description = course.fullDescription;
 
   <!-- COURSE OVERVIEW SECTION -->
   <section class="course-overview-section">
+    <div class="course-overview-left">
+      <h2 class="section-heading">{course.courseOverviewHeading}</h2>
+    </div>
     <div class="overview-container">
       <div class="overview-header">
-        <h2 class="section-heading">{course.courseOverviewHeading}</h2>
         <p class="overview-description">{course.courseOverviewDescription}</p>
         <button class="download-btn">{course.downloadLabel}</button>
       </div>
@@ -499,8 +502,7 @@ const description = course.fullDescription;
     align-items: flex-start;
   }
 
-  .who-is-this-for-section::before {
-    content: "";
+  .who-is-this-for-left {
     flex: 0 1 35%;
     max-width: 35%;
   }
@@ -581,8 +583,7 @@ const description = course.fullDescription;
     align-items: flex-start;
   }
 
-  .course-overview-section::before {
-    content: "";
+  .course-overview-left {
     flex: 0 1 35%;
     max-width: 35%;
   }

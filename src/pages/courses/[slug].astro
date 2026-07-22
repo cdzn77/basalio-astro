@@ -485,19 +485,29 @@ const description = course.fullDescription;
     display: block;
   }
 
-  /* WHO IS THIS FOR SECTION */
+  /* WHO IS THIS FOR SECTION: 35%/65% grid layout */
   .who-is-this-for-section {
     display: flex;
+    flex-direction: row;
     width: 100%;
     max-width: 100%;
     padding: 80px 40px;
     background: #FFFFFF;
     box-sizing: border-box;
     margin: 0 auto;
+    gap: 40px;
     align-items: flex-start;
   }
 
+  .who-is-this-for-section::before {
+    content: "";
+    flex: 0 1 35%;
+    max-width: 35%;
+  }
+
   .who-is-this-for-container {
+    flex: 0 1 65%;
+    max-width: 65%;
     width: 100%;
   }
 
@@ -543,21 +553,33 @@ const description = course.fullDescription;
     padding: 0;
   }
 
-  /* COURSE OVERVIEW SECTION */
+  /* COURSE OVERVIEW SECTION: 35%/65% grid layout */
   .course-overview-section {
     display: flex;
+    flex-direction: row;
     width: 100%;
     max-width: 100%;
     padding: 80px 40px;
     background: #FFFFFF;
     box-sizing: border-box;
     margin: 0 auto;
-    flex-direction: column;
-    gap: 60px;
+    gap: 40px;
+    align-items: flex-start;
+  }
+
+  .course-overview-section::before {
+    content: "";
+    flex: 0 1 35%;
+    max-width: 35%;
   }
 
   .overview-container {
+    flex: 0 1 65%;
+    max-width: 65%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
   }
 
   .overview-header {
@@ -688,7 +710,7 @@ const description = course.fullDescription;
     display: block;
   }
 
-  /* TOOLS SECTION */
+  /* TOOLS SECTION: 35%/65% grid layout */
   .tools-section {
     display: flex;
     flex-direction: row;
@@ -698,12 +720,19 @@ const description = course.fullDescription;
     background: #FFFFFF;
     box-sizing: border-box;
     margin: 0 auto;
-    gap: 60px;
-    align-items: stretch;
+    gap: 40px;
+    align-items: flex-start;
+  }
+
+  .tools-section::before {
+    content: "";
+    flex: 0 1 35%;
+    max-width: 35%;
   }
 
   .tools-container {
-    flex: 1;
+    flex: 0 1 65%;
+    max-width: 65%;
     display: flex;
     flex-direction: column;
     gap: 40px;
@@ -748,20 +777,29 @@ const description = course.fullDescription;
     border-radius: 8px;
   }
 
-  /* INSTRUCTOR SECTION */
+  /* INSTRUCTOR SECTION: 35%/65% grid layout */
   .instructor-section {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     width: 100%;
     max-width: 100%;
     padding: 80px 40px;
     background: #FFEA00;
     box-sizing: border-box;
     margin: 0 auto;
-    gap: 60px;
+    gap: 40px;
+    align-items: flex-start;
+  }
+
+  .instructor-section::before {
+    content: "";
+    flex: 0 1 35%;
+    max-width: 35%;
   }
 
   .instructor-container {
+    flex: 0 1 65%;
+    max-width: 65%;
     display: flex;
     flex-direction: row;
     gap: 60px;

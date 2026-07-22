@@ -926,12 +926,11 @@ const description = course.fullDescription;
   }
 
   .instructor-stats {
-    display:flex;
-    flex-flow:row;
-    place-content:flex-start;
-    align-items:flex-start;
-    gap:80px;
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:40px;
     width:100%;
+    row-gap:16px;
   }
 
   .stat {
@@ -940,7 +939,15 @@ const description = course.fullDescription;
     place-content:flex-start;
     align-items:flex-start;
     gap:8px;
-    width:min-content;
+    width:100%;
+  }
+
+  .stat-label {
+    grid-column:auto;
+  }
+
+  .stat-value {
+    grid-column:auto;
   }
 
   .stat-label {

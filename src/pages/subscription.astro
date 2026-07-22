@@ -1,0 +1,1127 @@
+---
+// Subscription Page - Retainer Service Details
+// 1:1 pixel-perfect replica of Ramp subscription template
+
+import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
+import RampHeader from '../components/RampHeader.astro';
+import RampTestimonials from '../components/RampTestimonials.astro';
+import RampFooter from '../components/RampFooter.astro';
+
+const title = "Monthly Subscription — Ramp Studio";
+const description = "A flexible marketing subscription designed to replace the overhead cost of a full-time hire.";
+
+const benefits = [
+  {
+    label: "Predictable pricing",
+    description: "One simple monthly rate with no surprises, contracts, or long-term commitments."
+  },
+  {
+    label: "Flexible scope",
+    description: "Pause, shift, or reprioritize requests as your business needs change."
+  },
+  {
+    label: "Fast turnaround",
+    description: "Get high-quality marketing deliverables quickly without waiting or internal bandwidth."
+  },
+  {
+    label: "No overhead",
+    description: "Skip hiring, onboarding, benefits, and management costs entirely."
+  },
+  {
+    label: "Senior-level output",
+    description: "Work that reflects experienced marketing and design thinking, not junior execution."
+  },
+  {
+    label: "Built to scale",
+    description: "Support launches, campaigns, and growth without expanding your internal team."
+  }
+];
+
+const pricingTiers = [
+  {
+    name: "Essentials",
+    price: "1750",
+    currency: "€",
+    period: "/mo",
+    features: [
+      "4 design/content updates per month",
+      "5 weekly social posts",
+      "Month strategy calls",
+      "48-hour email support"
+    ],
+    buttonText: "SUBSCRIBE",
+    highlighted: false
+  },
+  {
+    name: "Premium",
+    price: "2750",
+    currency: "€",
+    period: "/mo",
+    features: [
+      "12 design/content updates per month",
+      "20+ weekly social posts",
+      "Weekly strategy call",
+      "24-hour email support"
+    ],
+    buttonText: "SUBSCRIBE",
+    highlighted: true
+  }
+];
+
+const descriptionWords = description.split(' ');
+---
+
+<RampTemplateLayout title={title} description={description}>
+  <!-- HEADER: Navigation bar -->
+  <Fragment slot="header">
+    <RampHeader />
+  </Fragment>
+
+  <!-- HERO SECTION: 35-65 split with heading on right -->
+  <section class="hero-section">
+    <!-- LEFT: Empty (35%) -->
+    <div class="hero-left"></div>
+
+    <!-- RIGHT: Heading + Trusted By (65%) -->
+    <div class="hero-right">
+      <h1 class="hero-heading">
+        A flexible marketing subscription designed to replace the overhead cost of a full-time hire.
+      </h1>
+
+      <!-- TRUSTED BY SECTION -->
+      <div class="trusted-by-section">
+        <p class="trusted-label">TRUSTED BY</p>
+        <div class="trusted-logos">
+          <div class="logo-placeholder">Logo</div>
+          <div class="logo-placeholder">Logo</div>
+          <div class="logo-placeholder">Logo</div>
+          <div class="logo-placeholder">Logo</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY BENEFITS SECTION -->
+  <section class="benefits-section">
+    <div class="benefits-header">
+      <p class="section-label">WHY IT WORKS</p>
+      <h2 class="section-title">Key Benefits</h2>
+    </div>
+
+    <div class="benefits-grid">
+      {benefits.map((benefit) => (
+        <div class="benefit-card">
+          <h3 class="benefit-title">{benefit.label}</h3>
+          <p class="benefit-description">{benefit.description}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- PRICING SECTION -->
+  <section class="pricing-section">
+    <div class="pricing-header">
+      <div class="pricing-title-block">
+        <p class="section-label">MONTHLY RETAINER</p>
+        <h2 class="section-title">Endless Support</h2>
+      </div>
+      <a href="#contact" class="contact-btn">
+        <span class="text-pill">CONTACT US</span>
+        <span class="icon-pill">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </span>
+      </a>
+    </div>
+
+    <div class="pricing-tiers">
+      {pricingTiers.map((tier) => (
+        <div class={`pricing-card ${tier.highlighted ? 'highlighted' : ''}`}>
+          <a href="#learn-more" class="card-top-button">
+            <svg class="icon-arrow" width="100%" height="100%" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <line x1="21.5" y1="12" x2="0.5" y2="12" fill="none" stroke="rgb(85, 26, 139)" stroke-miterlimit="10" stroke-width="1.5"></line>
+              <polyline points="13.86 4.36 21.5 12 13.86 19.64" fill="none" stroke="rgb(85, 26, 139)" stroke-miterlimit="10" stroke-width="1.5"></polyline>
+            </svg>
+          </a>
+
+          <div class="tier-header">
+            <h3 class="tier-name">{tier.name}</h3>
+            {tier.highlighted && <span class="new-badge">●</span>}
+          </div>
+
+          <div class="features-list">
+            {tier.features.map((feature) => (
+              <p class="feature-item">{feature}</p>
+            ))}
+          </div>
+
+          <div class="tier-footer">
+            <div class="price">
+              <span class="currency">{tier.currency}</span>
+              <span class="amount">{tier.price}</span>
+              <span class="period">{tier.period}</span>
+            </div>
+            <a href="#subscribe" class="subscribe-btn">
+              <span class="text-pill">{tier.buttonText}</span>
+              <span class="icon-pill">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M1 8H15M15 8L8 1M15 8L8 15"></path>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS SECTION -->
+  <section>
+    <RampTestimonials />
+  </section>
+
+  <!-- FAQ SECTION: Black background with 35-65 split layout -->
+  <section class="faq-section">
+    <div class="faq-wrapper">
+      <!-- LEFT: FAQ Title (35%) -->
+      <div class="faq-left">
+        <h2 class="faq-title">FAQ</h2>
+      </div>
+
+      <!-- RIGHT: Description + Items (65%) -->
+      <div class="faq-right">
+        <p class="faq-description">Explore our most commonly asked questions about our agency, podcast, and product launch resources.</p>
+
+        <div class="faq-items">
+          <!-- First item: expanded by default -->
+          <div class="faq-item active">
+            <div class="faq-header">
+              <h3 class="faq-question">What does Ramp Studio do?</h3>
+              <button class="faq-toggle" aria-label="Close answer">×</button>
+            </div>
+            <div class="faq-answer">
+              <p>Ramp Studio helps brands build momentum through practical marketing education, hands-on execution, and reusable resources. We offer self-paced courses, a subscription-based marketing retainer, and tools designed to help teams move faster, stay consistent, and make smarter decisions without overcomplicating things.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3 class="faq-question">Who is Ramp Studio for?</h3>
+              <button class="faq-toggle" aria-label="Expand answer">+</button>
+            </div>
+            <div class="faq-answer">
+              <p>We serve marketers, founders, content creators, and small business owners who want to build scalable marketing systems without feeling overwhelmed. Our content is accessible to beginners while remaining valuable for experienced professionals.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3 class="faq-question">How do your courses work?</h3>
+              <button class="faq-toggle" aria-label="Expand answer">+</button>
+            </div>
+            <div class="faq-answer">
+              <p>Our courses are self-paced, comprehensive programs that combine video lessons, worksheets, templates, and community support. You get lifetime access to course materials and can work through them at your own pace.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3 class="faq-question">What is the subscription marketing retainer?</h3>
+              <button class="faq-toggle" aria-label="Expand answer">+</button>
+            </div>
+            <div class="faq-answer">
+              <p>Our retainer service provides ongoing support including design updates, content creation, strategy calls, and email support. We offer Essentials and Premium tiers depending on your needs.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3 class="faq-question">Do I need to choose between courses, resources, or the retainer?</h3>
+              <button class="faq-toggle" aria-label="Expand answer">+</button>
+            </div>
+            <div class="faq-answer">
+              <p>No! Many clients use a combination of our offerings. You might take a course to learn fundamentals, use resources to accelerate your work, and hire us for retainer support for ongoing execution.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <div class="faq-header">
+              <h3 class="faq-question">What makes Ramp Studio different from other marketing agencies?</h3>
+              <button class="faq-toggle" aria-label="Expand answer">+</button>
+            </div>
+            <div class="faq-answer">
+              <p>We combine education with execution. Rather than just doing the work for you, we teach you how to build sustainable systems. Plus, we're transparent about our pricing and focused on serving creative entrepreneurs specifically.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <Fragment slot="footer">
+    <RampFooter address="Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark" />
+  </Fragment>
+</RampTemplateLayout>
+
+<style>
+  /* HERO SECTION: 35-65 split layout */
+  .hero-section {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+    padding: 120px 40px;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    gap: 40px;
+    align-items: flex-start;
+  }
+
+  .hero-left {
+    flex: 0 1 35%;
+  }
+
+  .hero-right {
+    flex: 0 1 65%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .hero-right {
+    flex: 0 0 auto;
+  }
+
+  .hero-heading {
+    background-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: block;
+    font-family: Switzer, "Switzer Placeholder", sans-serif;
+    font-feature-settings: normal;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 400;
+    height: 158.391px;
+    letter-spacing: -0.96px;
+    line-height: 52.8px;
+    margin: 0;
+    margin-left: 0;
+    padding: 0;
+    padding-left: 0;
+    text-align: left;
+    text-decoration: none;
+    text-transform: none;
+    text-wrap-style: balance;
+    width: 800px;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0px;
+  }
+
+  /* TRUSTED BY SECTION */
+  .trusted-by-section {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .trusted-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+
+  .trusted-logos {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1;
+  }
+
+  .logo-placeholder {
+    width: 160px;
+    height: 40px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.3);
+  }
+
+  /* BENEFITS SECTION */
+  .benefits-section {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    padding: 40px 40px 80px 40px;
+    background: var(--basalio-paper, #FFFFFF);
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    align-items: flex-start;
+  }
+
+  .benefits-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 0 1 35%;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+
+  .section-title {
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--basalio-ink, #000000);
+    margin: 0;
+    padding: 0;
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 300px);
+    gap: 40px 50px;
+    flex: 1 1 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .benefit-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .benefit-title {
+    background-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: block;
+    font-family: Switzer, "Switzer Placeholder", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    height: 22.3984px;
+    letter-spacing: normal;
+    line-height: 22.4px;
+    margin: 0;
+    padding: 0;
+    text-align: start;
+    width: 300px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .benefit-description {
+    background-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    color: rgb(87, 87, 87);
+    display: block;
+    font-family: Switzer, "Switzer Placeholder", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    height: 39.2031px;
+    letter-spacing: normal;
+    line-height: 19.6px;
+    margin: 0;
+    padding: 0;
+    text-align: start;
+    width: 300px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* PRICING SECTION - 35/65 split layout */
+  .pricing-section {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 80px 40px;
+    background-color: rgb(250, 250, 250);
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .pricing-header {
+    flex: 0 0 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .pricing-title-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .section-label {
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 0px;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: block;
+    font-family: "Azeret Mono", monospace;
+    font-feature-settings: normal;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    height: 19.6px;
+    letter-spacing: 2.8px;
+    line-height: 19.6px;
+    margin: 0;
+    padding: 0;
+    text-align: start;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-wrap-mode: nowrap;
+    white-space: nowrap;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0px;
+  }
+
+  .section-title {
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: inline-block;
+    font-family: Switzer, "Switzer Placeholder", sans-serif;
+    font-feature-settings: normal;
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    height: 48px;
+    letter-spacing: -0.8px;
+    line-height: 48px;
+    margin: 0;
+    padding: 0;
+    text-align: start;
+    text-decoration: none;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0px;
+  }
+
+  .contact-btn {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    text-decoration: none;
+  }
+
+  .contact-btn .text-pill {
+    background: #000000;
+    color: #FFFFFF;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-family: 'Azeret Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2.8px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .contact-btn .icon-pill {
+    background: #000000;
+    border-radius: 8px;
+    width: 40px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+  }
+
+  .contact-btn .icon-pill svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 200ms ease-out;
+  }
+
+  .contact-btn:hover .icon-pill svg {
+    transform: translateX(3px);
+  }
+
+  .pricing-tiers {
+    flex: 0 0 65%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    width: 100%;
+  }
+
+  .pricing-card {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 40px;
+    background: #FFFFFF;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .card-top-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .card-top-button:hover {
+    background: #F5F5F5;
+  }
+
+  .card-top-button svg {
+    width: 24px;
+    height: 24px;
+    stroke: #000000;
+    transition: transform 200ms ease-out;
+  }
+
+  .card-top-button:hover svg {
+    transform: translateX(3px);
+  }
+
+  .icon-arrow {
+    box-sizing: border-box;
+    color: rgb(85, 26, 139);
+    cursor: pointer;
+    display: block;
+    font-family: sans-serif;
+    font-size: 12px;
+    height: 24px;
+    overflow-clip-margin: content-box;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 24px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .icon-arrow line,
+  .icon-arrow polyline {
+    box-sizing: border-box;
+    color: rgb(85, 26, 139);
+    cursor: pointer;
+    display: inline;
+    fill: none;
+    font-family: sans-serif;
+    font-size: 12px;
+    height: auto;
+    stroke: rgb(85, 26, 139);
+    stroke-miterlimit: 10;
+    stroke-width: 1.5px;
+    transform-origin: 0px 0px;
+    width: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .pricing-card.highlighted {
+    background: #FFEA00;
+    border: none;
+  }
+
+  .tier-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .tier-name {
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 0px;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: block;
+    font-family: Switzer, "Switzer Placeholder", sans-serif;
+    font-feature-settings: normal;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 400;
+    height: 33.6px;
+    letter-spacing: -0.56px;
+    line-height: 33.6px;
+    margin: 0;
+    overflow-wrap: break-word;
+    padding: 0;
+    text-align: start;
+    text-decoration: none;
+    text-transform: none;
+    word-break: break-word;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0px;
+  }
+
+  .new-badge {
+    font-size: 20px;
+    color: #000000;
+  }
+
+  .features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .feature-item {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgba(0, 0, 0, 0.65);
+    margin: 0;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .feature-item:last-child {
+    border-bottom: none;
+  }
+
+  .tier-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+  }
+
+  .price {
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 0px;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: block;
+    font-family: Switzer, "Switzer Placeholder", sans-serif;
+    font-feature-settings: normal;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    height: 28px;
+    letter-spacing: normal;
+    line-height: 28px;
+    margin: 0;
+    padding: 0;
+    text-align: start;
+    text-decoration: none;
+    text-transform: none;
+    text-wrap-mode: nowrap;
+    white-space: nowrap;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0px;
+  }
+
+  .currency {
+    font-size: 20px;
+    font-weight: 500;
+    color: rgb(0, 0, 0);
+  }
+
+  .amount {
+    font-size: 20px;
+    font-weight: 500;
+    color: rgb(0, 0, 0);
+  }
+
+  .period {
+    font-size: 20px;
+    font-weight: 500;
+    color: rgb(0, 0, 0);
+  }
+
+  .subscribe-btn {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+    text-decoration: none;
+  }
+
+  .subscribe-btn .text-pill {
+    background: #000000;
+    color: #FFFFFF;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-family: 'Azeret Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .subscribe-btn .icon-pill {
+    background: #000000;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+  }
+
+  .subscribe-btn .icon-pill svg {
+    transition: transform 200ms ease-out;
+  }
+
+  .subscribe-btn:hover .icon-pill svg {
+    transform: translateX(3px);
+  }
+
+  /* FAQ SECTION: Black background with 35-65 split layout */
+  .faq-section {
+    background: #000000;
+    padding: 80px 40px;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    overflow: visible;
+    margin-bottom: -40px;
+  }
+
+  .faq-wrapper {
+    max-width: 1706px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    align-items: flex-start;
+  }
+
+  /* LEFT: FAQ Title (35%) */
+  .faq-left {
+    flex: 0 1 35%;
+    min-width: 0;
+  }
+
+  .faq-title {
+    font-size: 36px;
+    font-weight: 400;
+    color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+    line-height: 1.3;
+  }
+
+  /* RIGHT: Description + Items (65%) */
+  .faq-right {
+    flex: 0 1 65%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .faq-description {
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 0px;
+    box-sizing: border-box;
+    color: rgb(255, 255, 255);
+    display: block;
+    font-family: Switzer, "Switzer Placeholder", sans-serif;
+    font-feature-settings: "blwf", "cv03", "cv04", "cv09", "cv11";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    height: 28px;
+    letter-spacing: -0.4px;
+    line-height: 28px;
+    margin: 0;
+    padding: 0;
+    text-align: start;
+    text-decoration: none;
+    text-transform: none;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0px;
+  }
+
+  .faq-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .faq-item {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 24px;
+    margin-bottom: 12px;
+  }
+
+  .faq-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .faq-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    gap: 16px;
+  }
+
+  .faq-question {
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 0px;
+    box-sizing: border-box;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: block;
+    font-family: Switzer, "Switzer Placeholder", sans-serif;
+    font-feature-settings: "blwf", "cv03", "cv04", "cv09", "cv11";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    height: 25.2px;
+    letter-spacing: -0.36px;
+    line-height: 25.2px;
+    margin: 0;
+    overflow-wrap: break-word;
+    padding: 0;
+    text-align: start;
+    text-decoration: none;
+    text-transform: none;
+    user-select: none;
+    white-space: pre-wrap;
+    word-break: break-word;
+    flex: 1;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0px;
+  }
+
+  .faq-toggle {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #FFFFFF;
+    font-weight: 300;
+    cursor: pointer;
+    padding: 0;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+  }
+
+  .faq-toggle:hover {
+    opacity: 0.7;
+  }
+
+  .faq-answer {
+    display: none;
+    margin-top: 16px;
+    padding-top: 16px;
+  }
+
+  .faq-item.active .faq-answer {
+    display: block;
+  }
+
+  .faq-answer p {
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 0px;
+    box-sizing: border-box;
+    color: rgb(87, 87, 87);
+    cursor: pointer;
+    display: block;
+    font-family: Switzer, "Switzer Placeholder", sans-serif;
+    font-feature-settings: normal;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 22.4px;
+    margin: 0;
+    padding: 0;
+    text-align: start;
+    text-decoration: none;
+    text-transform: none;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .hero-section {
+      padding: 80px 20px;
+    }
+
+    .hero-content {
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .hero-left,
+    .hero-right {
+      flex: 1;
+      max-width: 100%;
+    }
+
+    .hero-heading {
+      font-size: 36px;
+    }
+
+    .benefits-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .benefits-section,
+    .pricing-section {
+      padding-left: 20px;
+    }
+
+    .pricing-tiers {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .trusted-logos {
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: 60px 20px;
+      gap: 60px;
+    }
+
+    .hero-heading {
+      font-size: 28px;
+      line-height: 1.3;
+    }
+
+    .section-title {
+      font-size: 28px;
+    }
+
+    .benefits-section,
+    .pricing-section {
+      padding: 60px 20px;
+    }
+
+    .pricing-header {
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .contact-btn {
+      width: 100%;
+      text-align: center;
+    }
+
+    .faq-section {
+      padding: 60px 20px;
+    }
+
+    .faq-title {
+      font-size: 28px;
+    }
+
+    .faq-question {
+      font-size: 14px;
+    }
+  }
+</style>
+
+<script>
+  // FAQ Accordion functionality - single-open pattern
+  const faqItems = document.querySelectorAll('.faq-item');
+
+  faqItems.forEach((item) => {
+    const header = item.querySelector('.faq-header');
+    const toggle = item.querySelector('.faq-toggle');
+
+    if (header) {
+      header.addEventListener('click', () => {
+        const isCurrentlyActive = item.classList.contains('active');
+
+        // If clicking an open item, close it
+        if (isCurrentlyActive) {
+          item.classList.remove('active');
+          toggle.textContent = '+';
+          toggle.setAttribute('aria-label', 'Expand answer');
+        } else {
+          // Close all other items
+          faqItems.forEach((otherItem) => {
+            const otherToggle = otherItem.querySelector('.faq-toggle');
+            otherItem.classList.remove('active');
+            if (otherToggle) {
+              otherToggle.textContent = '+';
+              otherToggle.setAttribute('aria-label', 'Expand answer');
+            }
+          });
+
+          // Open the clicked item
+          item.classList.add('active');
+          toggle.textContent = '×';
+          toggle.setAttribute('aria-label', 'Close answer');
+        }
+      });
+    }
+  });
+</script>

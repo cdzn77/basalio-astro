@@ -121,14 +121,22 @@ const {
       top: 0;
       left: 0;
       right: 0;
-      background: var(--color-primary, #FFEA00);
+      background: transparent;
       z-index: 1000;
-      padding: 14px 40px;
+      padding: 20px 40px;
       border-bottom: none;
+      height: 80px;
       display: flex;
+      flex-direction: row;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      min-height: 60px;
+      box-sizing: border-box;
+      transition: backdrop-filter 0.3s ease, background 0.3s ease;
+      backdrop-filter: blur(0px);
+    }
+
+    .ramp-header.scrolled {
+      backdrop-filter: blur(10px);
     }
 
     .ramp-main {

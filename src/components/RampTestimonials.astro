@@ -1,6 +1,7 @@
 ---
-// Ramp Testimonials - COMPLETE REDESIGN
-// Reference-accurate styling: typography, layout, spacing, card design, navigation
+// Ramp Testimonials - Shared component for homepage and courses page
+// 35-65 split layout: left column (header + arrows), right column (carousel)
+// Reuses carousel paging logic from RampCourses component
 
 interface Testimonial {
   image: string;
@@ -16,169 +17,346 @@ interface Props {
 
 const {
   testimonials = [
-    { image: "/assets/mtgtbdnjaof929atjpy1noqquia.jpeg", quote: "Template helped us launch a polished website that feels premium and scales with you.", name: "Maya Thompson", title: "Wellness Coach", results: "18x email sign ups" },
-    { image: "/assets/mtgtbdnjaof929atjpy1noqquia.jpeg", quote: "Every resource feels intentional, from free step-by-step workflows to paid resources.", name: "Priya Desai", title: "Shopify Store Owner", results: "2x quarterly revenue" },
-    { image: "/assets/mtgtbdnjaof929atjpy1noqquia.jpeg", quote: "We saved weeks of design time and launched a high-end website that feels premium.", name: "Lucas Martinez", title: "Café Owner", results: "20% increased conversion" }
+    {
+      image: "/assets/l4gfk0yuorz9j7rwu2ebwwxpw.jpg",
+      quote: '"Template helped us launch a polished website that feels premium and scales with you."',
+      name: "Maya Thompson",
+      title: "Wellness Coach",
+      results: "18x email sign ups"
+    },
+    {
+      image: "/assets/jjmc0ozsfy0hhnmbr8w4de17pw.jpg",
+      quote: '"Every resource feels intentional, from free step-by-step workflows to paid resources."',
+      name: "Priya Desai",
+      title: "Shopify Store Owner",
+      results: "2x quaterly revenue"
+    },
+    {
+      image: "/assets/k54odknaj7dnpcqlcqviskrrxay.jpg",
+      quote: '"We saved weeks of design time and launched a high-end website that feels premium."',
+      name: "Lucas Martinez",
+      title: "Café Owner",
+      results: "20% increased conversion"
+    },
+    {
+      image: "/assets/l4gfk0yuorz9j7rwu2ebwwxpw.jpg",
+      quote: '"The platform made it incredibly easy to manage our workflow and scale our operations."',
+      name: "Sarah Johnson",
+      title: "Startup Founder",
+      results: "5x team productivity"
+    },
+    {
+      image: "/assets/jjmc0ozsfy0hhnmbr8w4de17pw.jpg",
+      quote: '"We went from scattered tools to a unified system that actually works for us."',
+      name: "David Chen",
+      title: "Agency Director",
+      results: "3x client retention"
+    },
+    {
+      image: "/assets/k54odknaj7dnpcqlcqviskrrxay.jpg",
+      quote: '"The learning curve was minimal and the results were immediate and measurable."',
+      name: "Emma Wilson",
+      title: "Marketing Manager",
+      results: "12x ROI improvement"
+    },
+    {
+      image: "/assets/l4gfk0yuorz9j7rwu2ebwwxpw.jpg",
+      quote: '"This transformed how we think about our business and customer relationships."',
+      name: "James Rodriguez",
+      title: "E-commerce Owner",
+      results: "8x sales growth"
+    },
+    {
+      image: "/assets/jjmc0ozsfy0hhnmbr8w4de17pw.jpg",
+      quote: '"The support and resources provided made all the difference in our success."',
+      name: "Lisa Anderson",
+      title: "Consultant",
+      results: "50+ client projects"
+    },
+    {
+      image: "/assets/k54odknaj7dnpcqlcqviskrrxay.jpg",
+      quote: '"Exceeded all our expectations and delivered results beyond what we imagined."',
+      name: "Michael Park",
+      title: "Digital Director",
+      results: "10x engagement rate"
+    }
   ]
 } = Astro.props;
 ---
 
-<section class="testimonials" id="testimonials">
-  <div class="container">
-    <div class="testimonials-header">
-      <p class="testimonials-label">TESTIMONIALS</p>
-      <h2 class="testimonials-title">Learner Stories</h2>
+<section class="testimonials">
+  <div class="testimonials-inner">
+    <!-- LEFT COLUMN: 35% - Header + Navigation -->
+    <div class="testimonials-left">
+      <div class="testimonials-header">
+        <p class="testimonials-eyebrow">TESTIMONIALS</p>
+        <h3 class="testimonials-heading">Learner Stories</h3>
+      </div>
+
+      <!-- Navigation Arrows -->
+      <div class="pagination-controls">
+        <button class="carousel-button carousel-button-prev" aria-label="Previous testimonial" data-direction="prev">
+          <div class="button-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <line x1="2.5" y1="12" x2="23.5" y2="12"></line>
+              <polyline points="10.14 4.36 2.5 12 10.14 19.64"></polyline>
+            </svg>
+          </div>
+        </button>
+        <button class="carousel-button carousel-button-next" aria-label="Next testimonial" data-direction="next">
+          <div class="button-icon-wrapper">
+            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
+              <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
+            </svg>
+          </div>
+        </button>
+      </div>
     </div>
 
-    <div class="carousel-wrapper">
-      <button class="carousel-arrow prev" aria-label="Previous testimonial">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M15 19L8 12L15 5"></path>
-        </svg>
-      </button>
+    <!-- RIGHT COLUMN: 65% - Carousel -->
+    <div class="testimonials-right">
+      <!-- Invisible hover zones for carousel control -->
+      <div class="carousel-zone carousel-zone-left" data-direction="prev"></div>
 
-      <div class="carousel-container">
+      <!-- Carousel viewport -->
+      <div class="carousel-viewport">
+        <!-- Track: flex row with cards -->
         <div class="carousel-track">
-          {testimonials.map((testimonial) => (
-            <div class="testimonial-card">
-              <div class="testimonial-image">
-                <img src={testimonial.image} alt={testimonial.name} loading="lazy" />
+          {testimonials.map((testimonial, index) => (
+            <div class="testimonial-card" data-card-index={index} class={index >= 3 ? 'hidden-card' : ''}>
+              <!-- Background image -->
+              <div class="card-image">
+                <img
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  loading="lazy"
+                />
               </div>
-              <p class="testimonial-quote">{testimonial.quote}</p>
-              <div class="testimonial-info">
-                <p class="testimonial-name">{testimonial.name}</p>
-                <p class="testimonial-title">{testimonial.title}</p>
-              </div>
-              <div class="testimonial-results">
-                <span class="results-label">RESULTS</span>
-                <span class="results-value">{testimonial.results}</span>
+
+              <!-- Overlay: Quote text (animated), name, role, results -->
+              <div class="card-content">
+                <blockquote class="card-quote">{testimonial.quote}</blockquote>
+
+                <div class="card-footer">
+                  <div class="card-info">
+                    <span class="card-client-label">CLIENT NAME</span>
+                    <p class="card-name">{testimonial.name}, <span class="card-role">{testimonial.title}</span></p>
+                  </div>
+
+                  <div class="card-results">
+                    <span class="results-label">RESULTS</span>
+                    <span class="results-value">{testimonial.results}</span>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <button class="carousel-arrow next" aria-label="Next testimonial">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 5L16 12L9 19"></path>
-        </svg>
-      </button>
+      <!-- Invisible right hover zone -->
+      <div class="carousel-zone carousel-zone-right" data-direction="next"></div>
     </div>
   </div>
 </section>
 
 <style>
-  /* TESTIMONIALS SECTION - REFERENCE DESIGN */
+  /* SECTION CONTAINER */
   .testimonials {
+    padding: 80px 40px;
     background: var(--basalio-paper, #FFFFFF);
     width: 100%;
-    max-width: 1792px;
-    padding: 100px 40px;
-    margin: 0 auto;
     box-sizing: border-box;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
+    border-radius: 0 0 40px 40px;
   }
 
-  .container {
+  /* INNER ROW: 35-65 split */
+  .testimonials-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
     width: 100%;
-    margin: 0 auto;
+    gap: 40px;
   }
 
-  /* HEADER SECTION */
+  /* LEFT COLUMN: 35% */
+  .testimonials-left {
+    flex: 0 0 35%;
+    max-width: 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    min-height: 288px;
+  }
+
+  /* HEADER: Eyebrow + Heading */
   .testimonials-header {
-    text-align: center;
-    margin-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
 
-  .testimonials-label {
+  .testimonials-eyebrow {
     font-family: 'Azeret Mono', monospace;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #999999;
-    display: block;
-    margin-bottom: 16px;
-  }
-
-  .testimonials-title {
-    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 64px;
-    font-weight: 400;
-    line-height: 1.1;
-    letter-spacing: -0.01em;
-    color: var(--basalio-ink, #000000);
+    letter-spacing: 2.8px;
+    color: #575757;
     margin: 0;
     padding: 0;
   }
 
-  /* CAROUSEL WRAPPER */
-  .carousel-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-    justify-content: center;
+  .testimonials-heading {
+    font-family: 'Manrope', sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #000000;
+    margin: 0;
+    padding: 0;
   }
 
-  /* NAVIGATION ARROWS */
-  .carousel-arrow {
-    flex-shrink: 0;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: #F0F0F0;
-    color: var(--basalio-ink, #000000);
-    border: none;
+  /* PAGINATION CONTROLS: Arrow buttons */
+  .pagination-controls {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    margin-top: auto;
+  }
+
+  .button-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Arrow buttons: 70x70px circular */
+  .carousel-button {
+    width: 70px;
+    height: 70px;
+    border-radius: 6px;
+    background: #FAFAFA;
+    color: #9C9C9C;
+    border: 1px solid #EBEBEB;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 20;
     transition: all 200ms ease;
-    padding: 0;
+    flex: 0 0 70px;
   }
 
-  .carousel-arrow:hover {
-    background: #E0E0E0;
-    transform: scale(1.05);
+  /* Disabled state (start/end) */
+  .carousel-button:disabled {
+    pointer-events: none;
+    background: #FAFAFA;
+    color: #9C9C9C;
+    opacity: 0.5;
   }
 
-  .carousel-arrow:active {
-    transform: scale(0.98);
+  /* Enabled state */
+  .carousel-button:not(:disabled) {
+    background: #FFFFFF;
+    color: #000000;
   }
 
-  /* CAROUSEL CONTAINER */
-  .carousel-container {
+  .carousel-button:hover:not(:disabled) {
+    background: #000000;
+    color: #FFFFFF;
+    border-color: #000000;
+  }
+
+  /* RIGHT COLUMN: 65% - Carousel */
+  .testimonials-right {
     flex: 1;
-    overflow: hidden;
-    min-width: 0;
+    position: relative;
+    overflow: clip;
+    min-height: 288px;
   }
 
+  /* Invisible hover zones */
+  .carousel-zone {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 15%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .carousel-zone-left {
+    left: 0;
+  }
+
+  .carousel-zone-right {
+    right: 0;
+  }
+
+  .carousel-zone:disabled,
+  .carousel-zone[data-disabled] {
+    pointer-events: none;
+  }
+
+  /* Carousel viewport */
+  .carousel-viewport {
+    position: relative;
+    overflow: clip;
+    width: 100%;
+    height: 288px;
+  }
+
+  /* Track: flex row with cards */
   .carousel-track {
+    position: absolute;
+    left: 0;
+    top: 0;
     display: flex;
-    gap: 40px;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-direction: row;
+    gap: 20px;
+    transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  /* TESTIMONIAL CARD */
+  /* Testimonial cards: horizontal layout with image left, content right */
   .testimonial-card {
-    flex: 0 0 420px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  /* IMAGE STYLING */
-  .testimonial-image {
-    width: 160px;
-    height: 160px;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #F5F5F5;
+    display: block;
+    width: 600px;
+    height: 288px;
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 6px;
+    overflow: visible;
+    position: relative;
+    box-sizing: border-box;
+    padding: 16px;
+    flex-grow: 0;
     flex-shrink: 0;
+    flex-basis: auto;
+    opacity: 1;
+    unicode-bidi: isolate;
+    -webkit-font-smoothing: antialiased;
   }
 
-  .testimonial-image img {
+  /* Card background image - LEFT side: Fixed dimensions with padding */
+  .card-image {
+    position: relative;
+    width: 150px;
+    height: 248px;
+    z-index: 0;
+    overflow: hidden;
+    border-radius: 6px;
+    display: block;
+    float: left;
+    margin-right: 24px;
+  }
+
+  .card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -186,87 +364,155 @@ const {
     display: block;
   }
 
-  /* QUOTE STYLING */
-  .testimonial-quote {
-    font-family: 'Manrope', sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.6;
-    color: var(--basalio-ink, #000000);
-    margin: 0;
-    padding: 0;
-    font-style: italic;
-  }
-
-  /* NAME & TITLE */
-  .testimonial-info {
+  /* Card content - RIGHT side */
+  .card-content {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    justify-content: space-between;
+    padding: 0;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    min-height: 248px;
+    overflow: hidden;
   }
 
-  .testimonial-name {
-    font-family: 'Manrope', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.4;
-    color: var(--basalio-ink, #000000);
+  /* Quote text - Large and prominent */
+  .card-quote {
+    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 31.2px;
+    letter-spacing: -0.52px;
+    color: #000000;
     margin: 0;
     padding: 0;
+    text-align: start;
+    background-color: transparent;
   }
 
-  .testimonial-title {
-    font-family: 'Manrope', sans-serif;
+  /* Footer: name, role, results */
+  .card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 0;
+  }
+
+  .card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .card-client-label {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2.8px;
+    line-height: 19.6px;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+    display: block;
+    background-color: transparent;
+  }
+
+  .card-name {
+    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 14px;
     font-weight: 400;
-    line-height: 1.5;
-    color: #575757;
+    line-height: 19.6px;
+    color: rgba(0, 0, 0, 0.65);
     margin: 0;
     padding: 0;
   }
 
-  /* RESULTS SECTION */
-  .testimonial-results {
+  .card-role {
+    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19.6px;
+    color: rgba(0, 0, 0, 0.65);
+    margin: 0;
+    padding: 0;
+    display: inline;
+  }
+
+  /* Results section */
+  .card-results {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding-top: 20px;
-    border-top: 1px solid #E0E0E0;
+    gap: 6px;
+    padding-top: 0;
   }
 
   .results-label {
     font-family: 'Azeret Mono', monospace;
-    font-size: 10px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #999999;
+    letter-spacing: 2.8px;
+    line-height: 19.6px;
+    color: #000000;
+    margin: 0;
+    padding: 0;
   }
 
   .results-value {
-    font-family: 'Manrope', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 1.4;
-    color: var(--basalio-ink, #000000);
+    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19.6px;
+    color: rgba(0, 0, 0, 0.65);
+    margin: 0;
+    padding: 0;
   }
 
-  /* RESPONSIVE DESIGN */
+  /* Responsive */
   @media (max-width: 1024px) {
-    .testimonials {
-      padding: 80px 40px;
+    .testimonials-inner {
+      flex-direction: column;
+      align-items: flex-start;
     }
 
-    .testimonials-title {
-      font-size: 48px;
+    .testimonials-left {
+      flex: 0 0 auto;
+      max-width: 100%;
     }
 
-    .testimonial-card {
-      flex: 0 0 380px;
+    .testimonials-right {
+      flex: 1;
+      width: 100%;
+    }
+  }
+
+  /* Hide cards 4-9 initially */
+  .testimonial-card.hidden-card {
+    display: none;
+  }
+
+  /* Show cards when loaded */
+  .carousel-track.loaded .testimonial-card.hidden-card {
+    display: block;
+  }
+
+  @media (max-width: 1024px) {
+    .testimonials-inner {
+      flex-direction: column;
+      align-items: flex-start;
     }
 
-    .carousel-wrapper {
-      gap: 24px;
+    .testimonials-left {
+      flex: 0 0 auto;
+      max-width: 100%;
+    }
+
+    .testimonials-right {
+      flex: 1;
+      width: 100%;
     }
   }
 
@@ -275,31 +521,128 @@ const {
       padding: 60px 20px;
     }
 
-    .testimonials-header {
-      margin-bottom: 60px;
+    .testimonials-heading {
+      font-size: 24px;
     }
 
-    .testimonials-title {
-      font-size: 36px;
-    }
-
-    .carousel-wrapper {
-      gap: 16px;
-    }
-
-    .carousel-arrow {
-      width: 44px;
-      height: 44px;
+    .carousel-button {
+      width: 60px;
+      height: 60px;
+      font-size: 12px;
     }
 
     .testimonial-card {
-      flex: 0 0 320px;
-      gap: 20px;
-    }
-
-    .testimonial-image {
-      width: 120px;
-      height: 120px;
+      flex: 0 0 100%;
     }
   }
 </style>
+
+<script>
+  // Reuse carousel paging logic from Our Courses
+  // This script is shared between RampCourses and RampTestimonials
+
+  const track = document.querySelector('.carousel-track');
+  const viewport = document.querySelector('.carousel-viewport');
+  const cards = document.querySelectorAll('.testimonial-card');
+  const prevBtn = document.querySelector('.carousel-button-prev');
+  const nextBtn = document.querySelector('.carousel-button-next');
+  const leftZone = document.querySelector('.carousel-zone-left');
+  const rightZone = document.querySelector('.carousel-zone-right');
+
+  if (track && viewport && cards.length > 0) {
+    const GAP = 20;
+    const CARD_WIDTH = 600; // Fixed card width matching Ramp spec
+    const CARD_PLUS_GAP = CARD_WIDTH + GAP; // 620px per card including gap
+
+    let currentPage = 0;
+    let totalPages = 1;
+    let visibleCards = 3; // Initially show 3 cards
+
+    const calculatePaging = () => {
+      const viewportWidth = viewport.clientWidth;
+      const cardsPerView = Math.floor(viewportWidth / CARD_PLUS_GAP);
+      const totalVisibleCards = track.classList.contains('loaded') ? 9 : 3;
+      totalPages = Math.max(1, Math.ceil(totalVisibleCards / cardsPerView));
+      visibleCards = totalVisibleCards;
+      return cardsPerView;
+    };
+
+    const updateTrackPosition = () => {
+      const offset = currentPage * (CARD_WIDTH + GAP);
+      track.style.transform = `translateX(-${offset}px)`;
+      updateButtonStates();
+    };
+
+    const updateButtonStates = () => {
+      const isFirstPage = currentPage === 0;
+      const isLastPage = currentPage === totalPages - 1;
+
+      prevBtn.disabled = isFirstPage;
+      nextBtn.disabled = isLastPage;
+      leftZone.style.pointerEvents = isFirstPage ? 'none' : 'auto';
+      rightZone.style.pointerEvents = isLastPage ? 'none' : 'auto';
+
+      if (isFirstPage) {
+        leftZone.setAttribute('data-disabled', 'true');
+      } else {
+        leftZone.removeAttribute('data-disabled');
+      }
+
+      if (isLastPage) {
+        rightZone.setAttribute('data-disabled', 'true');
+      } else {
+        rightZone.removeAttribute('data-disabled');
+      }
+    };
+
+    const navigate = (direction) => {
+      if (direction === 'next' && currentPage < totalPages - 1) {
+        currentPage++;
+        updateTrackPosition();
+      } else if (direction === 'prev' && currentPage > 0) {
+        currentPage--;
+        updateTrackPosition();
+      }
+    };
+
+    calculatePaging();
+    updateButtonStates();
+
+    prevBtn?.addEventListener('click', () => navigate('prev'));
+    nextBtn?.addEventListener('click', () => navigate('next'));
+
+    leftZone?.addEventListener('mouseenter', () => navigate('prev'));
+    rightZone?.addEventListener('mouseenter', () => navigate('next'));
+
+    window.addEventListener('resize', () => {
+      calculatePaging();
+      currentPage = Math.min(currentPage, totalPages - 1);
+      updateTrackPosition();
+    });
+
+    // Load more functionality - find load-more button and handle click
+    const loadMoreBtn = document.querySelector('[data-action="load-more"]') ||
+                       document.querySelector('.load-more-button') ||
+                       Array.from(document.querySelectorAll('button')).find(btn =>
+                         btn.textContent.toLowerCase().includes('load more')
+                       );
+
+    console.log('Load More button found:', !!loadMoreBtn);
+    console.log('Button element:', loadMoreBtn);
+
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('click', (e) => {
+        console.log('Load More button clicked');
+        track.classList.add('loaded');
+        console.log('Loaded class added to track');
+        calculatePaging();
+        currentPage = Math.min(currentPage, totalPages - 1);
+        updateTrackPosition();
+        updateButtonStates();
+        console.log('Load More triggered - now showing all 9 cards');
+      });
+    } else {
+      console.log('Load More button NOT found - checked all selectors');
+    }
+  }
+</script>

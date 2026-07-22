@@ -1,0 +1,407 @@
+---
+// Contact Page - Get in touch with Ramp Studio
+
+import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
+import RampHeader from '../components/RampHeader.astro';
+import RampFooter from '../components/RampFooter.astro';
+
+const title = "Contact Ramp Studio";
+const description = "Get in touch with Ramp Studio. Call, email, or message us for inquiries.";
+---
+
+<RampTemplateLayout title={title} description={description}>
+  <!-- HEADER: Navigation bar -->
+  <Fragment slot="header">
+    <RampHeader />
+  </Fragment>
+
+  <!-- CONTACT US SECTION -->
+  <section class="contact-us-section">
+    <!-- LEFT: Label -->
+    <div class="contact-left">
+      <p class="contact-label">CONTACT US</p>
+    </div>
+
+    <!-- CENTER: Contact Info -->
+    <div class="contact-center">
+      <a href="tel:+4532847196" class="contact-phone">+45 32 84 71 96</a>
+      <a href="mailto:hello@rampstudio.com" class="contact-email">hello@rampstudio.com</a>
+
+      <!-- Social Links -->
+      <ul class="social-links">
+        <li><a href="https://www.linkedin.com">LinkedIn</a></li>
+        <li><a href="https://www.instagram.com">Instagram</a></li>
+        <li><a href="https://www.twitter.com">Twitter</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- MESSAGE US SECTION -->
+  <section class="message-us-section">
+    <!-- LEFT: Label -->
+    <div class="message-left">
+      <p class="message-label">MESSAGE US</p>
+    </div>
+
+    <!-- RIGHT: Form -->
+    <div class="message-right">
+      <form class="contact-form">
+        <!-- Name Field -->
+        <label class="form-group">
+          <span class="form-label">Name</span>
+          <input type="text" placeholder="John Smith" class="form-input" />
+        </label>
+
+        <!-- Email Field -->
+        <label class="form-group">
+          <span class="form-label">Email</span>
+          <input type="email" placeholder="john@email.com" class="form-input" />
+        </label>
+
+        <!-- Message Field -->
+        <label class="form-group">
+          <span class="form-label">Message</span>
+          <textarea placeholder="What would you like to discuss?" class="form-textarea"></textarea>
+        </label>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-button">SUBMIT</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER: Reused from homepage -->
+  <Fragment slot="footer">
+    <RampFooter address="Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark" />
+  </Fragment>
+</RampTemplateLayout>
+
+<style>
+  /* CONTACT US SECTION */
+  .contact-us-section {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 1786px;
+    padding: 120px 40px 50px 40px;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    gap: 40px;
+    margin: 0 auto;
+    align-items: flex-start;
+  }
+
+  .contact-left {
+    flex: 0 1 35%;
+  }
+
+  .contact-label {
+    background-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: block;
+    font-family: "Azeret Mono", monospace;
+    font-size: 14px;
+    font-weight: 500;
+    height: 19.6016px;
+    letter-spacing: 2.8px;
+    line-height: 19.6px;
+    margin: 0;
+    padding: 0;
+    text-align: start;
+    text-transform: uppercase;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .contact-center {
+    flex: 0 1 65%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .contact-phone,
+  .contact-email {
+    background-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    display: inline;
+    font-family: Switzer, "Switzer Placeholder", sans-serif;
+    font-size: 48px;
+    font-weight: 400;
+    height: auto;
+    letter-spacing: -0.96px;
+    line-height: 52.8px;
+    padding: 0;
+    text-align: left;
+    text-decoration: none;
+    text-wrap-mode: wrap;
+    transition: color 0.3s cubic-bezier(0, 0, 1, 1);
+    width: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .contact-email {
+    margin-bottom: 50px;
+  }
+
+  .social-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 120.805px;
+  }
+
+  .social-links li {
+    margin: 0;
+    padding: 0;
+  }
+
+  .social-links a {
+    background-color: rgba(0, 0, 0, 0);
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    display: inline;
+    font-family: Switzer, "Switzer Placeholder", sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    height: auto;
+    letter-spacing: -0.56px;
+    line-height: 33.6px;
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    padding: 0px;
+    text-align: left;
+    text-decoration: none;
+    text-decoration-color: rgb(0, 0, 0);
+    text-decoration-line: none;
+    text-decoration-skip-ink: auto;
+    text-decoration-style: solid;
+    text-decoration-thickness: auto;
+    text-transform: none;
+    text-underline-offset: auto;
+    text-wrap-mode: wrap;
+    transition: color 0.3s cubic-bezier(0, 0, 1, 1);
+    width: auto;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-color: rgb(0, 0, 0);
+    -webkit-text-stroke-width: 0px;
+  }
+
+  /* MESSAGE US SECTION */
+  .message-us-section {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 1786px;
+    padding: 80px 40px;
+    background: #FFFFFF;
+    box-sizing: border-box;
+    gap: 40px;
+    margin: 0 auto;
+    align-items: flex-start;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    position: relative;
+    z-index: 2;
+    margin-bottom: -40px;
+  }
+
+  .message-left {
+    flex: 0 1 35%;
+  }
+
+  .message-label {
+    background-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: block;
+    font-family: "Azeret Mono", monospace;
+    font-size: 14px;
+    font-weight: 500;
+    height: 19.6016px;
+    letter-spacing: 2.8px;
+    line-height: 19.6px;
+    margin: 0;
+    padding: 0;
+    text-align: start;
+    text-transform: uppercase;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .message-right {
+    flex: 0 1 65%;
+  }
+
+  .contact-form {
+    align-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+    column-gap: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    font-family: sans-serif;
+    font-size: 12px;
+    height: auto;
+    justify-content: flex-start;
+    margin-top: 0px;
+    max-width: 100%;
+    opacity: 1;
+    overflow-x: hidden;
+    overflow-y: visible;
+    position: relative;
+    row-gap: 20px;
+    unicode-bidi: isolate;
+    width: 600px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .form-label {
+    background-color: rgba(0, 0, 0, 0);
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    cursor: default;
+    display: block;
+    font-family: Switzer, "Switzer Placeholder", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    height: 19.6016px;
+    letter-spacing: normal;
+    line-height: 19.6px;
+    margin: 0;
+    padding: 0;
+    text-align: start;
+    text-decoration: none;
+    text-decoration-color: rgb(0, 0, 0);
+    text-decoration-line: none;
+    text-decoration-skip-ink: auto;
+    text-decoration-style: solid;
+    text-decoration-thickness: auto;
+    text-transform: none;
+    text-underline-offset: auto;
+    text-wrap-mode: nowrap;
+    unicode-bidi: isolate;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-color: rgb(0, 0, 0);
+    -webkit-text-stroke-width: 0px;
+  }
+
+  .form-input,
+  .form-textarea {
+    font-family: 'Switzer', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000000;
+    background: #F5F5F5;
+    border: none;
+    padding: 16px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    outline: none;
+  }
+
+  .form-input:focus,
+  .form-textarea:focus,
+  .form-input:active,
+  .form-textarea:active {
+    outline: none;
+  }
+
+  .form-input::placeholder,
+  .form-textarea::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  .form-textarea {
+    min-height: 200px;
+    resize: vertical;
+    height: auto;
+  }
+
+  .submit-button {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    background: #000000;
+    border: none;
+    padding: 16px 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 200ms ease;
+    align-self: flex-start;
+  }
+
+  .submit-button:hover {
+    background: #333333;
+  }
+
+  .submit-button:active {
+    transform: scale(0.98);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .contact-us-section,
+    .message-us-section {
+      flex-direction: column;
+      gap: 40px;
+      padding: 60px 20px;
+    }
+
+    .contact-left,
+    .contact-center,
+    .message-left,
+    .message-right {
+      flex: 0 0 auto;
+    }
+
+    .contact-phone,
+    .contact-email {
+      font-size: 36px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .contact-us-section,
+    .message-us-section {
+      flex-direction: column;
+      gap: 40px;
+      padding: 40px 20px;
+    }
+
+    .contact-phone,
+    .contact-email {
+      font-size: 28px;
+    }
+
+    .social-links {
+      flex-direction: row;
+      gap: 20px;
+    }
+  }
+</style>

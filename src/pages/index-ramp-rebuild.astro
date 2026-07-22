@@ -3,6 +3,7 @@
 // Exact replica of the Ramp Studio template
 
 import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
+import RampHeader from '../components/RampHeader.astro';
 import RampHero from '../components/RampHero.astro';
 import RampWhatWeDo from '../components/RampWhatWeDo.astro';
 import RampCourses from '../components/RampCourses.astro';
@@ -17,7 +18,12 @@ const description = "Ramp helps marketers, founders, and creators build scalable
 ---
 
 <RampTemplateLayout title={title} description={description}>
-  <!-- Hero Section (includes header/logo) -->
+  <!-- HEADER: Navigation bar (universal across all pages) -->
+  <Fragment slot="header">
+    <RampHeader />
+  </Fragment>
+
+  <!-- Hero Section -->
   <RampHero
     courseLabel="COACHING OFFERS 101"
     courseText="This course helps you design clear, compelling offers that people actually understand and want to buy."
@@ -42,27 +48,28 @@ const description = "Ramp helps marketers, founders, and creators build scalable
         title: "Social Media Growth",
         description: "Learn the fundamentals of building a strong social media presence",
         image: "https://via.placeholder.com/400x300?text=Social+Media",
-        link: "#"
+        link: "/courses/social-media"
       },
       {
         title: "Content Creation 101",
         description: "Teaches you how to create content that feels intentional and on-brand",
         image: "https://via.placeholder.com/400x300?text=Content+Creation",
-        link: "#"
+        link: "/courses/content-101"
       },
       {
         title: "Branding 101",
         description: "Focus on positioning, messaging, and consistency across every touchpoint",
         image: "https://via.placeholder.com/400x300?text=Branding",
-        link: "#"
+        link: "/courses/branding-101"
       },
       {
         title: "Email Marketing 101",
         description: "Learn how to use email lists to actually support and grow your business",
         image: "https://via.placeholder.com/400x300?text=Email+Marketing",
-        link: "#"
+        link: "/courses/best-practices"
       }
     ]}
+    ctaLink="/courses"
   />
 
   <!-- Resources Section -->

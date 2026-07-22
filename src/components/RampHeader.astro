@@ -10,120 +10,200 @@ const { brand = "Ramp Studio." } = Astro.props;
 ---
 
 <div class="header-container">
-  <a href="/" class="brand-logo">{brand}</a>
-  <button id="menu-toggle" class="menu-btn" aria-label="Toggle menu">
-    <span>MENU</span>
-    <span class="plus">+</span>
-  </button>
+  <a href="/index-ramp-rebuild" class="brand-logo">{brand}</a>
+  <div class="menu-wrapper">
+    <button id="menu-toggle" class="menu-btn" aria-label="Toggle menu">
+      <span>MENU</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 16 16" fill="currentColor" class="plus-icon">
+        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+      </svg>
+    </button>
+
+    <!-- Menu Dropdown -->
+    <div class="menu-dropdown" id="menu-dropdown">
+      <a href="/index-ramp-rebuild" class="menu-item">HOME</a>
+      <a href="/courses" class="menu-item">COURSES</a>
+      <a href="/resources" class="menu-item">RESOURCES</a>
+      <a href="/subscription" class="menu-item">RETAINER</a>
+      <a href="/contact" class="menu-item">CONTACT</a>
+      <a href="/#faq" class="menu-item">FAQ</a>
+    </div>
+  </div>
 </div>
 
-<nav id="mobile-menu" class="mobile-menu">
-  <a href="#courses">Courses</a>
-  <a href="#resources">Resources</a>
-  <a href="#retainer">Retainer</a>
-  <a href="#testimonials">Testimonials</a>
-  <a href="#faq">FAQ</a>
-</nav>
+<script>
+  // Add scroll handler for header background change
+  const header = document.querySelector('.ramp-header');
 
-<style>
-  .ramp-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: var(--color-primary, #FFEA00);
-    z-index: 1000;
-    padding: 14px 40px;
-    border-bottom: none;
+  function handleScroll() {
+    if (window.scrollY > 100) {
+      header?.classList.add('scrolled');
+    } else {
+      header?.classList.remove('scrolled');
+    }
   }
 
+  window.addEventListener('scroll', handleScroll, { passive: true });
+
+  // Menu toggle functionality
+  const menuToggle = document.getElementById('menu-toggle');
+  const menuDropdown = document.getElementById('menu-dropdown');
+
+  if (menuToggle && menuDropdown) {
+    // Toggle menu on button click
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menuDropdown.classList.toggle('active');
+    });
+
+    // Close menu when clicking on a menu item
+    menuDropdown.querySelectorAll('.menu-item').forEach(item => {
+      item.addEventListener('click', () => {
+        menuDropdown.classList.remove('active');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!menuToggle.contains(e.target) && !menuDropdown.contains(e.target)) {
+        menuDropdown.classList.remove('active');
+      }
+    });
+  }
+</script>
+
+<style>
   .header-container {
-    max-width: 1200px;
-    margin: 0 auto;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 60px;
+    height: 100%;
+    box-sizing: border-box;
   }
 
   .brand-logo {
-    font-family: 'Manrope', sans-serif;
+    background-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    display: inline;
+    font-family: Manrope, "Manrope Placeholder", sans-serif;
     font-size: 30px;
     font-weight: 600;
-    color: #000000;
+    height: auto;
+    letter-spacing: -1.5px;
+    line-height: 30px;
+    padding: 0;
+    text-align: start;
     text-decoration: none;
-    transition: opacity 0.2s ease;
+    text-wrap-mode: nowrap;
+    transition: color 0.3s cubic-bezier(0, 0, 1, 1);
+    width: auto;
+    -webkit-font-smoothing: antialiased;
   }
 
   .brand-logo:hover {
-    opacity: 0.7;
+    color: rgb(0, 0, 0);
   }
 
   .menu-btn {
     background: #000000;
     color: #FFFFFF;
     border: none;
-    padding: 12px 20px;
+    padding: 0px 16px;
     border-radius: 6px;
-    font-family: 'Manrope', sans-serif;
-    font-size: 12px;
-    font-weight: 700;
+    font-family: 'Azeret Mono', monospace;
+    font-size: 14px;
+    font-weight: 400;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.2em;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
-    transition: all 0.3s ease;
+    justify-content: space-between;
+    width: 182px;
+    height: 41px;
   }
 
   .menu-btn:hover {
     opacity: 0.8;
-    transform: translateY(-2px);
   }
 
-  .plus {
-    font-weight: 400;
+  .plus-icon {
+    flex-shrink: 0;
   }
 
-  .mobile-menu {
-    display: none;
-    position: fixed;
-    top: 60px;
-    left: 0;
+  /* MENU DROPDOWN */
+  .menu-wrapper {
+    position: relative;
+  }
+
+  .menu-dropdown {
+    position: absolute;
+    top: 36px;
     right: 0;
-    background: #FFFFFF;
-    border-bottom: 1px solid #E0E0E0;
-    padding: 20px 40px;
-    flex-direction: column;
-    gap: 16px;
-    z-index: 999;
-  }
-
-  .mobile-menu.active {
+    width: 182px;
+    height: auto;
+    background: #000000;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 20px 0px;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    padding: 8px 16px;
+    box-sizing: border-box;
+    row-gap: 1px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 10;
   }
 
-  .mobile-menu a {
-    font-size: 16px;
-    font-weight: 500;
-    color: #000000;
-    padding: 12px 0;
-    border-bottom: 1px solid #F0F0F0;
+  .menu-dropdown.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
   }
 
-  .mobile-menu a:last-child {
-    border-bottom: none;
+  .menu-item {
+    width: 150px;
+    height: 40px;
+    background: rgba(255, 222, 222, 0);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-start;
+    padding: 10px 0px;
+    column-gap: 15px;
+    row-gap: 15px;
+    font-family: 'Azeret Mono', monospace;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #FFFFFF;
+    text-decoration: none;
+    cursor: pointer;
+    box-sizing: border-box;
+    white-space: nowrap;
+    transition: opacity 0.2s ease;
+  }
+
+  .menu-item:hover {
+    color: #FFEA00;
   }
 
   @media (max-width: 768px) {
-    .ramp-header {
-      padding: 12px 20px;
-    }
-
     .header-container {
-      padding: 0;
-      height: 50px;
+      padding: 0 20px;
+      height: 60px;
     }
 
     .brand-logo {
@@ -131,8 +211,15 @@ const { brand = "Ramp Studio." } = Astro.props;
     }
 
     .menu-btn {
-      padding: 10px 16px;
-      font-size: 11px;
+      width: 160px;
+      height: 36px;
+      padding: 0px 12px;
+      font-size: 12px;
+    }
+
+    .menu-dropdown {
+      width: 160px;
+      height: auto;
     }
   }
 </style>

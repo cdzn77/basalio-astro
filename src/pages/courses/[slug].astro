@@ -54,7 +54,7 @@ const description = course.fullDescription;
 
       <!-- Description meta -->
       <div class="description-meta">
-        <p class="description-label">{course.descriptionTitle}</p>
+        <p class="description-label">Got a question?</p>
         <p class="description-text">{course.descriptionText}</p>
       </div>
     </div>
@@ -373,14 +373,23 @@ const description = course.fullDescription;
   }
 
   .description-label {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 1.6px;
-    text-transform: uppercase;
-    color: #000000;
+    background-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    color: rgb(0, 0, 0);
+    display: block;
+    font-family: Switzer, "Switzer Placeholder", sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.22px;
+    line-height: 26.4px;
     margin: 0;
     padding: 0;
+    text-align: start;
+    text-decoration: none;
+    text-wrap-mode: wrap;
+    text-wrap-style: auto;
+    width: 600px;
+    -webkit-font-smoothing: antialiased;
   }
 
   .description-text {

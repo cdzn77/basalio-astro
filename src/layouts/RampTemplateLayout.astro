@@ -121,7 +121,7 @@ const {
       top: 0;
       left: 0;
       right: 0;
-      background: #FFEA00;
+      background: transparent;
       z-index: 1000;
       padding: 20px 40px;
       border-bottom: none;
@@ -142,7 +142,12 @@ const {
     .ramp-main {
       position: relative;
       z-index: 2;
-      margin-top: 80px;
+      margin-top: 0;
+    }
+
+    .ramp-main > section:first-child {
+      margin-top: -80px;
+      padding-top: 80px;
     }
 
     .ramp-footer {

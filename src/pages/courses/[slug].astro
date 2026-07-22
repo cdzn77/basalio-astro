@@ -130,9 +130,10 @@ const description = course.fullDescription;
 
   <!-- TOOLS SECTION -->
   <section class="tools-section">
-    <div class="tools-container">
+    <div class="tools-left">
       <h2 class="section-heading">Tools</h2>
-
+    </div>
+    <div class="tools-container">
       <div class="tools-grid">
         {course.tools.map(tool => (
           <div class="tool-card">
@@ -148,13 +149,15 @@ const description = course.fullDescription;
 
   <!-- INSTRUCTOR SECTION: Yellow background -->
   <section class="instructor-section">
+    <div class="instructor-left">
+      <h2 class="section-heading">INSTRUCTOR</h2>
+    </div>
     <div class="instructor-container">
       <div class="instructor-image-wrapper">
         <img src={course.instructor.image} alt={course.instructor.name} class="instructor-image" />
       </div>
 
       <div class="instructor-content">
-        <h2 class="section-heading">INSTRUCTOR</h2>
 
         <h3 class="instructor-name">{course.instructor.name}</h3>
         <p class="instructor-title">{course.instructor.title}</p>
@@ -739,8 +742,7 @@ const description = course.fullDescription;
     align-items: flex-start;
   }
 
-  .tools-section::before {
-    content: "";
+  .tools-left {
     flex: 0 1 35%;
     max-width: 35%;
   }
@@ -806,8 +808,7 @@ const description = course.fullDescription;
     align-items: flex-start;
   }
 
-  .instructor-section::before {
-    content: "";
+  .instructor-left {
     flex: 0 1 35%;
     max-width: 35%;
   }

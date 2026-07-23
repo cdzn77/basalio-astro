@@ -3,20 +3,15 @@
 :root {
   /* Colors - Ramp Studio Brand */
   --color-primary: #FFEA00;
-  --color-dark: #000000;
   --color-light: #FFFFFF;
   --color-text: #000000;
   --color-text-secondary: #555555;
   --color-text-tertiary: #999999;
-  --color-bg-light: #FFFFFF;
   --color-bg-white: #FFFFFF;
-  --color-bg-beige: #FFFFFF;
   --color-bg-light-gray: #F5F5F5;
   --color-bg-gray: #E0E0E0;
   --color-bg-dark-gray: #333333;
   --color-bg-darker: #0A0A0A;
-  --color-accent: #999999;
-  --color-focus: #FFEA00;
 
   /* Typography */
   --font-display: 'Space Grotesk', sans-serif;

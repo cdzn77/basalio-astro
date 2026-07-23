@@ -1,6 +1,0 @@
-import { t as e } from "./rolldown-runtime.blwatvxf.mjs";
-
-function t(e, t) { return { breakpoints: [{ hash: `rh48bt`, mediaQuery: `(min-width: 1200px)` }, { hash: `v3p6u5`, mediaQuery: `(min-width: 810px) and (max-width: 1199.98px)` }, { hash: `198b18i`, mediaQuery: `(max-width: 809.98px)` }], description: `Get continuous access to exclusive courses, resources, updates, and insights with the Ramp subscription—built for long-term growth.`, elements: { DeM3Getdw: `faq`, MMEDcslhv: `flexible` }, framerSearch: { index: !0 }, robots: `max-image-preview:large`, serializationId: `framer-Veb06`, socialImage: `../images/wwm2waimiwnvahhxgmjc07jgew.jpg`, title: `Subscription -Ongoing Marketing Education & Resources with Ramp Marketing`, viewport: `width=device-width` } }
-var n, r, i = e((() => { n = 1, r = { exports: { default: { type: `function`, annotations: { framerContractVersion: `1` } }, metadataVersion: { type: `variable`, annotations: { framerContractVersion: `1` } }, __FramerMetadata__: { type: `variable` } } } }));
-export { n as i, i as n, t as r, r as t };
-//# sourceMappingURL=szctYfFA1.Bzqvv2m2.mjs.map

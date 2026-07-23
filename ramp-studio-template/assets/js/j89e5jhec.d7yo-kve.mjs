@@ -1,6 +1,0 @@
-import { t as e } from "./rolldown-runtime.blwatvxf.mjs";
-
-function t(e, t) { return { breakpoints: [{ hash: `1d0uw4e`, mediaQuery: `(min-width: 1200px)` }, { hash: `1f2s4pq`, mediaQuery: `(min-width: 810px) and (max-width: 1199.98px)` }, { hash: `1oq5j43`, mediaQuery: `(max-width: 809.98px)` }], description: `Learn how Ramp was built to help modern marketers move faster with clear systems, actionable education, and thoughtfully designed marketing resources.`, elements: { AwXY5wgAO: `trigger-one`, dUzUw4Z8g: `trigger-three`, kfevKzdOU: `timeline`, MYXWvN3_X: `contact`, PI7tb6De_: `trigger-two`, qFE7GNboB: `vision`, Uw5evtck4: `what-we-do`, ZBgIuaLUn: `instructors` }, framerSearch: { index: !0 }, robots: `max-image-preview:large`, serializationId: `framer-gfoS2`, socialImage: `../images/wwm2waimiwnvahhxgmjc07jgew.jpg`, title: `About Ramp Marketing`, viewport: `width=device-width` } }
-var n, r, i = e((() => { n = 1, r = { exports: { default: { type: `function`, annotations: { framerContractVersion: `1` } }, metadataVersion: { type: `variable`, annotations: { framerContractVersion: `1` } }, __FramerMetadata__: { type: `variable` } } } }));
-export { n as i, i as n, t as r, r as t };
-//# sourceMappingURL=J89e5jhEc.D7YO-Kve.mjs.map

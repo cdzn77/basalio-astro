@@ -1,6 +1,0 @@
-import { t as e } from "./rolldown-runtime.blwatvxf.mjs";
-
-function t(e, t) { return { breakpoints: [{ hash: `1yc28lm`, mediaQuery: `(min-width: 1200px)` }, { hash: `146w3et`, mediaQuery: `(min-width: 810px) and (max-width: 1199.98px)` }, { hash: `13pihhw`, mediaQuery: `(max-width: 809.98px)` }], description: `Explore curated marketing resources, templates, tools, and guides designed to help you work smarter and build better marketing systems.`, elements: { ZlvcDuOB7: `grow` }, framerSearch: { index: !0 }, robots: `max-image-preview:large`, serializationId: `framer-UbNlY`, socialImage: `../images/wwm2waimiwnvahhxgmjc07jgew.jpg`, title: `Resources - Free & Premium Marketing Resources with Ramp Marketing`, viewport: `width=device-width` } }
-var n, r, i = e((() => { n = 1, r = { exports: { metadataVersion: { type: `variable`, annotations: { framerContractVersion: `1` } }, default: { type: `function`, annotations: { framerContractVersion: `1` } }, __FramerMetadata__: { type: `variable` } } } }));
-export { n as i, i as n, t as r, r as t };
-//# sourceMappingURL=VwdWHxpTK.CO-akuBH.mjs.map

@@ -534,6 +534,7 @@ const {
   // Testimonials Carousel - Wait for Layout
   // Use DOMContentLoaded or check readyState for more robust initialization
   const initCarousel = () => {
+    console.log('[Testimonials] initCarousel called');
     const track = document.querySelector('.carousel-track');
     const viewport = document.querySelector('.carousel-viewport');
     const cards = document.querySelectorAll('.testimonial-card');
@@ -542,7 +543,10 @@ const {
     const leftZone = document.querySelector('.carousel-zone-left');
     const rightZone = document.querySelector('.carousel-zone-right');
 
+    console.log('[Testimonials] DOM check:', { track: !!track, viewport: !!viewport, cardsCount: cards.length, prevBtn: !!prevBtn, nextBtn: !!nextBtn, viewportWidth: viewport?.clientWidth });
+
     if (track && viewport && cards.length > 0 && prevBtn && nextBtn && viewport.clientWidth > 0) {
+      console.log('[Testimonials] All DOM elements found, initializing...');
     const GAP = 20;
     const CARD_WIDTH = cards[0]?.offsetWidth ?? 600; // FIXED: Get actual card width from DOM
     const CARD_PLUS_GAP = CARD_WIDTH + GAP;
@@ -599,11 +603,13 @@ const {
     updateButtonStates();
 
     prevBtn.addEventListener('click', (e) => {
+      console.log('[Testimonials] Prev button clicked, currentPage:', currentPage, 'totalPages:', totalPages);
       e.preventDefault();
       e.stopPropagation();
       navigate('prev');
     });
     nextBtn.addEventListener('click', (e) => {
+      console.log('[Testimonials] Next button clicked, currentPage:', currentPage, 'totalPages:', totalPages);
       e.preventDefault();
       e.stopPropagation();
       navigate('next');
@@ -621,9 +627,15 @@ const {
   };
 
   // FIXED: Use more robust initialization timing
+  console.log('[Testimonials] Initializing carousel...');
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCarousel);
+    console.log('[Testimonials] DOM loading, waiting for DOMContentLoaded...');
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('[Testimonials] DOMContentLoaded fired, calling initCarousel');
+      initCarousel();
+    });
   } else {
+    console.log('[Testimonials] DOM ready, calling initCarousel immediately');
     initCarousel();
   }
 </script>

@@ -198,14 +198,11 @@ const description = course.fullDescription;
     <img src={course.instructorImage} alt="Instructor background image" class="instructor-bg-image" />
   </section>
 
-  <!-- TOOLS IMAGE -->
-  <section class="tools-image-section">
-    <img src={course.toolsImage} alt="Tools image" class="tools-image" />
-  </section>
-
   <!-- CLOSING IMAGE -->
   <section class="closing-image-section">
-    <img src={course.closingImage} alt="Course closing image" class="closing-image" />
+    <div class="closing-image-wrapper">
+      <img src={course.closingImage} alt="Course closing image" class="closing-image" />
+    </div>
   </section>
 
   <!-- FOOTER: Reused from homepage -->
@@ -342,15 +339,19 @@ const description = course.fullDescription;
     display:flex;
     align-items:center;
     padding:12px 16px;
-    border-radius:8px;
+    border-radius:8px 0 0 8px;
     background:#000000;
     height:44px;
+    box-sizing:border-box;
     color:#FFFFFF;
     font-family:'Azeret Mono',monospace;
-    font-size:14px;
+    font-size:12px;
     font-weight:700;
     text-transform:uppercase;
     letter-spacing:0.15em;
+    margin-right:-1px;
+    position:relative;
+    z-index:1;
   }
 
   .enroll-icon {
@@ -360,12 +361,13 @@ const description = course.fullDescription;
     width:40px;
     height:44px;
     background:#000000;
-    border-radius:8px;
+    border-radius:0 8px 8px 0;
     color:#FFFFFF;
+    position:relative;
   }
 
   .enroll-icon svg {
-    transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    transition:transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .enroll-btn:hover .enroll-icon svg {
@@ -588,7 +590,7 @@ const description = course.fullDescription;
     display:flex;
     align-items:center;
     padding:12px 16px;
-    border-radius:8px;
+    border-radius:8px 0 0 8px;
     background:#000000;
     height:44px;
     color:#FFFFFF;
@@ -598,6 +600,9 @@ const description = course.fullDescription;
     text-transform:uppercase;
     letter-spacing:0.15em;
     box-sizing:border-box;
+    margin-right:-1px;
+    position:relative;
+    z-index:1;
   }
 
   .download-icon {
@@ -607,12 +612,17 @@ const description = course.fullDescription;
     width:40px;
     height:44px;
     background:#000000;
-    border-radius:8px;
+    border-radius:0 8px 8px 0;
     color:#FFFFFF;
+    position:relative;
   }
 
   .download-icon svg {
-    transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+    transition:transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .download-btn:hover .download-icon {
+    margin-left:-8px;
   }
 
   .download-btn:hover .download-icon svg {
@@ -775,21 +785,6 @@ const description = course.fullDescription;
     color:rgba(0,0,0,0.65);
     margin:0;
     padding:0;
-  }
-
-  .tools-image-section {
-    width:100%;
-    height:350px;
-    background:#FFED00;
-    overflow:hidden;
-  }
-
-  .tools-image {
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    border-radius:8px;
   }
 
   /* INSTRUCTOR SECTION */
@@ -989,17 +984,51 @@ const description = course.fullDescription;
 
   /* CLOSING IMAGE */
   .closing-image-section {
+    border-bottom-left-radius:40px;
+    border-bottom-right-radius:40px;
+    box-sizing:border-box;
+    display:block;
+    flex-basis:auto;
+    flex-grow:0;
+    flex-shrink:0;
+    position:relative;
     width:100%;
-    height:350px;
+    z-index:1;
     background:#FFED00;
-    overflow:hidden;
+    padding:40px 40px 200px 40px;
+    margin-bottom:-40px;
+  }
+
+  .closing-image-wrapper {
+    border-bottom-left-radius:40px;
+    border-bottom-right-radius:40px;
+    border-top-left-radius:0px;
+    border-top-right-radius:0px;
+    bottom:0px;
+    box-sizing:border-box;
+    display:block;
+    left:0px;
+    position:absolute;
+    right:0px;
+    top:0px;
+    width:100%;
+    height:100%;
   }
 
   .closing-image {
-    width:100%;
+    aspect-ratio:auto 1024 / 1024;
+    border-bottom-left-radius:40px;
+    border-bottom-right-radius:40px;
+    border-top-left-radius:0px;
+    border-top-right-radius:0px;
+    box-sizing:border-box;
+    display:block;
     height:100%;
     object-fit:cover;
-    display:block;
+    object-position:50% 50%;
+    overflow-x:clip;
+    overflow-y:clip;
+    width:100%;
   }
 
   /* SECTION HEADING */
@@ -1224,10 +1253,6 @@ const description = course.fullDescription;
     }
 
     .module-image-section {
-      height:250px;
-    }
-
-    .tools-image-section {
       height:250px;
     }
 

@@ -43,7 +43,7 @@ const {
   .pill-text {
     background: var(--basalio-ink, #000000);
     color: var(--basalio-paper, #FFFFFF);
-    border-radius: 8px;
+    border-radius: 8px 0 0 8px;
     padding: 12px 16px;
     font-size: v-bind(fontSize);
     font-weight: v-bind(fontWeight);
@@ -53,19 +53,23 @@ const {
     align-items: center;
     justify-content: center;
     white-space: nowrap;
+    margin-right: -1px;
+    position: relative;
+    z-index: 1;
   }
 
   .pill-icon {
     background: var(--basalio-ink, #000000);
     color: var(--basalio-paper, #FFFFFF);
-    border-radius: 8px;
+    border-radius: 0 8px 8px 0;
     width: 40px;
     height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex: 0 0 40px;
-    transition: transform 150ms ease-out;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
   }
 
   .two-pill-button:hover .pill-icon {

@@ -13,9 +13,11 @@ interface Testimonial {
 
 interface Props {
   testimonials?: Testimonial[];
+  sectionHeading?: string;
 }
 
 const {
+  sectionHeading = "Built by Creatives",
   testimonials = [
     {
       image: "/assets/l4gfk0yuorz9j7rwu2ebwwxpw.jpg",
@@ -90,7 +92,7 @@ const {
     <div class="testimonials-left">
       <div class="testimonials-header">
         <p class="testimonials-eyebrow">TESTIMONIALS</p>
-        <h3 class="testimonials-heading">Built by Creatives</h3>
+        <h3 class="testimonials-heading">{sectionHeading}</h3>
       </div>
 
       <!-- Navigation Arrows -->

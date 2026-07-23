@@ -1,6 +1,6 @@
 ---
-// Shared two-pill button component (text pill + icon pill)
-// Used across: header CTA, Courses View All, Resources View All, Retainer Contact Us, Retainer Subscribe ×2
+// Dual-button component matching RampHero design
+// Used across: header CTA, Courses View All, Resources View All, etc.
 
 interface Props {
   label: string;
@@ -21,99 +21,128 @@ const {
 } = Astro.props;
 ---
 
-<a href={href} class="two-pill-button">
-  <span class="pill-text">{uppercase ? label.toUpperCase() : label}</span>
-  <span class="pill-icon">
-    <div class="pill-arrow pill-arrow-left">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
+<a href={href} class="view-button">
+  <div class="btn-text-box">
+    <div class="btn-text-wrapper">
+      <p class="btn-text-content">{uppercase ? label.toUpperCase() : label}</p>
+    </div>
+  </div>
+  <div class="btn-arrow-box">
+    <div class="btn-arrow btn-arrow-left">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
         <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
         <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
       </svg>
     </div>
-    <div class="pill-arrow pill-arrow-right">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
+    <div class="btn-arrow btn-arrow-right">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
         <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
         <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
       </svg>
     </div>
-  </span>
+  </div>
 </a>
 
-<style>
-  .two-pill-button {
+<style define:vars={{ fontSize, fontWeight, letterSpacing }}>
+  .view-button {
     display: flex;
     flex-direction: row;
-    gap: 0;
+    height: 43.6px;
+    cursor: pointer;
+    position: relative;
+    opacity: 1;
+    background: transparent;
+    border: none;
+    padding: 0;
     text-decoration: none;
-    width: fit-content;
-    height: 44px;
+    -webkit-font-smoothing: antialiased;
   }
 
-  .pill-text {
-    background: var(--basalio-ink, #000000);
-    color: var(--basalio-paper, #FFFFFF);
-    border-radius: 8px 0 0 8px;
+  .btn-text-box {
+    background-color: #000000;
+    border-radius: 8px;
+    height: 43.6px;
     padding: 12px 16px;
-    font-size: v-bind(fontSize);
-    font-weight: v-bind(fontWeight);
-    letter-spacing: v-bind(letterSpacing);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+
+  .btn-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .btn-text-content {
+    font-family: 'Azeret Mono', monospace;
+    font-size: var(--fontSize);
+    font-weight: var(--fontWeight);
+    letter-spacing: var(--letterSpacing);
+    line-height: 19.6px;
     text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    color: #FFFFFF;
+    margin: 0;
+    padding: 0;
     white-space: nowrap;
-    margin-right: -1px;
-    position: relative;
-    z-index: 1;
+    height: 19.6px;
   }
 
-  .pill-icon {
-    background: var(--basalio-ink, #000000);
-    color: var(--basalio-paper, #FFFFFF);
-    border-radius: 0 8px 8px 0;
+  .btn-arrow-box {
+    background-color: #000000;
+    border-radius: 8px;
+    height: 43.6px;
     width: 40px;
-    height: 44px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex: 0 0 40px;
+    align-items: center;
+    column-gap: 10px;
+    flex-shrink: 0;
     position: relative;
+    margin-left: 8px;
   }
 
-  .pill-arrow {
-    position: absolute;
+  .btn-arrow {
     display: flex;
-    align-items: center;
     justify-content: center;
-    width: 16px;
+    align-items: center;
     height: 16px;
+    width: 16px;
+    position: absolute;
+    will-change: transform;
     transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
-  .pill-arrow-left {
+  .btn-arrow-left {
     opacity: 0;
     transform: translateX(-8px);
   }
 
-  .pill-arrow-right {
+  .btn-arrow-right {
     opacity: 1;
     transform: translateX(0);
   }
 
-  .pill-arrow svg {
-    width: 100%;
+  .btn-arrow svg {
     height: 100%;
-    stroke: var(--basalio-paper, #FFFFFF);
+    width: 100%;
+    stroke: #FFFFFF;
+    stroke-width: 1.5px;
     fill: none;
+    stroke-miterlimit: 10;
   }
 
-  .two-pill-button:hover .pill-arrow-left {
-    opacity: 1 !important;
-    transform: translateX(0) !important;
+  .view-button:hover .btn-arrow-left {
+    opacity: 1;
   }
 
-  .two-pill-button:hover .pill-arrow-right {
-    opacity: 0 !important;
-    transform: translateX(8px) !important;
+  .view-button:hover .btn-arrow-right {
+    opacity: 0;
   }
 </style>

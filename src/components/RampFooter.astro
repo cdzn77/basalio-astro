@@ -1,89 +1,103 @@
 ---
-// Ramp Footer - Structural skeleton
-// Row 1: Address (26px, 35% left) + Navigation (16px, 65% right)
-// Row 2: Four brand words (170px, -8.5px letter-spacing, static - no marquee animation yet)
-
 interface NavLink {
   label: string;
   href: string;
 }
 
 interface Props {
-  address?: string;
-  column1Links?: NavLink[];
-  column2Links?: NavLink[];
+  description?: string;
+  productLinks?: NavLink[];
+  supportLinks?: NavLink[];
   brandWords?: string[];
 }
 
 const {
-  address = "Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark",
-  column1Links = [
-    { label: "Courses", href: "/courses" },
-    { label: "Subscription", href: "/subscription" },
-    { label: "Resources", href: "/resources" },
-    { label: "Contact", href: "/contact" }
+  description = "Nine curated interaction modules for WordPress portfolios. Nothing you'd need Framer for.",
+  productLinks = [
+    { label: "Modules", href: "/modules" },
+    { label: "Performance", href: "/performance" },
+    { label: "Pricing", href: "/pricing" },
+    { label: "Roadmap", href: "/roadmap" }
   ],
-  column2Links = [
-    { label: "Terms & Conditions", href: "/terms" },
+  supportLinks = [
+    { label: "Help center", href: "/help" },
+    { label: "Contact", href: "/contact" },
+    { label: "Terms of Service", href: "/terms" },
     { label: "Privacy Policy", href: "/privacy" }
   ],
-  brandWords = ["Ramp", "Studio.", "Creative.", "Collective."]
+  brandWords = ["BASALIO"]
 } = Astro.props;
 ---
 
 <footer class="footer">
   <div class="footer-inner">
-    <!-- ROW 1: Address + Navigation -->
-    <div class="footer-row-1">
-      <!-- LEFT: Address (35%) + Social Icons + Copyright -->
-      <div class="footer-address-block">
-        <div class="footer-address-content">
-          <p class="footer-address">{address}</p>
-          <!-- Social Icons -->
-          <div class="footer-social-icons">
-            <a href="https://x.com/basalio" class="footer-social-link" aria-label="X (Twitter)">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.514l-5.106-6.666-5.829 6.666H2.423l7.723-8.835L2.25 2.25h6.514l4.882 6.465L18.244 2.25zM17.41 20.452h1.828L6.282 3.97H4.344l13.066 16.482z"/>
-              </svg>
-            </a>
-            <a href="https://github.com/basalio" class="footer-social-link" aria-label="GitHub">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.868-.013-1.703-2.782.603-3.369-1.343-3.369-1.343-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.547 2.914 1.186.092-.923.35-1.548.636-1.903-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.137 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-              </svg>
-            </a>
-            <a href="https://wordpress.org" class="footer-social-link" aria-label="WordPress">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15H8v-6h2v6zm3-10c-.83 0-1.5-.67-1.5-1.5S11.17 4 12 4s1.5.67 1.5 1.5S12.83 7 12 7zm3 10h-2v-6h2v6z"/>
-              </svg>
-            </a>
-          </div>
+    <!-- Main Content Row -->
+    <div class="footer-content-row">
+      <!-- LEFT: Logo, Description, Social Icons -->
+      <div class="footer-left-section">
+        <div class="footer-logo-block">
+          <h3 class="footer-logo">🔺 Basalio</h3>
+          <p class="footer-description">{description}</p>
         </div>
-        <p class="footer-copyright-left">© 2026 Basalio. All rights reserved.</p>
+
+        <!-- Social Icons -->
+        <div class="footer-social-icons">
+          <a href="https://x.com/basalio" class="footer-social-link" aria-label="X (Twitter)">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.514l-5.106-6.666-5.829 6.666H2.423l7.723-8.835L2.25 2.25h6.514l4.882 6.465L18.244 2.25zM17.41 20.452h1.828L6.282 3.97H4.344l13.066 16.482z"/>
+            </svg>
+          </a>
+          <a href="https://github.com/basalio" class="footer-social-link" aria-label="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.868-.013-1.703-2.782.603-3.369-1.343-3.369-1.343-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.547 2.914 1.186.092-.923.35-1.548.636-1.903-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.137 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+            </svg>
+          </a>
+          <a href="https://wordpress.org" class="footer-social-link" aria-label="WordPress">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15H8v-6h2v6zm3-10c-.83 0-1.5-.67-1.5-1.5S11.17 4 12 4s1.5.67 1.5 1.5S12.83 7 12 7zm3 10h-2v-6h2v6z"/>
+            </svg>
+          </a>
+        </div>
       </div>
 
-      <!-- RIGHT: Navigation (65%) + Tagline -->
-      <div class="footer-nav-block">
-        <div class="footer-nav-content">
-          <!-- Nav Column 1 -->
-          <nav class="footer-nav-column">
-            {column1Links.map((link) => (
-              <a href={link.href} class="footer-link">{link.label}</a>
-            ))}
-          </nav>
+      <!-- MIDDLE: Link Columns -->
+      <div class="footer-links-section">
+        <!-- Product Column -->
+        <nav class="footer-link-column">
+          <h4 class="footer-column-label">PRODUCT</h4>
+          {productLinks.map((link) => (
+            <a href={link.href} class="footer-link">{link.label}</a>
+          ))}
+        </nav>
 
-          <!-- Nav Column 2 -->
-          <nav class="footer-nav-column">
-            {column2Links.map((link) => (
-              <a href={link.href} class="footer-link">{link.label}</a>
-            ))}
-          </nav>
+        <!-- Support Column -->
+        <nav class="footer-link-column">
+          <h4 class="footer-column-label">SUPPORT</h4>
+          {supportLinks.map((link) => (
+            <a href={link.href} class="footer-link">{link.label}</a>
+          ))}
+        </nav>
+      </div>
+
+      <!-- RIGHT: Newsletter Section -->
+      <div class="footer-right-section">
+        <h4 class="footer-column-label">STAY IN THE LOOP</h4>
+        <p class="footer-newsletter-text">Get notified when a new module ships. No spam, unsubscribe anytime.</p>
+        <div class="footer-newsletter-form">
+          <input type="email" placeholder="Email" class="footer-email-input" />
+          <button class="footer-subscribe-btn">Subscribe</button>
         </div>
-        <p class="footer-copyright-right">Built for portfolios. Nothing else.</p>
       </div>
     </div>
 
-    <!-- ROW 2: Brand Statement (Static - No Animation Yet) -->
-    <div class="footer-row-2">
+    <!-- Copyright Row -->
+    <div class="footer-copyright-row">
+      <p class="footer-copyright-left">© 2026 Basalio. All rights reserved.</p>
+      <p class="footer-copyright-right">Built for portfolios. Nothing else.</p>
+    </div>
+
+    <!-- BASALIO Branding Row -->
+    <div class="footer-branding-row">
       <div class="footer-brand-container">
         <div class="footer-brand-row">
           {brandWords.map((word) => (
@@ -98,20 +112,19 @@ const {
 <style>
   /* FOOTER SHELL */
   .footer {
-    background: #FFEA00;
+    background-color: #1a1a1a;
     width: 100%;
     box-sizing: border-box;
     position: relative;
     z-index: 1;
   }
 
-
-  /* FOOTER INNER: Padding wrapper, two rows with 40px gap */
+  /* FOOTER INNER */
   .footer-inner {
     display: flex;
     flex-direction: column;
     gap: 40px;
-    padding: 80px 40px;
+    padding: 60px 40px;
     max-width: 1400px;
     margin: 0 auto;
     box-sizing: border-box;
@@ -119,36 +132,43 @@ const {
     z-index: 1;
   }
 
-  /* ROW 1: Address + Navigation */
-  .footer-row-1 {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 40px;
-    align-items: stretch;
+  /* MAIN CONTENT ROW */
+  .footer-content-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 60px;
+    align-items: flex-start;
   }
 
-  /* LEFT: Address (35%) */
-  .footer-address-block {
-    flex: 0 1 35%;
-    min-width: 0;
+  /* LEFT SECTION: Logo, Description, Social Icons */
+  .footer-left-section {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 24px;
   }
 
-  .footer-address-content {
+  .footer-logo-block {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 8px;
   }
 
-  .footer-address {
-    font-size: 26px;
+  .footer-logo {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer-description {
+    font-size: 14px;
     font-weight: 400;
-    line-height: 32.5px;
-    color: var(--color-text, #000000);
-    margin: 0 0 24px 0;
+    line-height: 19.6px;
+    color: #999999;
+    margin: 0;
     padding: 0;
   }
 
@@ -156,7 +176,7 @@ const {
   .footer-social-icons {
     display: flex;
     flex-direction: row;
-    gap: 16px;
+    gap: 12px;
     align-items: center;
   }
 
@@ -166,13 +186,13 @@ const {
     justify-content: center;
     width: 24px;
     height: 24px;
-    color: var(--color-text, #000000);
+    color: #ffffff;
     text-decoration: none;
     transition: opacity 200ms ease;
   }
 
   .footer-social-link:hover {
-    opacity: 0.6;
+    opacity: 0.7;
   }
 
   .footer-social-link svg {
@@ -181,80 +201,137 @@ const {
     fill: currentColor;
   }
 
-  /* RIGHT: Navigation (65%) */
-  .footer-nav-block {
-    flex: 0 1 65%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-
-  .footer-nav-content {
+  /* MIDDLE SECTION: Link Columns */
+  .footer-links-section {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    gap: 60px;
+    gap: 80px;
   }
 
-  /* Navigation Column */
-  .footer-nav-column {
+  .footer-link-column {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
 
-  /* Navigation Links - SIMPLE HOVER STATE: opacity shift (not crossfade) */
+  .footer-column-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #999999;
+    margin: 0 0 8px 0;
+    padding: 0;
+  }
+
+  /* Navigation Links */
   .footer-link {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
-    line-height: 22.4px;
-    color: var(--color-text, #000000);
+    line-height: 19.6px;
+    color: #ffffff;
     text-decoration: none;
     cursor: pointer;
     transition: opacity 200ms ease;
   }
 
   .footer-link:hover {
-    opacity: 0.6;
+    opacity: 0.7;
   }
 
-  /* Copyright Text */
-  .footer-copyright-left {
-    font-size: 14px;
+  /* RIGHT SECTION: Newsletter */
+  .footer-right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .footer-newsletter-text {
+    font-size: 13px;
     font-weight: 400;
-    line-height: 19.6px;
-    letter-spacing: -0.28px;
-    color: var(--color-text, #000000);
+    line-height: 18.2px;
+    color: #999999;
     margin: 0;
     padding: 0;
-    text-align: left;
+  }
+
+  .footer-newsletter-form {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .footer-email-input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #333333;
+    border-radius: 6px;
+    background-color: #222222;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+  .footer-email-input::placeholder {
+    color: #666666;
+  }
+
+  .footer-subscribe-btn {
+    padding: 10px 16px;
+    background-color: #ffff00;
+    color: #000000;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 200ms ease;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+  }
+
+  .footer-subscribe-btn:hover {
+    opacity: 0.8;
+  }
+
+  /* COPYRIGHT ROW */
+  .footer-copyright-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #333333;
+    padding-top: 24px;
+  }
+
+  .footer-copyright-left {
+    font-size: 12px;
+    font-weight: 400;
+    color: #666666;
+    margin: 0;
+    padding: 0;
   }
 
   .footer-copyright-right {
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 400;
-    line-height: 19.6px;
-    letter-spacing: -0.28px;
-    color: var(--color-text, #000000);
+    color: #666666;
     margin: 0;
     padding: 0;
-    text-align: right;
   }
 
-  /* ROW 2: Brand Statement Container */
-  .footer-row-2 {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  /* BRANDING ROW */
+  .footer-branding-row {
+    background-color: #ffea00;
+    margin: 60px -40px -40px -40px;
+    padding: 60px 40px;
   }
 
-  /* Brand Statement Container */
   .footer-brand-container {
     width: 100%;
   }
 
-  /* Brand Word Row (STATIC VERSION - fills full width, centered) */
   .footer-brand-row {
     display: flex;
     flex-direction: row;
@@ -266,12 +343,11 @@ const {
     margin-left: calc(-50vw + 50%);
   }
 
-  /* Brand Words: responsive sizing to fill width without overflow */
   .footer-brand-word {
     font-size: clamp(100px, 18vw, 380px);
     font-weight: 400;
     letter-spacing: -0.04em;
-    color: var(--color-text, #000000);
+    color: #000000;
     margin: 0;
     padding: 0;
     display: inline-block;
@@ -279,40 +355,51 @@ const {
     line-height: 1;
   }
 
-  /* Responsive: mobile stacking and scaled-down branding */
-  @media (max-width: 768px) {
-    .footer-inner {
-      padding: 60px 20px;
-    }
-
-    .footer-row-1 {
-      flex-direction: column;
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .footer-content-row {
+      grid-template-columns: 1fr 1fr;
       gap: 40px;
     }
 
-    .footer-address-block,
-    .footer-nav-block {
-      flex: 1;
-      max-width: 100%;
+    .footer-links-section {
+      gap: 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer-inner {
+      padding: 40px 20px;
     }
 
-    .footer-nav-block {
-      justify-content: flex-start;
+    .footer-content-row {
+      grid-template-columns: 1fr;
+      gap: 40px;
     }
 
-    .footer-address {
-      font-size: 18px;
-      line-height: 24px;
+    .footer-links-section {
+      flex-direction: column;
+      gap: 30px;
     }
 
-    .footer-link {
-      font-size: 14px;
-      line-height: 20px;
+    .footer-newsletter-form {
+      flex-direction: column;
+    }
+
+    .footer-copyright-row {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+
+    .footer-branding-row {
+      margin: 40px -20px -20px -20px;
+      padding: 40px 20px;
     }
 
     .footer-brand-word {
       font-size: 80px;
-      letter-spacing: -4px;
+      letter-spacing: -3px;
     }
   }
 </style>

@@ -79,14 +79,21 @@ const pricingCards: PricingCard[] = [
 
               <!-- Features list with alternating dividers (no divider after last item) -->
               <div class="features-list">
-                {card.features.map((feature, index) => (
-                  <>
-                    <p class="feature-text" style={`color: ${card.featureTextColor};`}>{feature}</p>
-                    {index < card.features.length - 1 && (
-                      <div class="feature-divider"></div>
-                    )}
-                  </>
-                ))}
+                {card.features.map((feature, index) => {
+                  const icon = feature.charAt(0);
+                  const text = feature.substring(1);
+                  return (
+                    <>
+                      <p class="feature-text">
+                        <span style="color: #000000;">{icon}</span>
+                        <span style={`color: ${card.featureTextColor};`}>{text}</span>
+                      </p>
+                      {index < card.features.length - 1 && (
+                        <div class="feature-divider"></div>
+                      )}
+                    </>
+                  );
+                })}
               </div>
             </div>
 

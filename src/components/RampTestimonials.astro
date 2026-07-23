@@ -555,14 +555,12 @@ const {
 
     let currentPage = 0;
     let totalPages = 1;
-    let visibleCards = 3; // Initially show 3 cards
+    const TOTAL_CARDS = cards.length; // Use actual number of testimonial cards
 
     const calculatePaging = () => {
       const viewportWidth = viewport.clientWidth;
       const cardsPerView = Math.floor(viewportWidth / CARD_PLUS_GAP);
-      const totalVisibleCards = track.classList.contains('loaded') ? 9 : 3;
-      totalPages = Math.max(1, Math.ceil(totalVisibleCards / cardsPerView));
-      visibleCards = totalVisibleCards;
+      totalPages = Math.max(1, Math.ceil(TOTAL_CARDS / cardsPerView));
       return cardsPerView;
     };
 
@@ -618,30 +616,5 @@ const {
       currentPage = Math.min(currentPage, totalPages - 1);
       updateTrackPosition();
     });
-
-    // Load more functionality - find load-more button and handle click
-    const loadMoreBtn = document.querySelector('[data-action="load-more"]') ||
-                       document.querySelector('.load-more-button') ||
-                       Array.from(document.querySelectorAll('button')).find(btn =>
-                         btn.textContent.toLowerCase().includes('load more')
-                       );
-
-    console.log('Load More button found:', !!loadMoreBtn);
-    console.log('Button element:', loadMoreBtn);
-
-    if (loadMoreBtn) {
-      loadMoreBtn.addEventListener('click', (e) => {
-        console.log('Load More button clicked');
-        track.classList.add('loaded');
-        console.log('Loaded class added to track');
-        calculatePaging();
-        currentPage = Math.min(currentPage, totalPages - 1);
-        updateTrackPosition();
-        updateButtonStates();
-        console.log('Load More triggered - now showing all 9 cards');
-      });
-    } else {
-      console.log('Load More button NOT found - checked all selectors');
-    }
   }
 </script>

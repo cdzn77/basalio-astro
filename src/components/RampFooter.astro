@@ -58,8 +58,13 @@ const {
       </div>
     </div>
 
-    <!-- ROW 2: Brand Statement (Static - No Animation Yet) -->
+    <!-- ROW 2: Copyright + Tagline -->
     <div class="footer-row-2">
+      <p class="footer-copyright">© 2026 Basalio. All rights reserved.<br />Built for portfolios. Nothing else.</p>
+    </div>
+
+    <!-- ROW 3: Brand Statement (Static - No Animation Yet) -->
+    <div class="footer-row-3">
       <div class="footer-brand-container">
         <div class="footer-brand-row">
           {brandWords.map((word) => (
@@ -150,8 +155,26 @@ const {
     opacity: 0.6;
   }
 
-  /* ROW 2: Brand Statement Container */
+  /* ROW 2: Copyright + Tagline */
   .footer-row-2 {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .footer-copyright {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19.6px;
+    letter-spacing: -0.28px;
+    color: var(--color-text, #000000);
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+
+  /* ROW 3: Brand Statement Container */
+  .footer-row-3 {
     display: flex;
     flex-direction: column;
     gap: 20px;

@@ -533,27 +533,30 @@ const {
 </style>
 
 <script>
-  // Testimonials Carousel with Debug Output
+  // Testimonials Carousel - Wait for Layout
   const debugDiv = document.getElementById('carousel-debug');
 
-  const track = document.querySelector('.carousel-track');
-  const viewport = document.querySelector('.carousel-viewport');
-  const cards = document.querySelectorAll('.testimonial-card');
-  const prevBtn = document.querySelector('.carousel-button-prev');
-  const nextBtn = document.querySelector('.carousel-button-next');
-  const leftZone = document.querySelector('.carousel-zone-left');
-  const rightZone = document.querySelector('.carousel-zone-right');
+  // Wait for the DOM and layout to be calculated
+  requestAnimationFrame(() => {
+    const track = document.querySelector('.carousel-track');
+    const viewport = document.querySelector('.carousel-viewport');
+    const cards = document.querySelectorAll('.testimonial-card');
+    const prevBtn = document.querySelector('.carousel-button-prev');
+    const nextBtn = document.querySelector('.carousel-button-next');
+    const leftZone = document.querySelector('.carousel-zone-left');
+    const rightZone = document.querySelector('.carousel-zone-right');
 
-  let debugLog = [];
-  debugLog.push(`Track: ${!!track}`);
-  debugLog.push(`Viewport: ${!!viewport}`);
-  debugLog.push(`Cards: ${cards.length}`);
-  debugLog.push(`PrevBtn: ${!!prevBtn}`);
-  debugLog.push(`NextBtn: ${!!nextBtn}`);
+    let debugLog = [];
+    debugLog.push(`Track: ${!!track}`);
+    debugLog.push(`Viewport: ${!!viewport}`);
+    debugLog.push(`Cards: ${cards.length}`);
+    debugLog.push(`PrevBtn: ${!!prevBtn}`);
+    debugLog.push(`NextBtn: ${!!nextBtn}`);
+    if (viewport) debugLog.push(`ViewportW: ${viewport.clientWidth}px`);
 
-  if (debugDiv) debugDiv.innerHTML = debugLog.join('<br>');
+    if (debugDiv) debugDiv.innerHTML = debugLog.join('<br>');
 
-  if (track && viewport && cards.length > 0 && prevBtn && nextBtn) {
+    if (track && viewport && cards.length > 0 && prevBtn && nextBtn && viewport.clientWidth > 0) {
     const GAP = 20;
     const CARD_WIDTH = 600;
     const CARD_PLUS_GAP = CARD_WIDTH + GAP;
@@ -599,6 +602,11 @@ const {
     };
 
     calculatePaging();
+
+    if (debugDiv) {
+      debugDiv.innerHTML = `ViewportW: ${viewport.clientWidth}px<br>CardsPerView: ${cardsPerView}<br>TotalPages: ${totalPages}<br>TotalCards: ${TOTAL_CARDS}`;
+    }
+
     updateButtonStates();
 
     prevBtn.addEventListener('click', (e) => {
@@ -624,9 +632,10 @@ const {
     if (debugDiv) {
       debugDiv.innerHTML = `Ready<br>Page: 1/${totalPages}<br>CardsPerView: ${cardsPerView}`;
     }
-  } else {
-    if (debugDiv) {
-      debugDiv.innerHTML = debugLog.join('<br>') + '<br><span style="color:red;">INIT FAILED</span>';
+    } else {
+      if (debugDiv) {
+        debugDiv.innerHTML = debugLog.join('<br>') + '<br><span style="color:red;">INIT FAILED</span>';
+      }
     }
-  }
+  });
 </script>

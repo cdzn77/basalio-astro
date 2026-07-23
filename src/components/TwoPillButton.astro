@@ -24,9 +24,18 @@ const {
 <a href={href} class="two-pill-button">
   <span class="pill-text">{uppercase ? label.toUpperCase() : label}</span>
   <span class="pill-icon">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M6 2L12 8L6 14"></path>
-    </svg>
+    <div class="pill-arrow pill-arrow-left">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
+        <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
+        <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
+      </svg>
+    </div>
+    <div class="pill-arrow pill-arrow-right">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
+        <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
+        <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
+      </svg>
+    </div>
   </span>
 </a>
 
@@ -68,11 +77,43 @@ const {
     align-items: center;
     justify-content: center;
     flex: 0 0 40px;
-    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     position: relative;
   }
 
-  .two-pill-button:hover .pill-icon {
-    transform: translateX(4px);
+  .pill-arrow {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .pill-arrow-left {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+
+  .pill-arrow-right {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .pill-arrow svg {
+    width: 100%;
+    height: 100%;
+    stroke: var(--basalio-paper, #FFFFFF);
+    fill: none;
+  }
+
+  .two-pill-button:hover .pill-arrow-left {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+  }
+
+  .two-pill-button:hover .pill-arrow-right {
+    opacity: 0 !important;
+    transform: translateX(8px) !important;
   }
 </style>

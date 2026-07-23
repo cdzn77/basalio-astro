@@ -46,9 +46,18 @@ const description = course.fullDescription;
       <button class="enroll-btn">
         <span class="enroll-text">{course.enrollLabel}</span>
         <span class="enroll-icon">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M1 8H15M15 8L8 1M15 8L8 15"></path>
-          </svg>
+          <div class="enroll-arrow enroll-arrow-left">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
+              <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
+              <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
+            </svg>
+          </div>
+          <div class="enroll-arrow enroll-arrow-right">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
+              <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
+              <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
+            </svg>
+          </div>
         </span>
       </button>
 
@@ -105,9 +114,18 @@ const description = course.fullDescription;
         <button class="download-btn">
           <span class="download-text">{course.downloadLabel}</span>
           <span class="download-icon">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M1 8H15M15 8L8 1M15 8L8 15"></path>
-            </svg>
+            <div class="download-arrow download-arrow-left">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
+                <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
+                <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
+              </svg>
+            </div>
+            <div class="download-arrow download-arrow-right">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
+                <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
+                <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
+              </svg>
+            </div>
           </span>
         </button>
       </div>
@@ -366,16 +384,41 @@ const description = course.fullDescription;
     position:relative;
   }
 
-  .enroll-icon svg {
-    transition:transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  .enroll-arrow {
+    position:absolute;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:16px;
+    height:16px;
+    transition:opacity 0.3s ease, transform 0.3s ease;
   }
 
-  .enroll-btn:hover .enroll-icon svg {
-    transform:translateX(8px);
+  .enroll-arrow-left {
+    opacity:0;
+    transform:translateX(-8px);
   }
 
-  .enroll-btn:hover {
-    opacity:0.8;
+  .enroll-arrow-right {
+    opacity:1;
+    transform:translateX(0);
+  }
+
+  .enroll-arrow svg {
+    width:100%;
+    height:100%;
+    stroke:#FFFFFF;
+    fill:none;
+  }
+
+  .enroll-btn:hover .enroll-arrow-left {
+    opacity:1 !important;
+    transform:translateX(0) !important;
+  }
+
+  .enroll-btn:hover .enroll-arrow-right {
+    opacity:0 !important;
+    transform:translateX(8px) !important;
   }
 
   .description-meta {
@@ -617,12 +660,41 @@ const description = course.fullDescription;
     position:relative;
   }
 
-  .download-icon svg {
-    transition:transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  .download-arrow {
+    position:absolute;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:16px;
+    height:16px;
+    transition:opacity 0.3s ease, transform 0.3s ease;
   }
 
-  .download-btn:hover .download-icon {
-    margin-left:-8px;
+  .download-arrow-left {
+    opacity:0;
+    transform:translateX(-8px);
+  }
+
+  .download-arrow-right {
+    opacity:1;
+    transform:translateX(0);
+  }
+
+  .download-arrow svg {
+    width:100%;
+    height:100%;
+    stroke:#FFFFFF;
+    fill:none;
+  }
+
+  .download-btn:hover .download-arrow-left {
+    opacity:1 !important;
+    transform:translateX(0) !important;
+  }
+
+  .download-btn:hover .download-arrow-right {
+    opacity:0 !important;
+    transform:translateX(8px) !important;
   }
 
   .download-btn:hover .download-icon svg {

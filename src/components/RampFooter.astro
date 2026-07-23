@@ -172,17 +172,18 @@ const {
     width: 100%;
   }
 
-  /* Brand Words: 170px, weight 400, -8.5px letter-spacing */
+  /* Brand Words: responsive sizing to fill width */
   .footer-brand-word {
-    font-size: 170px;
+    font-size: clamp(120px, 25vw, 600px);
     font-weight: 400;
-    letter-spacing: -8.5px;
+    letter-spacing: -0.05em;
     color: var(--color-text, #000000);
     margin: 0;
     padding: 0;
     display: inline-block;
     white-space: nowrap;
     line-height: 1;
+    flex: 1;
   }
 
   /* Responsive: mobile stacking and scaled-down branding */

@@ -547,49 +547,97 @@ const {
 
     if (track && viewport && cards.length > 0 && prevBtn && nextBtn && viewport.clientWidth > 0) {
       console.log('[Testimonials] All DOM elements found, initializing...');
-    const GAP = 20;
-    const CARD_WIDTH = cards[0]?.offsetWidth ?? 600; // FIXED: Get actual card width from DOM
-    const CARD_PLUS_GAP = CARD_WIDTH + GAP;
 
-    let currentPage = 0;
-    let totalPages = 1;
-    let cardsPerView = 1;
-    const TOTAL_CARDS = cards.length;
+      // DEBUG: Check track CSS properties
+      const trackStyle = window.getComputedStyle(track);
+      console.log('[Testimonials] Track CSS (computed):', {
+        position: trackStyle.position,
+        left: trackStyle.left,
+        top: trackStyle.top,
+        transform: trackStyle.transform,
+        transition: trackStyle.transition,
+        display: trackStyle.display,
+        zIndex: trackStyle.zIndex
+      });
+      console.log('[Testimonials] Track inline styles:', {
+        position: track.style.position,
+        left: track.style.left,
+        top: track.style.top,
+        transform: track.style.transform
+      });
 
-    const calculatePaging = () => {
-      const viewportWidth = viewport.clientWidth;
-      cardsPerView = Math.max(1, Math.floor(viewportWidth / CARD_PLUS_GAP));
-      totalPages = Math.max(1, Math.ceil(TOTAL_CARDS / cardsPerView));
-    };
+      // DEBUG: Check viewport dimensions
+      console.log('[Testimonials] Viewport:', {
+        clientWidth: viewport.clientWidth,
+        clientHeight: viewport.clientHeight,
+        offsetWidth: viewport.offsetWidth,
+        offsetHeight: viewport.offsetHeight
+      });
 
-    const updateTrackPosition = () => {
-      const offset = currentPage * cardsPerView * CARD_PLUS_GAP;
-      track.style.transform = `translateX(-${offset}px)`;
-      updateButtonStates();
-    };
-
-    const updateButtonStates = () => {
-      const isFirstPage = currentPage === 0;
-      const isLastPage = currentPage === totalPages - 1;
-
-      prevBtn.disabled = isFirstPage;
-      nextBtn.disabled = isLastPage;
-      if (leftZone) leftZone.style.pointerEvents = isFirstPage ? 'none' : 'auto';
-      if (rightZone) rightZone.style.pointerEvents = isLastPage ? 'none' : 'auto';
-    };
-
-    let lastNavigateTime = 0;
-    const NAVIGATE_COOLDOWN = 300; // FIXED: Add throttle to prevent rapid navigation
-
-    const navigate = (direction) => {
-      if (direction === 'next' && currentPage < totalPages - 1) {
-        currentPage++;
-        updateTrackPosition();
-      } else if (direction === 'prev' && currentPage > 0) {
-        currentPage--;
-        updateTrackPosition();
+      // DEBUG: Check first card dimensions
+      if (cards[0]) {
+        console.log('[Testimonials] First card:', {
+          offsetWidth: cards[0].offsetWidth,
+          offsetHeight: cards[0].offsetHeight,
+          clientWidth: cards[0].clientWidth,
+          clientHeight: cards[0].clientHeight
+        });
       }
-    };
+
+      const GAP = 20;
+      const CARD_WIDTH = cards[0]?.offsetWidth ?? 600; // FIXED: Get actual card width from DOM
+      const CARD_PLUS_GAP = CARD_WIDTH + GAP;
+
+      let currentPage = 0;
+      let totalPages = 1;
+      let cardsPerView = 1;
+      const TOTAL_CARDS = cards.length;
+
+      const calculatePaging = () => {
+        const viewportWidth = viewport.clientWidth;
+        cardsPerView = Math.max(1, Math.floor(viewportWidth / CARD_PLUS_GAP));
+        totalPages = Math.max(1, Math.ceil(TOTAL_CARDS / cardsPerView));
+        console.log('[Testimonials] calculatePaging():', {viewportWidth, CARD_PLUS_GAP, TOTAL_CARDS, cardsPerView, totalPages});
+      };
+
+      const updateTrackPosition = () => {
+        const offset = currentPage * cardsPerView * CARD_PLUS_GAP;
+        const transformValue = `translateX(-${offset}px)`;
+        console.log('[Testimonials] updateTrackPosition:', {currentPage, cardsPerView, offset, transform: transformValue});
+        console.log('[Testimonials]   BEFORE transform:', track.style.transform);
+        track.style.transform = transformValue;
+        console.log('[Testimonials]   AFTER transform:', track.style.transform);
+        console.log('[Testimonials]   COMPUTED transform:', window.getComputedStyle(track).transform);
+        updateButtonStates();
+      };
+
+      const updateButtonStates = () => {
+        const isFirstPage = currentPage === 0;
+        const isLastPage = currentPage === totalPages - 1;
+
+        prevBtn.disabled = isFirstPage;
+        nextBtn.disabled = isLastPage;
+        if (leftZone) leftZone.style.pointerEvents = isFirstPage ? 'none' : 'auto';
+        if (rightZone) rightZone.style.pointerEvents = isLastPage ? 'none' : 'auto';
+      };
+
+      let lastNavigateTime = 0;
+      const NAVIGATE_COOLDOWN = 300; // FIXED: Add throttle to prevent rapid navigation
+
+      const navigate = (direction) => {
+        console.log(`[Testimonials] navigate('${direction}'): currentPage=${currentPage}, totalPages=${totalPages}`);
+        if (direction === 'next' && currentPage < totalPages - 1) {
+          currentPage++;
+          console.log(`[Testimonials]   ✓ Moving NEXT → page ${currentPage}`);
+          updateTrackPosition();
+        } else if (direction === 'prev' && currentPage > 0) {
+          currentPage--;
+          console.log(`[Testimonials]   ✓ Moving PREV → page ${currentPage}`);
+          updateTrackPosition();
+        } else {
+          console.log(`[Testimonials]   ✗ Cannot move in direction ${direction} (boundary reached)`);
+        }
+      };
 
     const throttledNavigate = (direction) => {
       const now = Date.now();
@@ -599,8 +647,12 @@ const {
       }
     };
 
+    console.log('[Testimonials] === Initial Setup ===');
+    console.log('[Testimonials] Calling calculatePaging()...');
     calculatePaging();
+    console.log('[Testimonials] Calling updateButtonStates()...');
     updateButtonStates();
+    console.log('[Testimonials] Initial state:', {currentPage, totalPages, cardsPerView});
 
     prevBtn.addEventListener('click', (e) => {
       console.log('[Testimonials] Prev button clicked, currentPage:', currentPage, 'totalPages:', totalPages);
@@ -623,6 +675,16 @@ const {
       currentPage = Math.min(currentPage, totalPages - 1);
       updateTrackPosition();
     });
+
+      console.log('[Testimonials] ✅ Carousel fully initialized');
+    } else {
+      console.error('[Testimonials] ❌ Carousel init FAILED - missing elements:');
+      console.error('  track:', track ? '✓' : '✗');
+      console.error('  viewport:', viewport ? '✓' : '✗');
+      console.error('  cards.length > 0:', cards.length > 0 ? `✓ (${cards.length})` : `✗ (${cards.length})`);
+      console.error('  prevBtn:', prevBtn ? '✓' : '✗');
+      console.error('  nextBtn:', nextBtn ? '✓' : '✗');
+      console.error('  viewport.clientWidth > 0:', viewport ? (viewport.clientWidth > 0 ? `✓ (${viewport.clientWidth}px)` : `✗ (${viewport.clientWidth}px)`) : 'N/A');
     }
   };
 

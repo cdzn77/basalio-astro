@@ -162,13 +162,16 @@ const {
     width: 100%;
   }
 
-  /* Brand Word Row (STATIC VERSION - fills full width) */
+  /* Brand Word Row (STATIC VERSION - fills full width, centered) */
   .footer-brand-row {
     display: flex;
     flex-direction: row;
     gap: 0;
     white-space: nowrap;
-    width: 100%;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    margin-left: calc(-50vw + 50%);
   }
 
   /* Brand Words: responsive sizing to fill width without overflow */

@@ -161,6 +161,19 @@ const description = "Nine curated interaction modules for portfolio and case-stu
   />
 
   <Fragment slot="footer">
-    <RampFooter address="Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark" />
+    <RampFooter
+      address="Built for creatives who make beautiful things. Nine blocks. No page builder lock-in."
+      column1Links={[
+        { label: "Documentation", href: "/docs" },
+        { label: "Support", href: "/support" },
+        { label: "Pricing", href: "#pricing" },
+        { label: "Contact", href: "/contact" }
+      ]}
+      column2Links={[
+        { label: "Terms", href: "/terms" },
+        { label: "Privacy", href: "/privacy" }
+      ]}
+      brandWords={["Basalio.", "Nine.", "Blocks.", "Forever."]}
+    />
   </Fragment>
 </RampTemplateLayout>

@@ -531,39 +531,62 @@ const {
 </style>
 
 <script>
-  // Reuse carousel paging logic from Our Courses
-  // This script is shared between RampCourses and RampTestimonials
+  // Testimonials Carousel - Comprehensive Debug Version
 
-  const track = document.querySelector('.carousel-track');
-  const viewport = document.querySelector('.carousel-viewport');
-  const cards = document.querySelectorAll('.testimonial-card');
-  const prevBtn = document.querySelector('.carousel-button-prev');
-  const nextBtn = document.querySelector('.carousel-button-next');
-  const leftZone = document.querySelector('.carousel-zone-left');
-  const rightZone = document.querySelector('.carousel-zone-right');
+  console.log('=== TESTIMONIALS CAROUSEL SCRIPT STARTING ===');
 
-  if (track && viewport && cards.length > 0) {
+  // Wait for DOM to be ready
+  setTimeout(() => {
+    const track = document.querySelector('.carousel-track');
+    const viewport = document.querySelector('.carousel-viewport');
+    const cards = document.querySelectorAll('.testimonial-card');
+    const prevBtn = document.querySelector('.carousel-button-prev');
+    const nextBtn = document.querySelector('.carousel-button-next');
+    const leftZone = document.querySelector('.carousel-zone-left');
+    const rightZone = document.querySelector('.carousel-zone-right');
+
+    console.log('DOM Elements Found:');
+    console.log('  track:', !!track, track?.className);
+    console.log('  viewport:', !!viewport, viewport?.className);
+    console.log('  cards:', cards.length);
+    console.log('  prevBtn:', !!prevBtn, prevBtn?.className);
+    console.log('  nextBtn:', !!nextBtn, nextBtn?.className);
+    console.log('  leftZone:', !!leftZone);
+    console.log('  rightZone:', !!rightZone);
+
+    if (!track) {
+      console.error('FATAL: .carousel-track not found!');
+      return;
+    }
+    if (!viewport) {
+      console.error('FATAL: .carousel-viewport not found!');
+      return;
+    }
+    if (cards.length === 0) {
+      console.error('FATAL: No .testimonial-card elements found!');
+      return;
+    }
+
     const GAP = 20;
-    const CARD_WIDTH = 600; // Fixed card width matching Ramp spec
-    const CARD_PLUS_GAP = CARD_WIDTH + GAP; // 620px per card including gap
+    const CARD_WIDTH = 600;
+    const CARD_PLUS_GAP = CARD_WIDTH + GAP;
 
     let currentPage = 0;
     let totalPages = 1;
     let cardsPerView = 1;
-    const TOTAL_CARDS = cards.length; // Use actual number of testimonial cards
+    const TOTAL_CARDS = cards.length;
 
     const calculatePaging = () => {
       const viewportWidth = viewport.clientWidth;
-      // Show 2 cards per view when possible, 1 card on smaller screens
       cardsPerView = Math.max(1, Math.floor(viewportWidth / CARD_PLUS_GAP));
       totalPages = Math.max(1, Math.ceil(TOTAL_CARDS / cardsPerView));
-      console.log('CardsPerView:', cardsPerView, 'ViewportWidth:', viewportWidth, 'TotalPages:', totalPages);
+      console.log(`[PAGING] ViewportWidth: ${viewportWidth}px, CardsPerView: ${cardsPerView}, TotalPages: ${totalPages}`);
       return cardsPerView;
     };
 
     const updateTrackPosition = () => {
-      // Calculate offset based on how many cards per page we're showing
-      const offset = currentPage * cardsPerView * (CARD_WIDTH + GAP);
+      const offset = currentPage * cardsPerView * CARD_PLUS_GAP;
+      console.log(`[POSITION] CurrentPage: ${currentPage}, Offset: ${offset}px`);
       track.style.transform = `translateX(-${offset}px)`;
       updateButtonStates();
     };
@@ -571,26 +594,16 @@ const {
     const updateButtonStates = () => {
       const isFirstPage = currentPage === 0;
       const isLastPage = currentPage === totalPages - 1;
+      console.log(`[BUTTONS] FirstPage: ${isFirstPage}, LastPage: ${isLastPage}`);
 
-      prevBtn.disabled = isFirstPage;
-      nextBtn.disabled = isLastPage;
-      leftZone.style.pointerEvents = isFirstPage ? 'none' : 'auto';
-      rightZone.style.pointerEvents = isLastPage ? 'none' : 'auto';
-
-      if (isFirstPage) {
-        leftZone.setAttribute('data-disabled', 'true');
-      } else {
-        leftZone.removeAttribute('data-disabled');
-      }
-
-      if (isLastPage) {
-        rightZone.setAttribute('data-disabled', 'true');
-      } else {
-        rightZone.removeAttribute('data-disabled');
-      }
+      if (prevBtn) prevBtn.disabled = isFirstPage;
+      if (nextBtn) nextBtn.disabled = isLastPage;
+      if (leftZone) leftZone.style.pointerEvents = isFirstPage ? 'none' : 'auto';
+      if (rightZone) rightZone.style.pointerEvents = isLastPage ? 'none' : 'auto';
     };
 
     const navigate = (direction) => {
+      console.log(`[NAVIGATE] Direction: ${direction}, CurrentPage: ${currentPage}/${totalPages - 1}`);
       if (direction === 'next' && currentPage < totalPages - 1) {
         currentPage++;
         updateTrackPosition();
@@ -600,32 +613,53 @@ const {
       }
     };
 
+    // Initialize
     calculatePaging();
     updateButtonStates();
 
-    console.log('Testimonials Carousel Debug:');
-    console.log('Total cards:', TOTAL_CARDS);
-    console.log('Viewport width:', viewport.clientWidth);
-    console.log('Card width:', CARD_WIDTH);
-    console.log('Total pages:', totalPages);
-    console.log('Buttons found:', { prevBtn: !!prevBtn, nextBtn: !!nextBtn });
+    console.log('=== CAROUSEL INITIALIZED ===');
+    console.log(`Total Cards: ${TOTAL_CARDS}, Total Pages: ${totalPages}, Cards Per View: ${cardsPerView}`);
 
-    prevBtn?.addEventListener('click', () => {
-      console.log('Prev clicked, currentPage:', currentPage);
-      navigate('prev');
-    });
-    nextBtn?.addEventListener('click', () => {
-      console.log('Next clicked, currentPage:', currentPage);
-      navigate('next');
-    });
+    // Attach event listeners
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        console.log('CLICK: Prev button');
+        navigate('prev');
+      });
+      console.log('✓ Prev button listener attached');
+    }
 
-    leftZone?.addEventListener('mouseenter', () => navigate('prev'));
-    rightZone?.addEventListener('mouseenter', () => navigate('next'));
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        console.log('CLICK: Next button');
+        navigate('next');
+      });
+      console.log('✓ Next button listener attached');
+    }
+
+    if (leftZone) {
+      leftZone.addEventListener('mouseenter', () => {
+        console.log('HOVER: Left zone');
+        navigate('prev');
+      });
+      console.log('✓ Left zone listener attached');
+    }
+
+    if (rightZone) {
+      rightZone.addEventListener('mouseenter', () => {
+        console.log('HOVER: Right zone');
+        navigate('next');
+      });
+      console.log('✓ Right zone listener attached');
+    }
 
     window.addEventListener('resize', () => {
+      console.log('EVENT: Window resize');
       calculatePaging();
       currentPage = Math.min(currentPage, totalPages - 1);
       updateTrackPosition();
     });
-  }
+
+    console.log('=== ALL LISTENERS ATTACHED - CAROUSEL READY ===');
+  }, 100);
 </script>

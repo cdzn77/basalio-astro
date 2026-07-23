@@ -558,17 +558,21 @@ const {
 
     let currentPage = 0;
     let totalPages = 1;
+    let cardsPerView = 1;
     const TOTAL_CARDS = cards.length; // Use actual number of testimonial cards
 
     const calculatePaging = () => {
       const viewportWidth = viewport.clientWidth;
-      const cardsPerView = Math.floor(viewportWidth / CARD_PLUS_GAP);
+      // Show 2 cards per view when possible, 1 card on smaller screens
+      cardsPerView = Math.max(1, Math.floor(viewportWidth / CARD_PLUS_GAP));
       totalPages = Math.max(1, Math.ceil(TOTAL_CARDS / cardsPerView));
+      console.log('CardsPerView:', cardsPerView, 'ViewportWidth:', viewportWidth, 'TotalPages:', totalPages);
       return cardsPerView;
     };
 
     const updateTrackPosition = () => {
-      const offset = currentPage * (CARD_WIDTH + GAP);
+      // Calculate offset based on how many cards per page we're showing
+      const offset = currentPage * cardsPerView * (CARD_WIDTH + GAP);
       track.style.transform = `translateX(-${offset}px)`;
       updateButtonStates();
     };
@@ -608,8 +612,21 @@ const {
     calculatePaging();
     updateButtonStates();
 
-    prevBtn?.addEventListener('click', () => navigate('prev'));
-    nextBtn?.addEventListener('click', () => navigate('next'));
+    console.log('Testimonials Carousel Debug:');
+    console.log('Total cards:', TOTAL_CARDS);
+    console.log('Viewport width:', viewport.clientWidth);
+    console.log('Card width:', CARD_WIDTH);
+    console.log('Total pages:', totalPages);
+    console.log('Buttons found:', { prevBtn: !!prevBtn, nextBtn: !!nextBtn });
+
+    prevBtn?.addEventListener('click', () => {
+      console.log('Prev clicked, currentPage:', currentPage);
+      navigate('prev');
+    });
+    nextBtn?.addEventListener('click', () => {
+      console.log('Next clicked, currentPage:', currentPage);
+      navigate('next');
+    });
 
     leftZone?.addEventListener('mouseenter', () => navigate('prev'));
     rightZone?.addEventListener('mouseenter', () => navigate('next'));

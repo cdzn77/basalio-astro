@@ -8,10 +8,14 @@ interface Service {
 }
 
 interface Props {
+  eyebrow?: string;
+  introText?: string;
   services?: Service[];
 }
 
 const {
+  eyebrow = "What we do",
+  introText = "We believe marketing doesn't have to be complicated. That's why we've built a creative hub filled with website templates, brand kits, free digital downloads and monthly support.",
   services = [
     { name: "Marketing", percentage: 30 },
     { name: "Social Media", percentage: 50 },
@@ -23,14 +27,14 @@ const {
 <section class="what-we-do">
   <!-- LEFT COLUMN: Eyebrow label (35%) -->
   <div class="column-left">
-    <p class="eyebrow">What we do</p>
+    <p class="eyebrow">{eyebrow}</p>
   </div>
 
   <!-- RIGHT COLUMN: Paragraph + Stats (65%) -->
   <div class="column-right">
     <!-- Block 1: Intro paragraph (max-width 800px) -->
     <div class="paragraph-block">
-      <p class="intro-text">We believe marketing doesn't have to be complicated. That's why we've built a creative hub filled with website templates, brand kits, free digital downloads and monthly support.</p>
+      <p class="intro-text">{introText}</p>
     </div>
 
     <!-- Block 2: Stats list (width 554px, with dividers) -->

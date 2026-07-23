@@ -20,35 +20,35 @@ interface Props {
 }
 
 const {
-  sectionLabel = "Monthly Retainer",
-  sectionHeading = "Endless Support",
-  ctaLabel = "Contact us",
-  ctaLink = "./contact"
+  sectionLabel = "Pricing",
+  sectionHeading = "Pick your plan",
+  ctaLabel = "Get started",
+  ctaLink = "#"
 } = Astro.props;
 
 const pricingCards: PricingCard[] = [
   {
-    title: "Essentials",
+    title: "Free",
     background: "#FFFFFF",
     featureTextColor: "rgb(87,87,87)",
-    price: "€1750/mo",
+    price: "$0",
     features: [
-      "4 design/content updates per month",
-      "5 weekly social posts",
-      "Month strategy calls",
-      "48-hour email support"
+      "All 9 blocks, fully functional",
+      "2 hacks to start",
+      "Forever free"
     ]
   },
   {
-    title: "Premium",
+    title: "Founder Lifetime",
     background: "rgb(255,234,0)",
     featureTextColor: "rgba(0,0,0,0.65)",
-    price: "€2750/mo",
+    price: "$149",
     features: [
-      "12 design/content updates per month",
-      "20 weekly social posts",
-      "Weekly strategy call",
-      "24-hour email support"
+      "All 9 blocks — same as free, always",
+      "Full hacks vault (12+ hacks, growing)",
+      "Pro control center — live-tune every block",
+      "Unlimited sites, no subscription, ever",
+      "Founder badge + first access to new hacks"
     ]
   }
 ];

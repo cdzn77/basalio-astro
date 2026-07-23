@@ -35,54 +35,55 @@ const {
   <div class="footer-inner">
     <!-- ROW 1: Address + Navigation -->
     <div class="footer-row-1">
-      <!-- LEFT: Address (35%) + Social Icons -->
+      <!-- LEFT: Address (35%) + Social Icons + Copyright -->
       <div class="footer-address-block">
-        <p class="footer-address">{address}</p>
-        <!-- Social Icons -->
-        <div class="footer-social-icons">
-          <a href="https://x.com/basalio" class="footer-social-link" aria-label="X (Twitter)">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.514l-5.106-6.666-5.829 6.666H2.423l7.723-8.835L2.25 2.25h6.514l4.882 6.465L18.244 2.25zM17.41 20.452h1.828L6.282 3.97H4.344l13.066 16.482z"/>
-            </svg>
-          </a>
-          <a href="https://github.com/basalio" class="footer-social-link" aria-label="GitHub">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.868-.013-1.703-2.782.603-3.369-1.343-3.369-1.343-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.547 2.914 1.186.092-.923.35-1.548.636-1.903-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.137 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
-            </svg>
-          </a>
-          <a href="https://wordpress.org" class="footer-social-link" aria-label="WordPress">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15H8v-6h2v6zm3-10c-.83 0-1.5-.67-1.5-1.5S11.17 4 12 4s1.5.67 1.5 1.5S12.83 7 12 7zm3 10h-2v-6h2v6z"/>
-            </svg>
-          </a>
+        <div class="footer-address-content">
+          <p class="footer-address">{address}</p>
+          <!-- Social Icons -->
+          <div class="footer-social-icons">
+            <a href="https://x.com/basalio" class="footer-social-link" aria-label="X (Twitter)">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.514l-5.106-6.666-5.829 6.666H2.423l7.723-8.835L2.25 2.25h6.514l4.882 6.465L18.244 2.25zM17.41 20.452h1.828L6.282 3.97H4.344l13.066 16.482z"/>
+              </svg>
+            </a>
+            <a href="https://github.com/basalio" class="footer-social-link" aria-label="GitHub">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.868-.013-1.703-2.782.603-3.369-1.343-3.369-1.343-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.547 2.914 1.186.092-.923.35-1.548.636-1.903-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.137 20.167 22 16.418 22 12c0-5.523-4.477-10-10-10z"/>
+              </svg>
+            </a>
+            <a href="https://wordpress.org" class="footer-social-link" aria-label="WordPress">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15H8v-6h2v6zm3-10c-.83 0-1.5-.67-1.5-1.5S11.17 4 12 4s1.5.67 1.5 1.5S12.83 7 12 7zm3 10h-2v-6h2v6z"/>
+              </svg>
+            </a>
+          </div>
         </div>
+        <p class="footer-copyright-left">© 2026 Basalio. All rights reserved.</p>
       </div>
 
-      <!-- RIGHT: Navigation (65%) -->
+      <!-- RIGHT: Navigation (65%) + Tagline -->
       <div class="footer-nav-block">
-        <!-- Nav Column 1 -->
-        <nav class="footer-nav-column">
-          {column1Links.map((link) => (
-            <a href={link.href} class="footer-link">{link.label}</a>
-          ))}
-        </nav>
+        <div class="footer-nav-content">
+          <!-- Nav Column 1 -->
+          <nav class="footer-nav-column">
+            {column1Links.map((link) => (
+              <a href={link.href} class="footer-link">{link.label}</a>
+            ))}
+          </nav>
 
-        <!-- Nav Column 2 -->
-        <nav class="footer-nav-column">
-          {column2Links.map((link) => (
-            <a href={link.href} class="footer-link">{link.label}</a>
-          ))}
-        </nav>
+          <!-- Nav Column 2 -->
+          <nav class="footer-nav-column">
+            {column2Links.map((link) => (
+              <a href={link.href} class="footer-link">{link.label}</a>
+            ))}
+          </nav>
+        </div>
+        <p class="footer-copyright-right">Built for portfolios. Nothing else.</p>
       </div>
     </div>
 
-    <!-- ROW 2: Copyright + Tagline -->
+    <!-- ROW 2: Brand Statement (Static - No Animation Yet) -->
     <div class="footer-row-2">
-      <p class="footer-copyright">© 2026 Basalio. All rights reserved.<br />Built for portfolios. Nothing else.</p>
-    </div>
-
-    <!-- ROW 3: Brand Statement (Static - No Animation Yet) -->
-    <div class="footer-row-3">
       <div class="footer-brand-container">
         <div class="footer-brand-row">
           {brandWords.map((word) => (
@@ -124,13 +125,22 @@ const {
     flex-direction: row;
     justify-content: space-between;
     gap: 40px;
-    align-items: flex-start;
+    align-items: stretch;
   }
 
   /* LEFT: Address (35%) */
   .footer-address-block {
     flex: 0 1 35%;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .footer-address-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 
   .footer-address {
@@ -175,6 +185,13 @@ const {
   .footer-nav-block {
     flex: 0 1 65%;
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .footer-nav-content {
+    display: flex;
     flex-direction: row;
     justify-content: flex-end;
     gap: 60px;
@@ -202,14 +219,8 @@ const {
     opacity: 0.6;
   }
 
-  /* ROW 2: Copyright + Tagline */
-  .footer-row-2 {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .footer-copyright {
+  /* Copyright Text */
+  .footer-copyright-left {
     font-size: 14px;
     font-weight: 400;
     line-height: 19.6px;
@@ -217,11 +228,22 @@ const {
     color: var(--color-text, #000000);
     margin: 0;
     padding: 0;
-    text-align: center;
+    text-align: left;
   }
 
-  /* ROW 3: Brand Statement Container */
-  .footer-row-3 {
+  .footer-copyright-right {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19.6px;
+    letter-spacing: -0.28px;
+    color: var(--color-text, #000000);
+    margin: 0;
+    padding: 0;
+    text-align: right;
+  }
+
+  /* ROW 2: Brand Statement Container */
+  .footer-row-2 {
     display: flex;
     flex-direction: column;
     gap: 20px;

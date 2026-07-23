@@ -3,6 +3,7 @@
 import RampTemplateLayout from '../../layouts/RampTemplateLayout.astro';
 import RampHeader from '../../components/RampHeader.astro';
 import RampFooter from '../../components/RampFooter.astro';
+import Button from '../../components/Button.astro';
 import { courses, getCourse } from '../../data/courses';
 
 export async function getStaticPaths() {
@@ -43,23 +44,7 @@ const description = course.fullDescription;
     <div class="hero-left">
       <h1 class="course-title">{course.title}</h1>
       <p class="course-full-description">{course.fullDescription}</p>
-      <button class="enroll-btn">
-        <span class="enroll-text">{course.enrollLabel}</span>
-        <span class="enroll-icon">
-          <div class="enroll-arrow enroll-arrow-left">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
-              <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
-              <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
-            </svg>
-          </div>
-          <div class="enroll-arrow enroll-arrow-right">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
-              <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
-              <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
-            </svg>
-          </div>
-        </span>
-      </button>
+      <Button label={course.enrollLabel} />
 
       <!-- Description meta -->
       <div class="description-meta">
@@ -111,23 +96,7 @@ const description = course.fullDescription;
     <div class="overview-container">
       <div class="overview-header">
         <p class="overview-description">{course.courseOverviewDescription}</p>
-        <button class="download-btn">
-          <span class="download-text">{course.downloadLabel}</span>
-          <span class="download-icon">
-            <div class="download-arrow download-arrow-left">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
-                <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
-                <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
-              </svg>
-            </div>
-            <div class="download-arrow download-arrow-right">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
-                <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
-                <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
-              </svg>
-            </div>
-          </span>
-        </button>
+        <Button label={course.downloadLabel} />
       </div>
 
       <!-- ACCORDION: Course Modules -->
@@ -339,87 +308,6 @@ const description = course.fullDescription;
     -webkit-font-smoothing:antialiased;
   }
 
-  .enroll-btn {
-    background:transparent;
-    border:none;
-    padding:0;
-    display:flex;
-    align-items:center;
-    gap:0;
-    cursor:pointer;
-    height:44px;
-    margin-bottom:50px;
-    transition:opacity 0.3s ease;
-    overflow:visible;
-  }
-
-  .enroll-text {
-    display:flex;
-    align-items:center;
-    padding:12px 16px;
-    border-radius:8px 0 0 8px;
-    background:#000000;
-    height:44px;
-    box-sizing:border-box;
-    color:#FFFFFF;
-    font-family:'Azeret Mono',monospace;
-    font-size:12px;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:0.15em;
-    margin-right:-1px;
-    position:relative;
-    z-index:1;
-  }
-
-  .enroll-icon {
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:40px;
-    height:44px;
-    background:#000000;
-    border-radius:0 8px 8px 0;
-    color:#FFFFFF;
-    position:relative;
-  }
-
-  .enroll-arrow {
-    position:absolute;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:16px;
-    height:16px;
-    transition:opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .enroll-arrow-left {
-    opacity:0;
-    transform:translateX(-8px);
-  }
-
-  .enroll-arrow-right {
-    opacity:1;
-    transform:translateX(0);
-  }
-
-  .enroll-arrow svg {
-    width:100%;
-    height:100%;
-    stroke:#FFFFFF;
-    fill:none;
-  }
-
-  .enroll-btn:hover .enroll-arrow-left {
-    opacity:1 !important;
-    transform:translateX(0) !important;
-  }
-
-  .enroll-btn:hover .enroll-arrow-right {
-    opacity:0 !important;
-    transform:translateX(8px) !important;
-  }
 
   .description-meta {
     display:flex;
@@ -615,95 +503,6 @@ const description = course.fullDescription;
     flex:1;
   }
 
-  .download-btn {
-    background:transparent;
-    border:none;
-    padding:0;
-    display:flex;
-    align-items:center;
-    gap:0;
-    cursor:pointer;
-    height:44px;
-    transition:opacity 0.3s ease;
-    overflow:visible;
-    flex:0 0 auto;
-  }
-
-  .download-text {
-    display:flex;
-    align-items:center;
-    padding:12px 16px;
-    border-radius:8px 0 0 8px;
-    background:#000000;
-    height:44px;
-    color:#FFFFFF;
-    font-family:'Azeret Mono',monospace;
-    font-size:14px;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:0.15em;
-    box-sizing:border-box;
-    margin-right:-1px;
-    position:relative;
-    z-index:1;
-  }
-
-  .download-icon {
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:40px;
-    height:44px;
-    background:#000000;
-    border-radius:0 8px 8px 0;
-    color:#FFFFFF;
-    position:relative;
-  }
-
-  .download-arrow {
-    position:absolute;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:16px;
-    height:16px;
-    transition:opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .download-arrow-left {
-    opacity:0;
-    transform:translateX(-8px);
-  }
-
-  .download-arrow-right {
-    opacity:1;
-    transform:translateX(0);
-  }
-
-  .download-arrow svg {
-    width:100%;
-    height:100%;
-    stroke:#FFFFFF;
-    fill:none;
-  }
-
-  .download-btn:hover .download-arrow-left {
-    opacity:1 !important;
-    transform:translateX(0) !important;
-  }
-
-  .download-btn:hover .download-arrow-right {
-    opacity:0 !important;
-    transform:translateX(8px) !important;
-  }
-
-  .download-btn:hover .download-icon svg {
-    transform:translateX(8px);
-  }
-
-  .download-btn:hover {
-    opacity:0.8;
-  }
 
   /* ACCORDION */
   .modules-accordion {

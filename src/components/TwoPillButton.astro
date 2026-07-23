@@ -1,6 +1,8 @@
 ---
-// Dual-button component matching RampHero design
-// Used across: header CTA, Courses View All, Resources View All, etc.
+// Wrapper component for Button - can be used interchangeably
+// Imports the reusable Button component
+
+import Button from './Button.astro';
 
 interface Props {
   label: string;
@@ -21,130 +23,11 @@ const {
 } = Astro.props;
 ---
 
-<a href={href} class="view-button">
-  <div class="btn-text-box">
-    <div class="btn-text-wrapper">
-      <p class="btn-text-content">{uppercase ? label.toUpperCase() : label}</p>
-    </div>
-  </div>
-  <div class="btn-arrow-box">
-    <div class="btn-arrow btn-arrow-left">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
-        <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
-        <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
-      </svg>
-    </div>
-    <div class="btn-arrow btn-arrow-right">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10">
-        <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
-        <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
-      </svg>
-    </div>
-  </div>
-</a>
-
-<style define:vars={{ fontSize, fontWeight, letterSpacing }}>
-  .view-button {
-    display: flex !important;
-    flex-direction: row !important;
-    height: 43.6px !important;
-    cursor: pointer !important;
-    position: relative !important;
-    opacity: 1 !important;
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    text-decoration: none !important;
-    -webkit-font-smoothing: antialiased !important;
-    gap: 8px !important;
-    align-items: center !important;
-  }
-
-  .btn-text-box {
-    background-color: #000000 !important;
-    border-radius: 8px !important;
-    height: 43.6px !important;
-    padding: 12px 16px !important;
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: center !important;
-    align-items: center !important;
-    column-gap: 10px !important;
-    flex-shrink: 0 !important;
-    box-sizing: border-box !important;
-  }
-
-  .btn-text-wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    box-sizing: border-box;
-  }
-
-  .btn-text-content {
-    font-family: 'Azeret Mono', monospace;
-    font-size: var(--fontSize);
-    font-weight: var(--fontWeight);
-    letter-spacing: var(--letterSpacing);
-    line-height: 19.6px;
-    text-transform: uppercase;
-    color: #FFFFFF;
-    margin: 0;
-    padding: 0;
-    white-space: nowrap;
-    height: 19.6px;
-  }
-
-  .btn-arrow-box {
-    background-color: #000000 !important;
-    border-radius: 8px !important;
-    height: 43.6px !important;
-    width: 40px !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    column-gap: 10px !important;
-    flex-shrink: 0 !important;
-    position: relative !important;
-    margin-left: 8px !important;
-  }
-
-  .btn-arrow {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 16px;
-    width: 16px;
-    position: absolute;
-    will-change: transform;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .btn-arrow-left {
-    opacity: 0;
-    transform: translateX(-8px);
-  }
-
-  .btn-arrow-right {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  .btn-arrow svg {
-    height: 100%;
-    width: 100%;
-    stroke: #FFFFFF;
-    stroke-width: 1.5px;
-    fill: none;
-    stroke-miterlimit: 10;
-  }
-
-  .view-button:hover .btn-arrow-left {
-    opacity: 1;
-  }
-
-  .view-button:hover .btn-arrow-right {
-    opacity: 0;
-  }
-</style>
+<Button
+  label={label}
+  href={href}
+  uppercase={uppercase}
+  fontSize={fontSize}
+  fontWeight={fontWeight}
+  letterSpacing={letterSpacing}
+/>

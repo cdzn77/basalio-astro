@@ -21,7 +21,7 @@ interface Props {
 
 const {
   sectionLabel = "Pricing",
-  sectionHeading = "Pick your plan",
+  sectionHeading = "One plugin. One price. No subscription.",
   ctaLabel = "Get started",
   ctaLink = "#"
 } = Astro.props;
@@ -31,24 +31,25 @@ const pricingCards: PricingCard[] = [
     title: "Free",
     background: "#FFFFFF",
     featureTextColor: "rgb(87,87,87)",
-    price: "$0",
+    price: "$0 forever",
     features: [
-      "4 blocks, fully functional",
-      "2 hacks to start",
-      "Forever free"
+      "✓ All 9 blocks — real plugin, any theme",
+      "✓ 4 free Hacks — copy-paste, yours to keep",
+      "✗ Hacks vault (8+ more)",
+      "✗ Control center"
     ]
   },
   {
     title: "Founder Lifetime",
     background: "rgb(255,234,0)",
     featureTextColor: "rgba(0,0,0,0.65)",
-    price: "$149",
+    price: "$149 one-time · 100 spots · unlimited sites",
     features: [
-      "All 9 blocks — same as free, always",
-      "Full hacks vault (12+ hacks, growing)",
-      "Pro control center — live-tune every block",
-      "Unlimited sites, no subscription, ever",
-      "Founder badge + first access to new hacks"
+      "✓ All 9 blocks — same as free, always",
+      "✓ Full Hacks vault (12+) — one click, no manual code",
+      "✓ Pro control center — tune every block live",
+      "✓ Unlimited sites, no renewal",
+      "✓ Founder badge + every future block & hack, forever"
     ]
   }
 ];

@@ -13,28 +13,28 @@ interface Props {
 const {
   faqs = [
     {
-      question: "What does Ramp Studio do?",
-      answer: "Ramp Studio helps brands build momentum through practical marketing education, hands-on execution, and reusable resources.  We offer self-paced courses, a subscription-based marketing retainer, and tools designed to help teams move faster, stay consistent, and make smarter decisions without overcomplicating things."
+      question: "What is Basalio?",
+      answer: "Basalio is a plugin for WordPress that provides nine carefully designed interaction modules for portfolio and case-study sites. Each module solves a specific problem—grid reveals, case study transitions, scroll sequences, and more—without bloat or learning curve. Built only for creatives, not page builders."
     },
     {
-      question: "Who is Ramp Studio for?",
-      answer: "Ramp is built for founders, small teams, and growing companies who want marketing that actually works—not just looks good.  If you're tired of one-off projects, unclear strategy, or starting from scratch every month, Ramp is for you."
+      question: "Do I need to know how to code?",
+      answer: "No. Each module is ready to use out of the box. If you want to customize interactions, we provide code templates and documentation. But for most uses, setup is drag-and-drop with no coding required."
     },
     {
-      question: "How do your courses work?",
-      answer: "Our courses are self-paced, practical, and designed to be applied immediately.  They focus on real-world marketing problems—systems, content, positioning, and execution—so you can learn once and reuse the knowledge across campaigns, clients, or teams."
+      question: "What WordPress theme do I need?",
+      answer: "Basalio works with any WordPress theme. It's not a page builder, and it doesn't lock you into a specific theme or platform. Use your own theme, or use one of the recommended partners. Nine blocks, infinite possibilities."
     },
     {
-      question: "What is the subscription marketing retainer?",
-      answer: "The subscription retainer gives you ongoing access to marketing support without the friction of traditional contracts.  Instead of hiring full-time or briefing a new agency every month, you get consistent execution, iterative improvement, and a long-term partner who understands your business."
+      question: "Can I use Basalio on multiple sites?",
+      answer: "Yes. The Founder Lifetime plan includes unlimited sites, plus you keep every block and hack forever. Scale your portfolio sites without renewal or per-site limits."
     },
     {
-      question: "Do I need to choose between courses, resources, or the retainer?",
-      answer: "Not at all.  Many clients start with courses or resources to build internal clarity, then move into a subscription when they want execution support. Others use everything together—learning, doing, and scaling at the same time."
+      question: "What's included in the free tier?",
+      answer: "All nine blocks—the full plugin, any theme. Plus four free Hacks you can copy-paste and keep. The free tier is production-ready. Paid tier unlocks the full Hacks vault and Pro control center for fine-tuning every interaction live."
     },
     {
-      question: "What makes Ramp Studio different from other marketing agencies?",
-      answer: "Ramp Studio is built around momentum.  We focus on clarity, systems, and repeatable outcomes—not buzzwords or one-off wins. Everything we offer is designed to reduce friction, save time, and help marketing compound over time."
+      question: "Is there support?",
+      answer: "Yes. We provide module documentation, code templates, integration guides, and a performance checklist. All customers get access to the full resource library and community support."
     }
   ]
 } = Astro.props;
@@ -48,7 +48,7 @@ const {
 
     <!-- RIGHT: Description -->
     <div class="faq-header-right">
-      <p class="faq-description">Explore our most commonly asked questions about our agency, podcast, and product launch resources.</p>
+      <p class="faq-description">Explore our most commonly asked questions about Basalio, setup, pricing, and how the modules work.</p>
     </div>
   </div>
 
@@ -353,12 +353,12 @@ const {
         item.setAttribute('data-open', 'true');
         // Add answer to DOM
         const faqData = {
-          0: "Ramp Studio helps brands build momentum through practical marketing education, hands-on execution, and reusable resources.  We offer self-paced courses, a subscription-based marketing retainer, and tools designed to help teams move faster, stay consistent, and make smarter decisions without overcomplicating things.",
-          1: "Ramp is built for founders, small teams, and growing companies who want marketing that actually works—not just looks good.  If you're tired of one-off projects, unclear strategy, or starting from scratch every month, Ramp is for you.",
-          2: "Our courses are self-paced, practical, and designed to be applied immediately.  They focus on real-world marketing problems—systems, content, positioning, and execution—so you can learn once and reuse the knowledge across campaigns, clients, or teams.",
-          3: "The subscription retainer gives you ongoing access to marketing support without the friction of traditional contracts.  Instead of hiring full-time or briefing a new agency every month, you get consistent execution, iterative improvement, and a long-term partner who understands your business.",
-          4: "Not at all.  Many clients start with courses or resources to build internal clarity, then move into a subscription when they want execution support. Others use everything together—learning, doing, and scaling at the same time.",
-          5: "Ramp Studio is built around momentum.  We focus on clarity, systems, and repeatable outcomes—not buzzwords or one-off wins. Everything we offer is designed to reduce friction, save time, and help marketing compound over time."
+          0: "Basalio is a plugin for WordPress that provides nine carefully designed interaction modules for portfolio and case-study sites. Each module solves a specific problem—grid reveals, case study transitions, scroll sequences, and more—without bloat or learning curve. Built only for creatives, not page builders.",
+          1: "No. Each module is ready to use out of the box. If you want to customize interactions, we provide code templates and documentation. But for most uses, setup is drag-and-drop with no coding required.",
+          2: "Basalio works with any WordPress theme. It's not a page builder, and it doesn't lock you into a specific theme or platform. Use your own theme, or use one of the recommended partners. Nine blocks, infinite possibilities.",
+          3: "Yes. The Founder Lifetime plan includes unlimited sites, plus you keep every block and hack forever. Scale your portfolio sites without renewal or per-site limits.",
+          4: "All nine blocks—the full plugin, any theme. Plus four free Hacks you can copy-paste and keep. The free tier is production-ready. Paid tier unlocks the full Hacks vault and Pro control center for fine-tuning every interaction live.",
+          5: "Yes. We provide module documentation, code templates, integration guides, and a performance checklist. All customers get access to the full resource library and community support."
         };
 
         const answerDiv = document.createElement('p');

@@ -532,8 +532,8 @@ const {
 
 <script>
   // Testimonials Carousel - Wait for Layout
-  // Wait for the DOM and layout to be calculated
-  setTimeout(() => {
+  // Use DOMContentLoaded or check readyState for more robust initialization
+  const initCarousel = () => {
     const track = document.querySelector('.carousel-track');
     const viewport = document.querySelector('.carousel-viewport');
     const cards = document.querySelectorAll('.testimonial-card');
@@ -544,7 +544,7 @@ const {
 
     if (track && viewport && cards.length > 0 && prevBtn && nextBtn && viewport.clientWidth > 0) {
     const GAP = 20;
-    const CARD_WIDTH = 600;
+    const CARD_WIDTH = cards[0]?.offsetWidth ?? 600; // FIXED: Get actual card width from DOM
     const CARD_PLUS_GAP = CARD_WIDTH + GAP;
 
     let currentPage = 0;
@@ -574,6 +574,9 @@ const {
       if (rightZone) rightZone.style.pointerEvents = isLastPage ? 'none' : 'auto';
     };
 
+    let lastNavigateTime = 0;
+    const NAVIGATE_COOLDOWN = 300; // FIXED: Add throttle to prevent rapid navigation
+
     const navigate = (direction) => {
       if (direction === 'next' && currentPage < totalPages - 1) {
         currentPage++;
@@ -581,6 +584,14 @@ const {
       } else if (direction === 'prev' && currentPage > 0) {
         currentPage--;
         updateTrackPosition();
+      }
+    };
+
+    const throttledNavigate = (direction) => {
+      const now = Date.now();
+      if (now - lastNavigateTime >= NAVIGATE_COOLDOWN) {
+        navigate(direction);
+        lastNavigateTime = now;
       }
     };
 
@@ -598,8 +609,8 @@ const {
       navigate('next');
     });
 
-    if (leftZone) leftZone.addEventListener('mouseenter', () => navigate('prev'));
-    if (rightZone) rightZone.addEventListener('mouseenter', () => navigate('next'));
+    if (leftZone) leftZone.addEventListener('mouseenter', () => throttledNavigate('prev')); // FIXED: Use throttled version
+    if (rightZone) rightZone.addEventListener('mouseenter', () => throttledNavigate('next')); // FIXED: Use throttled version
 
     window.addEventListener('resize', () => {
       calculatePaging();
@@ -607,5 +618,12 @@ const {
       updateTrackPosition();
     });
     }
-  }, 500);
+  };
+
+  // FIXED: Use more robust initialization timing
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCarousel);
+  } else {
+    initCarousel();
+  }
 </script>

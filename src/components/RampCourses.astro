@@ -377,25 +377,22 @@ const {
 
   if (track && viewport && cards.length > 0) {
     const GAP = 20;
-    let CARD_WIDTH = 0; // Will be calculated based on viewport
-    let CARD_PLUS_GAP = 0;
+    const CARD_WIDTH = 500; // FIXED: Match CSS flex: 0 0 500px (line 285)
+    const CARD_PLUS_GAP = CARD_WIDTH + GAP; // 520px total per card
 
     let currentPage = 0;
     let totalPages = 1;
 
-    // Calculate card width to show 2 cards per view
+    // Calculate paging based on FIXED card width
     const calculatePaging = () => {
-      const viewportWidth = viewport.clientWidth;
-      CARD_WIDTH = (viewportWidth - GAP) / 2; // 2 cards per view
-      CARD_PLUS_GAP = CARD_WIDTH + GAP;
-      const cardsPerView = 2; // Always show 2 cards
+      const cardsPerView = 2; // Always show 2 cards per view
       totalPages = Math.max(1, Math.ceil(cards.length / cardsPerView));
       return cardsPerView;
     };
 
     // Update track position based on current page
     const updateTrackPosition = () => {
-      const offset = currentPage * (CARD_WIDTH + GAP);
+      const offset = currentPage * CARD_PLUS_GAP; // Use fixed 520px per page
       track.style.transform = `translateX(-${offset}px)`;
       updateButtonStates();
     };

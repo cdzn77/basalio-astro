@@ -277,10 +277,12 @@ const {
 
   .btn-arrow-left {
     opacity: 0;
+    transform: translateX(-8px);
   }
 
   .btn-arrow-right {
     opacity: 1;
+    transform: translateX(0);
   }
 
   .btn-arrow svg {
@@ -294,10 +296,12 @@ const {
 
   .btn-view-course:hover .btn-arrow-left {
     opacity: 1 !important;
+    transform: translateX(0) !important;
   }
 
   .btn-view-course:hover .btn-arrow-right {
     opacity: 0 !important;
+    transform: translateX(8px) !important;
   }
 
   /* RESPONSIVE OVERRIDES */

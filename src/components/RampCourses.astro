@@ -145,12 +145,12 @@ const {
     gap: 40px;
   }
 
-  /* LEFT COLUMN: 500px wide, flex column, match carousel height (450px) */
+  /* LEFT COLUMN: 500px wide, flex column, match carousel height (571px) */
   .courses-left {
     flex: 0 0 500px;
     display: flex;
     flex-direction: column;
-    height: 450px;
+    height: 571px;
   }
 
   /* Eyebrow + heading block (natural document flow spacing) */
@@ -233,7 +233,7 @@ const {
     flex: 1;
     position: relative;
     overflow: clip;
-    min-height: 450px;
+    min-height: 571px;
   }
 
   /* Invisible hover zones (left and right edges) */
@@ -265,7 +265,7 @@ const {
     position: relative;
     overflow: clip;
     width: 100%;
-    height: 450px;
+    height: 571px;
   }
 
   /* Track: position absolute, flex row, gap 20px, width = sum of cards + gaps */
@@ -279,10 +279,10 @@ const {
     transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  /* Course cards: 2-column carousel (2 cards visible at once) */
+  /* Course cards: fixed size 500x571px */
   .course-card {
-    flex: 0 0 calc(50% - 10px);
-    height: 400px;
+    flex: 0 0 500px;
+    height: 571px;
     background: #FFEA00;
     border-radius: 6px;
     padding: 40px;

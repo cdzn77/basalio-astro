@@ -161,8 +161,6 @@ const {
       <div class="carousel-zone carousel-zone-right" data-direction="next"></div>
     </div>
   </div>
-  <!-- DEBUG OUTPUT -->
-  <div id="carousel-debug" style="position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.95); color: #00ff00; padding: 20px; font-family: monospace; font-size: 16px; max-width: 400px; z-index: 9999; border-radius: 4px; border: 2px solid #00ff00; line-height: 1.8;"></div>
 </section>
 
 <style>
@@ -534,8 +532,6 @@ const {
 
 <script>
   // Testimonials Carousel - Wait for Layout
-  const debugDiv = document.getElementById('carousel-debug');
-
   // Wait for the DOM and layout to be calculated
   setTimeout(() => {
     const track = document.querySelector('.carousel-track');
@@ -545,16 +541,6 @@ const {
     const nextBtn = document.querySelector('.carousel-button-next');
     const leftZone = document.querySelector('.carousel-zone-left');
     const rightZone = document.querySelector('.carousel-zone-right');
-
-    let debugLog = [];
-    debugLog.push(`Track: ${!!track}`);
-    debugLog.push(`Viewport: ${!!viewport}`);
-    debugLog.push(`Cards: ${cards.length}`);
-    debugLog.push(`PrevBtn: ${!!prevBtn}`);
-    debugLog.push(`NextBtn: ${!!nextBtn}`);
-    if (viewport) debugLog.push(`ViewportW: ${viewport.clientWidth}px`);
-
-    if (debugDiv) debugDiv.innerHTML = debugLog.join('<br>');
 
     if (track && viewport && cards.length > 0 && prevBtn && nextBtn && viewport.clientWidth > 0) {
     const GAP = 20;
@@ -576,9 +562,6 @@ const {
       const offset = currentPage * cardsPerView * CARD_PLUS_GAP;
       track.style.transform = `translateX(-${offset}px)`;
       updateButtonStates();
-      if (debugDiv) {
-        debugDiv.innerHTML = `Page: ${currentPage + 1}/${totalPages}<br>Offset: ${offset}px<br>CardsPerView: ${cardsPerView}`;
-      }
     };
 
     const updateButtonStates = () => {
@@ -602,11 +585,6 @@ const {
     };
 
     calculatePaging();
-
-    if (debugDiv) {
-      debugDiv.innerHTML = `ViewportW: ${viewport.clientWidth}px<br>CardsPerView: ${cardsPerView}<br>TotalPages: ${totalPages}<br>TotalCards: ${TOTAL_CARDS}`;
-    }
-
     updateButtonStates();
 
     prevBtn.addEventListener('click', (e) => {
@@ -628,14 +606,6 @@ const {
       currentPage = Math.min(currentPage, totalPages - 1);
       updateTrackPosition();
     });
-
-    if (debugDiv) {
-      debugDiv.innerHTML = `Ready<br>Page: 1/${totalPages}<br>CardsPerView: ${cardsPerView}`;
-    }
-    } else {
-      if (debugDiv) {
-        debugDiv.innerHTML = debugLog.join('<br>') + '<br><span style="color:red;">INIT FAILED</span>';
-      }
     }
   }, 500);
 </script>

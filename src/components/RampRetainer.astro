@@ -2,6 +2,8 @@
 // Ramp Monthly Retainer - Two pricing cards with shared two-pill button component
 // Layout: LEFT (35%, eyebrow+heading+CTA) | RIGHT (65%, two cards side-by-side)
 
+import Button from './Button.astro';
+
 interface PricingCard {
   title: string;
   background: string;
@@ -61,15 +63,8 @@ const pricingCards: PricingCard[] = [
         <h3 class="retainer-heading">{sectionHeading}</h3>
       </div>
 
-      <!-- VIEW ALL BUTTON: Reused two-pill component -->
-      <a href={ctaLink} class="view-all-link">
-        <span class="view-all-text">{ctaLabel}</span>
-        <span class="view-all-icon">
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M6 2L12 8L6 14"></path>
-          </svg>
-        </span>
-      </a>
+      <!-- CTA BUTTON: Using unified button component -->
+      <Button label={ctaLabel} href={ctaLink} uppercase={false} />
     </div>
 
     <!-- RIGHT COLUMN (65%): Two pricing cards side-by-side -->
@@ -98,15 +93,8 @@ const pricingCards: PricingCard[] = [
             <div class="card-price-section">
               <p class="card-price">{card.price}</p>
 
-              <!-- SUBSCRIBE BUTTON: Reused two-pill component -->
-              <a href="./contact" class="view-all-link subscribe-button">
-                <span class="view-all-text">Subscribe</span>
-                <span class="view-all-icon">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M6 2L12 8L6 14"></path>
-                  </svg>
-                </span>
-              </a>
+              <!-- SUBSCRIBE BUTTON: Using unified button component -->
+              <Button label="Subscribe" href="./contact" uppercase={false} />
             </div>
           </div>
         ))}

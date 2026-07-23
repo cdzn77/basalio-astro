@@ -6,6 +6,7 @@ import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampTestimonials from '../components/RampTestimonials.astro';
 import RampFooter from '../components/RampFooter.astro';
+import Button from '../components/Button.astro';
 
 const title = "Monthly Subscription — Ramp Studio";
 const description = "A flexible marketing subscription designed to replace the overhead cost of a full-time hire.";
@@ -125,15 +126,7 @@ const descriptionWords = description.split(' ');
         <p class="section-label">MONTHLY RETAINER</p>
         <h2 class="section-title">Endless Support</h2>
       </div>
-      <a href="#contact" class="contact-btn">
-        <span class="text-pill">CONTACT US</span>
-        <span class="icon-pill">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </span>
-      </a>
+      <Button label="Contact Us" href="#contact" />
     </div>
 
     <div class="pricing-tiers">
@@ -163,10 +156,7 @@ const descriptionWords = description.split(' ');
               <span class="amount">{tier.price}</span>
               <span class="period">{tier.period}</span>
             </div>
-            <a href="#subscribe" class="subscribe-btn">
-              <span class="text-pill">{tier.buttonText}</span>
-              <span class="icon-pill">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+            <Button label={tier.buttonText} href="#subscribe" uppercase={true} />
                   <path d="M1 8H15M15 8L8 1M15 8L8 15"></path>
                 </svg>
               </span>

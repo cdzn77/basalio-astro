@@ -52,14 +52,15 @@ const Component = href ? 'a' : 'button';
     position: relative;
     display: inline-flex;
     align-items: center;
+    gap: 8px;
     height: 43.6px;
     background: transparent;
     border: none;
     padding: 0;
     text-decoration: none;
     -webkit-font-smoothing: antialiased;
-    border-radius: 8px;
-    overflow: hidden;
+    border-radius: 0;
+    overflow: visible;
   }
 
   .btn-text {
@@ -70,7 +71,7 @@ const Component = href ? 'a' : 'button';
     align-items: center !important;
     justify-content: center !important;
     flex-shrink: 0 !important;
-    border-radius: 6px !important;
+    border-radius: 6px 0 0 6px !important;
   }
 
   .btn-label {
@@ -94,9 +95,9 @@ const Component = href ? 'a' : 'button';
     align-items: center !important;
     justify-content: center !important;
     position: relative !important;
-    border-radius: 6px !important;
-    margin-left: -8px !important;
-    padding-left: 8px !important;
+    border-radius: 0 6px 6px 0 !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
   }
 
   .btn-arrow {

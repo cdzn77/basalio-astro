@@ -11,6 +11,7 @@ interface Props {
   eyebrow?: string;
   introText?: string;
   services?: Service[];
+  showPercentage?: boolean;
 }
 
 const {
@@ -20,7 +21,8 @@ const {
     { name: "Marketing", percentage: 30 },
     { name: "Social Media", percentage: 50 },
     { name: "Coaching", percentage: 20 }
-  ]
+  ],
+  showPercentage = true
 } = Astro.props;
 ---
 
@@ -44,7 +46,7 @@ const {
         <>
           <div class="stat-row">
             <span class="stat-label">{service.name}</span>
-            <span class="stat-percent">{service.percentage}%</span>
+            <span class="stat-percent">{service.percentage}{showPercentage ? '%' : ''}</span>
           </div>
           <div class="divider"></div>
         </>

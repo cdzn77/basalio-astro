@@ -126,7 +126,7 @@ const {
         <!-- Track: flex row with cards -->
         <div class="carousel-track">
           {testimonials.map((testimonial, index) => (
-            <div class="testimonial-card" data-card-index={index} class={index >= 3 ? 'hidden-card' : ''}>
+            <div class="testimonial-card" data-card-index={index}>
               <!-- Background image -->
               <div class="card-image">
                 <img
@@ -491,15 +491,6 @@ const {
     }
   }
 
-  /* Hide cards 4-9 initially */
-  .testimonial-card.hidden-card {
-    display: none;
-  }
-
-  /* Show cards when loaded */
-  .carousel-track.loaded .testimonial-card.hidden-card {
-    display: block;
-  }
 
   @media (max-width: 1024px) {
     .testimonials-inner {

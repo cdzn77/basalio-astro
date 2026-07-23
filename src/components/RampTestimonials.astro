@@ -162,7 +162,7 @@ const {
     </div>
   </div>
   <!-- DEBUG OUTPUT -->
-  <div id="carousel-debug" style="position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.9); color: #0f0; padding: 15px; font-family: monospace; font-size: 12px; max-width: 300px; z-index: 9999; border-radius: 4px;"></div>
+  <div id="carousel-debug" style="position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.95); color: #00ff00; padding: 20px; font-family: monospace; font-size: 16px; max-width: 400px; z-index: 9999; border-radius: 4px; border: 2px solid #00ff00; line-height: 1.8;"></div>
 </section>
 
 <style>
@@ -537,7 +537,7 @@ const {
   const debugDiv = document.getElementById('carousel-debug');
 
   // Wait for the DOM and layout to be calculated
-  requestAnimationFrame(() => {
+  setTimeout(() => {
     const track = document.querySelector('.carousel-track');
     const viewport = document.querySelector('.carousel-viewport');
     const cards = document.querySelectorAll('.testimonial-card');
@@ -637,5 +637,5 @@ const {
         debugDiv.innerHTML = debugLog.join('<br>') + '<br><span style="color:red;">INIT FAILED</span>';
       }
     }
-  });
+  }, 500);
 </script>

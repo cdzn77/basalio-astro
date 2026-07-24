@@ -342,87 +342,92 @@ const {
   // Paging logic: calculate how many cards fit in viewport, advance by one page per action
   // This script targets V2 elements specifically
 
-  const track = document.querySelector('.carousel-track-v2');
-  const viewport = document.querySelector('.carousel-viewport-v2');
-  const cards = document.querySelectorAll('.testimonial-card-v2');
-  const prevBtn = document.querySelector('.carousel-button-prev-v2');
-  const nextBtn = document.querySelector('.carousel-button-next-v2');
-  const leftZone = document.querySelector('.carousel-zone-left-v2');
-  const rightZone = document.querySelector('.carousel-zone-right-v2');
+  const testimonialsV2 = document.querySelector('.testimonials-v2');
+  if (!testimonialsV2) {
+    console.error('[TestimonialsV2] .testimonials-v2 section not found');
+  } else {
+    const track = testimonialsV2.querySelector('.carousel-track-v2');
+    const viewport = testimonialsV2.querySelector('.carousel-viewport-v2');
+    const cards = testimonialsV2.querySelectorAll('.testimonial-card-v2');
+    const prevBtn = testimonialsV2.querySelector('.carousel-button-prev-v2');
+    const nextBtn = testimonialsV2.querySelector('.carousel-button-next-v2');
+    const leftZone = testimonialsV2.querySelector('.carousel-zone-left-v2');
+    const rightZone = testimonialsV2.querySelector('.carousel-zone-right-v2');
 
-  if (track && viewport && cards.length > 0) {
-    const GAP = 20;
-    const CARD_WIDTH = 500; // FIXED: Match CSS flex: 0 0 500px
-    const CARD_PLUS_GAP = CARD_WIDTH + GAP; // 520px total per card
+    if (track && viewport && cards.length > 0) {
+      const GAP = 20;
+      const CARD_WIDTH = 500; // FIXED: Match CSS flex: 0 0 500px
+      const CARD_PLUS_GAP = CARD_WIDTH + GAP; // 520px total per card
 
-    let currentPage = 0;
-    let totalPages = 1;
+      let currentPage = 0;
+      let totalPages = 1;
 
-    // Calculate paging based on FIXED card width
-    const calculatePaging = () => {
-      const cardsPerView = 2; // Always show 2 cards per view
-      totalPages = Math.max(1, Math.ceil(cards.length / cardsPerView));
-      return cardsPerView;
-    };
+      // Calculate paging based on FIXED card width
+      const calculatePaging = () => {
+        const cardsPerView = 2; // Always show 2 cards per view
+        totalPages = Math.max(1, Math.ceil(cards.length / cardsPerView));
+        return cardsPerView;
+      };
 
-    // Update track position based on current page
-    const updateTrackPosition = () => {
-      const offset = currentPage * CARD_PLUS_GAP; // Use fixed 520px per page
-      track.style.transform = `translateX(-${offset}px)`;
-      updateButtonStates();
-    };
+      // Update track position based on current page
+      const updateTrackPosition = () => {
+        const offset = currentPage * CARD_PLUS_GAP; // Use fixed 520px per page
+        track.style.transform = `translateX(-${offset}px)`;
+        updateButtonStates();
+      };
 
-    // Enable/disable buttons based on boundary logic
-    const updateButtonStates = () => {
-      const isFirstPage = currentPage === 0;
-      const isLastPage = currentPage === totalPages - 1;
+      // Enable/disable buttons based on boundary logic
+      const updateButtonStates = () => {
+        const isFirstPage = currentPage === 0;
+        const isLastPage = currentPage === totalPages - 1;
 
-      prevBtn.disabled = isFirstPage;
-      nextBtn.disabled = isLastPage;
-      leftZone.style.pointerEvents = isFirstPage ? 'none' : 'auto';
-      rightZone.style.pointerEvents = isLastPage ? 'none' : 'auto';
+        prevBtn.disabled = isFirstPage;
+        nextBtn.disabled = isLastPage;
+        leftZone.style.pointerEvents = isFirstPage ? 'none' : 'auto';
+        rightZone.style.pointerEvents = isLastPage ? 'none' : 'auto';
 
-      if (isFirstPage) {
-        leftZone.setAttribute('data-disabled', 'true');
-      } else {
-        leftZone.removeAttribute('data-disabled');
-      }
+        if (isFirstPage) {
+          leftZone.setAttribute('data-disabled', 'true');
+        } else {
+          leftZone.removeAttribute('data-disabled');
+        }
 
-      if (isLastPage) {
-        rightZone.setAttribute('data-disabled', 'true');
-      } else {
-        rightZone.removeAttribute('data-disabled');
-      }
-    };
+        if (isLastPage) {
+          rightZone.setAttribute('data-disabled', 'true');
+        } else {
+          rightZone.removeAttribute('data-disabled');
+        }
+      };
 
-    // Navigate to next or previous page
-    const navigate = (direction) => {
-      if (direction === 'next' && currentPage < totalPages - 1) {
-        currentPage++;
-        updateTrackPosition();
-      } else if (direction === 'prev' && currentPage > 0) {
-        currentPage--;
-        updateTrackPosition();
-      }
-    };
+      // Navigate to next or previous page
+      const navigate = (direction) => {
+        if (direction === 'next' && currentPage < totalPages - 1) {
+          currentPage++;
+          updateTrackPosition();
+        } else if (direction === 'prev' && currentPage > 0) {
+          currentPage--;
+          updateTrackPosition();
+        }
+      };
 
-    // Initialize paging
-    calculatePaging();
-    updateButtonStates();
-
-    // Attach click handlers to visible buttons
-    prevBtn?.addEventListener('click', () => navigate('prev'));
-    nextBtn?.addEventListener('click', () => navigate('next'));
-
-    // Attach mouseenter handlers to invisible hover zones
-    leftZone?.addEventListener('mouseenter', () => navigate('prev'));
-    rightZone?.addEventListener('mouseenter', () => navigate('next'));
-
-    // Recalculate paging on window resize
-    window.addEventListener('resize', () => {
+      // Initialize paging
       calculatePaging();
-      currentPage = Math.min(currentPage, totalPages - 1);
-      updateTrackPosition();
-    });
+      updateButtonStates();
+
+      // Attach click handlers to visible buttons
+      prevBtn?.addEventListener('click', () => navigate('prev'));
+      nextBtn?.addEventListener('click', () => navigate('next'));
+
+      // Attach mouseenter handlers to invisible hover zones
+      leftZone?.addEventListener('mouseenter', () => navigate('prev'));
+      rightZone?.addEventListener('mouseenter', () => navigate('next'));
+
+      // Recalculate paging on window resize
+      window.addEventListener('resize', () => {
+        calculatePaging();
+        currentPage = Math.min(currentPage, totalPages - 1);
+        updateTrackPosition();
+      });
+    }
   }
 </script>

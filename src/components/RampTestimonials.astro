@@ -127,31 +127,12 @@ const {
         <div class="carousel-track">
           {testimonials.map((testimonial, index) => (
             <div class="testimonial-card" data-card-index={index}>
-              <!-- Background image -->
-              <div class="card-image">
-                <img
-                  src={testimonial.image}
-                  alt={testimonial.name}
-                  loading="lazy"
-                />
-              </div>
-
-              <!-- Overlay: Quote text (animated), name, role, results -->
-              <div class="card-content">
-                <blockquote class="card-quote">{testimonial.quote}</blockquote>
-
-                <div class="card-footer">
-                  <div class="card-info">
-                    <span class="card-client-label">ROLE</span>
-                    <p class="card-name">{testimonial.name}</p>
-                  </div>
-
-                  <div class="card-results">
-                    <span class="results-label">RESULTS</span>
-                    <span class="results-value">{testimonial.results}</span>
-                  </div>
-                </div>
-              </div>
+              <img class="testimonial-image" src={testimonial.image} alt={testimonial.name} loading="lazy" />
+              <blockquote class="testimonial-quote">{testimonial.quote}</blockquote>
+              <span class="testimonial-label">ROLE</span>
+              <p class="testimonial-name">{testimonial.name}</p>
+              <span class="testimonial-label">RESULTS</span>
+              <span class="testimonial-results">{testimonial.results}</span>
             </div>
           ))}
         </div>
@@ -325,70 +306,73 @@ const {
     will-change: transform;
   }
 
-  /* Testimonial cards: horizontal layout with image left, content right */
+  /* Testimonial cards: simple flex column like course cards */
   .testimonial-card {
-    display: flex;
-    width: 600px;
+    flex: 0 0 600px;
     height: 288px;
     background: #FFFFFF;
     border: 1px solid #E5E5E5;
     border-radius: 6px;
-    overflow: visible;
-    position: relative;
-    box-sizing: border-box;
     padding: 16px;
-    flex: 0 0 600px;
-    opacity: 1;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* Card background image - LEFT side: Fixed dimensions with padding */
-  .card-image {
-    position: relative;
-    width: 150px;
-    height: 248px;
-    z-index: 0;
-    overflow: hidden;
-    border-radius: 6px;
-    display: block;
-    flex: 0 0 150px;
-    margin-right: 24px;
-  }
-
-  .card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-  }
-
-  /* Card content - RIGHT side */
-  .card-content {
-    position: relative;
-    z-index: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 0;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
     box-sizing: border-box;
-    background: #FFFFFF;
-    flex: 1;
-    overflow: hidden;
   }
 
-  /* Quote text - Large and prominent */
-  .card-quote {
+  .testimonial-image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 6px;
+    display: block;
+  }
+
+  .testimonial-quote {
     font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 26px;
+    font-size: 16px;
     font-weight: 400;
-    line-height: 31.2px;
-    letter-spacing: -0.52px;
+    line-height: 22px;
     color: #000000;
     margin: 0;
     padding: 0;
-    text-align: start;
-    background-color: transparent;
+    flex: 1;
+  }
+
+  .testimonial-label {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: #999999;
+    margin: 4px 0 0 0;
+    padding: 0;
+    display: block;
+  }
+
+  .testimonial-name {
+    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 19.6px;
+    color: #000000;
+    margin: 0 0 8px 0;
+    padding: 0;
+  }
+
+  .testimonial-results {
+    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18.2px;
+    color: #666666;
+    margin: 0;
+    padding: 0;
+    display: block;
   }
 
   /* Footer: name, role, results */

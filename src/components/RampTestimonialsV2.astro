@@ -87,15 +87,9 @@ const {
         <!-- Track: position absolute, flex row, gap 20px, overflowing -->
         <div class="carousel-track-v2">
           {testimonials.map((testimonial, index) => {
-            const testimonialImages = [
-              '/assets/testimonial-designer.jpg',
-              '/assets/testimonial-videographer.jpg',
-              '/assets/testimonial-director.jpg',
-              '/assets/testimonial-agency.jpg'
-            ];
             return (
               <div class="testimonial-card-v2">
-                <img src={testimonialImages[index] || testimonialImages[0]} alt={testimonial.name} class="testimonial-image-v2" />
+                <img src={testimonial.image} alt={testimonial.name} class="testimonial-image-v2" />
                 <blockquote class="testimonial-quote-v2">{testimonial.quote}</blockquote>
                 <span class="testimonial-label-v2">ROLE</span>
                 <p class="testimonial-name-v2">{testimonial.name}</p>

@@ -19,31 +19,31 @@ const {
   testimonials = [
     {
       image: "/assets/l4gfk0yuorz9j7rwu2ebwwxpw.jpg",
-      quote: '"Template helped us launch a polished website that feels premium and scales with you."',
-      name: "Maya Thompson",
-      title: "Wellness Coach",
-      results: "18x email sign ups"
+      quote: '"I stopped explaining hover states to developers. I just build them."',
+      name: "UX/UI Designer",
+      title: "UX/UI Designer",
+      results: "No handoff docs needed"
     },
     {
       image: "/assets/jjmc0ozsfy0hhnmbr8w4de17pw.jpg",
-      quote: '"Every resource feels intentional, from free step-by-step workflows to paid resources."',
-      name: "Priya Desai",
-      title: "Shopify Store Owner",
-      results: "2x quaterly revenue"
+      quote: '"My reel finally scrolls the way it plays — frame by frame, not just fading in."',
+      name: "Videographer",
+      title: "Videographer",
+      results: "Scroll Sequence, no video embed"
     },
     {
       image: "/assets/k54odknaj7dnpcqlcqviskrrxay.jpg",
-      quote: '"We saved weeks of design time and launched a high-end website that feels premium."',
-      name: "Lucas Martinez",
-      title: "Café Owner",
-      results: "20% increased conversion"
+      quote: '"Case studies that morph from the grid instead of just... linking to a new page."',
+      name: "Director",
+      title: "Director",
+      results: "One shared-element transition, zero page reload"
     },
     {
       image: "/assets/l4gfk0yuorz9j7rwu2ebwwxpw.jpg",
-      quote: '"The platform made it incredibly easy to manage our workflow and scale our operations."',
-      name: "Sarah Johnson",
-      title: "Startup Founder",
-      results: "5x team productivity"
+      quote: '"Every client site gets the same polish — without rebuilding it every time."',
+      name: "Agency",
+      title: "Agency",
+      results: "Nine blocks, unlimited client sites"
     },
     {
       image: "/assets/jjmc0ozsfy0hhnmbr8w4de17pw.jpg",
@@ -124,7 +124,7 @@ const {
         <!-- Track: flex row with cards -->
         <div class="carousel-track">
           {testimonials.map((testimonial, index) => (
-            <div class="testimonial-card" data-card-index={index} class={index >= 3 ? 'hidden-card' : ''}>
+            <div class="testimonial-card" data-card-index={index} class={index >= 4 ? 'hidden-card' : ''}>
               <!-- Background image -->
               <div class="card-image">
                 <img
@@ -168,7 +168,6 @@ const {
     background: var(--basalio-paper, #FFFFFF);
     width: 100%;
     box-sizing: border-box;
-    border-radius: 0 0 40px 40px;
   }
 
   /* INNER ROW: 35-65 split */

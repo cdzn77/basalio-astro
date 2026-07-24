@@ -567,7 +567,7 @@ const {
     };
 
     const updateTrackPosition = () => {
-      const offset = currentPage * (CARD_WIDTH + GAP);
+      const offset = currentPage * cardsPerView * (CARD_WIDTH + GAP);
       track.style.transform = `translateX(-${offset}px)`;
       updateButtonStates();
     };

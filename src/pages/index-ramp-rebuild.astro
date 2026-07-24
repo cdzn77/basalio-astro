@@ -10,6 +10,7 @@ import RampCourses from '../components/RampCourses.astro';
 import RampResources from '../components/RampResources.astro';
 import RampRetainer from '../components/RampRetainer.astro';
 import RampTestimonials from '../components/RampTestimonials.astro';
+import RampTestimonialsV2 from '../components/RampTestimonialsV2.astro';
 import RampFAQ from '../components/RampFAQ.astro';
 import RampFooter from '../components/RampFooter.astro';
 
@@ -95,7 +96,7 @@ const description = "Nine curated interaction modules for portfolio and case-stu
     sectionHeading={"One plugin. One price.\nNo subscription."}
   />
 
-  <!-- Testimonials Section -->
+  <!-- Testimonials Section (ORIGINAL - may have carousel issues) -->
   <RampTestimonials
     sectionHeading={"Built for people who\nactually make things."}
     testimonials={[
@@ -125,6 +126,37 @@ const description = "Nine curated interaction modules for portfolio and case-stu
         quote: "Every client site gets the same polish — without rebuilding it every time.",
         name: "Agency",
         title: "",
+        results: "Nine blocks, unlimited client sites"
+      }
+    ]}
+  />
+
+  <!-- Testimonials Section V2 (FIXED - built from scratch) -->
+  <RampTestimonialsV2
+    sectionHeading={"Built for people who\nactually make things."}
+    testimonials={[
+      {
+        image: "/assets/l4gfk0yuorz9j7rwu2ebwwxpw.jpg",
+        quote: "I stopped explaining hover states to developers. I just build them.",
+        name: "UX/UI Designer",
+        results: "No handoff docs needed"
+      },
+      {
+        image: "/assets/jjmc0ozsfy0hhnmbr8w4de17pw.jpg",
+        quote: "My reel finally scrolls the way it plays — frame by frame, not just fading in.",
+        name: "Videographer",
+        results: "Scroll Sequence, no video embed"
+      },
+      {
+        image: "/assets/k54odknaj7dnpcqlcqviskrrxay.jpg",
+        quote: "Case studies that morph from the grid instead of just... linking to a new page.",
+        name: "Director",
+        results: "One shared-element transition, zero page reload"
+      },
+      {
+        image: "/assets/l4gfk0yuorz9j7rwu2ebwwxpw.jpg",
+        quote: "Every client site gets the same polish — without rebuilding it every time.",
+        name: "Agency",
         results: "Nine blocks, unlimited client sites"
       }
     ]}

@@ -356,17 +356,17 @@ const {
 
       let currentPage = 0;
       let totalPages = 1;
+      let cardsPerView = 2; // Always show 2 cards per view
 
       // Calculate paging based on FIXED card width
       const calculatePaging = () => {
-        const cardsPerView = 2; // Always show 2 cards per view
         totalPages = Math.max(1, Math.ceil(cards.length / cardsPerView));
         return cardsPerView;
       };
 
       // Update track position based on current page
       const updateTrackPosition = () => {
-        const offset = currentPage * CARD_PLUS_GAP; // Use fixed 520px per page
+        const offset = currentPage * cardsPerView * CARD_PLUS_GAP; // Advance by full page (2 cards = 1040px)
         track.style.transform = `translateX(-${offset}px)`;
         updateButtonStates();
       };

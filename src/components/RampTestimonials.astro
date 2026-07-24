@@ -259,7 +259,7 @@ const {
   .testimonials-right {
     flex: 1;
     position: relative;
-    overflow: hidden;
+    overflow: clip;
     min-height: 288px;
   }
 
@@ -290,7 +290,7 @@ const {
   /* Carousel viewport */
   .carousel-viewport {
     position: relative;
-    overflow: hidden;
+    overflow: clip;
     width: 100%;
     height: 288px;
   }
@@ -298,12 +298,12 @@ const {
   /* Track: flex row with cards */
   .carousel-track {
     position: absolute;
-    inset: 0;
+    left: 0;
+    top: 0;
     display: flex;
     flex-direction: row;
     gap: 20px;
     transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
-    will-change: transform;
   }
 
   /* Testimonial cards: simple flex column like course cards */
@@ -514,13 +514,18 @@ const {
 <script is:inline>
   const initCarousel = () => {
     console.log('[Testimonials] initCarousel called');
-    const track = document.querySelector('.carousel-track');
-    const viewport = document.querySelector('.carousel-viewport');
-    const cards = document.querySelectorAll('.testimonial-card');
-    const prevBtn = document.querySelector('.carousel-button-prev');
-    const nextBtn = document.querySelector('.carousel-button-next');
-    const leftZone = document.querySelector('.carousel-zone-left');
-    const rightZone = document.querySelector('.carousel-zone-right');
+    const testimonials = document.querySelector('.testimonials');
+    if (!testimonials) {
+      console.error('[Testimonials] .testimonials section not found');
+      return;
+    }
+    const track = testimonials.querySelector('.carousel-track');
+    const viewport = testimonials.querySelector('.carousel-viewport');
+    const cards = testimonials.querySelectorAll('.testimonial-card');
+    const prevBtn = testimonials.querySelector('.carousel-button-prev');
+    const nextBtn = testimonials.querySelector('.carousel-button-next');
+    const leftZone = testimonials.querySelector('.carousel-zone-left');
+    const rightZone = testimonials.querySelector('.carousel-zone-right');
 
     console.log('[Testimonials] DOM check:', { track: !!track, viewport: !!viewport, cardsCount: cards.length, prevBtn: !!prevBtn, nextBtn: !!nextBtn, viewportWidth: viewport?.clientWidth });
 
@@ -580,7 +585,7 @@ const {
       };
 
       const updateTrackPosition = () => {
-        const offset = currentPage * cardsPerView * CARD_PLUS_GAP;
+        const offset = currentPage * CARD_PLUS_GAP;
         const transformValue = `translateX(-${offset}px)`;
         console.log('[Testimonials] updateTrackPosition:', {currentPage, cardsPerView, offset, transform: transformValue});
         console.log('[Testimonials]   BEFORE transform:', track.style.transform);

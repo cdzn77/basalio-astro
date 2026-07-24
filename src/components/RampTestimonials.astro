@@ -1,11 +1,13 @@
 ---
-// Ramp Testimonials - Page-based carousel with hover-zones and visible arrow buttons
-// Two-column layout: LEFT (500px text/button) | RIGHT (carousel 1109px)
+// Ramp Testimonials - Shared component for homepage and courses page
+// 35-65 split layout: left column (header + arrows), right column (carousel)
+// Reuses carousel paging logic from RampCourses component
 
 interface Testimonial {
   image: string;
   quote: string;
   name: string;
+  title: string;
   results: string;
 }
 
@@ -15,93 +17,124 @@ interface Props {
 }
 
 const {
+  sectionHeading = "Built by Creatives",
   testimonials = [
     {
       image: "/assets/l4gfk0yuorz9j7rwu2ebwwxpw.jpg",
-      quote: "I stopped explaining hover states to developers. I just build them.",
-      name: "UX/UI Designer",
-      results: "No handoff docs needed"
+      quote: '"Template helped us launch a polished website that feels premium and scales with you."',
+      name: "Maya Thompson",
+      title: "Wellness Coach",
+      results: "18x email sign ups"
     },
     {
       image: "/assets/jjmc0ozsfy0hhnmbr8w4de17pw.jpg",
-      quote: "My reel finally scrolls the way it plays — frame by frame, not just fading in.",
-      name: "Videographer",
-      results: "Scroll Sequence, no video embed"
+      quote: '"Every resource feels intentional, from free step-by-step workflows to paid resources."',
+      name: "Priya Desai",
+      title: "Shopify Store Owner",
+      results: "2x quaterly revenue"
     },
     {
       image: "/assets/k54odknaj7dnpcqlcqviskrrxay.jpg",
-      quote: "Case studies that morph from the grid instead of just... linking to a new page.",
-      name: "Director",
-      results: "One shared-element transition, zero page reload"
+      quote: '"We saved weeks of design time and launched a high-end website that feels premium."',
+      name: "Lucas Martinez",
+      title: "Café Owner",
+      results: "20% increased conversion"
     },
     {
       image: "/assets/l4gfk0yuorz9j7rwu2ebwwxpw.jpg",
-      quote: "Every client site gets the same polish — without rebuilding it every time.",
-      name: "Agency",
-      results: "Nine blocks, unlimited client sites"
+      quote: '"The platform made it incredibly easy to manage our workflow and scale our operations."',
+      name: "Sarah Johnson",
+      title: "Startup Founder",
+      results: "5x team productivity"
+    },
+    {
+      image: "/assets/jjmc0ozsfy0hhnmbr8w4de17pw.jpg",
+      quote: '"We went from scattered tools to a unified system that actually works for us."',
+      name: "David Chen",
+      title: "Agency Director",
+      results: "3x client retention"
+    },
+    {
+      image: "/assets/k54odknaj7dnpcqlcqviskrrxay.jpg",
+      quote: '"The learning curve was minimal and the results were immediate and measurable."',
+      name: "Emma Wilson",
+      title: "Marketing Manager",
+      results: "12x ROI improvement"
+    },
+    {
+      image: "/assets/l4gfk0yuorz9j7rwu2ebwwxpw.jpg",
+      quote: '"This transformed how we think about our business and customer relationships."',
+      name: "James Rodriguez",
+      title: "E-commerce Owner",
+      results: "8x sales growth"
+    },
+    {
+      image: "/assets/jjmc0ozsfy0hhnmbr8w4de17pw.jpg",
+      quote: '"The support and resources provided made all the difference in our success."',
+      name: "Lisa Anderson",
+      title: "Consultant",
+      results: "50+ client projects"
+    },
+    {
+      image: "/assets/k54odknaj7dnpcqlcqviskrrxay.jpg",
+      quote: '"Exceeded all our expectations and delivered results beyond what we imagined."',
+      name: "Michael Park",
+      title: "Digital Director",
+      results: "10x engagement rate"
     }
-  ],
-  sectionHeading = "Built for people who\nactually make things."
+  ]
 } = Astro.props;
 ---
 
-<section class="testimonials" id="testimonials">
+<section class="testimonials">
   <div class="testimonials-inner">
-    <!-- LEFT COLUMN: 500px, eyebrow + heading + pagination -->
+    <!-- LEFT COLUMN: 35% - Header + Navigation -->
     <div class="testimonials-left">
       <div class="testimonials-header">
         <p class="testimonials-eyebrow">WHO IT'S FOR</p>
-        <h2 class="testimonials-heading">{sectionHeading}</h2>
+        <h3 class="testimonials-heading">{sectionHeading}</h3>
       </div>
 
-      <!-- PAGINATION CONTROLS: Below the button on the left side -->
+      <!-- Navigation Arrows -->
       <div class="pagination-controls">
         <button class="carousel-button carousel-button-prev" aria-label="Previous testimonial" data-direction="prev">
           <div class="button-icon-wrapper">
-            <svg width="100%" height="100%" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <line x1="2.5" y1="12" x2="23.5" y2="12" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></line>
-              <polyline points="10.14 4.36 2.5 12 10.14 19.64" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></polyline>
+            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <line x1="2.5" y1="12" x2="23.5" y2="12"></line>
+              <polyline points="10.14 4.36 2.5 12 10.14 19.64"></polyline>
             </svg>
           </div>
         </button>
         <button class="carousel-button carousel-button-next" aria-label="Next testimonial" data-direction="next">
           <div class="button-icon-wrapper">
-            <svg width="100%" height="100%" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <line x1="21.5" y1="12" x2="0.5" y2="12" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></line>
-              <polyline points="13.86 4.36 21.5 12 13.86 19.64" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="1.5"></polyline>
+            <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <line x1="21.5" y1="12" x2="0.5" y2="12"></line>
+              <polyline points="13.86 4.36 21.5 12 13.86 19.64"></polyline>
             </svg>
           </div>
         </button>
       </div>
     </div>
 
-    <!-- RIGHT COLUMN: Carousel (1109px, or fill remaining) -->
+    <!-- RIGHT COLUMN: 65% - Carousel -->
     <div class="testimonials-right">
-      <!-- Invisible left hover zone -->
+      <!-- Invisible hover zones for carousel control -->
       <div class="carousel-zone carousel-zone-left" data-direction="prev"></div>
 
-      <!-- Carousel viewport (overflow clip) -->
+      <!-- Carousel viewport -->
       <div class="carousel-viewport">
-        <!-- Track: position absolute, flex row, gap 20px, overflowing -->
+        <!-- Track: flex row with cards -->
         <div class="carousel-track">
-          {testimonials.map((testimonial, index) => {
-            const testimonialImages = [
-              '/assets/l4gfk0yuorz9j7rwu2ebwwxpw.jpg',
-              '/assets/jjmc0ozsfy0hhnmbr8w4de17pw.jpg',
-              '/assets/k54odknaj7dnpcqlcqviskrrxay.jpg',
-              '/assets/l4gfk0yuorz9j7rwu2ebwwxpw.jpg'
-            ];
-            return (
-              <div class="testimonial-card">
-                <img src={testimonialImages[index] || testimonialImages[0]} alt={testimonial.name} class="testimonial-image" />
-                <blockquote class="testimonial-quote">{testimonial.quote}</blockquote>
-                <span class="testimonial-label">ROLE</span>
-                <p class="testimonial-name">{testimonial.name}</p>
-                <span class="testimonial-label">RESULTS</span>
-                <p class="testimonial-results">{testimonial.results}</p>
-              </div>
-            );
-          })}
+          {testimonials.map((testimonial, index) => (
+            <div class="testimonial-card" data-card-index={index}>
+              <img class="testimonial-image" src={testimonial.image} alt={testimonial.name} loading="lazy" />
+              <blockquote class="testimonial-quote">{testimonial.quote}</blockquote>
+              <span class="testimonial-label">ROLE</span>
+              <p class="testimonial-name">{testimonial.name}</p>
+              <span class="testimonial-label">RESULTS</span>
+              <span class="testimonial-results">{testimonial.results}</span>
+            </div>
+          ))}
         </div>
       </div>
 
@@ -112,64 +145,64 @@ const {
 </section>
 
 <style>
-  /* SECTION SHELL: flex column, center alignment, padding 200px 40px, gap 40px */
+  /* SECTION CONTAINER */
   .testimonials {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 200px 40px;
-    gap: 40px;
+    padding: 80px 40px;
     background: var(--basalio-paper, #FFFFFF);
     width: 100%;
     box-sizing: border-box;
   }
 
-  /* INNER ROW: flex row, space-between, align-items flex-start, two columns */
+  /* INNER ROW: 35-65 split */
   .testimonials-inner {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: stretch;
     width: 100%;
-    gap: 20px;
+    gap: 40px;
   }
 
-  /* LEFT COLUMN: 500px wide, flex column, match carousel height (571px) */
+  /* LEFT COLUMN: 35% */
   .testimonials-left {
-    flex: 0 0 500px;
+    flex: 0 0 35%;
+    max-width: 35%;
     display: flex;
     flex-direction: column;
-    height: 571px;
+    gap: 40px;
+    min-height: 288px;
   }
 
-  /* Eyebrow + heading block (natural document flow spacing) */
+  /* HEADER: Eyebrow + Heading */
   .testimonials-header {
     display: flex;
     flex-direction: column;
+    gap: 12px;
   }
 
   .testimonials-eyebrow {
+    font-family: 'Azeret Mono', monospace;
     font-size: 14px;
     font-weight: 500;
-    line-height: 19.6px;
-    letter-spacing: 2.8px;
     text-transform: uppercase;
-    color: var(--basalio-ink, #000000);
-    margin: 0 0 12px 0;
+    letter-spacing: 2.8px;
+    color: #575757;
+    margin: 0;
+    padding: 0;
   }
 
   .testimonials-heading {
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 48px;
-    letter-spacing: -0.8px;
-    color: var(--basalio-ink, #000000);
-    margin: 0 0 40px 0;
+    font-family: 'Manrope', sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #000000;
+    margin: 0;
+    padding: 0;
     white-space: pre-line;
   }
 
-  /* PAGINATION CONTROLS: At bottom of left column with spacing */
+  /* PAGINATION CONTROLS: Arrow buttons */
   .pagination-controls {
     display: flex;
     flex-direction: row;
@@ -177,7 +210,6 @@ const {
     margin-top: auto;
   }
 
-  /* Icon wrapper for SVG centering */
   .button-icon-wrapper {
     display: flex;
     align-items: center;
@@ -186,14 +218,14 @@ const {
     height: 24px;
   }
 
-  /* Visible navigation buttons (white by default, invert on hover) */
+  /* Arrow buttons: 70x70px circular */
   .carousel-button {
     width: 70px;
     height: 70px;
-    border-radius: 8px;
-    background: #FFFFFF;
-    color: var(--basalio-ink, #000000);
-    border: 1px solid #E8E8E8;
+    border-radius: 6px;
+    background: #FAFAFA;
+    color: #9C9C9C;
+    border: 1px solid #EBEBEB;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -203,9 +235,18 @@ const {
     flex: 0 0 70px;
   }
 
+  /* Disabled state (start/end) */
   .carousel-button:disabled {
     pointer-events: none;
+    background: #FAFAFA;
+    color: #9C9C9C;
     opacity: 0.5;
+  }
+
+  /* Enabled state */
+  .carousel-button:not(:disabled) {
+    background: #FFFFFF;
+    color: #000000;
   }
 
   .carousel-button:hover:not(:disabled) {
@@ -214,15 +255,15 @@ const {
     border-color: #000000;
   }
 
-  /* RIGHT COLUMN: Carousel (1109px wide, or fill remaining space) */
+  /* RIGHT COLUMN: 65% - Carousel */
   .testimonials-right {
     flex: 1;
     position: relative;
-    overflow: clip;
-    min-height: 571px;
+    overflow: hidden;
+    min-height: 288px;
   }
 
-  /* Invisible hover zones (left and right edges) */
+  /* Invisible hover zones */
   .carousel-zone {
     position: absolute;
     top: 0;
@@ -246,47 +287,47 @@ const {
     pointer-events: none;
   }
 
-  /* Carousel viewport (overflow clip, position relative for absolute track) */
+  /* Carousel viewport */
   .carousel-viewport {
     position: relative;
-    overflow: clip;
+    overflow: hidden;
     width: 100%;
-    height: 571px;
+    height: 288px;
   }
 
-  /* Track: position absolute, flex row, gap 20px, width = sum of cards + gaps */
+  /* Track: flex row with cards */
   .carousel-track {
     position: absolute;
-    left: 0;
-    top: 0;
+    inset: 0;
     display: flex;
     flex-direction: row;
     gap: 20px;
     transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: transform;
   }
 
-  /* Testimonial cards: fixed size 500x571px */
+  /* Testimonial cards: simple flex column like course cards */
   .testimonial-card {
-    flex: 0 0 500px;
-    height: 571px;
+    flex: 0 0 600px;
+    height: 288px;
     background: #FFFFFF;
-    border: 1px solid #E8E8E8;
+    border: 1px solid #E5E5E5;
     border-radius: 6px;
-    padding: 40px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     text-decoration: none;
     color: inherit;
     box-sizing: border-box;
   }
 
   .testimonial-image {
-    width: 100%;
-    height: 300px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     object-position: center;
-    border-radius: 8px;
+    border-radius: 6px;
     display: block;
   }
 
@@ -303,12 +344,12 @@ const {
 
   .testimonial-label {
     font-family: 'Azeret Mono', monospace;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
-    letter-spacing: 2.4px;
+    letter-spacing: 1.8px;
     text-transform: uppercase;
     color: #999999;
-    margin: 0;
+    margin: 4px 0 0 0;
     padding: 0;
     display: block;
   }
@@ -319,7 +360,7 @@ const {
     font-weight: 600;
     line-height: 19.6px;
     color: #000000;
-    margin: 0;
+    margin: 0 0 8px 0;
     padding: 0;
   }
 
@@ -333,93 +374,309 @@ const {
     padding: 0;
     display: block;
   }
+
+  /* Footer: name, role, results */
+  .card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 0;
+  }
+
+  .card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .card-client-label {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2.8px;
+    line-height: 19.6px;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+    display: block;
+    background-color: transparent;
+  }
+
+  .card-name {
+    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19.6px;
+    color: rgba(0, 0, 0, 0.65);
+    margin: 0;
+    padding: 0;
+  }
+
+  .card-role {
+    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19.6px;
+    color: rgba(0, 0, 0, 0.65);
+    margin: 0;
+    padding: 0;
+    display: inline;
+  }
+
+  /* Results section */
+  .card-results {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 0;
+  }
+
+  .results-label {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2.8px;
+    line-height: 19.6px;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+  }
+
+  .results-value {
+    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 19.6px;
+    color: rgba(0, 0, 0, 0.65);
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .testimonials-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .testimonials-left {
+      flex: 0 0 auto;
+      max-width: 100%;
+    }
+
+    .testimonials-right {
+      flex: 1;
+      width: 100%;
+    }
+  }
+
+
+  @media (max-width: 1024px) {
+    .testimonials-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .testimonials-left {
+      flex: 0 0 auto;
+      max-width: 100%;
+    }
+
+    .testimonials-right {
+      flex: 1;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .testimonials {
+      padding: 60px 20px;
+    }
+
+    .testimonials-heading {
+      font-size: 24px;
+    }
+
+    .carousel-button {
+      width: 60px;
+      height: 60px;
+      font-size: 12px;
+    }
+
+    .testimonial-card {
+      flex: 0 0 100%;
+    }
+  }
 </style>
 
 <script is:inline>
-  // PAGE-BASED CAROUSEL NAVIGATION
-  // Paging logic: calculate how many cards fit in viewport, advance by one page per action
+  const initCarousel = () => {
+    console.log('[Testimonials] initCarousel called');
+    const track = document.querySelector('.carousel-track');
+    const viewport = document.querySelector('.carousel-viewport');
+    const cards = document.querySelectorAll('.testimonial-card');
+    const prevBtn = document.querySelector('.carousel-button-prev');
+    const nextBtn = document.querySelector('.carousel-button-next');
+    const leftZone = document.querySelector('.carousel-zone-left');
+    const rightZone = document.querySelector('.carousel-zone-right');
 
-  const track = document.querySelector('.carousel-track');
-  const viewport = document.querySelector('.carousel-viewport');
-  const cards = document.querySelectorAll('.testimonial-card');
-  const prevBtn = document.querySelector('.carousel-button-prev');
-  const nextBtn = document.querySelector('.carousel-button-next');
-  const leftZone = document.querySelector('.carousel-zone-left');
-  const rightZone = document.querySelector('.carousel-zone-right');
+    console.log('[Testimonials] DOM check:', { track: !!track, viewport: !!viewport, cardsCount: cards.length, prevBtn: !!prevBtn, nextBtn: !!nextBtn, viewportWidth: viewport?.clientWidth });
 
-  if (track && viewport && cards.length > 0) {
-    const GAP = 20;
-    const CARD_WIDTH = 500; // FIXED: Match CSS flex: 0 0 500px
-    const CARD_PLUS_GAP = CARD_WIDTH + GAP; // 520px total per card
+    if (track && viewport && cards.length > 0 && prevBtn && nextBtn && viewport.clientWidth > 0) {
+      console.log('[Testimonials] All DOM elements found, initializing...');
 
-    let currentPage = 0;
-    let totalPages = 1;
+      // DEBUG: Check track CSS properties
+      const trackStyle = window.getComputedStyle(track);
+      console.log('[Testimonials] Track CSS (computed):', {
+        position: trackStyle.position,
+        left: trackStyle.left,
+        top: trackStyle.top,
+        transform: trackStyle.transform,
+        transition: trackStyle.transition,
+        display: trackStyle.display,
+        zIndex: trackStyle.zIndex
+      });
+      console.log('[Testimonials] Track inline styles:', {
+        position: track.style.position,
+        left: track.style.left,
+        top: track.style.top,
+        transform: track.style.transform
+      });
 
-    // Calculate paging based on FIXED card width
-    const calculatePaging = () => {
-      const cardsPerView = 2; // Always show 2 cards per view
-      totalPages = Math.max(1, Math.ceil(cards.length / cardsPerView));
-      return cardsPerView;
-    };
+      // DEBUG: Check viewport dimensions
+      console.log('[Testimonials] Viewport:', {
+        clientWidth: viewport.clientWidth,
+        clientHeight: viewport.clientHeight,
+        offsetWidth: viewport.offsetWidth,
+        offsetHeight: viewport.offsetHeight
+      });
 
-    // Update track position based on current page
-    const updateTrackPosition = () => {
-      const offset = currentPage * CARD_PLUS_GAP; // Use fixed 520px per page
-      track.style.transform = `translateX(-${offset}px)`;
-      updateButtonStates();
-    };
-
-    // Enable/disable buttons based on boundary logic
-    const updateButtonStates = () => {
-      const isFirstPage = currentPage === 0;
-      const isLastPage = currentPage === totalPages - 1;
-
-      prevBtn.disabled = isFirstPage;
-      nextBtn.disabled = isLastPage;
-      leftZone.style.pointerEvents = isFirstPage ? 'none' : 'auto';
-      rightZone.style.pointerEvents = isLastPage ? 'none' : 'auto';
-
-      if (isFirstPage) {
-        leftZone.setAttribute('data-disabled', 'true');
-      } else {
-        leftZone.removeAttribute('data-disabled');
+      // DEBUG: Check first card dimensions
+      if (cards[0]) {
+        console.log('[Testimonials] First card:', {
+          offsetWidth: cards[0].offsetWidth,
+          offsetHeight: cards[0].offsetHeight,
+          clientWidth: cards[0].clientWidth,
+          clientHeight: cards[0].clientHeight
+        });
       }
 
-      if (isLastPage) {
-        rightZone.setAttribute('data-disabled', 'true');
-      } else {
-        rightZone.removeAttribute('data-disabled');
+      const GAP = 20;
+      const CARD_WIDTH = cards[0]?.offsetWidth ?? 600; // FIXED: Get actual card width from DOM
+      const CARD_PLUS_GAP = CARD_WIDTH + GAP;
+
+      let currentPage = 0;
+      let totalPages = 1;
+      let cardsPerView = 1;
+      const TOTAL_CARDS = cards.length;
+
+      const calculatePaging = () => {
+        const viewportWidth = viewport.clientWidth;
+        cardsPerView = Math.max(1, Math.floor(viewportWidth / CARD_PLUS_GAP));
+        totalPages = Math.max(1, Math.ceil(TOTAL_CARDS / cardsPerView));
+        console.log('[Testimonials] calculatePaging():', {viewportWidth, CARD_PLUS_GAP, TOTAL_CARDS, cardsPerView, totalPages});
+      };
+
+      const updateTrackPosition = () => {
+        const offset = currentPage * cardsPerView * CARD_PLUS_GAP;
+        const transformValue = `translateX(-${offset}px)`;
+        console.log('[Testimonials] updateTrackPosition:', {currentPage, cardsPerView, offset, transform: transformValue});
+        console.log('[Testimonials]   BEFORE transform:', track.style.transform);
+        track.style.transform = transformValue;
+        console.log('[Testimonials]   AFTER transform:', track.style.transform);
+        console.log('[Testimonials]   COMPUTED transform:', window.getComputedStyle(track).transform);
+        updateButtonStates();
+      };
+
+      const updateButtonStates = () => {
+        const isFirstPage = currentPage === 0;
+        const isLastPage = currentPage === totalPages - 1;
+
+        prevBtn.disabled = isFirstPage;
+        nextBtn.disabled = isLastPage;
+        if (leftZone) leftZone.style.pointerEvents = isFirstPage ? 'none' : 'auto';
+        if (rightZone) rightZone.style.pointerEvents = isLastPage ? 'none' : 'auto';
+      };
+
+      let lastNavigateTime = 0;
+      const NAVIGATE_COOLDOWN = 300; // FIXED: Add throttle to prevent rapid navigation
+
+      const navigate = (direction) => {
+        console.log(`[Testimonials] navigate('${direction}'): currentPage=${currentPage}, totalPages=${totalPages}`);
+        if (direction === 'next' && currentPage < totalPages - 1) {
+          currentPage++;
+          console.log(`[Testimonials]   ✓ Moving NEXT → page ${currentPage}`);
+          updateTrackPosition();
+        } else if (direction === 'prev' && currentPage > 0) {
+          currentPage--;
+          console.log(`[Testimonials]   ✓ Moving PREV → page ${currentPage}`);
+          updateTrackPosition();
+        } else {
+          console.log(`[Testimonials]   ✗ Cannot move in direction ${direction} (boundary reached)`);
+        }
+      };
+
+    const throttledNavigate = (direction) => {
+      const now = Date.now();
+      if (now - lastNavigateTime >= NAVIGATE_COOLDOWN) {
+        navigate(direction);
+        lastNavigateTime = now;
       }
     };
 
-    // Navigate to next or previous page
-    const navigate = (direction) => {
-      if (direction === 'next' && currentPage < totalPages - 1) {
-        currentPage++;
-        updateTrackPosition();
-      } else if (direction === 'prev' && currentPage > 0) {
-        currentPage--;
-        updateTrackPosition();
-      }
-    };
-
-    // Initialize paging
+    console.log('[Testimonials] === Initial Setup ===');
+    console.log('[Testimonials] Calling calculatePaging()...');
     calculatePaging();
+    console.log('[Testimonials] Calling updateButtonStates()...');
     updateButtonStates();
+    console.log('[Testimonials] Initial state:', {currentPage, totalPages, cardsPerView});
 
-    // Attach click handlers to visible buttons
-    prevBtn?.addEventListener('click', () => navigate('prev'));
-    nextBtn?.addEventListener('click', () => navigate('next'));
+    prevBtn.addEventListener('click', (e) => {
+      console.log('[Testimonials] Prev button clicked, currentPage:', currentPage, 'totalPages:', totalPages);
+      e.preventDefault();
+      e.stopPropagation();
+      navigate('prev');
+    });
+    nextBtn.addEventListener('click', (e) => {
+      console.log('[Testimonials] Next button clicked, currentPage:', currentPage, 'totalPages:', totalPages);
+      e.preventDefault();
+      e.stopPropagation();
+      navigate('next');
+    });
 
-    // Attach mouseenter handlers to invisible hover zones
-    leftZone?.addEventListener('mouseenter', () => navigate('prev'));
-    rightZone?.addEventListener('mouseenter', () => navigate('next'));
+    if (leftZone) leftZone.addEventListener('mouseenter', () => throttledNavigate('prev')); // FIXED: Use throttled version
+    if (rightZone) rightZone.addEventListener('mouseenter', () => throttledNavigate('next')); // FIXED: Use throttled version
 
-    // Recalculate paging on window resize
     window.addEventListener('resize', () => {
       calculatePaging();
       currentPage = Math.min(currentPage, totalPages - 1);
       updateTrackPosition();
     });
+
+      console.log('[Testimonials] ✅ Carousel fully initialized');
+    } else {
+      console.error('[Testimonials] ❌ Carousel init FAILED - missing elements:');
+      console.error('  track:', track ? '✓' : '✗');
+      console.error('  viewport:', viewport ? '✓' : '✗');
+      console.error('  cards.length > 0:', cards.length > 0 ? `✓ (${cards.length})` : `✗ (${cards.length})`);
+      console.error('  prevBtn:', prevBtn ? '✓' : '✗');
+      console.error('  nextBtn:', nextBtn ? '✓' : '✗');
+      console.error('  viewport.clientWidth > 0:', viewport ? (viewport.clientWidth > 0 ? `✓ (${viewport.clientWidth}px)` : `✗ (${viewport.clientWidth}px)`) : 'N/A');
+    }
+  };
+
+  // FIXED: Use more robust initialization timing
+  console.log('[Testimonials] Initializing carousel...');
+  if (document.readyState === 'loading') {
+    console.log('[Testimonials] DOM loading, waiting for DOMContentLoaded...');
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('[Testimonials] DOMContentLoaded fired, calling initCarousel');
+      initCarousel();
+    });
+  } else {
+    console.log('[Testimonials] DOM ready, calling initCarousel immediately');
+    initCarousel();
   }
 </script>

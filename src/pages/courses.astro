@@ -1,69 +1,69 @@
 ---
-// Courses Page - Reuses Nav, Testimonials, Footer from homepage
-// Page-load animations based on confirmed Framer spring config
+// Modules Page - All 9 interaction modules for WordPress portfolios
+// Reuses Nav, Testimonials, Footer from homepage
 
 import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampTestimonials from '../components/RampTestimonials.astro';
 import RampFooter from '../components/RampFooter.astro';
 
-const title = "Courses — Ramp Studio";
-const description = "Explore courses built to strengthen strategy, execution & long-term growth for any team.";
+const title = "Modules — Basalio";
+const description = "Nine curated interaction modules built for WordPress portfolios. Grid reveals, case study transitions, scroll sequences, and more.";
 
-const courses = [
+const modules = [
   {
-    title: "Social Media Growth",
-    description: "Learn the fundamentals of building a strong social media presence",
-    tag: "Beginner Friendly",
-    slug: "social-media"
+    title: "Grid Reveal",
+    description: "Reveal content in a cascading grid pattern as users scroll down the page",
+    tag: "Layout Module",
+    slug: "grid-reveal"
   },
   {
-    title: "Content Creation 101",
-    description: "Teaches you how to create content that feels intentional and on-brand",
-    tag: "Beginner Friendly",
-    slug: "content-101"
+    title: "Case Study Transition",
+    description: "Smooth transitions between case studies with parallax and fade effects",
+    tag: "Navigation Module",
+    slug: "case-study-transition"
   },
   {
-    title: "Branding 101",
-    description: "Focus on positioning, messaging, and consistency across every touchpoint.",
-    tag: "Self Paced",
-    slug: "branding-101"
+    title: "Scroll Sequence",
+    description: "Trigger animations based on scroll position for synchronized storytelling",
+    tag: "Animation Module",
+    slug: "scroll-sequence"
   },
   {
-    title: "Email Marketing 101",
-    description: "Learn how to use email lists to actually support and grow your business",
-    tag: "Self Paced",
-    slug: "best-practices"
+    title: "Image Counter",
+    description: "Animate numerical counters that respond to viewport interactions",
+    tag: "Interaction Module",
+    slug: "image-counter"
   },
   {
-    title: "Marketing Funnels 101",
-    description: "Teaches you how to guide people from discovery to decision with intention.",
-    tag: "Self Paced",
-    slug: "marketing-funnels"
+    title: "Timeline",
+    description: "Interactive timeline component for process documentation and milestones",
+    tag: "Content Module",
+    slug: "timeline"
   },
   {
-    title: "Coaching Offers 101",
-    description: "This course helps you design clear, compelling offers that people actually understand and want to buy.",
-    tag: "Self Paced",
-    slug: "campaign-planning"
+    title: "Image Carousel",
+    description: "Responsive carousel for showcasing multiple images with smooth transitions",
+    tag: "Gallery Module",
+    slug: "image-carousel"
   },
   {
-    title: "Sales Strategy Masterclass",
-    description: "Master the art of closing deals and building long-term client relationships.",
-    tag: "Advanced",
-    slug: "sales-strategy"
+    title: "Fullscreen Video",
+    description: "Full-width video player with autoplay and custom controls for portfolio reels",
+    tag: "Media Module",
+    slug: "fullscreen-video"
   },
   {
-    title: "Customer Retention 101",
-    description: "Learn proven techniques to keep your customers coming back and increase lifetime value.",
-    tag: "Self Paced",
-    slug: "retention-101"
+    title: "Smooth Scroll",
+    description: "Custom scroll behavior with easing and anchor linking for polished navigation",
+    tag: "Navigation Module",
+    slug: "smooth-scroll"
   },
   {
-    title: "Analytics for Growth",
-    description: "Understand your data and use insights to drive strategic business decisions.",
-    tag: "Advanced",
-    slug: "analytics-growth"
+    title: "Hover Effects",
+    description: "Advanced hover states and interactive feedback for all interactive elements",
+    tag: "Interaction Module",
+    slug: "hover-effects"
   }
 ];
 
@@ -79,10 +79,10 @@ const descriptionWords = description.split(' ');
 
   <!-- HERO SECTION: Left sidebar (dot + label) + Right (description) -->
   <section class="courses-hero">
-    <!-- LEFT SIDEBAR: Dot indicator + "OUR COURSES" label -->
+    <!-- LEFT SIDEBAR: Dot indicator + "OUR MODULES" label -->
     <div class="hero-left">
       <div class="dot-indicator" aria-hidden="true"></div>
-      <p class="courses-label">OUR COURSES</p>
+      <p class="courses-label">OUR MODULES</p>
     </div>
 
     <!-- RIGHT: Description with per-word spans -->
@@ -97,10 +97,10 @@ const descriptionWords = description.split(' ');
     </div>
   </section>
 
-  <!-- COURSES GRID -->
+  <!-- MODULES GRID -->
   <section class="courses-grid-section">
     <div class="courses-grid">
-      {courses.map((course, index) => {
+      {modules.map((module, index) => {
         const imageMap = [
           'course-1.png',
           'course-2.png',
@@ -113,34 +113,29 @@ const descriptionWords = description.split(' ');
           'course-1.png'
         ];
         return (
-        <div class={`course-card ${index >= 6 ? 'hidden-course' : ''}`}>
-          <!-- Course Image Placeholder -->
+        <div class={`course-card ${index >= 9 ? 'hidden-course' : ''}`}>
+          <!-- Module Image Placeholder -->
           <div class="course-image-placeholder">
             <img
               src={`/assets/${imageMap[index]}`}
-              alt={course.title}
+              alt={module.title}
               class="course-image"
             />
           </div>
 
-          <!-- Course Info -->
+          <!-- Module Info -->
           <div class="course-info">
-            <a href={`/courses/${course.slug}`} class="course-link">
-              <h2 class="course-title">{course.title}</h2>
-              <p class="course-description">{course.description}</p>
+            <a href={`/modules/${module.slug}`} class="course-link">
+              <h2 class="course-title">{module.title}</h2>
+              <p class="course-description">{module.description}</p>
             </a>
 
             <!-- Tag Pill -->
-            <a href={`/courses/${course.slug}`} class="course-tag">{course.tag}</a>
+            <a href={`/modules/${module.slug}`} class="course-tag">{module.tag}</a>
           </div>
         </div>
       );
       })}
-    </div>
-
-    <!-- LOAD MORE BUTTON -->
-    <div class="load-more-wrapper">
-      <button class="load-more-button" data-action="load-more">Load More</button>
     </div>
   </section>
 
@@ -508,16 +503,10 @@ const descriptionWords = description.split(' ');
   // opacity: 0→1, y: 10→0, spring, 600ms, bounce: 0, delay: 0
   // (Applied via CSS with .menu-label class if it exists in nav component)
 
-  // LOAD MORE BUTTON - Load additional courses (4-9)
-  const loadMoreBtn = document.querySelector('[data-action="load-more"]');
+  // Show all modules on load (no "Load More" button)
   const coursesGrid = document.querySelector('.courses-grid');
-
-  if (loadMoreBtn && coursesGrid) {
-    loadMoreBtn.addEventListener('click', () => {
-      console.log('Loading more courses');
-      coursesGrid.classList.add('loaded');
-      loadMoreBtn.style.display = 'none'; // Hide button after clicked
-    });
+  if (coursesGrid) {
+    coursesGrid.classList.add('loaded');
   }
 </script>
 

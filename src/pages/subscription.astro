@@ -1,75 +1,43 @@
 ---
-// Subscription Page - Retainer Service Details
-// 1:1 pixel-perfect replica of Ramp subscription template
+// Pricing Page - Basalio WordPress Plugin Pricing
+// One-time purchase model with two tiers: Free and Founder Lifetime
 
 import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
-import RampTestimonials from '../components/RampTestimonials.astro';
+import RampRetainer from '../components/RampRetainer.astro';
+import RampTestimonialsV2 from '../components/RampTestimonialsV2.astro';
+import RampFAQ from '../components/RampFAQ.astro';
 import RampFooter from '../components/RampFooter.astro';
-import Button from '../components/Button.astro';
 
-const title = "Monthly Subscription — Ramp Studio";
-const description = "A flexible marketing subscription designed to replace the overhead cost of a full-time hire.";
+const title = "Pricing — Basalio";
+const description = "One plugin. One price. No subscription. All nine interaction modules with powerful controls for creative sites.";
 
-const benefits = [
+const faqs = [
   {
-    label: "Predictable pricing",
-    description: "One simple monthly rate with no surprises, contracts, or long-term commitments."
+    question: "Can I use Basalio on multiple sites with the Free tier?",
+    answer: "Yes. Both Free and Founder Lifetime include unlimited sites. Free gives you all 9 blocks plus 4 free Hacks. Founder Lifetime adds the full Hacks vault and Pro control center for tuning every interaction live."
   },
   {
-    label: "Flexible scope",
-    description: "Pause, shift, or reprioritize requests as your business needs change."
+    question: "What's included with Founder Lifetime?",
+    answer: "The $149 one-time purchase includes all 9 blocks (same as Free), the complete Hacks vault (12+ ready-to-use interactions), Pro control center for live tuning, unlimited sites with no renewal ever, and the Founder badge. Every new block and hack released is included, forever."
   },
   {
-    label: "Fast turnaround",
-    description: "Get high-quality marketing deliverables quickly without waiting or internal bandwidth."
+    question: "Are there any recurring fees?",
+    answer: "No. Founder Lifetime is a true one-time purchase. $149, then nothing else. All future blocks and hacks are included. It's not a subscription—once you own it, you own it forever."
   },
   {
-    label: "No overhead",
-    description: "Skip hiring, onboarding, benefits, and management costs entirely."
+    question: "Can I upgrade from Free to Founder Lifetime later?",
+    answer: "Yes. Start with Free (all 9 blocks, 4 Hacks), and upgrade to Founder Lifetime anytime. You'll only pay the difference between what Free would cost and the Founder price."
   },
   {
-    label: "Senior-level output",
-    description: "Work that reflects experienced marketing and design thinking, not junior execution."
+    question: "What if I want to use Basalio on a client site?",
+    answer: "Both tiers are licensed per site owner. If you're building client sites, each client who owns their own site will need their own Founder Lifetime license. If you're reselling, that's a custom arrangement—reach out."
   },
   {
-    label: "Built to scale",
-    description: "Support launches, campaigns, and growth without expanding your internal team."
+    question: "Is there a trial period?",
+    answer: "Free is your trial. All 9 blocks, full functionality, 4 Hacks included. Use it on production sites, no expiration. Upgrade to Founder Lifetime if you want the full Hacks vault and Pro controls."
   }
 ];
-
-const pricingTiers = [
-  {
-    name: "Essentials",
-    price: "1750",
-    currency: "€",
-    period: "/mo",
-    features: [
-      "4 design/content updates per month",
-      "5 weekly social posts",
-      "Month strategy calls",
-      "48-hour email support"
-    ],
-    buttonText: "SUBSCRIBE",
-    highlighted: false
-  },
-  {
-    name: "Premium",
-    price: "2750",
-    currency: "€",
-    period: "/mo",
-    features: [
-      "12 design/content updates per month",
-      "20+ weekly social posts",
-      "Weekly strategy call",
-      "24-hour email support"
-    ],
-    buttonText: "SUBSCRIBE",
-    highlighted: true
-  }
-];
-
-const descriptionWords = description.split(' ');
 ---
 
 <RampTemplateLayout title={title} description={description}>
@@ -78,173 +46,51 @@ const descriptionWords = description.split(' ');
     <RampHeader />
   </Fragment>
 
-  <!-- HERO SECTION: 35-65 split with heading on right -->
-  <section class="hero-section">
-    <!-- LEFT: Empty (35%) -->
-    <div class="hero-left"></div>
+  <!-- PRICING SECTION: Using RampRetainer component -->
+  <RampRetainer
+    sectionLabel="PRICING"
+    sectionHeading="One plugin. One price. No subscription."
+    ctaLabel="Get started"
+    ctaLink="/contact"
+  />
 
-    <!-- RIGHT: Heading + Trusted By (65%) -->
-    <div class="hero-right">
-      <h1 class="hero-heading">
-        A flexible marketing subscription designed to replace the overhead cost of a full-time hire.
-      </h1>
-
-      <!-- TRUSTED BY SECTION -->
-      <div class="trusted-by-section">
-        <p class="trusted-label">TRUSTED BY</p>
-        <div class="trusted-logos">
-          <div class="logo-placeholder">Logo</div>
-          <div class="logo-placeholder">Logo</div>
-          <div class="logo-placeholder">Logo</div>
-          <div class="logo-placeholder">Logo</div>
-        </div>
-      </div>
-    </div>
+  <!-- TESTIMONIALS SECTION: "Built for people who actually make things" -->
+  <section class="testimonials-rounded">
+    <RampTestimonialsV2
+      sectionHeading={"Built for people who\nactually make things."}
+      testimonials={[
+        {
+          image: "/assets/uxui_whoitsfor.png",
+          quote: "I stopped explaining hover states to developers. I just build them.",
+          name: "UX/UI Designer",
+          results: "No handoff docs needed"
+        },
+        {
+          image: "/assets/videographer_whoitsfor.png",
+          quote: "My reel finally scrolls the way it plays — frame by frame, not just fading in.",
+          name: "Videographer",
+          results: "Scroll Sequence, no video embed"
+        },
+        {
+          image: "/assets/director_whoitsfor.png",
+          quote: "Case studies that morph from the grid instead of just... linking to a new page.",
+          name: "Director",
+          results: "One shared-element transition, zero page reload"
+        },
+        {
+          image: "/assets/agency_whoitsfor.png",
+          quote: "Every client site gets the same polish — without rebuilding it every time.",
+          name: "Agency",
+          results: "Nine blocks, unlimited client sites"
+        }
+      ]}
+    />
   </section>
 
-  <!-- KEY BENEFITS SECTION -->
-  <section class="benefits-section">
-    <div class="benefits-header">
-      <p class="section-label">WHY IT WORKS</p>
-      <h2 class="section-title">Key Benefits</h2>
-    </div>
-
-    <div class="benefits-grid">
-      {benefits.map((benefit) => (
-        <div class="benefit-card">
-          <h3 class="benefit-title">{benefit.label}</h3>
-          <p class="benefit-description">{benefit.description}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- PRICING SECTION -->
-  <section class="pricing-section">
-    <div class="pricing-header">
-      <div class="pricing-title-block">
-        <p class="section-label">MONTHLY RETAINER</p>
-        <h2 class="section-title">Endless Support</h2>
-      </div>
-      <Button label="Contact Us" href="#contact" />
-    </div>
-
-    <div class="pricing-tiers">
-      {pricingTiers.map((tier) => (
-        <div class={`pricing-card ${tier.highlighted ? 'highlighted' : ''}`}>
-          <a href="#learn-more" class="card-top-button">
-            <svg class="icon-arrow" width="100%" height="100%" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-              <line x1="21.5" y1="12" x2="0.5" y2="12" fill="none" stroke="rgb(85, 26, 139)" stroke-miterlimit="10" stroke-width="1.5"></line>
-              <polyline points="13.86 4.36 21.5 12 13.86 19.64" fill="none" stroke="rgb(85, 26, 139)" stroke-miterlimit="10" stroke-width="1.5"></polyline>
-            </svg>
-          </a>
-
-          <div class="tier-header">
-            <h3 class="tier-name">{tier.name}</h3>
-            {tier.highlighted && <span class="new-badge">●</span>}
-          </div>
-
-          <div class="features-list">
-            {tier.features.map((feature) => (
-              <p class="feature-item">{feature}</p>
-            ))}
-          </div>
-
-          <div class="tier-footer">
-            <div class="price">
-              <span class="currency">{tier.currency}</span>
-              <span class="amount">{tier.price}</span>
-              <span class="period">{tier.period}</span>
-            </div>
-            <Button label={tier.buttonText} href="#subscribe" uppercase={true} />
-          </div>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- TESTIMONIALS SECTION -->
-  <section>
-    <RampTestimonials />
-  </section>
-
-  <!-- FAQ SECTION: Black background with 35-65 split layout -->
-  <section class="faq-section">
-    <div class="faq-wrapper">
-      <!-- LEFT: FAQ Title (35%) -->
-      <div class="faq-left">
-        <h2 class="faq-title">FAQ</h2>
-      </div>
-
-      <!-- RIGHT: Description + Items (65%) -->
-      <div class="faq-right">
-        <p class="faq-description">Explore our most commonly asked questions about our agency, podcast, and product launch resources.</p>
-
-        <div class="faq-items">
-          <!-- First item: expanded by default -->
-          <div class="faq-item active">
-            <div class="faq-header">
-              <h3 class="faq-question">What does Ramp Studio do?</h3>
-              <button class="faq-toggle" aria-label="Close answer">×</button>
-            </div>
-            <div class="faq-answer">
-              <p>Ramp Studio helps brands build momentum through practical marketing education, hands-on execution, and reusable resources. We offer self-paced courses, a subscription-based marketing retainer, and tools designed to help teams move faster, stay consistent, and make smarter decisions without overcomplicating things.</p>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-header">
-              <h3 class="faq-question">Who is Ramp Studio for?</h3>
-              <button class="faq-toggle" aria-label="Expand answer">+</button>
-            </div>
-            <div class="faq-answer">
-              <p>We serve marketers, founders, content creators, and small business owners who want to build scalable marketing systems without feeling overwhelmed. Our content is accessible to beginners while remaining valuable for experienced professionals.</p>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-header">
-              <h3 class="faq-question">How do your courses work?</h3>
-              <button class="faq-toggle" aria-label="Expand answer">+</button>
-            </div>
-            <div class="faq-answer">
-              <p>Our courses are self-paced, comprehensive programs that combine video lessons, worksheets, templates, and community support. You get lifetime access to course materials and can work through them at your own pace.</p>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-header">
-              <h3 class="faq-question">What is the subscription marketing retainer?</h3>
-              <button class="faq-toggle" aria-label="Expand answer">+</button>
-            </div>
-            <div class="faq-answer">
-              <p>Our retainer service provides ongoing support including design updates, content creation, strategy calls, and email support. We offer Essentials and Premium tiers depending on your needs.</p>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-header">
-              <h3 class="faq-question">Do I need to choose between courses, resources, or the retainer?</h3>
-              <button class="faq-toggle" aria-label="Expand answer">+</button>
-            </div>
-            <div class="faq-answer">
-              <p>No! Many clients use a combination of our offerings. You might take a course to learn fundamentals, use resources to accelerate your work, and hire us for retainer support for ongoing execution.</p>
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <div class="faq-header">
-              <h3 class="faq-question">What makes Ramp Studio different from other marketing agencies?</h3>
-              <button class="faq-toggle" aria-label="Expand answer">+</button>
-            </div>
-            <div class="faq-answer">
-              <p>We combine education with execution. Rather than just doing the work for you, we teach you how to build sustainable systems. Plus, we're transparent about our pricing and focused on serving creative entrepreneurs specifically.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- FAQ SECTION: Common questions about Basalio pricing -->
+  <RampFAQ
+    faqs={faqs}
+  />
 
   <!-- FOOTER -->
   <Fragment slot="footer">

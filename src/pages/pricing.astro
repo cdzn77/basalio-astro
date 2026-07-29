@@ -1,9 +1,10 @@
 ---
 // Pricing Page — Basalio founder pre-sale
-// One paid SKU, risk reversal first, honest build status
+// Cohesive design using existing site components and patterns
 
 import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
+import RampRetainer from '../components/RampRetainer.astro';
 import RampFAQ from '../components/RampFAQ.astro';
 import RampFooter from '../components/RampFooter.astro';
 
@@ -13,48 +14,18 @@ const description = "The nine blocks are free forever. The Pro control center is
 const supportEmail = "hello@basalio.com";
 const founderPrice = "$149";
 const postCapPrice = "$249";
-const priceIncreaseNote = "after the first 100";
-const licenseScope = "Unlimited sites per license";
 const proShipTarget = "October 2026";
 const refundWindow = "30 days";
 
 // Build status rows — verified against actual repo state
 const buildStatus = [
-  {
-    item: "Nine interaction blocks",
-    status: "LIVE",
-    note: "Grid Reveal, Case Study Transition, Scroll Sequence, Image Counter, Timeline, Image Carousel, Fullscreen Video, Smooth Scroll, Hover Effects. In testing, shipping free."
-  },
-  {
-    item: "Four free Hacks",
-    status: "LIVE",
-    note: "Copy-paste snippets available now on /hacks."
-  },
-  {
-    item: "WordPress.org listing",
-    status: "IN REVIEW",
-    note: "Plugin submitted. Public download coming at launch."
-  },
-  {
-    item: "Pro control center sidebar",
-    status: "IN BUILD",
-    note: `Target ship date: ${proShipTarget}. Editor sidebar for live tuning.`
-  },
-  {
-    item: "Full Hacks vault (12+)",
-    status: "IN BUILD",
-    note: "Grows continuously post-launch."
-  },
-  {
-    item: "One-click hack-trailer effects",
-    status: "PLANNED",
-    note: "Follows Pro sidebar launch."
-  },
-  {
-    item: "WordPress version compatibility",
-    status: "ONGOING",
-    note: "Testing against beta and RC releases before launch."
-  }
+  { item: "Nine interaction blocks", status: "LIVE", note: "Grid Reveal, Case Study Transition, Scroll Sequence, Image Counter, Timeline, Image Carousel, Fullscreen Video, Smooth Scroll, Hover Effects. In testing, shipping free." },
+  { item: "Four free Hacks", status: "LIVE", note: "Copy-paste snippets available now on /hacks." },
+  { item: "WordPress.org listing", status: "IN REVIEW", note: "Plugin submitted. Public download coming at launch." },
+  { item: "Pro control center sidebar", status: "IN BUILD", note: `Target ship date: ${proShipTarget}. Editor sidebar for live tuning.` },
+  { item: "Full Hacks vault (12+)", status: "IN BUILD", note: "Grows continuously post-launch." },
+  { item: "One-click hack-trailer effects", status: "PLANNED", note: "Follows Pro sidebar launch." },
+  { item: "WordPress version compatibility", status: "ONGOING", note: "Testing against beta and RC releases before launch." }
 ];
 
 // FAQ items — pricing-focused questions
@@ -69,11 +40,11 @@ const faqs = [
   },
   {
     question: "How many sites?",
-    answer: `${licenseScope}. Works on client sites, personal projects, anything.`
+    answer: `Unlimited sites per license. Works on client sites, personal projects, anything.`
   },
   {
     question: "What happens after the 100 founder licenses?",
-    answer: `The price goes to ${postCapPrice} once 100 founder licenses are gone or the Pro control center ships, whichever happens first. Founder licenses stay valid, keep every future block and Hack, and are never re-billed.`
+    answer: `The price goes to ${postCapPrice} once 100 founder licenses are gone or the Pro control center ships (October 2026), whichever happens first. Founder licenses stay valid, keep every future block and Hack, and are never re-billed.`
   },
   {
     question: "What if my license lapses?",
@@ -104,183 +75,43 @@ const faqs = [
     <RampHeader />
   </Fragment>
 
-  <!-- 1. HEADER SECTION: 35-65 split -->
-  <section class="pricing-header">
-    <!-- LEFT (35%): Eyebrow -->
-    <div class="header-left">
-      <p class="eyebrow">PRICING</p>
-    </div>
+  <!-- 1. PRICING TIERS SECTION: Using existing RampRetainer component -->
+  <RampRetainer
+    sectionLabel="PRICING"
+    sectionHeading="The blocks are free. The Pro layer is one payment, once."
+  />
 
-    <!-- RIGHT (65%): H1 + Subhead -->
-    <div class="header-right">
-      <h1 class="header-title">The blocks are free. The Pro layer is one payment, once.</h1>
-      <p class="header-subhead">Nine interaction blocks, free forever on WordPress.org — no locked blocks, no watermarks, no instance limits. The Pro control center and the full Hacks vault are a single {founderPrice} founder license for the first 100 people.</p>
-    </div>
-  </section>
-
-  <!-- 2. TWO-CARD COMPARISON -->
-  <section class="pricing-cards-section">
-    <div class="pricing-cards">
-      <!-- Card A: Free -->
-      <div class="pricing-card free-card">
-        <div class="card-header">
-          <span class="card-label">FREE · FOREVER</span>
-        </div>
-
-        <h2 class="card-name">The blocks</h2>
-
-        <div class="card-price">
-          <span class="price-amount">$0</span>
-        </div>
-
-        <p class="card-deck">All nine interaction blocks. Every one complete.</p>
-
-        <!-- Divider list -->
-        <ul class="divider-list">
-          <li>Grid Reveal, Case Study Transition, Scroll Sequence, Image Counter, Timeline, Image Carousel, Fullscreen Video, Smooth Scroll, Hover Effects</li>
-          <li>Works with any theme — no page builder, no premium theme</li>
-          <li>Keyboard-operable and reduced-motion aware by default</li>
-          <li>Shared script loads only on pages that use a block</li>
-          <li>Four Hacks as copy-paste snippets</li>
-        </ul>
-
-        <p class="card-footnote">Free is not a trial. Nothing here expires, phones home, or gets pulled into Pro later.</p>
-
-        <!-- CTA buttons -->
-        <div class="card-cta">
-          <a href="/hacks" class="cta-primary">Get the 4 free Hacks →</a>
-          <a href="#waitlist" class="cta-secondary">Notify me at launch →</a>
-        </div>
-      </div>
-
-      <!-- Card B: Founder Lifetime -->
-      <div class="pricing-card founder-card">
-        <div class="card-header">
-          <span class="card-label">FOUNDER · 100 LICENSES</span>
-        </div>
-
-        <h2 class="card-name">The control center</h2>
-
-        <div class="card-price">
-          <span class="price-amount">{founderPrice}</span>
-          <span class="price-period">one time — for the first 100 licenses, or until the Pro control center ships. Whichever comes first. {postCapPrice} after that.</span>
-        </div>
-
-        <p class="card-deck">Everything above, plus the Pro layer — for as long as Basalio exists. No renewal.</p>
-
-        <!-- Divider list -->
-        <ul class="divider-list">
-          <li>Full Hacks vault — 12+ recipes, growing</li>
-          <li>Pro control center: live-tune all nine blocks from the editor sidebar</li>
-          <li>One-click versions of the three hack-trailer effects</li>
-          <li>Every future block and Hack included, no upgrade fee</li>
-          <li>Direct line to the person building it</li>
-          <li>{licenseScope}</li>
-        </ul>
-
-        <!-- CTA button -->
-        <div class="card-cta">
-          <a href="#early-access" class="cta-primary-founder">Claim founder access →</a>
-        </div>
-
-        <p class="card-micro">{refundWindow}-day refund · {licenseScope}</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. BUILD LEDGER -->
-  <section class="build-ledger">
+  <!-- 2. BUILD LEDGER SECTION -->
+  <section class="ledger-section">
     <div class="ledger-container">
-      <h2 class="ledger-title">What's built, what isn't</h2>
-      <p class="ledger-intro">A founder license is partly a bet on work that isn't finished. Here's the honest state of it.</p>
+      <div class="ledger-header">
+        <p class="ledger-eyebrow">TRANSPARENCY</p>
+        <h2 class="ledger-title">What's built, what isn't</h2>
+        <p class="ledger-description">A founder license is partly a bet on work that isn't finished. Here's the honest state of it.</p>
+      </div>
 
-      <div class="ledger-rows">
+      <div class="ledger-table">
         {buildStatus.map((row) => (
           <div class="ledger-row">
-            <div class="ledger-item">{row.item}</div>
-            <div class={`ledger-status ${row.status.toLowerCase().replace(/\s+/g, '-')}`}>
-              <span class="status-label">{row.status}</span>
+            <div class="ledger-item-name">{row.item}</div>
+            <div class={`ledger-status ledger-${row.status.toLowerCase().replace(/\s+/g, '-')}`}>
+              <span class="status-badge">{row.status}</span>
             </div>
-            <div class="ledger-note">{row.note}</div>
+            <div class="ledger-item-note">{row.note}</div>
           </div>
         ))}
       </div>
 
-      <p class="ledger-closing">Nothing on this page is described as finished when it isn't. If a row moves, this table moves with it.</p>
+      <p class="ledger-footer">Nothing on this page is described as finished when it isn't. If a row moves, this table moves with it.</p>
     </div>
   </section>
 
-  <!-- 4. CONTROL CENTER PREVIEW -->
-  <section class="control-preview">
-    <div class="preview-container">
-      <h2 class="preview-title">What you're buying access to</h2>
-      <p class="preview-body">Every block ships with sensible defaults. The Pro sidebar is where you stop accepting them — timing, easing, distance, thresholds, all live, all in the editor, no CSS.</p>
+  <!-- 3. RISK REVERSAL SECTION -->
+  <section class="risk-section">
+    <div class="risk-container">
+      <h2 class="risk-title">If I don't ship it</h2>
 
-      <!-- Coded mockup: editor sidebar frame -->
-      <div class="mockup-frame">
-        <div class="mockup-badge">
-          <span class="badge-label">MOCKUP · IN BUILD</span>
-        </div>
-
-        <div class="sidebar-mock">
-          <!-- Chrome/frame styling -->
-          <div class="sidebar-header">
-            <span class="sidebar-title">Block Settings</span>
-            <div class="sidebar-dots">
-              <span></span><span></span><span></span>
-            </div>
-          </div>
-
-          <!-- Control rows -->
-          <div class="sidebar-controls">
-            <div class="control-group">
-              <label class="control-label">Reveal duration</label>
-              <input type="range" class="control-input" min="0" max="100" value="60" disabled />
-              <span class="control-value">0.6s</span>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label">Easing</label>
-              <select class="control-input" disabled>
-                <option>cubic-bezier</option>
-                <option>ease-out</option>
-                <option>ease-in-out</option>
-              </select>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label">Stagger</label>
-              <input type="range" class="control-input" min="0" max="100" value="40" disabled />
-              <span class="control-value">40ms</span>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label">Trigger offset</label>
-              <input type="range" class="control-input" min="0" max="100" value="50" disabled />
-              <span class="control-value">50%</span>
-            </div>
-
-            <div class="control-group">
-              <label class="control-label">Reduced-motion fallback</label>
-              <select class="control-input" disabled>
-                <option>Instant</option>
-                <option>Fade</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <p class="preview-caption">Mockup of work in progress. Shipping {proShipTarget}.</p>
-    </div>
-  </section>
-
-  <!-- 5. RISK REVERSAL -->
-  <section class="risk-reversal">
-    <div class="reversal-container">
-      <h2 class="reversal-title">If I don't ship it</h2>
-
-      <div class="reversal-body">
+      <div class="risk-content">
         <p>Basalio is built by one person. You should know what that means before you pay.</p>
 
         <p>The nine blocks are free whether or not you ever buy anything — they don't depend on me staying in business. The Pro layer does. So: a {refundWindow}-day refund, no questions and no form. And if the Pro control center hasn't shipped by {proShipTarget}, email {supportEmail} and I refund you in full, past the window, no argument.</p>
@@ -290,19 +121,9 @@ const faqs = [
     </div>
   </section>
 
-  <!-- 6. FAQ SECTION -->
+  <!-- 4. FAQ SECTION -->
   <section class="pricing-faq">
     <RampFAQ {faqs} />
-  </section>
-
-  <!-- 7. FOOTER CTA -->
-  <section class="footer-cta">
-    <div class="cta-container">
-      <h2 class="cta-title">100-founder-license cap</h2>
-      <p class="cta-subhead">{founderPrice} once. {refundWindow}-day refund. {licenseScope}.</p>
-      <a href="#early-access" class="cta-button">Claim founder access →</a>
-      <p class="cta-support">Questions first? <a href={`mailto:${supportEmail}`}>{supportEmail}</a></p>
-    </div>
   </section>
 
   <!-- FOOTER -->
@@ -311,331 +132,73 @@ const faqs = [
   </Fragment>
 </RampTemplateLayout>
 
-
 <style>
-  /* COLOR TOKENS */
-  :root {
-    --ink: #0A0A0A;
-    --paper: #FFFFFF;
-    --stone: #DFDCD5;
-    --acid: #DFFF00;
-  }
-
-  /* 1. HEADER SECTION: 35-65 split */
-  .pricing-header {
-    display: grid;
-    grid-template-columns: 35% 65%;
+  /* 2. BUILD LEDGER SECTION */
+  .ledger-section {
     width: 100%;
-    max-width: 1786px;
-    margin: 0 auto;
-    padding: 120px 40px;
-    background: var(--paper);
-    box-sizing: border-box;
-    gap: 60px;
-    align-items: flex-start;
-  }
-
-  .header-left {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .eyebrow {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 2.8px;
-    text-transform: uppercase;
-    color: var(--ink);
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-  }
-
-  .header-right {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .header-title {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 52px;
-    font-weight: 400;
-    letter-spacing: -0.52px;
-    line-height: 1.2;
-    color: var(--ink);
-    margin: 0;
-    padding: 0;
-    text-wrap: balance;
-  }
-
-  .header-subhead {
-    font-family: Switzer, sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 1.6;
-    color: rgba(10, 10, 10, 0.7);
-    margin: 0;
-    padding: 0;
-    max-width: 650px;
-  }
-
-  /* 2. TWO-CARD COMPARISON */
-  .pricing-cards-section {
-    width: 100%;
-    max-width: 1786px;
-    margin: 0 auto;
-    padding: 100px 40px;
-    background: var(--paper);
-    box-sizing: border-box;
-  }
-
-  .pricing-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-  }
-
-  .pricing-card {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    padding: 40px;
-    border: 1px solid var(--stone);
-    border-radius: 8px;
-    background: var(--paper);
-    box-sizing: border-box;
-  }
-
-  .free-card {
-    border: 1px solid var(--stone);
-  }
-
-  .founder-card {
-    border: 2px solid var(--acid);
-    background: rgba(223, 255, 0, 0.05);
-  }
-
-  .card-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .card-label {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--ink);
-    padding: 6px 10px;
-    background: transparent;
-    border: 1px solid var(--ink);
-    border-radius: 4px;
-    white-space: nowrap;
-    display: inline-block;
-  }
-
-  .founder-card .card-label {
-    background: var(--acid);
-    border: none;
-    color: var(--ink);
-  }
-
-  .card-name {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 32px;
-    font-weight: 400;
-    letter-spacing: -0.32px;
-    color: var(--ink);
-    margin: 0;
-    padding: 0;
-  }
-
-  .card-price {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    flex-wrap: wrap;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .price-amount {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 40px;
-    font-weight: 600;
-    color: var(--ink);
-  }
-
-  .price-period {
-    font-family: Switzer, sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    color: rgba(10, 10, 10, 0.6);
-    line-height: 1.5;
-  }
-
-  .price-note {
-    font-family: Switzer, sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    color: rgba(10, 10, 10, 0.5);
-  }
-
-  .card-deck {
-    font-family: Switzer, sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: var(--ink);
-    margin: 0;
-    padding: 0;
-  }
-
-  .divider-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .divider-list li {
-    font-family: Switzer, sans-serif;
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 1.6;
-    color: rgba(10, 10, 10, 0.75);
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--stone);
-    margin: 0;
-  }
-
-  .divider-list li:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-
-  .card-footnote {
-    font-family: Switzer, sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 1.5;
-    color: rgba(10, 10, 10, 0.5);
-    margin: 0;
-    padding: 0;
-  }
-
-  .card-cta {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 12px;
-  }
-
-  .cta-primary,
-  .cta-secondary,
-  .cta-primary-founder {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 14px 24px;
-    border-radius: 6px;
-    display: inline-block;
-    width: fit-content;
-    transition: all 200ms ease;
-    cursor: pointer;
-    border: 2px solid;
-  }
-
-  .cta-primary,
-  .cta-primary-founder {
-    background: var(--ink);
-    color: var(--paper);
-    border-color: var(--ink);
-  }
-
-  .cta-primary:hover,
-  .cta-primary-founder:hover {
-    background: rgba(10, 10, 10, 0.9);
-    border-color: rgba(10, 10, 10, 0.9);
-  }
-
-  .cta-secondary {
-    background: transparent;
-    color: var(--ink);
-    border-color: var(--ink);
-  }
-
-  .cta-secondary:hover {
-    background: rgba(10, 10, 10, 0.05);
-  }
-
-  .card-micro {
-    font-family: Switzer, sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    color: rgba(10, 10, 10, 0.5);
-    margin: 8px 0 0 0;
-    padding: 0;
-  }
-
-  /* 3. BUILD LEDGER */
-  .build-ledger {
-    width: 100%;
-    max-width: 1786px;
-    margin: 0 auto;
-    padding: 100px 40px;
-    background: var(--paper);
+    background: #FFFFFF;
+    padding: 80px 40px;
     box-sizing: border-box;
   }
 
   .ledger-container {
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 60px;
+  }
+
+  .ledger-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ledger-eyebrow {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    color: #000000;
+    margin: 0;
+    padding: 0;
   }
 
   .ledger-title {
-    font-family: 'Instrument Sans', sans-serif;
     font-size: 40px;
     font-weight: 400;
-    letter-spacing: -0.4px;
-    color: var(--ink);
+    line-height: 48px;
+    letter-spacing: -0.8px;
+    color: #000000;
     margin: 0;
     padding: 0;
   }
 
-  .ledger-intro {
-    font-family: Switzer, sans-serif;
+  .ledger-description {
     font-size: 16px;
     font-weight: 400;
-    line-height: 1.6;
-    color: rgba(10, 10, 10, 0.7);
+    line-height: 24px;
+    color: #575757;
     margin: 0;
     padding: 0;
   }
 
-  .ledger-rows {
+  .ledger-table {
     display: flex;
     flex-direction: column;
     gap: 0;
+    border-top: 1px solid #E8E8E8;
+    border-bottom: 1px solid #E8E8E8;
   }
 
   .ledger-row {
     display: grid;
-    grid-template-columns: 1.2fr 150px 1fr;
+    grid-template-columns: 1.5fr 140px 1fr;
     gap: 40px;
-    padding: 20px 0;
-    border-bottom: 1px solid var(--stone);
+    padding: 24px 0;
+    border-bottom: 1px solid #E8E8E8;
     align-items: flex-start;
   }
 
@@ -643,11 +206,12 @@ const faqs = [
     border-bottom: none;
   }
 
-  .ledger-item {
-    font-family: Switzer, sans-serif;
+  .ledger-item-name {
     font-size: 15px;
     font-weight: 600;
-    color: var(--ink);
+    color: #000000;
+    margin: 0;
+    padding: 0;
   }
 
   .ledger-status {
@@ -656,415 +220,113 @@ const faqs = [
     justify-content: flex-start;
   }
 
-  .status-label {
-    font-family: 'Azeret Mono', monospace;
+  .status-badge {
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
     padding: 6px 10px;
     border-radius: 4px;
-    white-space: nowrap;
     display: inline-block;
+    white-space: nowrap;
   }
 
-  .ledger-status.live .status-label {
-    background: var(--acid);
-    color: var(--ink);
+  .ledger-live .status-badge {
+    background: #FFEA00;
+    color: #000000;
   }
 
-  .ledger-status.in-build .status-label {
-    border: 1px solid var(--ink);
-    color: var(--ink);
+  .ledger-in-build .status-badge {
+    border: 1px solid #000000;
+    color: #000000;
     background: transparent;
   }
 
-  .ledger-status.planned .status-label {
-    background: var(--stone);
-    color: var(--ink);
+  .ledger-planned .status-badge {
+    background: #E8E8E8;
+    color: #000000;
   }
 
-  .ledger-status.ongoing .status-label {
-    background: var(--stone);
-    color: var(--ink);
+  .ledger-ongoing .status-badge {
+    background: #E8E8E8;
+    color: #000000;
   }
 
-  .ledger-status.in-review .status-label {
-    border: 1px solid var(--ink);
-    color: var(--ink);
+  .ledger-in-review .status-badge {
+    border: 1px solid #000000;
+    color: #000000;
     background: transparent;
   }
 
-  .ledger-note {
-    font-family: Switzer, sans-serif;
+  .ledger-item-note {
     font-size: 14px;
     font-weight: 400;
-    line-height: 1.5;
-    color: rgba(10, 10, 10, 0.6);
+    line-height: 20px;
+    color: #575757;
+    margin: 0;
+    padding: 0;
   }
 
-  .ledger-closing {
-    font-family: Switzer, sans-serif;
+  .ledger-footer {
     font-size: 13px;
     font-weight: 400;
-    line-height: 1.5;
-    color: rgba(10, 10, 10, 0.5);
+    line-height: 19.5px;
+    color: rgba(0, 0, 0, 0.5);
     margin: 20px 0 0 0;
-    padding: 0;
-    border-top: 1px solid var(--stone);
-    padding-top: 20px;
+    padding: 20px 0 0 0;
+    border-top: 1px solid #E8E8E8;
   }
 
-  /* 4. CONTROL CENTER PREVIEW */
-  .control-preview {
+  /* 3. RISK REVERSAL SECTION */
+  .risk-section {
     width: 100%;
-    max-width: 1786px;
-    margin: 0 auto;
-    padding: 100px 40px;
-    background: var(--paper);
+    background: #FFFFFF;
+    padding: 80px 40px;
     box-sizing: border-box;
   }
 
-  .preview-container {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-  }
-
-  .preview-title {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 40px;
-    font-weight: 400;
-    letter-spacing: -0.4px;
-    color: var(--ink);
-    margin: 0;
-    padding: 0;
-  }
-
-  .preview-body {
-    font-family: Switzer, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.6;
-    color: rgba(10, 10, 10, 0.7);
-    margin: 0;
-    padding: 0;
-    max-width: 600px;
-  }
-
-  .mockup-frame {
-    position: relative;
-    background: var(--paper);
-    border: 1px solid var(--stone);
-    border-radius: 8px;
-    overflow: hidden;
-    max-width: 400px;
-  }
-
-  .mockup-badge {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    z-index: 10;
-  }
-
-  .badge-label {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--ink);
-    background: var(--stone);
-    padding: 6px 10px;
-    border-radius: 4px;
-    display: inline-block;
-  }
-
-  .sidebar-mock {
-    background: #1a1a1a;
-    color: #ffffff;
-    padding: 0;
-  }
-
-  .sidebar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-  }
-
-  .sidebar-title {
-    color: #ffffff;
-  }
-
-  .sidebar-dots {
-    display: flex;
-    gap: 4px;
-  }
-
-  .sidebar-dots span {
-    width: 4px;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.4);
-    border-radius: 50%;
-  }
-
-  .sidebar-controls {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .control-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .control-label {
-    font-family: Switzer, sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.8);
-    margin: 0;
-    padding: 0;
-  }
-
-  .control-input {
-    font-family: Switzer, sans-serif;
-    font-size: 12px;
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 8px 10px;
-    border-radius: 4px;
-    cursor: not-allowed;
-    opacity: 0.7;
-  }
-
-  .control-input:focus {
-    outline: none;
-  }
-
-  .control-value {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 11px;
-    color: rgba(255, 255, 255, 0.6);
-  }
-
-  .preview-caption {
-    font-family: Switzer, sans-serif;
-    font-size: 13px;
-    font-weight: 400;
-    color: rgba(10, 10, 10, 0.5);
-    margin: 0;
-    padding: 0;
-  }
-
-  /* 5. RISK REVERSAL */
-  .risk-reversal {
+  .risk-container {
     width: 100%;
-    max-width: 1786px;
-    margin: 0 auto;
-    padding: 100px 40px;
-    background: var(--paper);
-    box-sizing: border-box;
-  }
-
-  .reversal-container {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
     max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
   }
 
-  .reversal-title {
-    font-family: 'Instrument Sans', sans-serif;
+  .risk-title {
     font-size: 40px;
     font-weight: 400;
-    letter-spacing: -0.4px;
-    color: var(--ink);
+    line-height: 48px;
+    letter-spacing: -0.8px;
+    color: #000000;
     margin: 0;
     padding: 0;
   }
 
-  .reversal-body {
+  .risk-content {
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
 
-  .reversal-body p {
-    font-family: Switzer, sans-serif;
+  .risk-content p {
     font-size: 16px;
     font-weight: 400;
-    line-height: 1.8;
-    color: rgba(10, 10, 10, 0.75);
+    line-height: 28px;
+    color: #575757;
     margin: 0;
     padding: 0;
   }
 
-  /* 6. FAQ SECTION */
+  /* 4. FAQ SECTION */
   .pricing-faq {
     width: 100%;
   }
 
-  /* 7. FOOTER CTA */
-  .footer-cta {
-    width: 100%;
-    max-width: 1786px;
-    margin: 0 auto;
-    padding: 80px 40px;
-    background: var(--paper);
-    box-sizing: border-box;
-    border-top: 1px solid var(--stone);
-  }
-
-  .cta-container {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    max-width: 600px;
-  }
-
-  .cta-title {
-    font-family: 'Instrument Sans', sans-serif;
-    font-size: 36px;
-    font-weight: 400;
-    letter-spacing: -0.36px;
-    color: var(--ink);
-    margin: 0;
-    padding: 0;
-  }
-
-  .cta-subhead {
-    font-family: Switzer, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 1.6;
-    color: rgba(10, 10, 10, 0.7);
-    margin: 0;
-    padding: 0;
-  }
-
-  .cta-button {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    text-decoration: none;
-    background: var(--ink);
-    color: var(--paper);
-    padding: 14px 24px;
-    border-radius: 6px;
-    display: inline-block;
-    width: fit-content;
-    border: 2px solid var(--ink);
-    transition: all 200ms ease;
-    cursor: pointer;
-  }
-
-  .cta-button:hover {
-    background: rgba(10, 10, 10, 0.9);
-    border-color: rgba(10, 10, 10, 0.9);
-  }
-
-  .cta-support {
-    font-family: Switzer, sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    color: rgba(10, 10, 10, 0.6);
-    margin: 8px 0 0 0;
-    padding: 0;
-  }
-
-  .cta-support a {
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--ink);
-    transition: all 200ms ease;
-  }
-
-  .cta-support a:hover {
-    color: rgba(10, 10, 10, 0.7);
-  }
-
   /* RESPONSIVE */
   @media (max-width: 1024px) {
-    .pricing-header {
-      grid-template-columns: 1fr;
-      gap: 40px;
-      padding: 80px 20px;
-    }
-
-    .header-title {
-      font-size: 40px;
-    }
-
-    .pricing-cards {
-      grid-template-columns: 1fr;
-    }
-
-    .ledger-row {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .pricing-header {
-      grid-template-columns: 1fr;
-      gap: 30px;
-      padding: 60px 20px;
-    }
-
-    .header-title {
-      font-size: 32px;
-    }
-
-    .header-subhead {
-      font-size: 16px;
-    }
-
-    .pricing-cards-section {
-      padding: 60px 20px;
-    }
-
-    .pricing-cards {
-      grid-template-columns: 1fr;
-    }
-
-    .pricing-card {
-      padding: 32px;
-    }
-
-    .card-name {
-      font-size: 28px;
-    }
-
-    .card-deck {
-      font-size: 16px;
-    }
-
-    .card-cta {
-      flex-direction: column;
-    }
-
-    .cta-primary,
-    .cta-secondary,
-    .cta-primary-founder {
-      width: 100%;
-      text-align: center;
-    }
-
-    .build-ledger {
+    .ledger-section {
       padding: 60px 20px;
     }
 
@@ -1074,40 +336,46 @@ const faqs = [
 
     .ledger-row {
       grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .risk-section {
+      padding: 60px 20px;
+    }
+
+    .risk-title {
+      font-size: 32px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .ledger-section {
+      padding: 40px 20px;
+    }
+
+    .ledger-title {
+      font-size: 28px;
+      line-height: 36px;
+    }
+
+    .ledger-row {
+      grid-template-columns: 1fr;
+      gap: 12px;
       padding: 16px 0;
     }
 
-    .control-preview {
-      padding: 60px 20px;
+    .risk-section {
+      padding: 40px 20px;
     }
 
-    .preview-title {
-      font-size: 32px;
-    }
-
-    .mockup-frame {
-      max-width: 100%;
-    }
-
-    .risk-reversal {
-      padding: 60px 20px;
-    }
-
-    .reversal-title {
-      font-size: 32px;
-    }
-
-    .footer-cta {
-      padding: 60px 20px;
-    }
-
-    .cta-title {
+    .risk-title {
       font-size: 28px;
+      line-height: 36px;
     }
 
-    .cta-button {
-      width: 100%;
-      text-align: center;
+    .risk-content p {
+      font-size: 15px;
+      line-height: 24px;
     }
   }
 </style>

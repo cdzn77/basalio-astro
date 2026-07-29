@@ -1,535 +1,1113 @@
 ---
-// Basalio Pricing page with interactive tier selection
-import Footer from '../components/Footer.astro';
+// Pricing Page — Basalio founder pre-sale
+// One paid SKU, risk reversal first, honest build status
+
+import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
+import RampHeader from '../components/RampHeader.astro';
+import RampFAQ from '../components/RampFAQ.astro';
+import RampFooter from '../components/RampFooter.astro';
+
+const title = "Pricing — Basalio";
+const description = "The nine blocks are free forever. The Pro control center is one payment for the first 100 people.";
+
+const supportEmail = "hello@basalio.com";
+const founderPrice = "$149";
+const postCapPrice = "$249";
+const priceIncreaseNote = "after the first 100";
+const licenseScope = "Unlimited sites per license";
+const proShipTarget = "October 2026";
+const refundWindow = "30 days";
+
+// Build status rows — verified against actual repo state
+const buildStatus = [
+  {
+    item: "Nine interaction blocks",
+    status: "LIVE",
+    note: "Grid Reveal, Case Study Transition, Scroll Sequence, Image Counter, Timeline, Image Carousel, Fullscreen Video, Smooth Scroll, Hover Effects. In testing, shipping free."
+  },
+  {
+    item: "Four free Hacks",
+    status: "LIVE",
+    note: "Copy-paste snippets available now on /hacks."
+  },
+  {
+    item: "WordPress.org listing",
+    status: "IN REVIEW",
+    note: "Plugin submitted. Public download coming at launch."
+  },
+  {
+    item: "Pro control center sidebar",
+    status: "IN BUILD",
+    note: `Target ship date: ${proShipTarget}. Editor sidebar for live tuning.`
+  },
+  {
+    item: "Full Hacks vault (12+)",
+    status: "IN BUILD",
+    note: "Grows continuously post-launch."
+  },
+  {
+    item: "One-click hack-trailer effects",
+    status: "PLANNED",
+    note: "Follows Pro sidebar launch."
+  },
+  {
+    item: "WordPress version compatibility",
+    status: "ONGOING",
+    note: "Testing against beta and RC releases before launch."
+  }
+];
+
+// FAQ items — pricing-focused questions
+const faqs = [
+  {
+    question: "Do the nine blocks stay free?",
+    answer: `Yes. All nine, complete, on WordPress.org, forever. No block moves behind Pro. Free is not a trial—the free tier is not a countdown.`
+  },
+  {
+    question: "It's GPL — why pay for it?",
+    answer: `You're not paying for permission; GPL already grants that. You're paying for the Hacks vault, the sidebar, and the work of testing against every WordPress release before it lands. The code is free. Maintaining it isn't.`
+  },
+  {
+    question: "How many sites?",
+    answer: `${licenseScope}. Works on client sites, personal projects, anything.`
+  },
+  {
+    question: "What happens after the 100 founder licenses?",
+    answer: `The price goes to ${postCapPrice} once 100 founder licenses are gone or the Pro control center ships, whichever happens first. Founder licenses stay valid, keep every future block and Hack, and are never re-billed.`
+  },
+  {
+    question: "What if my license lapses?",
+    answer: `It can't. One payment, no renewal, no subscription. Your site keeps working with or without me.`
+  },
+  {
+    question: "Does my content break if I uninstall?",
+    answer: `No. Basalio is theme-agnostic and your content survives uninstall. Interactions stop; the content stays.`
+  },
+  {
+    question: "Is it actually lightweight?",
+    answer: `One shared script, loaded only on pages that use a block. See /compatibility for the numbers.`
+  },
+  {
+    question: "When does Pro ship?",
+    answer: `${proShipTarget}. If it doesn't, see the refund guarantee below.`
+  },
+  {
+    question: "Will it ever be cheaper than $149?",
+    answer: `No. $149 is the lowest Basalio Pro will ever be. There is no launch sale coming and no discount below this.`
+  }
+];
 ---
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Basalio - Pricing</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@1,9..144,500&display=swap" rel="stylesheet">
-	<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpolygon points='8,56 56,56 46,44 18,44' fill='%23F6F4EF'/%3E%3Crect x='23' y='20' width='18' height='24' fill='%23DFFF00'/%3E%3C/svg%3E">
-	<style>
-		:root{
-			--smp-grid-width-desktop: 1440px;
-			--smp-grid-outer-desktop: 3.333rem;
-			--smp-grid-gap-desktop: 2.222rem;
-			--smp-grid-gap-mobile: 1.667rem;
-			--font-size-xs: 0.722rem;
-			--font-size-sm: 0.889rem;
-			--font-size-base: 1.111rem;
-			--font-size-md: 1.556rem;
-			--font-size-lg: 2rem;
-			--font-size-xl: 3.056rem;
-			--font-size-2xl: 6.222rem;
-			--spacing-micro: 0.556rem;
-			--spacing-small: 0.889rem;
-			--spacing-base: 1.111rem;
-			--spacing-md: 1.389rem;
-			--spacing-lg: 1.667rem;
-			--spacing-xl: 2.222rem;
-			--spacing-2xl: 2.5rem;
-			--spacing-3xl: 3.333rem;
-		}
-		html{scroll-behavior:smooth;}
-		body{margin:0;background:#1C1917;color:#F6F4EF;font-family:'Inter',sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;}
-		a{color:inherit;text-decoration:none;}
-		a:focus,button:focus,input:focus,select:focus,textarea:focus{outline:2px solid #DFFF00;outline-offset:2px;}
-		a:focus:not(:focus-visible),button:focus:not(:focus-visible),input:focus:not(:focus-visible){outline:none;}
-		*:focus-visible{outline:2px solid #DFFF00;outline-offset:2px;}
-		/* Apply Semplice spacing system */
-		section {
-			padding: var(--spacing-3xl) 0 !important;
-		}
-		section > div, section > div > div {
-			max-width: var(--smp-grid-width-desktop);
-			margin: 0 auto !important;
-			padding: 0 var(--smp-grid-outer-desktop) !important;
-		}
-		/* Grid layouts */
-		[style*="display:grid"] {
-			gap: var(--smp-grid-gap-desktop) !important;
-		}
-		/* Eyebrow text styling */
-		section p[style*="IBM Plex Mono"] {
-			font-size: var(--font-size-xs);
-			letter-spacing: 0.08em;
-			text-transform: uppercase;
-			margin-bottom: var(--spacing-lg);
-		}
-		/* Section headings */
-		section h2 {
-			font-size: var(--font-size-xl);
-			line-height: 1.1;
-			margin-bottom: var(--spacing-xl);
-			letter-spacing: -0.02em;
-		}
-		/* Text content spacing */
-		section p[style*="color:#D4CABE"] {
-			font-size: var(--font-size-base);
-			line-height: 1.6;
-			margin-bottom: var(--spacing-lg);
-			max-width: 65ch;
-		}
-		header {
-			max-width: 100%;
-		}
-		header > div {
-			max-width: var(--smp-grid-width-desktop);
-			margin: 0 auto;
-			padding: 0 var(--smp-grid-outer-desktop) !important;
-		}
-		@keyframes driftGrad{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-		@keyframes floatY{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
-		#backToTop{position:fixed;bottom:32px;right:32px;z-index:40;width:44px;height:44px;border-radius:22px;background:#DFFF00;color:#17171A;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;opacity:0;pointer-events:none;transition:opacity .3s ease;box-shadow:0 4px 12px rgba(0,0,0,0.3);}#backToTop.show{opacity:1;pointer-events:auto;}#backToTop:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.4);}
-		.accordion-content{max-height:0;overflow:hidden;transition:max-height .3s ease;}
-		.accordion-content.open{max-height:1000px;}
-		.toggle-icon{transition:transform .3s ease;display:inline-block;}
-		.accordion-button.open .toggle-icon{transform:rotate(45deg);}
-		#mobileMenuBtn{display:none;background:none;border:none;color:#F6F4EF;cursor:pointer;padding:0;width:44px;height:44px;min-width:44px;min-height:44px;}
-		#mobileMenu{display:none;position:fixed;top:0;left:0;right:0;width:100%;height:100vh;background:#1C1917;overflow-y:auto;z-index:48;flex-direction:column;padding-top:80px;}
-		#mobileMenu.open{display:flex;}
-		#mobileMenu a{display:block;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);color:#D4CABE;font-size:16px;font-weight:500;}
-		#mobileMenu a:hover{background:rgba(255,255,255,0.05);color:#F6F4EF;}
-		@media (max-width:900px){
-		  #mobileMenuBtn{display:block;}
-		  nav>div>div:last-child{display:none !important;}
-		}
-		@media (max-width:1024px){
-		  #pricingCards{grid-template-columns:repeat(2,1fr) !important;}
-		}
-		@media (max-width:768px){
-		  #backToTop{bottom:16px;right:16px;width:40px;height:40px;}
-		  nav{padding:0 12px;}
-		  nav>div{padding:6px 6px 6px 14px;}
-		  header{padding:56px 0 40px !important;gap:32px !important;}
-		  header>div{padding:0 16px !important;flex:1 1 100% !important;min-width:auto !important;}
-		  header h1{font-size:clamp(28px,3.8vw,40px) !important;margin:12px 0 !important;}
-		  header>div:last-child{height:auto !important;width:100% !important;}
-		  #focalTier{width:100% !important;padding:24px 20px !important;max-width:100% !important;}
-		  #tierButtons{width:100%;}
-		  #pricingCards{grid-template-columns:1fr !important;gap:16px !important;}
-		  #pricingCards>div{padding:20px !important;}
-		  section{padding:40px 0 !important;}
-		  section>div{padding:0 16px !important;}
-		  .accordion-button{padding:16px 0;font-size:15px;}
-		  table{font-size:12px;}
-		  table th,table td{padding:12px 10px !important;}
-		  h2{font-size:clamp(22px,2.8vw,32px) !important;}
-		  footer>div{grid-template-columns:1fr !important;gap:28px !important;}
-		  div[style*="padding:0 32px"]{padding:0 16px !important;}
-		}
-		@media (max-width:480px){
-		  header{padding:40px 0 32px !important;}
-		  header>div{padding:0 12px !important;}
-		  #focalTier{padding:20px 16px !important;}
-		  #tierButtons{flex-direction:column;gap:8px;}
-		  #tierButtons button{width:100%;}
-		  #pricingCards{gap:12px !important;}
-		  #pricingCards>div{padding:16px !important;}
-		  section{padding:32px 0 !important;}
-		  section>div{padding:0 12px !important;}
-		  .accordion-button{padding:12px 0;font-size:14px;}
-		  table{font-size:11px;}
-		  table th,table td{padding:10px 8px !important;}
-		  h2{font-size:clamp(18px,2.5vw,28px) !important;}
-		  h1{font-size:clamp(24px,3.5vw,36px) !important;}
-		  footer{padding:40px 12px !important;}
-		  footer>div{gap:20px !important;}
-		}
-		@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
-	</style>
-</head>
-<body>
+<RampTemplateLayout {title} {description}>
+  <!-- HEADER: Navigation bar -->
+  <Fragment slot="header">
+    <RampHeader />
+  </Fragment>
 
-<nav style="position:fixed;top:14px;left:0;right:0;z-index:50;padding:0 20px;pointer-events:none;">
-	<div style="max-width:1120px;margin:0 auto;background:rgba(28,25,23,0.92);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:8px 8px 8px 22px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 24px 48px -24px rgba(0,0,0,0.55);pointer-events:auto;">
-		<a href="/" style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;color:#F6F4EF;">
-			<svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true" style="flex:none;"><polygon points="8,56 56,56 46,44 18,44" fill="#F6F4EF"></polygon><rect x="23" y="20" width="18" height="24" fill="#DFFF00"></rect></svg>
-			Basalio
-		</a>
-		<button id="mobileMenuBtn" aria-label="Toggle menu" style="pointer-events:auto;margin-right:8px;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="6" x2="22" y2="6"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="18" x2="22" y2="18"></line></svg></button>
-		<div style="display:flex;gap:26px;align-items:center;">
-			<a href="/#exhibits" style="font-size:14px;color:#D4CABE;transition:color .15s ease;" style-hover="color:#F6F4EF;">Modules</a>
-			<a href="/#bench" style="font-size:14px;color:#D4CABE;transition:color .15s ease;" style-hover="color:#F6F4EF;">Performance</a>
-			<a href="/roadmap" style="font-size:14px;color:#D4CABE;transition:color .15s ease;" style-hover="color:#F6F4EF;">Roadmap</a>
-			<a href="/pricing" style="font-size:14px;color:#F6F4EF;">Pricing</a>
-			<a href="/support" style="font-size:14px;color:#D4CABE;transition:color .15s ease;" style-hover="color:#F6F4EF;">Support</a>
-			<a href="/#waitlist" style="display:inline-flex;align-items:center;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;padding:9px 18px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease;" style-hover="transform:translateY(-1px);">Join the beta</a>
-		</div>
-	</div>
-</nav>
+  <!-- 1. HEADER SECTION: 35-65 split -->
+  <section class="pricing-header">
+    <!-- LEFT (35%): Eyebrow -->
+    <div class="header-left">
+      <p class="eyebrow">PRICING</p>
+    </div>
 
-<div id="mobileMenu">
-	<a href="/#exhibits">Modules</a>
-	<a href="/#bench">Performance</a>
-	<a href="/roadmap">Roadmap</a>
-	<a href="/pricing">Pricing</a>
-	<a href="/support">Support</a>
-	<a href="/#waitlist">Join the beta</a>
-</div>
+    <!-- RIGHT (65%): H1 + Subhead -->
+    <div class="header-right">
+      <h1 class="header-title">The blocks are free. The Pro layer is one payment, once.</h1>
+      <p class="header-subhead">Nine interaction blocks, free forever on WordPress.org — no locked blocks, no watermarks, no instance limits. The Pro control center and the full Hacks vault are a single {founderPrice} founder license for the first 100 people.</p>
+    </div>
+  </section>
 
-<header style="position:relative;overflow:hidden;background:#1C1917;padding:220px 0 88px;">
-	<div aria-hidden="true" style="position:absolute;top:-180px;left:-140px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(223,255,0,0.13),transparent 70%);filter:blur(10px);pointer-events:none;"></div>
-	<div aria-hidden="true" style="position:absolute;bottom:-220px;right:-160px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(43,199,166,0.12),transparent 70%);filter:blur(10px);pointer-events:none;"></div>
+  <!-- 2. TWO-CARD COMPARISON -->
+  <section class="pricing-cards-section">
+    <div class="pricing-cards">
+      <!-- Card A: Free -->
+      <div class="pricing-card free-card">
+        <div class="card-header">
+          <span class="card-label">FREE · FOREVER</span>
+        </div>
 
-	<div style="position:relative;max-width:1200px;margin:0 auto;padding:0 32px;display:flex;gap:56px;align-items:center;flex-wrap:wrap;">
+        <h2 class="card-name">The blocks</h2>
 
-		<div style="flex:1 1 460px;min-width:300px;">
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">Pricing</p>
-			<h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em;line-height:1.05;font-size:clamp(34px,4.4vw,54px);margin:16px 0 16px;color:#F6F4EF;">One purchase. No subscription.</h1>
-			<p style="color:#D4CABE;font-size:17px;max-width:56ch;margin:0 0 32px;">Priced like the tools you already trust: a single payment, tiered by how many sites you're building for, never by locking modules behind a higher plan. Every tier gets every module.</p>
+        <div class="card-price">
+          <span class="price-amount">$0</span>
+        </div>
 
-			<div style="display:inline-flex;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:999px;padding:5px;gap:4px;" id="tierButtons">
-				<button data-tier="0" class="tier-btn" style="flex:1;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;padding:9px 18px;border:0;border-radius:999px;cursor:pointer;white-space:nowrap;transition:background .18s ease,color .18s ease;background:#DFFF00;color:#17171A;">Personal</button>
-				<button data-tier="1" class="tier-btn" style="flex:1;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;padding:9px 18px;border:0;border-radius:999px;cursor:pointer;white-space:nowrap;transition:background .18s ease,color .18s ease;background:transparent;color:#D4CABE;">Studio</button>
-				<button data-tier="2" class="tier-btn" style="flex:1;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;padding:9px 18px;border:0;border-radius:999px;cursor:pointer;white-space:nowrap;transition:background .18s ease,color .18s ease;background:transparent;color:#D4CABE;">Agency</button>
-			</div>
-		</div>
+        <p class="card-deck">All nine interaction blocks. Every one complete.</p>
 
-		<div style="flex:1 1 400px;min-width:340px;display:flex;justify-content:center;">
-			<div style="position:relative;height:320px;width:380px;">
+        <!-- Divider list -->
+        <ul class="divider-list">
+          <li>Grid Reveal, Case Study Transition, Scroll Sequence, Image Counter, Timeline, Image Carousel, Fullscreen Video, Smooth Scroll, Hover Effects</li>
+          <li>Works with any theme — no page builder, no premium theme</li>
+          <li>Keyboard-operable and reduced-motion aware by default</li>
+          <li>Shared script loads only on pages that use a block</li>
+          <li>Four Hacks as copy-paste snippets</li>
+        </ul>
 
-				<div aria-hidden="true" style="position:absolute;top:0;left:10px;animation:floatY 5s ease-in-out infinite;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F6F4EF;background:#26221E;border:1px solid rgba(255,255,255,0.12);border-radius:999px;padding:7px 14px;box-shadow:0 16px 30px -14px rgba(0,0,0,0.5);white-space:nowrap;">Every module included</div>
-				<div aria-hidden="true" style="position:absolute;top:0;right:10px;animation:floatY 6.5s ease-in-out infinite;animation-delay:-2s;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F6F4EF;background:#26221E;border:1px solid rgba(255,255,255,0.12);border-radius:999px;padding:7px 14px;box-shadow:0 16px 30px -14px rgba(0,0,0,0.5);white-space:nowrap;">Lifetime updates</div>
-				<div aria-hidden="true" style="position:absolute;bottom:0;left:10px;animation:floatY 5.6s ease-in-out infinite;animation-delay:-3.4s;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F6F4EF;background:#26221E;border:1px solid rgba(255,255,255,0.12);border-radius:999px;padding:7px 14px;box-shadow:0 16px 30px -14px rgba(0,0,0,0.5);white-space:nowrap;">No subscription</div>
-				<div aria-hidden="true" style="position:absolute;bottom:0;right:10px;animation:floatY 4.6s ease-in-out infinite;animation-delay:-1.2s;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#F6F4EF;background:#26221E;border:1px solid rgba(255,255,255,0.12);border-radius:999px;padding:7px 14px;box-shadow:0 16px 30px -14px rgba(0,0,0,0.5);white-space:nowrap;">14-day refund</div>
+        <p class="card-footnote">Free is not a trial. Nothing here expires, phones home, or gets pulled into Pro later.</p>
 
-				<div id="focalTier" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:230px;background:linear-gradient(165deg, rgba(223,255,0,0.14), #26221E 60%);border:1px solid rgba(223,255,0,0.35);border-radius:16px;padding:30px 26px;box-shadow:0 40px 80px -30px rgba(0,0,0,0.6);text-align:center;">
-					<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#D4CABE;text-transform:uppercase;letter-spacing:.06em;margin:0;">Personal</p>
-					<p style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;margin:12px 0 2px;color:#F6F4EF;">$79</p>
-					<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#D4CABE;margin:0 0 16px;">one-time</p>
-					<p style="font-size:13px;color:#F6F4EF;margin:0;">1 site</p>
-				</div>
+        <!-- CTA buttons -->
+        <div class="card-cta">
+          <a href="/hacks" class="cta-primary">Get the 4 free Hacks →</a>
+          <a href="#waitlist" class="cta-secondary">Notify me at launch →</a>
+        </div>
+      </div>
 
-			</div>
-		</div>
+      <!-- Card B: Founder Lifetime -->
+      <div class="pricing-card founder-card">
+        <div class="card-header">
+          <span class="card-label">FOUNDER · 100 LICENSES</span>
+        </div>
 
-	</div>
-</header>
+        <h2 class="card-name">The control center</h2>
 
-<section style="padding:80px 0;background:#1C1917;">
-	<div style="max-width:1200px;margin:0 auto;padding:0 32px;">
-		<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;" id="pricingCards">
-			<!-- Cards will be inserted by JavaScript -->
-		</div>
-	</div>
-</section>
+        <div class="card-price">
+          <span class="price-amount">{founderPrice}</span>
+          <span class="price-period">one time — for the first 100 licenses, or until the Pro control center ships. Whichever comes first. {postCapPrice} after that.</span>
+        </div>
 
-<section style="padding:80px 0;background:#1C1917;border-top:1px solid #3A352E;">
-	<div style="max-width:1200px;margin:0 auto;padding:0 32px;">
-		<div style="max-width:640px;margin-bottom:48px;">
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">Compare licenses</p>
-			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(28px,3.4vw,38px);margin-top:14px;">Everything included, line by line.</h2>
-			<p style="color:#D4CABE;margin-top:16px;font-size:17px;">The only thing that changes between tiers is how many sites you can build on, and a few things agencies specifically need.</p>
-		</div>
+        <p class="card-deck">Everything above, plus the Pro layer — for as long as Basalio exists. No renewal.</p>
 
-		<div style="overflow-x:auto;border:1px solid #3A352E;border-radius:10px;background:#26221E;">
-			<table style="width:100%;min-width:640px;border-collapse:collapse;">
-				<caption style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;">Feature comparison across Personal, Studio, and Agency licenses</caption>
-				<thead>
-					<tr>
-						<th scope="col" style="text-align:left;padding:16px 22px;"></th>
-						<th scope="col" style="padding:26px 22px 20px;text-align:center;"><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:#D4CABE;">Personal</div><div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#F6F4EF;margin-top:6px;">$79</div></th>
-						<th scope="col" style="padding:26px 22px 20px;text-align:center;background:rgba(223,255,0,0.06);border-top:2px solid #DFFF00;"><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:#D4CABE;">Studio</div><div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#F6F4EF;margin-top:6px;">$149</div></th>
-						<th scope="col" style="padding:26px 22px 20px;text-align:center;"><div style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:#D4CABE;">Agency</div><div style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;color:#F6F4EF;margin-top:6px;">$299</div></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<th scope="row" style="text-align:left;font-weight:500;color:#F6F4EF;font-size:14px;padding:16px 22px;border-top:1px solid #3A352E;">Sites you can activate on</th>
-						<td style="padding:16px 22px;font-size:14px;text-align:center;border-top:1px solid #3A352E;color:#D4CABE;">1</td>
-						<td style="padding:16px 22px;font-size:14px;text-align:center;border-top:1px solid #3A352E;color:#D4CABE;background:rgba(223,255,0,0.03);">5</td>
-						<td style="padding:16px 22px;font-size:14px;text-align:center;border-top:1px solid #3A352E;color:#D4CABE;">Unlimited</td>
-					</tr>
-					<tr>
-						<th scope="row" style="text-align:left;font-weight:500;color:#F6F4EF;font-size:14px;padding:16px 22px;border-top:1px solid #3A352E;">Lifetime updates</th>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="margin:0 auto;color:#2BC7A6;"><path d="M3 8.4l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;background:rgba(223,255,0,0.03);"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="margin:0 auto;color:#2BC7A6;"><path d="M3 8.4l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="margin:0 auto;color:#2BC7A6;"><path d="M3 8.4l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></td>
-					</tr>
-					<tr>
-						<th scope="row" style="text-align:left;font-weight:500;color:#F6F4EF;font-size:14px;padding:16px 22px;border-top:1px solid #3A352E;">All 3 beta modules</th>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="margin:0 auto;color:#2BC7A6;"><path d="M3 8.4l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;background:rgba(223,255,0,0.03);"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="margin:0 auto;color:#2BC7A6;"><path d="M3 8.4l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="margin:0 auto;color:#2BC7A6;"><path d="M3 8.4l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></td>
-					</tr>
-					<tr>
-						<th scope="row" style="text-align:left;font-weight:500;color:#F6F4EF;font-size:14px;padding:16px 22px;border-top:1px solid #3A352E;">Future roadmap modules, as released</th>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="margin:0 auto;color:#2BC7A6;"><path d="M3 8.4l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;background:rgba(223,255,0,0.03);"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="margin:0 auto;color:#2BC7A6;"><path d="M3 8.4l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="margin:0 auto;color:#2BC7A6;"><path d="M3 8.4l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></td>
-					</tr>
-					<tr>
-						<th scope="row" style="text-align:left;font-weight:500;color:#F6F4EF;font-size:14px;padding:16px 22px;border-top:1px solid #3A352E;">Use on client sites</th>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;color:rgba(255,255,255,0.28);font-size:15px;">&mdash;</td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;background:rgba(223,255,0,0.03);"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="margin:0 auto;color:#2BC7A6;"><path d="M3 8.4l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="margin:0 auto;color:#2BC7A6;"><path d="M3 8.4l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></td>
-					</tr>
-					<tr>
-						<th scope="row" style="text-align:left;font-weight:500;color:#F6F4EF;font-size:14px;padding:16px 22px;border-top:1px solid #3A352E;">Client site-transfer license</th>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;color:rgba(255,255,255,0.28);font-size:15px;">&mdash;</td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;background:rgba(223,255,0,0.03);color:rgba(255,255,255,0.28);font-size:15px;">&mdash;</td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="margin:0 auto;color:#2BC7A6;"><path d="M3 8.4l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></td>
-					</tr>
-					<tr>
-						<th scope="row" style="text-align:left;font-weight:500;color:#F6F4EF;font-size:14px;padding:16px 22px;border-top:1px solid #3A352E;">Support</th>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;color:#D4CABE;">Email</td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;color:#D4CABE;background:rgba(223,255,0,0.03);">Priority</td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;color:#D4CABE;">Priority</td>
-					</tr>
-					<tr>
-						<th scope="row" style="text-align:left;font-weight:500;color:#F6F4EF;font-size:14px;padding:16px 22px;border-top:1px solid #3A352E;">Early access to roadmap builds</th>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;color:rgba(255,255,255,0.28);font-size:15px;">&mdash;</td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;background:rgba(223,255,0,0.03);"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="margin:0 auto;color:#2BC7A6;"><path d="M3 8.4l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="margin:0 auto;color:#2BC7A6;"><path d="M3 8.4l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></td>
-					</tr>
-					<tr>
-						<th scope="row" style="text-align:left;font-weight:500;color:#F6F4EF;font-size:14px;padding:16px 22px;border-top:1px solid #3A352E;">Direct input on roadmap order</th>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;color:rgba(255,255,255,0.28);font-size:15px;">&mdash;</td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;background:rgba(223,255,0,0.03);color:rgba(255,255,255,0.28);font-size:15px;">&mdash;</td>
-						<td style="padding:16px 22px;text-align:center;border-top:1px solid #3A352E;"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" style="margin:0 auto;color:#2BC7A6;"><path d="M3 8.4l3.2 3.2L13 5" fill="none" stroke="currentColor" stroke-width="1.6"></path></svg></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;margin-top:16px;">Prices shown are founding rates for the paid launch. Beta access is free; see the section below.</p>
-	</div>
-</section>
+        <!-- Divider list -->
+        <ul class="divider-list">
+          <li>Full Hacks vault — 12+ recipes, growing</li>
+          <li>Pro control center: live-tune all nine blocks from the editor sidebar</li>
+          <li>One-click versions of the three hack-trailer effects</li>
+          <li>Every future block and Hack included, no upgrade fee</li>
+          <li>Direct line to the person building it</li>
+          <li>{licenseScope}</li>
+        </ul>
 
-<section id="faq" style="padding:80px 0;border-top:1px solid #3A352E;background:#1C1917;">
-	<div style="max-width:900px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">Licensing & updates</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(28px,3.4vw,42px);margin:14px 0 36px;">The questions worth answering before you buy.</h2>
+        <!-- CTA button -->
+        <div class="card-cta">
+          <a href="#early-access" class="cta-primary-founder">Claim founder access →</a>
+        </div>
 
-		<div style="display:grid;gap:0;">
-			<button class="accordion-button open" style="border-bottom:1px solid #3A352E;padding:18px 0;display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:#F6F4EF;">
-				Is Basalio a subscription?
-				<span class="toggle-icon" style="flex-shrink:0;transform:rotate(45deg);">−</span>
-			</button>
-			<div class="accordion-content open" style="padding:16px 0 32px;">
-				<p style="font-size:14px;color:#D4CABE;margin:0;line-height:1.6;">No. It's a one-time payment, and every tier includes lifetime updates. You're buying a license, not renting access. Nothing expires and nothing rebills.</p>
-			</div>
+        <p class="card-micro">{refundWindow}-day refund · {licenseScope}</p>
+      </div>
+    </div>
+  </section>
 
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;padding:18px 0;display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:#F6F4EF;">
-				What exactly do "lifetime updates" cover?
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding:0;">
-				<p style="font-size:14px;color:#D4CABE;padding:16px 0 32px;margin:0;line-height:1.6;">All bug fixes, performance improvements, and new modules as they release. Major version updates included. You're always current, always supported.</p>
-			</div>
+  <!-- 3. BUILD LEDGER -->
+  <section class="build-ledger">
+    <div class="ledger-container">
+      <h2 class="ledger-title">What's built, what isn't</h2>
+      <p class="ledger-intro">A founder license is partly a bet on work that isn't finished. Here's the honest state of it.</p>
 
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;padding:18px 0;display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:#F6F4EF;">
-				It's pre-launch. What does joining the beta cost?
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding:0;">
-				<p style="font-size:14px;color:#D4CABE;padding:16px 0 32px;margin:0;line-height:1.6;">Nothing. Beta seats are free for real, live portfolio sites. When paid launch happens, existing beta members keep their free access.</p>
-			</div>
+      <div class="ledger-rows">
+        {buildStatus.map((row) => (
+          <div class="ledger-row">
+            <div class="ledger-item">{row.item}</div>
+            <div class={`ledger-status ${row.status.toLowerCase().replace(/\s+/g, '-')}`}>
+              <span class="status-label">{row.status}</span>
+            </div>
+            <div class="ledger-note">{row.note}</div>
+          </div>
+        ))}
+      </div>
 
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;padding:18px 0;display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:#F6F4EF;">
-				Can I use one license across client projects?
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding:0;">
-				<p style="font-size:14px;color:#D4CABE;padding:16px 0 32px;margin:0;line-height:1.6;">Studio and Agency tiers can. Personal tier is one site only. Agency tier includes client-transfer licenses—hand off to clients with no extra cost.</p>
-			</div>
+      <p class="ledger-closing">Nothing on this page is described as finished when it isn't. If a row moves, this table moves with it.</p>
+    </div>
+  </section>
 
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;padding:18px 0;display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:#F6F4EF;">
-				What if I outgrow my tier?
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding:0;">
-				<p style="font-size:14px;color:#D4CABE;padding:16px 0 32px;margin:0;line-height:1.6;">Reach out and we'll help. Upgrades are pro-rated. Most folks land on Studio or Agency for client work—we can work out what fits.</p>
-			</div>
+  <!-- 4. CONTROL CENTER PREVIEW -->
+  <section class="control-preview">
+    <div class="preview-container">
+      <h2 class="preview-title">What you're buying access to</h2>
+      <p class="preview-body">Every block ships with sensible defaults. The Pro sidebar is where you stop accepting them — timing, easing, distance, thresholds, all live, all in the editor, no CSS.</p>
 
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;padding:18px 0;display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:#F6F4EF;">
-				How are licenses and updates delivered?
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding:0;">
-				<p style="font-size:14px;color:#D4CABE;padding:16px 0 32px;margin:0;line-height:1.6;">You'll get a license key via email after purchase. Drop it into Basalio settings to activate. Updates pull automatically—no manual steps needed.</p>
-			</div>
+      <!-- Coded mockup: editor sidebar frame -->
+      <div class="mockup-frame">
+        <div class="mockup-badge">
+          <span class="badge-label">MOCKUP · IN BUILD</span>
+        </div>
 
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;padding:18px 0;display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:#F6F4EF;">
-				Do you offer refunds?
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding:0;">
-				<p style="font-size:14px;color:#D4CABE;padding:16px 0 32px;margin:0;line-height:1.6;">Yes. 14-day money-back guarantee, no questions asked. Just reach out within two weeks if it's not right for you.</p>
-			</div>
-		</div>
-	</div>
-</section>
+        <div class="sidebar-mock">
+          <!-- Chrome/frame styling -->
+          <div class="sidebar-header">
+            <span class="sidebar-title">Block Settings</span>
+            <div class="sidebar-dots">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
 
-<section style="position:relative;overflow:hidden;padding:100px 0;text-align:center;background:linear-gradient(100deg,#DFFF00,#2BC7A6 55%,#FF6B4A);background-size:200% 200%;animation:driftGrad 18s ease-in-out infinite;">
-	<div style="max-width:1200px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.85);margin:0;">Beta</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(28px,4vw,42px);max-width:640px;margin:14px auto 16px;color:#fff;">No checkout yet, just early access.</h2>
-		<p style="color:rgba(255,255,255,0.85);max-width:44ch;margin:0 auto 32px;">Paid licenses open after beta. For now, seats are free for real, live portfolio sites.</p>
-		<script>
-			const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-			const mobileMenu = document.getElementById('mobileMenu');
-			if (mobileMenuBtn) {
-				mobileMenuBtn.addEventListener('click', () => {
-					mobileMenu.classList.toggle('open');
-				});
-				mobileMenu.querySelectorAll('a').forEach(link => {
-					link.addEventListener('click', () => {
-						mobileMenu.classList.remove('open');
-					});
-				});
-			}
-		</script>
-		<form style="display:flex;gap:10px;max-width:440px;margin:0 auto;">
-			<input type="email" required placeholder="you@yourstudio.com" aria-label="Email address" style="flex:1;padding:13px 18px;border:0;border-radius:999px;font-family:'Inter',sans-serif;font-size:14px;background:rgba(255,255,255,0.95);">
-			<button type="submit" style="display:inline-flex;align-items:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:13px 22px;border:0;border-radius:999px;background:#17171A;color:#F6F4EF;cursor:pointer;white-space:nowrap;">Request access</button>
-		</form>
-	</div>
-</section>
+          <!-- Control rows -->
+          <div class="sidebar-controls">
+            <div class="control-group">
+              <label class="control-label">Reveal duration</label>
+              <input type="range" class="control-input" min="0" max="100" value="60" disabled />
+              <span class="control-value">0.6s</span>
+            </div>
 
-<Footer />
+            <div class="control-group">
+              <label class="control-label">Easing</label>
+              <select class="control-input" disabled>
+                <option>cubic-bezier</option>
+                <option>ease-out</option>
+                <option>ease-in-out</option>
+              </select>
+            </div>
 
-<script>
-	const tiersData = [
-		{ name: 'Personal', price: '$79', sites: '1 site' },
-		{ name: 'Studio', price: '$149', sites: '5 sites' },
-		{ name: 'Agency', price: '$299', sites: 'Unlimited sites' },
-	];
+            <div class="control-group">
+              <label class="control-label">Stagger</label>
+              <input type="range" class="control-input" min="0" max="100" value="40" disabled />
+              <span class="control-value">40ms</span>
+            </div>
 
-	let activeTier = 0;
+            <div class="control-group">
+              <label class="control-label">Trigger offset</label>
+              <input type="range" class="control-input" min="0" max="100" value="50" disabled />
+              <span class="control-value">50%</span>
+            </div>
 
-	const pricingCardsHtml = [
-		{
-			name: 'Personal',
-			price: '$79',
-			sites: '1 site',
-			features: ['All 3 beta modules', 'Roadmap modules as released', 'Email support'],
-			highlighted: false,
-		},
-		{
-			name: 'Studio',
-			price: '$149',
-			sites: '5 sites',
-			features: ['Everything in Personal', 'Use on client sites', 'Priority support', 'Early roadmap access'],
-			highlighted: true,
-		},
-		{
-			name: 'Agency',
-			price: '$299',
-			sites: 'Unlimited sites',
-			features: ['Everything in Studio', 'Client site-transfer license', 'Direct roadmap input'],
-			highlighted: false,
-		},
-	];
+            <div class="control-group">
+              <label class="control-label">Reduced-motion fallback</label>
+              <select class="control-input" disabled>
+                <option>Instant</option>
+                <option>Fade</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
 
-	function renderPricingCards() {
-		const container = document.getElementById('pricingCards');
-		container.innerHTML = pricingCardsHtml.map((card, idx) => {
-			const borderColor = card.highlighted ? 'rgba(223,255,0,0.35)' : '#3A352E';
-			const bgColor = card.highlighted ? 'linear-gradient(165deg, rgba(223,255,0,0.14), #26221E 60%)' : '#26221E';
-			const shadowStyle = card.highlighted ? 'box-shadow:0 24px 50px -24px rgba(0,0,0,0.5);' : '';
-			return `
-				<div style="position:relative;border:1px solid ${borderColor};background:${bgColor};padding:32px;border-radius:10px;display:flex;flex-direction:column;overflow:hidden;${shadowStyle}">
-					<span style="position:absolute;top:8px;right:16px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:48px;color:rgba(255,255,255,0.06);">${idx + 1}</span>
-					<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;text-transform:uppercase;letter-spacing:.06em;margin:0;">${card.name}</p>
-					<p style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;margin:12px 0 4px;color:#F6F4EF;">${card.price} <span style="font-size:14px;color:#D4CABE;font-family:'Inter',sans-serif;font-weight:400;">one-time</span></p>
-					<p style="color:#D4CABE;font-size:14px;margin:0 0 20px;">${card.sites}</p>
-					<ul style="list-style:none;margin:0 0 24px;padding:0;flex:1;">
-						${card.features.map(f => `<li style="font-size:14px;padding:7px 0;border-top:1px solid ${card.highlighted ? 'rgba(255,255,255,0.12)' : '#3A352E'};color:#F6F4EF;">${f}</li>`).join('')}
-					</ul>
-					<a href="/#waitlist" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;padding:12px 20px;border-radius:999px;${card.highlighted ? 'background:#DFFF00;color:#17171A;' : 'border:1px solid rgba(255,255,255,0.4);background:transparent;color:#F6F4EF;'}transition:transform .18s ease;">Join the beta</a>
-				</div>
-			`;
-		}).join('');
-	}
+      <p class="preview-caption">Mockup of work in progress. Shipping {proShipTarget}.</p>
+    </div>
+  </section>
 
-	document.querySelectorAll('.tier-btn').forEach(btn => {
-		btn.addEventListener('click', function() {
-			activeTier = parseInt(this.dataset.tier);
-			updateTierDisplay();
-		});
-	});
+  <!-- 5. RISK REVERSAL -->
+  <section class="risk-reversal">
+    <div class="reversal-container">
+      <h2 class="reversal-title">If I don't ship it</h2>
 
-	function updateTierDisplay() {
-		// Update buttons
-		document.querySelectorAll('.tier-btn').forEach((btn, idx) => {
-			if (idx === activeTier) {
-				btn.style.background = '#DFFF00';
-				btn.style.color = '#17171A';
-			} else {
-				btn.style.background = 'transparent';
-				btn.style.color = '#D4CABE';
-			}
-		});
+      <div class="reversal-body">
+        <p>Basalio is built by one person. You should know what that means before you pay.</p>
 
-		// Update focal tier card
-		const tier = tiersData[activeTier];
-		const focalCard = document.getElementById('focalTier');
-		if (activeTier === 1) {
-			focalCard.style.background = 'linear-gradient(165deg, rgba(223,255,0,0.14), #26221E 60%)';
-			focalCard.style.border = '1px solid rgba(223,255,0,0.35)';
-		} else {
-			focalCard.style.background = '#26221E';
-			focalCard.style.border = '1px solid #3A352E';
-		}
-		focalCard.innerHTML = `
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#D4CABE;text-transform:uppercase;letter-spacing:.06em;margin:0;">${tier.name}</p>
-			<p style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:42px;margin:12px 0 2px;color:#F6F4EF;">${tier.price}</p>
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#D4CABE;margin:0 0 16px;">one-time</p>
-			<p style="font-size:13px;color:#F6F4EF;margin:0;">${tier.sites}</p>
-		`;
-	}
+        <p>The nine blocks are free whether or not you ever buy anything — they don't depend on me staying in business. The Pro layer does. So: a {refundWindow}-day refund, no questions and no form. And if the Pro control center hasn't shipped by {proShipTarget}, email {supportEmail} and I refund you in full, past the window, no argument.</p>
 
-	renderPricingCards();
-	updateTierDisplay();
+        <p>Everything is GPL-2.0-or-later. If I disappear tomorrow, the code you have keeps working and stays yours to fork.</p>
+      </div>
+    </div>
+  </section>
 
-	// Accordion functionality
-	const accordionButtons = document.querySelectorAll('.accordion-button');
-	accordionButtons.forEach((button) => {
-		button.addEventListener('click', function() {
-			const section = this.closest('section');
-			const isOpen = this.classList.contains('open');
-			const content = this.nextElementSibling;
+  <!-- 6. FAQ SECTION -->
+  <section class="pricing-faq">
+    <RampFAQ {faqs} />
+  </section>
 
-			// Close all other accordions in this section
-			section.querySelectorAll('.accordion-button.open').forEach(otherBtn => {
-				if (otherBtn !== this) {
-					otherBtn.classList.remove('open');
-					otherBtn.nextElementSibling.classList.remove('open');
-				}
-			});
+  <!-- 7. FOOTER CTA -->
+  <section class="footer-cta">
+    <div class="cta-container">
+      <h2 class="cta-title">100-founder-license cap</h2>
+      <p class="cta-subhead">{founderPrice} once. {refundWindow}-day refund. {licenseScope}.</p>
+      <a href="#early-access" class="cta-button">Claim founder access →</a>
+      <p class="cta-support">Questions first? <a href={`mailto:${supportEmail}`}>{supportEmail}</a></p>
+    </div>
+  </section>
 
-			// Toggle this accordion
-			if (isOpen) {
-				this.classList.remove('open');
-				content.classList.remove('open');
-			} else {
-				this.classList.add('open');
-				content.classList.add('open');
-			}
-		});
-	});
+  <!-- FOOTER -->
+  <Fragment slot="footer">
+    <RampFooter address="Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark" />
+  </Fragment>
+</RampTemplateLayout>
 
-	// Back to top button
-	const backToTopBtn = document.getElementById('backToTop');
-	window.addEventListener('scroll', () => {
-		if (window.scrollY > 300) {
-			backToTopBtn.classList.add('show');
-		} else {
-			backToTopBtn.classList.remove('show');
-		}
-	});
-	backToTopBtn.addEventListener('click', () => {
-		window.scrollTo({ top: 0, behavior: 'smooth' });
-	});
-</script>
 
-<button id="backToTop" aria-label="Back to top">↑</button>
+<style>
+  /* COLOR TOKENS */
+  :root {
+    --ink: #0A0A0A;
+    --paper: #FFFFFF;
+    --stone: #DFDCD5;
+    --acid: #DFFF00;
+  }
 
-</body>
-</html>
+  /* 1. HEADER SECTION: 35-65 split */
+  .pricing-header {
+    display: grid;
+    grid-template-columns: 35% 65%;
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+    padding: 120px 40px;
+    background: var(--paper);
+    box-sizing: border-box;
+    gap: 60px;
+    align-items: flex-start;
+  }
+
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .eyebrow {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+
+  .header-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .header-title {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 52px;
+    font-weight: 400;
+    letter-spacing: -0.52px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+    text-wrap: balance;
+  }
+
+  .header-subhead {
+    font-family: Switzer, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(10, 10, 10, 0.7);
+    margin: 0;
+    padding: 0;
+    max-width: 650px;
+  }
+
+  /* 2. TWO-CARD COMPARISON */
+  .pricing-cards-section {
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+    padding: 100px 40px;
+    background: var(--paper);
+    box-sizing: border-box;
+  }
+
+  .pricing-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .pricing-card {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 40px;
+    border: 1px solid var(--stone);
+    border-radius: 8px;
+    background: var(--paper);
+    box-sizing: border-box;
+  }
+
+  .free-card {
+    border: 1px solid var(--stone);
+  }
+
+  .founder-card {
+    border: 2px solid var(--acid);
+    background: rgba(223, 255, 0, 0.05);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .card-label {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink);
+    padding: 6px 10px;
+    background: transparent;
+    border: 1px solid var(--ink);
+    border-radius: 4px;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  .founder-card .card-label {
+    background: var(--acid);
+    border: none;
+    color: var(--ink);
+  }
+
+  .card-name {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: -0.32px;
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+  }
+
+  .card-price {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .price-amount {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .price-period {
+    font-family: Switzer, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(10, 10, 10, 0.6);
+    line-height: 1.5;
+  }
+
+  .price-note {
+    font-family: Switzer, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(10, 10, 10, 0.5);
+  }
+
+  .card-deck {
+    font-family: Switzer, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+  }
+
+  .divider-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .divider-list li {
+    font-family: Switzer, sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(10, 10, 10, 0.75);
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--stone);
+    margin: 0;
+  }
+
+  .divider-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .card-footnote {
+    font-family: Switzer, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgba(10, 10, 10, 0.5);
+    margin: 0;
+    padding: 0;
+  }
+
+  .card-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .cta-primary,
+  .cta-secondary,
+  .cta-primary-founder {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 24px;
+    border-radius: 6px;
+    display: inline-block;
+    width: fit-content;
+    transition: all 200ms ease;
+    cursor: pointer;
+    border: 2px solid;
+  }
+
+  .cta-primary,
+  .cta-primary-founder {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .cta-primary:hover,
+  .cta-primary-founder:hover {
+    background: rgba(10, 10, 10, 0.9);
+    border-color: rgba(10, 10, 10, 0.9);
+  }
+
+  .cta-secondary {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .cta-secondary:hover {
+    background: rgba(10, 10, 10, 0.05);
+  }
+
+  .card-micro {
+    font-family: Switzer, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(10, 10, 10, 0.5);
+    margin: 8px 0 0 0;
+    padding: 0;
+  }
+
+  /* 3. BUILD LEDGER */
+  .build-ledger {
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+    padding: 100px 40px;
+    background: var(--paper);
+    box-sizing: border-box;
+  }
+
+  .ledger-container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .ledger-title {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 40px;
+    font-weight: 400;
+    letter-spacing: -0.4px;
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+  }
+
+  .ledger-intro {
+    font-family: Switzer, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(10, 10, 10, 0.7);
+    margin: 0;
+    padding: 0;
+  }
+
+  .ledger-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .ledger-row {
+    display: grid;
+    grid-template-columns: 1.2fr 150px 1fr;
+    gap: 40px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--stone);
+    align-items: flex-start;
+  }
+
+  .ledger-row:last-child {
+    border-bottom: none;
+  }
+
+  .ledger-item {
+    font-family: Switzer, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .ledger-status {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .status-label {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  .ledger-status.live .status-label {
+    background: var(--acid);
+    color: var(--ink);
+  }
+
+  .ledger-status.in-build .status-label {
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+  }
+
+  .ledger-status.planned .status-label {
+    background: var(--stone);
+    color: var(--ink);
+  }
+
+  .ledger-status.ongoing .status-label {
+    background: var(--stone);
+    color: var(--ink);
+  }
+
+  .ledger-status.in-review .status-label {
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+  }
+
+  .ledger-note {
+    font-family: Switzer, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgba(10, 10, 10, 0.6);
+  }
+
+  .ledger-closing {
+    font-family: Switzer, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgba(10, 10, 10, 0.5);
+    margin: 20px 0 0 0;
+    padding: 0;
+    border-top: 1px solid var(--stone);
+    padding-top: 20px;
+  }
+
+  /* 4. CONTROL CENTER PREVIEW */
+  .control-preview {
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+    padding: 100px 40px;
+    background: var(--paper);
+    box-sizing: border-box;
+  }
+
+  .preview-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .preview-title {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 40px;
+    font-weight: 400;
+    letter-spacing: -0.4px;
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+  }
+
+  .preview-body {
+    font-family: Switzer, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(10, 10, 10, 0.7);
+    margin: 0;
+    padding: 0;
+    max-width: 600px;
+  }
+
+  .mockup-frame {
+    position: relative;
+    background: var(--paper);
+    border: 1px solid var(--stone);
+    border-radius: 8px;
+    overflow: hidden;
+    max-width: 400px;
+  }
+
+  .mockup-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
+  }
+
+  .badge-label {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--stone);
+    padding: 6px 10px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  .sidebar-mock {
+    background: #1a1a1a;
+    color: #ffffff;
+    padding: 0;
+  }
+
+  .sidebar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .sidebar-title {
+    color: #ffffff;
+  }
+
+  .sidebar-dots {
+    display: flex;
+    gap: 4px;
+  }
+
+  .sidebar-dots span {
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+  }
+
+  .sidebar-controls {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .control-label {
+    font-family: Switzer, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    padding: 0;
+  }
+
+  .control-input {
+    font-family: Switzer, sans-serif;
+    font-size: 12px;
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 10px;
+    border-radius: 4px;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  .control-input:focus {
+    outline: none;
+  }
+
+  .control-value {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .preview-caption {
+    font-family: Switzer, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(10, 10, 10, 0.5);
+    margin: 0;
+    padding: 0;
+  }
+
+  /* 5. RISK REVERSAL */
+  .risk-reversal {
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+    padding: 100px 40px;
+    background: var(--paper);
+    box-sizing: border-box;
+  }
+
+  .reversal-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    max-width: 800px;
+  }
+
+  .reversal-title {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 40px;
+    font-weight: 400;
+    letter-spacing: -0.4px;
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+  }
+
+  .reversal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .reversal-body p {
+    font-family: Switzer, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.8;
+    color: rgba(10, 10, 10, 0.75);
+    margin: 0;
+    padding: 0;
+  }
+
+  /* 6. FAQ SECTION */
+  .pricing-faq {
+    width: 100%;
+  }
+
+  /* 7. FOOTER CTA */
+  .footer-cta {
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+    padding: 80px 40px;
+    background: var(--paper);
+    box-sizing: border-box;
+    border-top: 1px solid var(--stone);
+  }
+
+  .cta-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 600px;
+  }
+
+  .cta-title {
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 36px;
+    font-weight: 400;
+    letter-spacing: -0.36px;
+    color: var(--ink);
+    margin: 0;
+    padding: 0;
+  }
+
+  .cta-subhead {
+    font-family: Switzer, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgba(10, 10, 10, 0.7);
+    margin: 0;
+    padding: 0;
+  }
+
+  .cta-button {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 14px 24px;
+    border-radius: 6px;
+    display: inline-block;
+    width: fit-content;
+    border: 2px solid var(--ink);
+    transition: all 200ms ease;
+    cursor: pointer;
+  }
+
+  .cta-button:hover {
+    background: rgba(10, 10, 10, 0.9);
+    border-color: rgba(10, 10, 10, 0.9);
+  }
+
+  .cta-support {
+    font-family: Switzer, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(10, 10, 10, 0.6);
+    margin: 8px 0 0 0;
+    padding: 0;
+  }
+
+  .cta-support a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    transition: all 200ms ease;
+  }
+
+  .cta-support a:hover {
+    color: rgba(10, 10, 10, 0.7);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .pricing-header {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding: 80px 20px;
+    }
+
+    .header-title {
+      font-size: 40px;
+    }
+
+    .pricing-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .ledger-row {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .pricing-header {
+      grid-template-columns: 1fr;
+      gap: 30px;
+      padding: 60px 20px;
+    }
+
+    .header-title {
+      font-size: 32px;
+    }
+
+    .header-subhead {
+      font-size: 16px;
+    }
+
+    .pricing-cards-section {
+      padding: 60px 20px;
+    }
+
+    .pricing-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .pricing-card {
+      padding: 32px;
+    }
+
+    .card-name {
+      font-size: 28px;
+    }
+
+    .card-deck {
+      font-size: 16px;
+    }
+
+    .card-cta {
+      flex-direction: column;
+    }
+
+    .cta-primary,
+    .cta-secondary,
+    .cta-primary-founder {
+      width: 100%;
+      text-align: center;
+    }
+
+    .build-ledger {
+      padding: 60px 20px;
+    }
+
+    .ledger-title {
+      font-size: 32px;
+    }
+
+    .ledger-row {
+      grid-template-columns: 1fr;
+      padding: 16px 0;
+    }
+
+    .control-preview {
+      padding: 60px 20px;
+    }
+
+    .preview-title {
+      font-size: 32px;
+    }
+
+    .mockup-frame {
+      max-width: 100%;
+    }
+
+    .risk-reversal {
+      padding: 60px 20px;
+    }
+
+    .reversal-title {
+      font-size: 32px;
+    }
+
+    .footer-cta {
+      padding: 60px 20px;
+    }
+
+    .cta-title {
+      font-size: 28px;
+    }
+
+    .cta-button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

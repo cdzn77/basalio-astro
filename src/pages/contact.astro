@@ -22,6 +22,14 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
       <div class="hero-label">GET IN TOUCH</div>
       <h1 class="hero-heading">Questions? We're here to help.</h1>
       <p class="hero-description">We typically respond within 24 hours. For urgent issues,<br />check our documentation or community.</p>
+
+      <!-- SOCIAL LINKS -->
+      <div class="social-links-inline">
+        <a href="https://twitter.com/basalio" class="social-link" target="_blank" rel="noopener">Twitter</a>
+        <a href="https://github.com/basalio" class="social-link" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/company/basalio" class="social-link" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://discord.gg/basalio" class="social-link" target="_blank" rel="noopener">Discord</a>
+      </div>
     </div>
 
     <!-- RIGHT COLUMN: Form -->
@@ -105,21 +113,6 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
           <p class="resource-description">Check service status and uptime for Basalio infrastructure.</p>
           <a href="https://status.basalio.so" class="resource-link">View status →</a>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SOCIAL SECTION -->
-  <section class="social-section">
-    <div class="social-container">
-      <h2 class="social-heading">Follow us</h2>
-      <p class="social-description">Stay updated with news, tips, and updates.</p>
-
-      <div class="social-links">
-        <a href="https://twitter.com/basalio" class="social-link" target="_blank" rel="noopener">Twitter</a>
-        <a href="https://github.com/basalio" class="social-link" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://www.linkedin.com/company/basalio" class="social-link" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://discord.gg/basalio" class="social-link" target="_blank" rel="noopener">Discord</a>
       </div>
     </div>
   </section>
@@ -360,52 +353,12 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     color: #666666;
   }
 
-  /* SOCIAL SECTION */
-  .social-section {
-    display: flex;
-    width: 100%;
-    max-width: 1786px;
-    padding: 60px 40px 200px 40px;
-    background: #FFFFFF;
-    box-sizing: border-box;
-    margin: 0 auto;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
-    position: relative;
-    z-index: 2;
-    margin-bottom: -40px;
-    justify-content: flex-start;
-  }
-
-  .social-container {
-    width: 100%;
-  }
-
-  .social-heading {
-    font-family: Switzer, sans-serif;
-    font-size: 32px;
-    font-weight: 400;
-    letter-spacing: -0.64px;
-    line-height: 38.4px;
-    color: #000000;
-    margin: 0 0 12px 0;
-    padding: 0;
-  }
-
-  .social-description {
-    font-family: Switzer, sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    color: #575757;
-    margin: 0 0 32px 0;
-    padding: 0;
-  }
-
-  .social-links {
+  /* INLINE SOCIAL LINKS */
+  .social-links-inline {
     display: flex;
     gap: 24px;
     flex-wrap: wrap;
+    margin-top: 20px;
   }
 
   .social-link {
@@ -459,13 +412,11 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
       line-height: 33.6px;
     }
 
-    .resources-section,
-    .social-section {
+    .resources-section {
       padding: 40px 20px;
     }
 
-    .resources-heading,
-    .social-heading {
+    .resources-heading {
       font-size: 24px;
       line-height: 28.8px;
     }

@@ -23,6 +23,12 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
       <h1 class="hero-heading">Questions? We're here to help.</h1>
       <p class="hero-description">We typically respond within 24 hours. For urgent issues,<br />check our documentation or community.</p>
 
+      <!-- FOLLOW US SECTION -->
+      <div class="follow-us-section">
+        <h2 class="follow-us-heading">Follow us</h2>
+        <p class="follow-us-description">Stay updated with news, tips, and updates.</p>
+      </div>
+
       <!-- SOCIAL LINKS -->
       <div class="social-links-inline">
         <a href="https://twitter.com/basalio" class="social-link" target="_blank" rel="noopener">Twitter</a>
@@ -270,11 +276,16 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     display: flex;
     width: 100%;
     max-width: 1786px;
-    padding: 80px 40px;
+    padding: 80px 40px 200px 40px;
     background: #FFFFFF;
     box-sizing: border-box;
     margin: 0 auto;
     justify-content: flex-start;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    position: relative;
+    z-index: 2;
+    margin-bottom: -40px;
   }
 
   .resources-container {
@@ -353,12 +364,37 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     color: #666666;
   }
 
+  /* FOLLOW US SECTION IN HERO COLUMN */
+  .follow-us-section {
+    margin-top: 40px;
+  }
+
+  .follow-us-heading {
+    font-family: Switzer, sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: -0.48px;
+    line-height: 28.8px;
+    color: #000000;
+    margin: 0 0 8px 0;
+    padding: 0;
+  }
+
+  .follow-us-description {
+    font-family: Switzer, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #575757;
+    margin: 0 0 16px 0;
+    padding: 0;
+  }
+
   /* INLINE SOCIAL LINKS */
   .social-links-inline {
     display: flex;
     gap: 24px;
     flex-wrap: wrap;
-    margin-top: 20px;
   }
 
   .social-link {
@@ -389,9 +425,8 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
       line-height: 43.2px;
     }
 
-    .resources-section,
-    .social-section {
-      padding: 60px 20px;
+    .resources-section {
+      padding: 60px 20px 200px 20px;
     }
 
     .resources-grid {
@@ -413,7 +448,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     }
 
     .resources-section {
-      padding: 40px 20px;
+      padding: 40px 20px 200px 20px;
     }
 
     .resources-heading {

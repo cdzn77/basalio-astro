@@ -22,10 +22,27 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
       </div>
 
       <div class="hacks-right">
+        <div class="hacks-intro">
+          <h2>Two steps for all of these</h2>
+          <p>Paste the code once, then add a class to whichever block you want it on.</p>
+          <p>The class field is in the block settings sidebar, under <strong>Advanced → Additional CSS class(es)</strong>. Select a block, open the sidebar, scroll to the bottom.</p>
+          <p>For the CSS, use <strong>Appearance → Customize → Additional CSS</strong>. On block themes that don't show the Customizer, it's <strong>Appearance → Editor → Styles → ⋮ → Additional CSS</strong> instead.</p>
+        </div>
+
         <div class="hack-card">
           <h2>Reveal on Scroll</h2>
           <p>Fade in elements as the user scrolls</p>
-          <p class="placement">Custom HTML block</p>
+          <div class="hack-instructions">
+            <div class="hack-step">
+              <h3>Paste it</h3>
+              <p>A Custom HTML block anywhere on the page — top is fine, it doesn't render anything visible.</p>
+            </div>
+            <div class="hack-step">
+              <h3>Use it</h3>
+              <p>Add <code>b-reveal</code> to any block you want to fade in. Works on images, groups, headings, columns — anything. Add it to several and they'll each reveal as they come into view.</p>
+              <p><em>If your editor splits the paste into separate HTML, CSS, and JavaScript fields, drop the &lt;style&gt; and &lt;script&gt; tags — those editors add their own.</em></p>
+            </div>
+          </div>
           <pre><code>{`<style>
 .b-reveal {
   opacity: 0;
@@ -64,26 +81,21 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
   for (var j = 0; j < els.length; j++) io.observe(els[j]);
 })();
 </script>`}</code></pre>
-          <table class="comparison-table">
-            <thead>
-              <tr>
-                <th>By hand</th>
-                <th>With Section Entrance</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>One trigger point and one timing for every element on the page</td>
-                <td>Trigger point, distance, duration, easing per block</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
 
         <div class="hack-card">
           <h2>Color-Peek Image</h2>
           <p>Reveal color under grayscale on hover</p>
-          <p class="placement">Appearance → Customize → Additional CSS</p>
+          <div class="hack-instructions">
+            <div class="hack-step">
+              <h3>Paste it</h3>
+              <p>Additional CSS.</p>
+            </div>
+            <div class="hack-step">
+              <h3>Use it</h3>
+              <p>Add <code>b-peek</code> to an Image block, or to a Group that contains one. The image starts grayscale and returns to full colour on hover — and on keyboard focus, if the image is inside a link.</p>
+            </div>
+          </div>
           <pre><code>{`.b-peek img {
   filter: grayscale(1);
   transition: filter .4s ease;
@@ -99,26 +111,22 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     transition: none;
   }
 }`}</code></pre>
-          <table class="comparison-table">
-            <thead>
-              <tr>
-                <th>By hand</th>
-                <th>With Grid Reveal</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Grayscale to colour, one image at a time</td>
-                <td>Caption reveal on hover, focus, and tap</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
 
         <div class="hack-card">
           <h2>Pin a Panel</h2>
           <p>Sticky section that unpins at scroll end</p>
-          <p class="placement">Appearance → Customize → Additional CSS</p>
+          <div class="hack-instructions">
+            <div class="hack-step">
+              <h3>Paste it</h3>
+              <p>Additional CSS.</p>
+            </div>
+            <div class="hack-step">
+              <h3>Use it</h3>
+              <p>Add <code>b-pin-wrap</code> to a Columns block with exactly two columns. The left column pins while the right one scrolls past it. Put your short content on the left, the long content on the right.</p>
+              <p><em>If nothing pins: something above it has overflow set — many themes do this on the content wrapper, and it silently disables sticky positioning. Inspect the parent elements and look for overflow: hidden.</em></p>
+            </div>
+          </div>
           <pre><code>{`.b-pin-wrap {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -139,26 +147,23 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     position: static;
   }
 }`}</code></pre>
-          <table class="comparison-table">
-            <thead>
-              <tr>
-                <th>By hand</th>
-                <th>With Pinned Scroll</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Sticky until the column ends, then it releases</td>
-                <td>Set where it pins and where it releases</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
 
         <div class="hack-card">
           <h2>Grain Overlay</h2>
           <p>SVG filter effect for texture</p>
-          <p class="no-upsell">No upsell here. This one's just yours.</p>
+          <div class="hack-instructions">
+            <div class="hack-step">
+              <h3>Paste it</h3>
+              <p>Additional CSS.</p>
+            </div>
+            <div class="hack-step">
+              <h3>Use it</h3>
+              <p>Add <code>b-grain</code> to a Group or Cover block that has a background colour or image. The grain sits on top of everything inside it and ignores clicks.</p>
+              <p>Adjust opacity between .08 and .25 to taste. It's nearly invisible on white — works best on mid-tone and dark backgrounds.</p>
+              <p><em>No upsell here. This one's just yours.</em></p>
+            </div>
+          </div>
           <pre><code>{`.b-grain {
   position: relative;
   isolation: isolate;
@@ -173,7 +178,6 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
   opacity: .18;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='b-noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b-noise)'/%3E%3C/svg%3E");
 }`}</code></pre>
-          <p class="placement">Appearance → Customize → Additional CSS</p>
         </div>
 
         <div class="hack-cta">

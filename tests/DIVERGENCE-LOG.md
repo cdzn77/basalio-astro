@@ -167,18 +167,17 @@ All 4 testable pages show **8–12% pixel differences** when shifted by their re
 
 ---
 
-## Unresolved Brand Questions (Awaiting Design Decision)
+## Resolved Brand Questions
 
-### 5. --paper Color Specification Discrepancy
+### 5. --paper Resolution (2026-07-30)
 
-**Issue:** Design document conflict on canonical white value
+**Issue:** DESIGN-SYSTEM.md claimed paper = #F6F4EF; tokens.css = #FFFFFF
 
-| Source | Value | Notes |
-|--------|-------|-------|
-| tokens.css | #FFFFFF | Current, pure white |
-| DESIGN-SYSTEM.md | #F6F4EF | Off-white (warmer, slightly off-white) |
-| User Canonical | #FFFFFF | Confirmed by Angelo |
+**Investigation:** Audited 84 #F6F4EF instances. All are light text on dark backgrounds, NOT page backgrounds. Different use case from --paper.
 
-**Decision:** HOLD — tokens.css remains at #FFFFFF per user canonical. Not a transcription error; represents real design choice between pure white vs. warm off-white.
+**Resolution:** 
+- tokens.css --paper: #FFFFFF ✓ (page backgrounds — correct)
+- Add --paper-inverse: #F6F4EF (light text on dark surfaces — new token)
+- DESIGN-SYSTEM.md mislabels #F6F4EF as "paper" — doc correction needed
 
-**Action:** Do not change. Document decision rationale when brand guidelines are finalized.
+**Decision:** CLOSED. --paper remains #FFFFFF permanently. No conflict; two different uses resolved.

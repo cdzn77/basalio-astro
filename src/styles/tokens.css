@@ -16,7 +16,6 @@
   --color-off-white-95: #F5F5F5;
 
   /* Stone / Earth tones (most frequently used) */
-  --color-stone-light: #D4CABE;
   --color-stone-medium: #C9BEB2;
   --color-stone-dark: #3A352E;
   --color-brown-dark: #1C1917;
@@ -38,6 +37,7 @@
   /* Semantic colors */
   --ink: #0A0A0A;
   --paper: #FFFFFF;
+  --paper-inverse: #F6F4EF;
   --stone: #DFDCD5;
   --acid: #DFFF00;
 

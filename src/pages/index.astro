@@ -9,7 +9,7 @@ import RampWhatWeDo from '../components/RampWhatWeDo.astro';
 import RampCourses from '../components/RampCourses.astro';
 import RampResources from '../components/RampResources.astro';
 import Button from '../components/Button.astro';
-import RampTestimonialsV2 from '../components/RampTestimonialsV2.astro';
+import RampRoles from '../components/RampRoles.astro';
 import RampFooter from '../components/RampFooter.astro';
 import PricingCards from '../components/patterns/PricingCards.astro';
 
@@ -190,35 +190,33 @@ const faqs = [
     </div>
   </section>
 
-  <!-- Testimonials Section -->
-  <RampTestimonialsV2
-    sectionHeading={"Built for people who\nactually make things."}
-    testimonials={[
+  <!-- Roles Section -->
+  <RampRoles
+    sectionHeading="Built for people whose work has to move."
+    bodyText="Basalio is nine blocks, not ninety. That only works if the nine are the right ones — so they were picked for a specific kind of site: the portfolio, the case study, the reel."
+    roles={[
       {
-        image: "/assets/uxui_whoitsfor.png",
-        quote: "I stopped explaining hover states to developers. I just build them.",
-        name: "UX/UI Designer",
-        results: "No handoff docs needed"
+        title: "Portfolio & Brand Designers",
+        description: "Your portfolio is the pitch. It has to feel considered before anyone reads a word of it.",
+        blocks: ["Grid Reveal for the work index,", "Case Study Transition between projects,", "Text Reveal for the pacing of a long-form write-up,", "Magnetic Button where the CTA needs to feel like software rather than a link."]
       },
       {
-        image: "/assets/videographer_whoitsfor.png",
-        quote: "My reel finally scrolls the way it plays - frame by frame, not just fading in.",
-        name: "Videographer",
-        results: "Scroll Sequence, no video embed"
+        title: "Videographers & Motion Designers",
+        description: "Your work moves. Most WordPress themes don't, and an embedded player is a poor substitute for a site that behaves like your reel.",
+        blocks: ["Scroll Sequence turns a frame set into scroll-driven playback.", "Pinned Scroll holds a panel while the story runs past it."]
       },
       {
-        image: "/assets/director_whoitsfor.png",
-        quote: "Case studies that morph from the grid instead of just... linking to a new page.",
-        name: "Director",
-        results: "One shared-element transition, zero page reload"
+        title: "Photographers",
+        description: "Image-led sites need presentation, not chrome.",
+        blocks: ["Before/After for retouching and process work.", "Filterable Grid for a body of work with categories.", "Grid Reveal so the set arrives with intent instead of all at once."]
       },
       {
-        image: "/assets/agency_whoitsfor.png",
-        quote: "Every client site gets the same polish - without rebuilding it every time.",
-        name: "Agency",
-        results: "Nine blocks, unlimited client sites"
+        title: "Studios & Agencies",
+        description: "You build client sites and then hand them over. Whatever you install has to still work when you're not there.",
+        blocks: ["Nine blocks, theme-agnostic,", "no page builder dependency.", "Content survives uninstall.", "One license covers every site you build."]
       }
     ]}
+    closingLine="If you need a general-purpose animation engine, this isn't it. Nine blocks, opinionated, built for one kind of site."
   />
 
 

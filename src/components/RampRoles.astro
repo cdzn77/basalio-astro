@@ -1,0 +1,231 @@
+---
+// Ramp Roles - WHO IT'S FOR section
+// Four-card grid layout showcasing different user roles
+
+interface Role {
+  title: string;
+  description: string;
+  blocks: string[];
+}
+
+interface Props {
+  sectionHeading?: string;
+  bodyText?: string;
+  roles?: Role[];
+  closingLine?: string;
+}
+
+const {
+  sectionHeading = "Built for people whose work has to move.",
+  bodyText = "Basalio is nine blocks, not ninety. That only works if the nine are the right ones — so they were picked for a specific kind of site: the portfolio, the case study, the reel.",
+  roles = [
+    {
+      title: "Portfolio & Brand Designers",
+      description: "Your portfolio is the pitch. It has to feel considered before anyone reads a word of it.",
+      blocks: ["Grid Reveal", "Case Study Transition", "Text Reveal", "Magnetic Button"]
+    },
+    {
+      title: "Videographers & Motion Designers",
+      description: "Your work moves. Most WordPress themes don't, and an embedded player is a poor substitute for a site that behaves like your reel.",
+      blocks: ["Scroll Sequence", "Pinned Scroll"]
+    },
+    {
+      title: "Photographers",
+      description: "Image-led sites need presentation, not chrome.",
+      blocks: ["Before/After", "Filterable Grid", "Grid Reveal"]
+    },
+    {
+      title: "Studios & Agencies",
+      description: "You build client sites and then hand them over. Whatever you install has to still work when you're not there.",
+      blocks: ["Nine blocks", "Theme-agnostic", "No page builder"]
+    }
+  ],
+  closingLine = "If you need a general-purpose animation engine, this isn't it. Nine blocks, opinionated, built for one kind of site."
+} = Astro.props;
+---
+
+<section class="roles" id="roles">
+  <div class="roles-inner">
+    <!-- HEADER -->
+    <div class="roles-header">
+      <p class="roles-eyebrow">WHO IT'S FOR</p>
+      <h2 class="roles-heading">{sectionHeading}</h2>
+      <p class="roles-body">{bodyText}</p>
+    </div>
+
+    <!-- FOUR-CARD GRID -->
+    <div class="roles-grid">
+      {roles.map((role) => (
+        <div class="role-card">
+          <h3 class="role-title">{role.title}</h3>
+          <p class="role-description">{role.description}</p>
+          <div class="role-blocks">
+            {role.blocks.map((block) => (
+              <span class="role-block">{block}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- CLOSING LINE -->
+    <p class="roles-closing">{closingLine}</p>
+  </div>
+</section>
+
+<style>
+  .roles {
+    width: 100%;
+    background: #FFFFFF;
+    padding: 80px 40px;
+    box-sizing: border-box;
+  }
+
+  .roles-inner {
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+  }
+
+  .roles-header {
+    margin-bottom: 60px;
+  }
+
+  .roles-eyebrow {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    color: #666666;
+    margin: 0 0 12px 0;
+    padding: 0;
+  }
+
+  .roles-heading {
+    font-family: Switzer, sans-serif;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 48px;
+    letter-spacing: -0.8px;
+    color: #000000;
+    margin: 0 0 24px 0;
+    padding: 0;
+    max-width: 700px;
+  }
+
+  .roles-body {
+    font-family: Switzer, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: #575757;
+    margin: 0;
+    padding: 0;
+    max-width: 700px;
+  }
+
+  .roles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+
+  .role-card {
+    padding: 32px;
+    background: #F9F9F9;
+    border: 1px solid #E8E8E8;
+    border-radius: 8px;
+  }
+
+  .role-title {
+    font-family: Switzer, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    color: #000000;
+    margin: 0 0 16px 0;
+    padding: 0;
+  }
+
+  .role-description {
+    font-family: Switzer, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #666666;
+    margin: 0 0 20px 0;
+    padding: 0;
+  }
+
+  .role-blocks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .role-block {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #000000;
+    background: #FFFFFF;
+    padding: 6px 12px;
+    border: 1px solid #E8E8E8;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  .roles-closing {
+    font-family: Switzer, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #666666;
+    margin: 0;
+    padding: 0;
+    max-width: 700px;
+  }
+
+  @media (max-width: 1024px) {
+    .roles {
+      padding: 60px 20px;
+    }
+
+    .roles-heading {
+      font-size: 32px;
+      line-height: 40px;
+    }
+
+    .roles-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .roles {
+      padding: 40px 20px;
+    }
+
+    .roles-heading {
+      font-size: 28px;
+      line-height: 36px;
+    }
+
+    .roles-body {
+      font-size: 14px;
+    }
+
+    .role-card {
+      padding: 24px;
+    }
+
+    .roles-grid {
+      gap: 16px;
+    }
+  }
+</style>

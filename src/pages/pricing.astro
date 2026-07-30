@@ -4,9 +4,9 @@
 
 import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
-import RampFAQ from '../components/RampFAQ.astro';
 import RampFooter from '../components/RampFooter.astro';
 import Button from '../components/Button.astro';
+import FAQ from '../components/FAQ.astro';
 
 const title = "Pricing — Basalio";
 const description = "The nine blocks are free forever. The Pro control center is one payment for the first 100 people.";
@@ -197,24 +197,7 @@ const faqs = [
   </section>
 
   <!-- 4. FAQ SECTION -->
-  <section class="pricing-faq">
-    <div class="faq-container">
-      <h2 class="faq-heading">Questions</h2>
-      <div class="faq-list">
-        {faqs.map((item, index) => (
-          <div class="faq-item">
-            <button class="faq-question" data-index={index}>
-              <span class="faq-question-text">{item.question}</span>
-              <span class="faq-toggle">+</span>
-            </button>
-            <div class="faq-answer" data-index={index} style="display: none;">
-              <p>{item.answer}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+  <FAQ {faqs} heading="Questions" />
 
   <!-- FOOTER -->
   <Fragment slot="footer">
@@ -494,101 +477,6 @@ const faqs = [
     padding: 0;
   }
 
-  /* 4. FAQ SECTION */
-  .pricing-faq {
-    width: 100%;
-    background: #1a1a1a;
-    padding: 80px 40px;
-    box-sizing: border-box;
-  }
-
-  .faq-container {
-    width: 100%;
-    max-width: 1786px;
-    margin: 0 auto;
-  }
-
-  .faq-heading {
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 48px;
-    letter-spacing: -0.8px;
-    color: #FFFFFF;
-    margin: 0 0 60px 0;
-    padding: 0;
-  }
-
-  .faq-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .faq-item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .faq-item:last-child {
-    border-bottom: none;
-  }
-
-  .faq-question {
-    width: 100%;
-    background: transparent;
-    border: none;
-    padding: 24px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    font-family: Switzer, sans-serif;
-    font-size: 16px;
-    font-weight: 500;
-    color: #FFFFFF;
-    text-align: left;
-    transition: opacity 200ms ease;
-  }
-
-  .faq-question:hover {
-    opacity: 0.8;
-  }
-
-  .faq-question-text {
-    margin: 0;
-    padding: 0;
-  }
-
-  .faq-toggle {
-    font-size: 24px;
-    font-weight: 300;
-    color: #FFFFFF;
-    flex-shrink: 0;
-    margin-left: 20px;
-  }
-
-  .faq-item.open .faq-toggle {
-    transform: rotate(45deg);
-  }
-
-  .faq-answer {
-    overflow: hidden;
-    transition: all 300ms ease;
-    max-height: 0;
-  }
-
-  .faq-item.open .faq-answer {
-    max-height: 500px;
-    padding-bottom: 24px;
-  }
-
-  .faq-answer p {
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 24px;
-    color: rgba(255, 255, 255, 0.8);
-    margin: 0;
-    padding: 0;
-  }
 
   /* Custom pricing cards grid */
   .pricing-cards-grid {

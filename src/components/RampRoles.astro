@@ -1,7 +1,7 @@
 ---
-// Ramp Roles - WHO IT'S FOR section with visual hierarchy and icon treatment
-// Two-column layout with left copy and right role cards with color/icons
-// Each role has unique color accent and SVG icon
+// Ramp Roles - WHO IT'S FOR section with bold color-blocked layout
+// Icon + title in prominent header bar with 20-30% colored block
+// Inspired by RampCourses bold color treatment
 
 interface Role {
   title: string;
@@ -55,7 +55,6 @@ const {
   ],
   closingLine = "If you need a general-purpose animation engine, this isn't it. Nine blocks, opinionated, built for one kind of site."
 } = Astro.props;
-
 ---
 
 <section class="roles" id="roles">
@@ -75,15 +74,14 @@ const {
       <div class="roles-stack">
         {roles.map((role, index) => (
           <div class="role-card" style={`--accent-color: ${role.accentColor}`}>
-            <!-- Icon badge with accent color -->
-            <div class="role-icon-badge">
-              <span class="role-icon">{role.emoji}</span>
+            <!-- LEFT: Color-blocked header with icon and title -->
+            <div class="role-header-block">
+              <div class="role-icon">{role.emoji}</div>
+              <h3 class="role-title">{role.title}</h3>
             </div>
 
-            <!-- Content section -->
+            <!-- RIGHT: Content section -->
             <div class="role-content">
-              <div class="role-number">{String(index + 1).padStart(2, '0')}</div>
-              <h3 class="role-title">{role.title}</h3>
               <p class="role-description">{role.description}</p>
               <div class="role-blocks">
                 {role.blocks.map((block) => (
@@ -99,10 +97,6 @@ const {
 </section>
 
 <style>
-  :root {
-    --accent-color: #FF6B9D;
-  }
-
   .roles {
     width: 100%;
     background: #FFFFFF;
@@ -179,98 +173,67 @@ const {
   .roles-stack {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
   }
 
+  /* Role cards: side-by-side layout with color-blocked header (30% width) */
   .role-card {
-    padding: 32px;
-    background: linear-gradient(135deg, #FFFFFF 0%, #F9F9F9 100%);
-    border: 1px solid #E8E8E8;
-    border-radius: 12px;
     display: flex;
-    gap: 24px;
-    align-items: flex-start;
-    position: relative;
+    gap: 0;
+    border-radius: 8px;
     overflow: hidden;
-    transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-
-  .role-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--accent-color);
-    opacity: 0;
-    transition: opacity 300ms ease;
+    background: #FFFFFF;
+    border: 1px solid #E8E8E8;
+    transition: box-shadow 300ms cubic-bezier(0.215, 0.61, 0.355, 1), transform 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 
   .role-card:hover {
-    border-color: var(--accent-color);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
-    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
   }
 
-  .role-card:hover::before {
-    opacity: 1;
-  }
-
-  /* Icon badge with accent color background */
-  .role-icon-badge {
-    width: 64px;
-    height: 64px;
-    min-width: 64px;
-    border-radius: 10px;
+  /* Color-blocked header: 30% width with accent background */
+  .role-header-block {
+    flex: 0 0 30%;
     background: var(--accent-color);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    transition: transform 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-
-  .role-card:hover .role-icon-badge {
-    transform: scale(1.1);
+    gap: 16px;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    min-height: 240px;
   }
 
   .role-icon {
-    font-size: 32px;
+    font-size: 56px;
     line-height: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .role-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .role-number {
-    font-family: Switzer, sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-    color: var(--accent-color);
-    line-height: 1;
-    white-space: nowrap;
-    flex-shrink: 0;
-    margin-bottom: 4px;
   }
 
   .role-title {
     font-family: Switzer, sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
     line-height: 1.3;
-    color: #000000;
+    color: #FFFFFF;
     margin: 0;
     padding: 0;
+    text-align: center;
+  }
+
+  /* Content section: 70% width */
+  .role-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 40px;
+    box-sizing: border-box;
+    justify-content: flex-start;
   }
 
   .role-description {
@@ -286,10 +249,10 @@ const {
   .role-blocks {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
     margin-top: 12px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    padding-top: 16px;
+    border-top: 1px solid #E8E8E8;
   }
 
   .role-block {
@@ -317,6 +280,20 @@ const {
       font-size: 32px;
       line-height: 40px;
     }
+
+    .role-card {
+      flex-direction: row;
+    }
+
+    .role-header-block {
+      flex: 0 0 28%;
+      padding: 32px 20px;
+      min-height: auto;
+    }
+
+    .role-content {
+      padding: 32px;
+    }
   }
 
   @media (max-width: 768px) {
@@ -338,17 +315,21 @@ const {
     }
 
     .role-card {
-      padding: 24px;
-      gap: 20px;
+      flex-direction: column;
     }
 
-    .role-icon-badge {
-      width: 56px;
-      height: 56px;
+    .role-header-block {
+      flex: 0 0 auto;
+      padding: 32px 24px;
+      min-height: auto;
     }
 
     .role-title {
-      font-size: 16px;
+      font-size: 15px;
+    }
+
+    .role-content {
+      padding: 24px;
     }
   }
 </style>

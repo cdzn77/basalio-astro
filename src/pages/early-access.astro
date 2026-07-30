@@ -107,7 +107,17 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
     const form = event.target;
     const formData = new FormData(form);
 
-    // Submit to Netlify
+    // For localhost, just show success immediately
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      form.style.display = 'none';
+      const successDiv = document.getElementById('form-success');
+      if (successDiv) {
+        successDiv.style.display = 'block';
+      }
+      return;
+    }
+
+    // Submit to Netlify (on production)
     fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },

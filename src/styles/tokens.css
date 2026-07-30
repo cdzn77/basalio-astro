@@ -38,7 +38,9 @@
   --surface-paper: #FFFFFF;
   --surface-ink: #1C1917;
   --text-on-paper: #0A0A0A;
+  --text-on-paper-muted: rgba(10, 10, 8, 0.6);  /* 60% opacity of --text-on-paper, composites to ~#6C6C6B, ~5.25:1 */
   --text-on-ink: #F6F4EF;
+  --text-on-ink-muted: #D4CABE;
   --stone: #DFDCD5;
   --acid: #DFFF00;
 

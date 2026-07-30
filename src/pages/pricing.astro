@@ -76,10 +76,12 @@ const faqs = [
   </Fragment>
 
   <!-- 1. PRICING TIERS SECTION: Using existing RampRetainer component -->
-  <RampRetainer
-    sectionLabel="PRICING"
-    sectionHeading="The blocks are free. The Pro layer is one payment, once."
-  />
+  <section class="pricing-hero-section">
+    <RampRetainer
+      sectionLabel="PRICING"
+      sectionHeading="The blocks are free. The Pro layer is one payment, once."
+    />
+  </section>
 
   <!-- 2. BUILD LEDGER SECTION -->
   <section class="ledger-section">
@@ -133,8 +135,9 @@ const faqs = [
 </RampTemplateLayout>
 
 <style>
-  /* PRICING TIERS SECTION: Add top padding for breathing room from header */
-  :global(.retainer) {
+  /* PRICING HERO SECTION: Top padding for breathing room from header */
+  .pricing-hero-section {
+    width: 100%;
     padding-top: 250px;
   }
 

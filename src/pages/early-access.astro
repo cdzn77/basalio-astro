@@ -25,7 +25,7 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
 
       <!-- RIGHT (65%): Form -->
       <div class="early-access-right">
-        <form name="early-access" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="early-access-form">
+        <form name="early-access" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" action="/early-access/" class="early-access-form" onsubmit="handleFormSubmit(event)">
           <!-- Honeypot field (hidden) -->
           <div class="honeypot">
             <label for="bot-field">Don't fill this out if you're human:</label>
@@ -99,6 +99,32 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
     <RampFooter description="Nine curated interaction blocks for WordPress portfolios. Nothing you'd need Framer for." hideNewsletter={true} />
   </Fragment>
 </BaseLayout>
+
+<script>
+  function handleFormSubmit(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    // Submit to Netlify
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString(),
+    }).then(() => {
+      // Show success message
+      form.style.display = 'none';
+      const successDiv = document.getElementById('form-success');
+      if (successDiv) {
+        successDiv.style.display = 'block';
+      }
+    }).catch((error) => {
+      console.error('Form submission error:', error);
+      alert('There was an error submitting the form. Please try again.');
+    });
+  }
+</script>
 
 <style>
   .early-access-section {

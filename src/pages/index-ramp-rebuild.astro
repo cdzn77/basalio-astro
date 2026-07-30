@@ -2,7 +2,7 @@
 // Ramp Studio Homepage - Complete rebuild in Astro
 // Exact replica of the Ramp Studio template
 
-import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampHero from '../components/RampHero.astro';
 import RampWhatWeDo from '../components/RampWhatWeDo.astro';
@@ -68,7 +68,7 @@ const faqs = [
 ];
 ---
 
-<RampTemplateLayout title={title} description={description}>
+<BaseLayout title={title} description={description}>
   <!-- HEADER: Navigation bar (universal across all pages) -->
   <Fragment slot="header">
     <RampHeader />
@@ -275,7 +275,7 @@ const faqs = [
       brandWords={["BASALIO"]}
     />
   </Fragment>
-</RampTemplateLayout>
+</BaseLayout>
 
 <style>
   /* PRICING HERO SECTION */

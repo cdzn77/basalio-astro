@@ -2,7 +2,7 @@
 // Pricing Page - Basalio founder pre-sale
 // Cohesive design using existing site components and patterns
 
-import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
 import Button from '../components/Button.astro';
@@ -65,7 +65,7 @@ const faqs = [
 ];
 ---
 
-<RampTemplateLayout {title} {description}>
+<BaseLayout {title} {description}>
   <!-- HEADER: Navigation bar -->
   <Fragment slot="header">
     <RampHeader />
@@ -203,7 +203,7 @@ const faqs = [
   <Fragment slot="footer">
     <RampFooter address="Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark" />
   </Fragment>
-</RampTemplateLayout>
+</BaseLayout>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {

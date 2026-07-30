@@ -1,7 +1,7 @@
 ---
 // Contact Page - Get in touch with Basalio
 
-import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
 
@@ -9,7 +9,7 @@ const title = "Contact Basalio";
 const description = "Get in touch with Basalio. Submit a message and we'll get back to you within 24 hours.";
 ---
 
-<RampTemplateLayout title={title} description={description}>
+<BaseLayout title={title} description={description}>
   <!-- HEADER: Navigation bar -->
   <Fragment slot="header">
     <RampHeader />
@@ -127,7 +127,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
   <Fragment slot="footer">
     <RampFooter address="Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark" />
   </Fragment>
-</RampTemplateLayout>
+</BaseLayout>
 
 <style>
   /* HERO + FORM SECTION (2-COLUMN LAYOUT) */

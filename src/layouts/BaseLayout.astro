@@ -1,0 +1,81 @@
+---
+/* BaseLayout – Shared HTML shell for all pages
+   - Wraps page content
+   - Manages head meta, fonts, global styles
+   - Provides header and footer slots
+   - Props: title, description, headerType (for future variants)
+*/
+
+import '../styles/global.css';
+import '../styles/tokens.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  headerType?: 'ramp' | 'simple';
+}
+
+const {
+  title = 'Basalio',
+  description = 'Basalio - WordPress Portfolio Modules',
+  headerType = 'ramp'
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpolygon points='8,56 56,56 46,44 18,44' fill='%23F6F4EF'/%3E%3Crect x='23' y='20' width='18' height='24' fill='%23DFFF00'/%3E%3C/svg%3E" />
+  
+  <slot name="head" />
+</head>
+
+<body>
+  <header class="base-header">
+    <slot name="header" />
+  </header>
+  
+  <main class="base-main">
+    <slot />
+  </main>
+  
+  <footer class="base-footer">
+    <slot name="footer" />
+  </footer>
+</body>
+</html>
+
+<style>
+  /* Global layout */
+  :global(body) {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  .base-header {
+    position: relative;
+    z-index: 10;
+  }
+
+  .base-main {
+    flex: 1;
+  }
+
+  .base-footer {
+    position: relative;
+    z-index: 5;
+  }
+</style>

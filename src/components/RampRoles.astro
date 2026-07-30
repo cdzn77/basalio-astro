@@ -1,7 +1,7 @@
 ---
-// Ramp Roles - WHO IT'S FOR section with bold color-blocked layout
-// Icon + title in prominent header bar with 20-30% colored block
-// Inspired by RampCourses bold color treatment
+// Ramp Roles - Adapted from proven RampTestimonialsV2 structure
+// Two-column layout: LEFT (500px heading/text) | RIGHT (roles grid)
+// Showing all 4 roles at once without carousel
 
 interface Role {
   title: string;
@@ -59,7 +59,7 @@ const {
 
 <section class="roles" id="roles">
   <div class="roles-inner">
-    <!-- LEFT COLUMN: Header + Body Text -->
+    <!-- LEFT COLUMN: Eyebrow + Heading + Description -->
     <div class="roles-left">
       <div class="roles-header">
         <p class="roles-eyebrow">{sectionLabel}</p>
@@ -69,25 +69,20 @@ const {
       <p class="roles-closing">{closingLine}</p>
     </div>
 
-    <!-- RIGHT COLUMN: Role Cards Stack -->
+    <!-- RIGHT COLUMN: Roles Grid (2 columns, 2 rows) -->
     <div class="roles-right">
-      <div class="roles-stack">
+      <div class="roles-grid">
         {roles.map((role, index) => (
           <div class="role-card" style={`--accent-color: ${role.accentColor}`}>
-            <!-- LEFT: Color-blocked header with icon and title -->
             <div class="role-header-block">
-              <div class="role-icon">{role.emoji}</div>
+              <div class="role-emoji">{role.emoji}</div>
               <h3 class="role-title">{role.title}</h3>
             </div>
-
-            <!-- RIGHT: Content section -->
-            <div class="role-content">
-              <p class="role-description">{role.description}</p>
-              <div class="role-blocks">
-                {role.blocks.map((block) => (
-                  <p class="role-block">{block}</p>
-                ))}
-              </div>
+            <p class="role-description">{role.description}</p>
+            <div class="role-blocks">
+              {role.blocks.map((block) => (
+                <p class="role-block">{block}</p>
+              ))}
             </div>
           </div>
         ))}
@@ -98,120 +93,117 @@ const {
 
 <style>
   .roles {
-    width: 100%;
-    background: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 80px 40px;
+    gap: 40px;
+    background: var(--surface-paper);
+    width: 100%;
     box-sizing: border-box;
   }
 
   .roles-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
     width: 100%;
     max-width: 1786px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: flex-start;
+    gap: 60px;
   }
 
   .roles-left {
+    flex: 0 0 400px;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 24px;
   }
 
   .roles-header {
-    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
   }
 
   .roles-eyebrow {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
+    line-height: 19.6px;
     letter-spacing: 2.8px;
     text-transform: uppercase;
-    color: #666666;
-    margin: 0 0 16px 0;
-    padding: 0;
+    color: var(--text-on-paper);
+    margin: 0 0 12px 0;
   }
 
   .roles-heading {
-    font-family: Switzer, sans-serif;
     font-size: 40px;
     font-weight: 400;
     line-height: 48px;
     letter-spacing: -0.8px;
-    color: #000000;
+    color: var(--text-on-paper);
     margin: 0;
-    padding: 0;
+    white-space: pre-line;
   }
 
   .roles-body {
-    font-family: Switzer, sans-serif;
     font-size: 15px;
     font-weight: 400;
     line-height: 24px;
-    color: #575757;
+    color: var(--text-on-paper-muted);
     margin: 0;
-    padding: 0;
   }
 
   .roles-closing {
-    font-family: Switzer, sans-serif;
     font-size: 13px;
     font-weight: 400;
     line-height: 20px;
-    color: #888888;
+    color: var(--text-on-paper-muted);
     margin: 0;
-    padding: 0;
   }
 
   .roles-right {
-    width: 100%;
+    flex: 1;
   }
 
-  .roles-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  .roles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
   }
 
-  /* Role cards: side-by-side layout with color-blocked header (30% width) */
+  /* Role card: header block (colored) + content (white) */
   .role-card {
-    display: flex;
-    gap: 0;
-    border-radius: 8px;
-    overflow: hidden;
     background: #FFFFFF;
     border: 1px solid #E8E8E8;
-    transition: box-shadow 300ms cubic-bezier(0.215, 0.61, 0.355, 1), transform 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 300ms ease, transform 300ms ease;
   }
 
   .role-card:hover {
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
   }
 
-  /* Color-blocked header: 30% width with accent background */
+  /* Colored header block with emoji + title */
   .role-header-block {
-    flex: 0 0 30%;
     background: var(--accent-color);
+    padding: 40px 24px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     gap: 16px;
-    padding: 40px 20px;
-    box-sizing: border-box;
-    min-height: 240px;
+    align-items: center;
+    text-align: center;
+    min-height: 160px;
+    justify-content: center;
   }
 
-  .role-icon {
-    font-size: 56px;
+  .role-emoji {
+    font-size: 48px;
     line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   .role-title {
@@ -222,37 +214,26 @@ const {
     color: #FFFFFF;
     margin: 0;
     padding: 0;
-    text-align: center;
   }
 
-  /* Content section: 70% width */
-  .role-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    padding: 40px;
-    box-sizing: border-box;
-    justify-content: flex-start;
-  }
-
+  /* Content section: white background */
   .role-description {
     font-family: Switzer, sans-serif;
     font-size: 14px;
     font-weight: 400;
-    line-height: 21px;
+    line-height: 20px;
     color: #666666;
     margin: 0;
-    padding: 0;
+    padding: 24px 24px 0 24px;
   }
 
   .role-blocks {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-top: 12px;
-    padding-top: 16px;
+    gap: 6px;
+    padding: 16px 24px 24px 24px;
     border-top: 1px solid #E8E8E8;
+    margin-top: 12px;
   }
 
   .role-block {
@@ -272,27 +253,21 @@ const {
     }
 
     .roles-inner {
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .roles-left {
+      flex: 1;
+    }
+
+    .roles-grid {
       grid-template-columns: 1fr;
-      gap: 60px;
     }
 
     .roles-heading {
       font-size: 32px;
       line-height: 40px;
-    }
-
-    .role-card {
-      flex-direction: row;
-    }
-
-    .role-header-block {
-      flex: 0 0 28%;
-      padding: 32px 20px;
-      min-height: auto;
-    }
-
-    .role-content {
-      padding: 32px;
     }
   }
 
@@ -301,35 +276,22 @@ const {
       padding: 40px 20px;
     }
 
-    .roles-inner {
-      gap: 40px;
-    }
-
     .roles-heading {
       font-size: 28px;
       line-height: 36px;
     }
 
-    .roles-body {
-      font-size: 14px;
-    }
-
-    .role-card {
-      flex-direction: column;
-    }
-
     .role-header-block {
-      flex: 0 0 auto;
-      padding: 32px 24px;
+      padding: 32px 20px;
       min-height: auto;
     }
 
-    .role-title {
-      font-size: 15px;
+    .role-emoji {
+      font-size: 40px;
     }
 
-    .role-content {
-      padding: 24px;
+    .role-title {
+      font-size: 14px;
     }
   }
 </style>

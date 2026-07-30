@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RampHeader from '../components/RampHeader.astro';
+import RampFooter from '../components/RampFooter.astro';
+
+const title = "Hacks - Basalio";
+const description = "Coming soon: Hacks and creative experiments from Basalio.";
+---
+
+<BaseLayout title={title} description={description}>
+  <Fragment slot="header">
+    <RampHeader />
+  </Fragment>
+
+  <section class="stub-section">
+    <div class="stub-content">
+      <h1>Hacks</h1>
+      <p>Coming soon: Creative experiments and quick prototypes.</p>
+    </div>
+  </section>
+
+  <Fragment slot="footer">
+    <RampFooter address="Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark" />
+  </Fragment>
+</BaseLayout>
+
+<style>
+  .stub-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 80px 40px;
+    background: var(--paper);
+  }
+
+  .stub-content {
+    text-align: center;
+    max-width: 600px;
+  }
+
+  h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 18px;
+    color: var(--color-gray-dark);
+    line-height: 1.6;
+  }
+</style>

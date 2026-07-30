@@ -63,18 +63,22 @@ const {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    padding-top: 80px;
   }
 
   .base-header {
-    position: relative;
-    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
     padding: 20px 40px;
-    background: var(--surface-paper);
     width: 100%;
     box-sizing: border-box;
     height: 80px;
     display: flex;
     align-items: center;
+    background: transparent;
   }
 
   .base-main {

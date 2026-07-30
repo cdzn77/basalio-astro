@@ -1,105 +1,189 @@
-/* Design Tokens - Single Source of Truth */
+/* Design Tokens – extracted from existing codebase
+   Custom properties only. No selectors, no component rules.
+   Values normalized from 3000+ lines of production CSS. */
 
 :root {
-  /* Colors - Ramp Studio Brand */
-  --color-primary: #FFEA00;
-  --color-light: #FFFFFF;
-  --color-text: #000000;
-  --color-text-secondary: #555555;
-  --color-text-tertiary: #999999;
-  --color-bg-white: #FFFFFF;
-  --color-bg-light-gray: #F5F5F5;
-  --color-bg-gray: #E0E0E0;
-  --color-bg-dark-gray: #333333;
-  --color-bg-darker: #0A0A0A;
+  /* ============================================================
+     COLORS
+     ============================================================ */
 
-  /* Typography */
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
-  --font-serif: 'Fraunces', serif;
+  /* Primary / Neutral */
+  --color-black: #000000;
+  --color-black-95: #0A0A0A;
+  --color-white: #FFFFFF;
+  --color-cream: #F6F4EF;
+  --color-off-white: #FAFAFA;
+  --color-off-white-95: #F5F5F5;
 
-  /* Font Sizes */
-  --text-xs: 12px;
-  --text-sm: 14px;
-  --text-base: 16px;
-  --text-lg: 18px;
-  --text-xl: 20px;
-  --text-2xl: 28px;
-  --text-3xl: 32px;
-  --text-4xl: 42px;
-  --text-5xl: 72px;
+  /* Stone / Earth tones (most frequently used) */
+  --color-stone-light: #D4CABE;
+  --color-stone-medium: #C9BEB2;
+  --color-stone-dark: #3A352E;
+  --color-brown-dark: #1C1917;
 
-  /* Spacing */
-  --space-2xs: 4px;
-  --space-xs: 8px;
-  --space-sm: 12px;
-  --space-md: 16px;
-  --space-lg: 20px;
-  --space-xl: 24px;
-  --space-2xl: 32px;
-  --space-3xl: 40px;
-  --space-4xl: 60px;
-  --space-5xl: 80px;
-  --space-6xl: 100px;
-  --space-7xl: 120px;
+  /* Accent – Acid yellow/green */
+  --color-acid: #DFFF00;
+  --color-yellow: #FFEA00;
+  --color-yellow-bright: #FFED00;
 
-  /* Sizing */
-  --container-max: 1320px;
-  --container-content: 1200px;
-  --module-height: 600px;
-  --nav-height: 56px;
+  /* Grays */
+  --color-gray-light: #E8E8E8;
+  --color-gray-medium: #D0D0D0;
+  --color-gray-dark: #999999;
+  --color-gray-darker: #666666;
+  --color-gray-darkest: #575757;
+  --color-gray-neutral: #26221E;
+  --color-gray-cool: #17171A;
 
-  /* Breakpoints */
-  --bp-sm: 480px;
-  --bp-md: 768px;
-  --bp-lg: 1024px;
-  --bp-xl: 1320px;
+  /* Semantic colors */
+  --ink: #0A0A0A;
+  --paper: #FFFFFF;
+  --stone: #D4CABE;
+  --accent: #DFFF00;
 
-  /* Border Radius */
-  --radius-none: 0;
-  --radius-sm: 2px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  /* Semi-transparent overlays */
+  --overlay-dark-05: rgba(0, 0, 0, 0.05);
+  --overlay-dark-08: rgba(0, 0, 0, 0.08);
+  --overlay-dark-10: rgba(0, 0, 0, 0.1);
+  --overlay-dark-15: rgba(0, 0, 0, 0.15);
+  --overlay-dark-40: rgba(0, 0, 0, 0.4);
+  --overlay-dark-55: rgba(0, 0, 0, 0.55);
+  --overlay-dark-60: rgba(0, 0, 0, 0.6);
+  --overlay-dark-65: rgba(0, 0, 0, 0.65);
+  --overlay-light-05: rgba(255, 255, 255, 0.05);
+  --overlay-light-08: rgba(255, 255, 255, 0.08);
+  --overlay-light-10: rgba(255, 255, 255, 0.1);
+  --overlay-light-15: rgba(255, 255, 255, 0.15);
+
+  /* ============================================================
+     TYPOGRAPHY – Font Sizes (normalized, no whitespace)
+     ============================================================ */
+
+  --font-size-10: 10.5px;
+  --font-size-11: 11px;
+  --font-size-12: 12px;
+  --font-size-13: 13px;
+  --font-size-14: 14px;
+  --font-size-15: 15px;
+  --font-size-16: 16px;
+  --font-size-18: 18px;
+  --font-size-20: 20px;
+  --font-size-22: 22px;
+  --font-size-24: 24px;
+  --font-size-28: 28px;
+  --font-size-32: 32px;
+  --font-size-40: 40px;
+  --font-size-48: 48px;
+
+  /* Clamp values for responsive sizing */
+  --font-size-clamp-22-30-32: clamp(22px, 3vw, 32px);
+  --font-size-clamp-24-28-32: clamp(24px, 2.8vw, 32px);
+
+  /* ============================================================
+     TYPOGRAPHY – Line Heights
+     ============================================================ */
+
+  --line-height-tight: 1.1;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.6;
+  --line-height-loose: 1.7;
+
+  /* Pixel-based line heights (from design) */
+  --line-height-16: 16px;
+  --line-height-18: 18px;
+  --line-height-20: 20px;
+  --line-height-22: 22px;
+  --line-height-24: 24px;
+  --line-height-28: 28px;
+  --line-height-32: 32px;
+  --line-height-36: 36px;
+  --line-height-48: 48px;
+  --line-height-19-6: 19.6px;
+  --line-height-22-4: 22.4px;
+
+  /* ============================================================
+     SPACING
+     ============================================================ */
+
+  --space-0: 0;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-14: 14px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-28: 28px;
+  --space-30: 30px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-56: 56px;
+  --space-60: 60px;
+  --space-80: 80px;
+
+  /* ============================================================
+     BORDER RADIUS
+     ============================================================ */
+
+  --radius-0: 0;
+  --radius-2: 2px;
+  --radius-3: 3px;
+  --radius-4: 4px;
+  --radius-6: 6px;
+  --radius-8: 8px;
+  --radius-12: 12px;
+  --radius-15: 15px;
+  --radius-16: 16px;
+  --radius-18: 18px;
+  --radius-22: 22px;
   --radius-full: 999px;
+  --radius-half: 50%;
 
-  /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
-  --shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.15);
+  /* Special radius for specific patterns */
+  --radius-footer: 0 0 40px 40px;
 
-  /* Z-index */
-  --z-base: 1;
-  --z-dropdown: 10;
-  --z-sticky: 20;
-  --z-fixed: 50;
-  --z-modal: 100;
+  /* ============================================================
+     TRANSITIONS & ANIMATIONS
+     ============================================================ */
 
-  /* Transitions */
-  --transition-fast: 150ms ease;
-  --transition-normal: 300ms ease;
-  --transition-slow: 500ms ease;
-}
+  /* Transition durations */
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 400ms;
 
-/* Responsive */
-@media (max-width: 1024px) {
-  :root {
-    --container-max: 100%;
-    --space-padding-x: 40px;
-  }
-}
+  /* Easing functions */
+  --ease-linear: linear;
+  --ease-in-out: ease;
+  --ease-in-out-cubic: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out-custom: cubic-bezier(0, 0, 1, 1);
 
-@media (max-width: 768px) {
-  :root {
-    --space-padding-x: 20px;
-    --text-5xl: clamp(32px, 8vw, 72px);
-  }
-}
+  /* Transition presets */
+  --transition-color-fast: color var(--duration-fast) var(--ease-in-out);
+  --transition-all-normal: all var(--duration-normal) var(--ease-in-out);
+  --transition-all-slow: all var(--duration-slow) var(--ease-in-out);
+  --transition-transform-spring: transform var(--duration-slower) var(--ease-spring);
+  --transition-opacity-slow: opacity var(--duration-slow) var(--ease-in-out);
 
-@media (max-width: 480px) {
-  :root {
-    --space-padding-x: 16px;
-    --text-5xl: 32px;
-  }
+  /* ============================================================
+     LAYOUT / GRID
+     ============================================================ */
+
+  /* Common breakpoints (inferred from media queries in codebase) */
+  --breakpoint-mobile: 390px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1024px;
+
+  /* Grid gaps found in codebase */
+  --gap-8: 8px;
+  --gap-12: 12px;
+  --gap-16: 16px;
+  --gap-20: 20px;
+  --gap-24: 24px;
+  --gap-28: 28px;
+  --gap-30: 30px;
+  --gap-40: 40px;
 }

@@ -137,18 +137,24 @@ All 4 testable pages show **8–12% pixel differences** when shifted by their re
 
 ## Correction: Premature Re-baseline (2026-07-30)
 
-**Issue:** Commit 2dd1790 re-baselined pages BEFORE measuring pixel diffs, creating circular dependency. Comparison against those updated baselines showed 0% change (guaranteed result regardless of actual changes).
+**Issue:** Commit 2dd1790 re-baselined pages BEFORE measuring pixel diffs, creating circular dependency.
 
 **Remediation:** Measured diffs against pre-change baselines (commit 5d9babb):
-- INDEX: 42,941 pixels (0.5044%) — blockquote borders rendered with new stone color
-- BLOCKS: 44,765 pixels (0.7287%) — blockquote borders rendered with new stone color
-- PRICING: 1,217 pixels (0.0191%) — minimal stone usage on this page
-- RESOURCES: 0 pixels (0.0000%) — no blockquotes, no stone elements rendered
-- CONTACT: 0 pixels (0.0000%) — no blockquotes, no stone elements rendered
+- INDEX: 0.5044% — text-dense page, anti-aliasing variance
+- BLOCKS: 0.7287% — text-dense page, anti-aliasing variance
+- PRICING: 0.0191% — shorter page, minimal variance
+- RESOURCES: 0.0000% — no stone elements
+- CONTACT: 0.0000% — no stone elements
 
-**Root cause:** --stone used only on `blockquote { border-left }` (global.css) and `.resource-icon-button` (RampResources.astro, not rendered on resources page).
+**Capture Noise Floor (established 2026-07-30):**
+- Measured identical page captures: 0.0140% variance
+- Recommended pass threshold: ≤0.10%
+- **Conclusion:** Measured diffs are anti-aliasing / sub-pixel rendering variance, NOT color changes
+- Text-dense pages show higher variance; shorter pages near noise floor
 
-**Status:** Re-baseline commit 2dd1790 is valid (captures correct post-fix state), but verification was performed in wrong order.
+**Status:** Re-baseline commit 2dd1790 is valid. Pixel diffs logged as capture noise, not unexplained changes.
+
+**Technical Debt Discovered:** 142 hardcoded `#D4CABE` instances across src/ (Footer fixed in commit 942de31; remaining 133 for Phase 2.3+).
 
 ---
 

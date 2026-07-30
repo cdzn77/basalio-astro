@@ -18,6 +18,7 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
         <p class="hacks-eyebrow">HACKS</p>
         <h1 class="hacks-heading">Free is the recipe. Pro is the appliance.</h1>
         <p class="hacks-body">Four effects you can paste into your site right now. No plugin, no account, no email.</p>
+        <p class="hacks-secondary">Three of them are the hand-rolled version of a Basalio block. The comparison is honest: here's what it takes by hand, here's what the block does in one click. The fourth is just a gift.</p>
       </div>
 
       <div class="hacks-right">
@@ -25,18 +26,60 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
           <h2>Reveal on Scroll</h2>
           <p>Fade in elements as the user scrolls</p>
           <pre><code>{`// [Code snippet goes here]`}</code></pre>
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>By hand</th>
+                <th>With the block</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Intersection Observer + opacity transition</td>
+                <td>Drop the block, set trigger point</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         <div class="hack-card">
           <h2>Color-Peek Image</h2>
           <p>Reveal color under grayscale on hover</p>
           <pre><code>{`// [Code snippet goes here]`}</code></pre>
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>By hand</th>
+                <th>With the block</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>grayscale() filter + opacity layers</td>
+                <td>Drop the block, upload image</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         <div class="hack-card">
           <h2>Pin a Panel</h2>
           <p>Sticky section that unpins at scroll end</p>
           <pre><code>{`// [Code snippet goes here]`}</code></pre>
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>By hand</th>
+                <th>With the block</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>position: sticky + scroll listeners</td>
+                <td>Drop the block, set duration</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         <div class="hack-card">
@@ -116,6 +159,15 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     padding: 0;
   }
 
+  .hacks-secondary {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-on-paper-muted);
+    margin: 20px 0 0 0;
+    padding: 0;
+  }
+
   .hack-card {
     display: flex;
     flex-direction: column;
@@ -167,6 +219,43 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
   .hack-card code {
     font-family: 'IBM Plex Mono', monospace;
     color: var(--text-on-paper);
+  }
+
+  .comparison-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .comparison-table thead {
+    border-bottom: 1px solid rgba(10, 10, 10, 0.08);
+  }
+
+  .comparison-table th {
+    text-align: left;
+    padding: 12px 0;
+    font-weight: 600;
+    color: var(--text-on-paper);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .comparison-table th:first-child {
+    width: 50%;
+  }
+
+  .comparison-table td {
+    padding: 12px 0;
+    color: var(--text-on-paper-muted);
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(10, 10, 10, 0.04);
+  }
+
+  .comparison-table td:first-child {
+    padding-right: 16px;
   }
 
   .hack-cta {

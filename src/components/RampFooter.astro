@@ -11,11 +11,18 @@ interface Props {
   brandWords?: string[];
 }
 
+interface Props {
+  description?: string;
+  productLinks?: NavLink[];
+  supportLinks?: NavLink[];
+  brandWords?: string[];
+  hideNewsletter?: boolean;
+}
+
 const {
   description = "Nine curated interaction blocks for WordPress portfolios. Nothing you'd need Framer for.",
   productLinks = [
     { label: "Blocks", href: "/blocks" },
-    { label: "Performance", href: "/performance" },
     { label: "Pricing", href: "/pricing" },
     { label: "Roadmap", href: "/roadmap" }
   ],
@@ -25,7 +32,8 @@ const {
     { label: "Terms of Service", href: "/terms" },
     { label: "Privacy Policy", href: "/privacy" }
   ],
-  brandWords = ["BASALIO"]
+  brandWords = ["BASALIO"],
+  hideNewsletter = false
 } = Astro.props;
 ---
 
@@ -80,14 +88,16 @@ const {
       </div>
 
       <!-- RIGHT: Newsletter Section -->
-      <div class="footer-right-section">
-        <h4 class="footer-column-label">STAY IN THE LOOP</h4>
-        <p class="footer-newsletter-text">Get notified when a new module ships. No spam,<br />unsubscribe anytime.</p>
-        <div class="footer-newsletter-form">
-          <input type="email" placeholder="Email" class="footer-email-input" />
-          <button class="footer-subscribe-btn">Subscribe</button>
+      {!hideNewsletter && (
+        <div class="footer-right-section">
+          <h4 class="footer-column-label">STAY IN THE LOOP</h4>
+          <p class="footer-newsletter-text">Get notified when a new block ships. No spam,<br />unsubscribe anytime.</p>
+          <div class="footer-newsletter-form">
+            <input type="email" placeholder="Email" class="footer-email-input" />
+            <button class="footer-subscribe-btn">Subscribe</button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
 
     <!-- Copyright Row -->

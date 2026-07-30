@@ -205,21 +205,23 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
   .hacks-inner {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     width: 100%;
-    max-width: 1786px;
+    max-width: 100%;
     margin: 0 auto;
-    gap: 60px;
+    gap: 40px;
     box-sizing: border-box;
   }
 
   .hacks-left {
-    flex: 0 1 28%;
+    flex: 0 0 280px;
+    min-width: 0;
   }
 
   .hacks-right {
     flex: 1;
+    min-width: 0;
   }
 
   .hacks-intro {
@@ -375,11 +377,13 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     background: rgba(10, 10, 10, 0.04);
     border-radius: 8px;
     border: 1px solid rgba(10, 10, 10, 0.06);
-    font-size: 12px;
-    line-height: 1.5;
+    font-size: 11px;
+    line-height: 1.4;
     overflow-x: auto;
+    overflow-y: hidden;
     max-width: 100%;
     box-sizing: border-box;
+    width: 100%;
   }
 
   .hack-card code {
@@ -387,7 +391,9 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     color: var(--text-on-paper);
     display: block;
     overflow-x: auto;
-    white-space: pre;
+    white-space: pre-wrap;
+    word-break: break-word;
+    word-wrap: break-word;
   }
 
 .hack-cta {

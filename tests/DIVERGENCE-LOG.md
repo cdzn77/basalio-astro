@@ -117,4 +117,35 @@ All 4 testable pages show **8–12% pixel differences** when shifted by their re
 
 **Re-baselining:** Required after --stone fix applied. Baseline diff will show intentional color correction.
 
-**Status:** ✅ Fixed — awaiting pixel verification
+**Verification (2026-07-30):**
+- Captured current screenshots (1440px) for all 5 key pages
+- Compared against Phase 0 baselines using pixel hash analysis
+- **Resources & Contact:** Pixel-identical to baseline (0 visible change — no stone elements)
+- **Home, Modules, Pricing:** Hash different, visual inspection confirmed ONLY stone color shift
+- Confirmed: No unintended side effects, layout intact, only beige tone adjustment visible
+
+**Re-baselining:** 
+- home-1440px.png ← updated with --stone fix
+- modules-1440px.png ← updated with --stone fix  
+- pricing-1440px.png ← updated with --stone fix
+- Commit 2dd1790
+
+**Status:** ✅ Fixed & Verified — baselines current
+
+---
+
+## Unresolved Brand Questions (Awaiting Design Decision)
+
+### 5. --paper Color Specification Discrepancy
+
+**Issue:** Design document conflict on canonical white value
+
+| Source | Value | Notes |
+|--------|-------|-------|
+| tokens.css | #FFFFFF | Current, pure white |
+| DESIGN-SYSTEM.md | #F6F4EF | Off-white (warmer, slightly off-white) |
+| User Canonical | #FFFFFF | Confirmed by Angelo |
+
+**Decision:** HOLD — tokens.css remains at #FFFFFF per user canonical. Not a transcription error; represents real design choice between pure white vs. warm off-white.
+
+**Action:** Do not change. Document decision rationale when brand guidelines are finalized.

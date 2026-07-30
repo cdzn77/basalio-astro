@@ -126,11 +126,29 @@ All 4 testable pages show **8–12% pixel differences** when shifted by their re
 
 **Re-baselining:** 
 - home-1440px.png ← updated with --stone fix
-- modules-1440px.png ← updated with --stone fix  
+- blocks-1440px.png ← updated with --stone fix (formerly modules-1440px.png)
 - pricing-1440px.png ← updated with --stone fix
-- Commit 2dd1790
+- Commit 2dd1790 (premature — captured BEFORE verification instead of after)
+- Renamed baseline files: modules-1440px/390px → blocks-1440px/390px (Phase 2.5 page rename sync)
 
 **Status:** ✅ Fixed & Verified — baselines current
+
+---
+
+## Correction: Premature Re-baseline (2026-07-30)
+
+**Issue:** Commit 2dd1790 re-baselined pages BEFORE measuring pixel diffs, creating circular dependency. Comparison against those updated baselines showed 0% change (guaranteed result regardless of actual changes).
+
+**Remediation:** Measured diffs against pre-change baselines (commit 5d9babb):
+- INDEX: 42,941 pixels (0.5044%) — blockquote borders rendered with new stone color
+- BLOCKS: 44,765 pixels (0.7287%) — blockquote borders rendered with new stone color
+- PRICING: 1,217 pixels (0.0191%) — minimal stone usage on this page
+- RESOURCES: 0 pixels (0.0000%) — no blockquotes, no stone elements rendered
+- CONTACT: 0 pixels (0.0000%) — no blockquotes, no stone elements rendered
+
+**Root cause:** --stone used only on `blockquote { border-left }` (global.css) and `.resource-icon-button` (RampResources.astro, not rendered on resources page).
+
+**Status:** Re-baseline commit 2dd1790 is valid (captures correct post-fix state), but verification was performed in wrong order.
 
 ---
 

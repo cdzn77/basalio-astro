@@ -207,27 +207,56 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
 </BaseLayout>
 
 <script>
-  document.querySelectorAll('.copy-code-btn').forEach(button => {
-    button.addEventListener('click', async (e) => {
-      const codeBlock = button.previousElementSibling.querySelector('code');
-      const text = codeBlock.textContent;
+  function initializeCopyButtons() {
+    const buttons = document.querySelectorAll('.copy-code-btn');
+    console.log('Found copy buttons:', buttons.length);
 
-      try {
-        await navigator.clipboard.writeText(text);
+    buttons.forEach((button, index) => {
+      button.addEventListener('click', async (e) => {
+        e.preventDefault();
 
-        const originalText = button.textContent;
-        button.textContent = 'Copied!';
-        button.classList.add('copied');
+        const preElement = button.previousElementSibling;
+        if (!preElement) {
+          console.error('No pre element found before button', index);
+          return;
+        }
 
-        setTimeout(() => {
-          button.textContent = originalText;
-          button.classList.remove('copied');
-        }, 2000);
-      } catch (err) {
-        console.error('Failed to copy:', err);
-      }
+        const codeBlock = preElement.querySelector('code');
+        if (!codeBlock) {
+          console.error('No code element found in pre', index);
+          return;
+        }
+
+        const text = codeBlock.textContent;
+
+        try {
+          await navigator.clipboard.writeText(text);
+
+          const originalText = button.textContent;
+          button.textContent = 'Copied!';
+          button.classList.add('copied');
+
+          setTimeout(() => {
+            button.textContent = originalText;
+            button.classList.remove('copied');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy to clipboard:', err);
+          button.textContent = 'Failed!';
+          setTimeout(() => {
+            button.textContent = 'Copy';
+          }, 2000);
+        }
+      });
     });
-  });
+  }
+
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeCopyButtons);
+  } else {
+    initializeCopyButtons();
+  }
 </script>
 
 <style>

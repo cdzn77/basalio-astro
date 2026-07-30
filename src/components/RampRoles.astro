@@ -1,14 +1,18 @@
 ---
-// Ramp Roles - WHO IT'S FOR section
-// Four-card grid layout showcasing different user roles
+// Ramp Roles - WHO IT'S FOR section with visual hierarchy and icon treatment
+// Two-column layout with left copy and right role cards with color/icons
+// Each role has unique color accent and SVG icon
 
 interface Role {
   title: string;
   description: string;
   blocks: string[];
+  emoji: string;
+  accentColor: string;
 }
 
 interface Props {
+  sectionLabel?: string;
   sectionHeading?: string;
   bodyText?: string;
   roles?: Role[];
@@ -16,64 +20,89 @@ interface Props {
 }
 
 const {
+  sectionLabel = "WHO IT'S FOR",
   sectionHeading = "Built for people whose work has to move.",
   bodyText = "Basalio is nine blocks, not ninety. That only works if the nine are the right ones — so they were picked for a specific kind of site: the portfolio, the case study, the reel.",
   roles = [
     {
       title: "Portfolio & Brand Designers",
       description: "Your portfolio is the pitch. It has to feel considered before anyone reads a word of it.",
-      blocks: ["Grid Reveal", "Case Study Transition", "Text Reveal", "Magnetic Button"]
+      blocks: ["Grid Reveal for the work index,", "Case Study Transition between projects,", "Text Reveal for the pacing of a long-form write-up,", "Magnetic Button where the CTA needs to feel like software rather than a link."],
+      emoji: "🎨",
+      accentColor: "#FF6B9D"
     },
     {
       title: "Videographers & Motion Designers",
       description: "Your work moves. Most WordPress themes don't, and an embedded player is a poor substitute for a site that behaves like your reel.",
-      blocks: ["Scroll Sequence", "Pinned Scroll"]
+      blocks: ["Scroll Sequence turns a frame set into scroll-driven playback.", "Pinned Scroll holds a panel while the story runs past it."],
+      emoji: "🎬",
+      accentColor: "#00D9FF"
     },
     {
       title: "Photographers",
       description: "Image-led sites need presentation, not chrome.",
-      blocks: ["Before/After", "Filterable Grid", "Grid Reveal"]
+      blocks: ["Before/After for retouching and process work.", "Filterable Grid for a body of work with categories.", "Grid Reveal so the set arrives with intent instead of all at once."],
+      emoji: "📷",
+      accentColor: "#FFB800"
     },
     {
       title: "Studios & Agencies",
       description: "You build client sites and then hand them over. Whatever you install has to still work when you're not there.",
-      blocks: ["Nine blocks", "Theme-agnostic", "No page builder"]
+      blocks: ["Nine blocks, theme-agnostic,", "no page builder dependency.", "Content survives uninstall.", "One license covers every site you build."],
+      emoji: "🏢",
+      accentColor: "#7B61FF"
     }
   ],
   closingLine = "If you need a general-purpose animation engine, this isn't it. Nine blocks, opinionated, built for one kind of site."
 } = Astro.props;
+
 ---
 
 <section class="roles" id="roles">
   <div class="roles-inner">
-    <!-- HEADER -->
-    <div class="roles-header">
-      <p class="roles-eyebrow">WHO IT'S FOR</p>
-      <h2 class="roles-heading">{sectionHeading}</h2>
+    <!-- LEFT COLUMN: Header + Body Text -->
+    <div class="roles-left">
+      <div class="roles-header">
+        <p class="roles-eyebrow">{sectionLabel}</p>
+        <h2 class="roles-heading">{sectionHeading}</h2>
+      </div>
       <p class="roles-body">{bodyText}</p>
+      <p class="roles-closing">{closingLine}</p>
     </div>
 
-    <!-- FOUR-CARD GRID -->
-    <div class="roles-grid">
-      {roles.map((role) => (
-        <div class="role-card">
-          <h3 class="role-title">{role.title}</h3>
-          <p class="role-description">{role.description}</p>
-          <div class="role-blocks">
-            {role.blocks.map((block) => (
-              <span class="role-block">{block}</span>
-            ))}
+    <!-- RIGHT COLUMN: Role Cards Stack -->
+    <div class="roles-right">
+      <div class="roles-stack">
+        {roles.map((role, index) => (
+          <div class="role-card" style={`--accent-color: ${role.accentColor}`}>
+            <!-- Icon badge with accent color -->
+            <div class="role-icon-badge">
+              <span class="role-icon">{role.emoji}</span>
+            </div>
+
+            <!-- Content section -->
+            <div class="role-content">
+              <div class="role-number">{String(index + 1).padStart(2, '0')}</div>
+              <h3 class="role-title">{role.title}</h3>
+              <p class="role-description">{role.description}</p>
+              <div class="role-blocks">
+                {role.blocks.map((block) => (
+                  <p class="role-block">{block}</p>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
-
-    <!-- CLOSING LINE -->
-    <p class="roles-closing">{closingLine}</p>
   </div>
 </section>
 
 <style>
+  :root {
+    --accent-color: #FF6B9D;
+  }
+
   .roles {
     width: 100%;
     background: #FFFFFF;
@@ -85,10 +114,20 @@ const {
     width: 100%;
     max-width: 1786px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: flex-start;
+  }
+
+  .roles-left {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
   }
 
   .roles-header {
-    margin-bottom: 60px;
+    margin-bottom: 0;
   }
 
   .roles-eyebrow {
@@ -98,7 +137,7 @@ const {
     letter-spacing: 2.8px;
     text-transform: uppercase;
     color: #666666;
-    margin: 0 0 12px 0;
+    margin: 0 0 16px 0;
     padding: 0;
   }
 
@@ -109,43 +148,128 @@ const {
     line-height: 48px;
     letter-spacing: -0.8px;
     color: #000000;
-    margin: 0 0 24px 0;
+    margin: 0;
     padding: 0;
-    max-width: 700px;
   }
 
   .roles-body {
     font-family: Switzer, sans-serif;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 400;
     line-height: 24px;
     color: #575757;
     margin: 0;
     padding: 0;
-    max-width: 700px;
   }
 
-  .roles-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
-    margin-bottom: 40px;
+  .roles-closing {
+    font-family: Switzer, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #888888;
+    margin: 0;
+    padding: 0;
+  }
+
+  .roles-right {
+    width: 100%;
+  }
+
+  .roles-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
   }
 
   .role-card {
     padding: 32px;
-    background: #F9F9F9;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F9F9F9 100%);
     border: 1px solid #E8E8E8;
-    border-radius: 8px;
+    border-radius: 12px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    position: relative;
+    overflow: hidden;
+    transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  .role-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--accent-color);
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+
+  .role-card:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    transform: translateY(-4px);
+  }
+
+  .role-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Icon badge with accent color background */
+  .role-icon-badge {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    border-radius: 10px;
+    background: var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  .role-card:hover .role-icon-badge {
+    transform: scale(1.1);
+  }
+
+  .role-icon {
+    font-size: 32px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .role-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .role-number {
+    font-family: Switzer, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--accent-color);
+    line-height: 1;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-bottom: 4px;
   }
 
   .role-title {
     font-family: Switzer, sans-serif;
     font-size: 18px;
-    font-weight: 500;
-    line-height: 24px;
+    font-weight: 600;
+    line-height: 1.3;
     color: #000000;
-    margin: 0 0 16px 0;
+    margin: 0;
     padding: 0;
   }
 
@@ -153,41 +277,30 @@ const {
     font-family: Switzer, sans-serif;
     font-size: 14px;
     font-weight: 400;
-    line-height: 20px;
+    line-height: 21px;
     color: #666666;
-    margin: 0 0 20px 0;
+    margin: 0;
     padding: 0;
   }
 
   .role-blocks {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
   }
 
   .role-block {
     font-family: 'Azeret Mono', monospace;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.5px;
-    text-transform: uppercase;
-    color: #000000;
-    background: #FFFFFF;
-    padding: 6px 12px;
-    border: 1px solid #E8E8E8;
-    border-radius: 4px;
-    display: inline-block;
-  }
-
-  .roles-closing {
-    font-family: Switzer, sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
+    line-height: 18px;
     color: #666666;
     margin: 0;
     padding: 0;
-    max-width: 700px;
   }
 
   @media (max-width: 1024px) {
@@ -195,20 +308,24 @@ const {
       padding: 60px 20px;
     }
 
+    .roles-inner {
+      grid-template-columns: 1fr;
+      gap: 60px;
+    }
+
     .roles-heading {
       font-size: 32px;
       line-height: 40px;
-    }
-
-    .roles-grid {
-      grid-template-columns: 1fr;
-      gap: 24px;
     }
   }
 
   @media (max-width: 768px) {
     .roles {
       padding: 40px 20px;
+    }
+
+    .roles-inner {
+      gap: 40px;
     }
 
     .roles-heading {
@@ -222,10 +339,16 @@ const {
 
     .role-card {
       padding: 24px;
+      gap: 20px;
     }
 
-    .roles-grid {
-      gap: 16px;
+    .role-icon-badge {
+      width: 56px;
+      height: 56px;
+    }
+
+    .role-title {
+      font-size: 16px;
     }
   }
 </style>

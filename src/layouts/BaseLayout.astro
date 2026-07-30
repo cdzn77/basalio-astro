@@ -43,17 +43,31 @@ const {
 </head>
 
 <body>
-  <header class="base-header">
+  <header class="base-header" id="base-header">
     <slot name="header" />
   </header>
-  
+
   <main class="base-main">
     <slot />
   </main>
-  
+
   <footer class="base-footer">
     <slot name="footer" />
   </footer>
+
+  <script>
+    const header = document.getElementById('base-header');
+
+    function handleScroll() {
+      if (window.scrollY > 100) {
+        header?.classList.add('scrolled');
+      } else {
+        header?.classList.remove('scrolled');
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+  </script>
 </body>
 </html>
 
@@ -79,6 +93,13 @@ const {
     display: flex;
     align-items: center;
     background: transparent;
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+  }
+
+  .base-header.scrolled {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   }
 
   .base-main {

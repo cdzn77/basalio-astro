@@ -43,7 +43,8 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
               <p><em>If your editor splits the paste into separate HTML, CSS, and JavaScript fields, drop the &lt;style&gt; and &lt;script&gt; tags — those editors add their own.</em></p>
             </div>
           </div>
-          <pre><code>{`<style>
+          <div class="code-block-container">
+            <pre><code class="hack-code-block">{`<style>
 .b-reveal {
   opacity: 0;
   transform: translateY(24px);
@@ -81,6 +82,8 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
   for (var j = 0; j < els.length; j++) io.observe(els[j]);
 })();
 </script>`}</code></pre>
+            <button class="copy-code-btn" title="Copy to clipboard">Copy</button>
+          </div>
         </div>
 
         <div class="hack-card">
@@ -96,7 +99,8 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
               <p>Add <code>b-peek</code> to an Image block, or to a Group that contains one. The image starts grayscale and returns to full colour on hover — and on keyboard focus, if the image is inside a link.</p>
             </div>
           </div>
-          <pre><code>{`.b-peek img {
+          <div class="code-block-container">
+            <pre><code class="hack-code-block">{`.b-peek img {
   filter: grayscale(1);
   transition: filter .4s ease;
 }
@@ -111,6 +115,8 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     transition: none;
   }
 }`}</code></pre>
+            <button class="copy-code-btn" title="Copy to clipboard">Copy</button>
+          </div>
         </div>
 
         <div class="hack-card">
@@ -127,7 +133,8 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
               <p><em>If nothing pins: something above it has overflow set — many themes do this on the content wrapper, and it silently disables sticky positioning. Inspect the parent elements and look for overflow: hidden.</em></p>
             </div>
           </div>
-          <pre><code>{`.b-pin-wrap {
+          <div class="code-block-container">
+            <pre><code class="hack-code-block">{`.b-pin-wrap {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
@@ -147,6 +154,8 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     position: static;
   }
 }`}</code></pre>
+            <button class="copy-code-btn" title="Copy to clipboard">Copy</button>
+          </div>
         </div>
 
         <div class="hack-card">
@@ -164,7 +173,8 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
               <p><em>No upsell here. This one's just yours.</em></p>
             </div>
           </div>
-          <pre><code>{`.b-grain {
+          <div class="code-block-container">
+            <pre><code class="hack-code-block">{`.b-grain {
   position: relative;
   isolation: isolate;
 }
@@ -178,6 +188,8 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
   opacity: .18;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='b-noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b-noise)'/%3E%3C/svg%3E");
 }`}</code></pre>
+            <button class="copy-code-btn" title="Copy to clipboard">Copy</button>
+          </div>
         </div>
 
         <div class="hack-cta">
@@ -193,6 +205,30 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     <RampFooter description="Nine curated interaction blocks for WordPress portfolios. Nothing you'd need Framer for." address="Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark" />
   </Fragment>
 </BaseLayout>
+
+<script>
+  document.querySelectorAll('.copy-code-btn').forEach(button => {
+    button.addEventListener('click', async (e) => {
+      const codeBlock = button.previousElementSibling.querySelector('code');
+      const text = codeBlock.textContent;
+
+      try {
+        await navigator.clipboard.writeText(text);
+
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        button.classList.add('copied');
+
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.classList.remove('copied');
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+      }
+    });
+  });
+</script>
 
 <style>
   .hacks-section {
@@ -368,9 +404,15 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
   }
 
 
-  .hack-card pre {
+  .code-block-container {
+    position: relative;
     margin: 16px 0 0 0;
+  }
+
+  .hack-card pre {
+    margin: 0;
     padding: 20px;
+    padding-right: 60px;
     background: rgba(10, 10, 10, 0.04);
     border-radius: 8px;
     border: 1px solid rgba(10, 10, 10, 0.06);
@@ -381,6 +423,45 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     max-width: 100%;
     box-sizing: border-box;
     width: 100%;
+  }
+
+  .copy-code-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 8px 16px;
+    min-height: 32px;
+    background: var(--acid);
+    color: var(--text-on-paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+    z-index: 10;
+  }
+
+  .copy-code-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .copy-code-btn:active {
+    transform: translateY(0);
+  }
+
+  .copy-code-btn.copied {
+    background: rgba(10, 10, 10, 0.1);
+    color: var(--text-on-paper-muted);
+  }
+
+  .copy-code-btn:focus-visible {
+    outline: 2px solid var(--text-on-paper);
+    outline-offset: 2px;
   }
 
   .hack-card code {

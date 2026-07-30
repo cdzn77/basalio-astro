@@ -2,7 +2,7 @@
 // Modules Page - All 9 interaction modules for WordPress portfolios
 // Reuses Nav, Testimonials, Footer from homepage
 
-import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampTestimonialsV2 from '../components/RampTestimonialsV2.astro';
 import RampFooter from '../components/RampFooter.astro';
@@ -71,7 +71,7 @@ const modules = [
 const descriptionWords = description.split(' ');
 ---
 
-<RampTemplateLayout title={title} description={description}>
+<BaseLayout title={title} description={description}>
   <!-- HEADER: Navigation bar -->
   <Fragment slot="header">
     <RampHeader />
@@ -176,7 +176,7 @@ const descriptionWords = description.split(' ');
   <Fragment slot="footer">
     <RampFooter address="Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark" />
   </Fragment>
-</RampTemplateLayout>
+</BaseLayout>
 
 <style>
   /* HERO SECTION: 2-column layout (35% left + 65% right) */

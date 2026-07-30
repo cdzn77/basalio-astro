@@ -1,40 +1,11 @@
 ---
-interface NavLink {
-  label: string;
-  href: string;
-}
+import { footerNav, footerCopy } from '../data/navigation';
 
 interface Props {
-  description?: string;
-  productLinks?: NavLink[];
-  supportLinks?: NavLink[];
-  brandWords?: string[];
-}
-
-interface Props {
-  description?: string;
-  productLinks?: NavLink[];
-  supportLinks?: NavLink[];
-  brandWords?: string[];
   hideNewsletter?: boolean;
 }
 
-const {
-  description = "Nine curated interaction blocks for WordPress portfolios. Nothing you'd need Framer for.",
-  productLinks = [
-    { label: "Blocks", href: "/blocks" },
-    { label: "Pricing", href: "/pricing" },
-    { label: "Roadmap", href: "/roadmap" }
-  ],
-  supportLinks = [
-    { label: "Help center", href: "/help" },
-    { label: "Contact", href: "/contact" },
-    { label: "Terms of Service", href: "/terms" },
-    { label: "Privacy Policy", href: "/privacy" }
-  ],
-  brandWords = ["BASALIO"],
-  hideNewsletter = false
-} = Astro.props;
+const { hideNewsletter = false } = Astro.props;
 ---
 
 <footer class="footer">
@@ -45,7 +16,7 @@ const {
       <div class="footer-left-section">
         <div class="footer-logo-block">
           <h3 class="footer-logo">Basalio</h3>
-          <p class="footer-description">{description}</p>
+          <p class="footer-description">{footerCopy.description}</p>
         </div>
 
         <!-- Social Icons -->
@@ -73,7 +44,7 @@ const {
         <!-- Product Column -->
         <nav class="footer-link-column">
           <h4 class="footer-column-label">PRODUCT</h4>
-          {productLinks.map((link) => (
+          {footerNav.product.map((link) => (
             <a href={link.href} class="footer-link">{link.label}</a>
           ))}
         </nav>
@@ -81,7 +52,7 @@ const {
         <!-- Support Column -->
         <nav class="footer-link-column">
           <h4 class="footer-column-label">SUPPORT</h4>
-          {supportLinks.map((link) => (
+          {footerNav.support.map((link) => (
             <a href={link.href} class="footer-link">{link.label}</a>
           ))}
         </nav>
@@ -110,9 +81,7 @@ const {
     <div class="footer-branding-row">
       <div class="footer-brand-container">
         <div class="footer-brand-row">
-          {brandWords.map((word) => (
-            <h2 class="footer-brand-word">{word}</h2>
-          ))}
+          <h2 class="footer-brand-word">BASALIO</h2>
         </div>
       </div>
     </div>

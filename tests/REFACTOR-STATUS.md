@@ -31,6 +31,19 @@
 
 ---
 
+## Phase 3 Technical Debt & Prep
+
+### Hardcoded transition values to tokenize
+**Location:** RampCourses.astro (lines 316, 337, 351), RampResources.astro (line 239)  
+**Values:** 300ms (Ramp template leftovers)  
+**Action (Phase 3):** Extract to `--transition-300` or similar token during component extraction
+
+### Brand token audit result
+**Finding:** #C6F135 does NOT appear in marketing site codebase  
+**Status:** ✅ Confirmed (no near-miss brand tokens found)
+
+---
+
 ## Open Blockers (Must Fix Before Phase 3)
 
 ### 1. **blocks.astro Token Isolation** ⚠️ CRITICAL FOR PHASE 3

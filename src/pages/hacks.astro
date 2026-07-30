@@ -222,6 +222,82 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     flex: 1;
   }
 
+  .hacks-intro {
+    margin-bottom: 60px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(10, 10, 10, 0.08);
+  }
+
+  .hacks-intro h2 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+    color: var(--text-on-paper);
+    margin: 0 0 16px 0;
+    padding: 0;
+  }
+
+  .hacks-intro p {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-on-paper-muted);
+    margin: 0 0 12px 0;
+    padding: 0;
+  }
+
+  .hacks-intro p:last-child {
+    margin-bottom: 0;
+  }
+
+  .hack-instructions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 24px 0;
+    padding: 20px;
+    background: rgba(10, 10, 10, 0.03);
+    border-radius: 8px;
+  }
+
+  .hack-step h3 {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--text-on-paper);
+    margin: 0 0 8px 0;
+    padding: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .hack-step p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-on-paper-muted);
+    margin: 0 0 8px 0;
+    padding: 0;
+  }
+
+  .hack-step p:last-child {
+    margin-bottom: 0;
+  }
+
+  .hack-step em {
+    font-style: italic;
+    color: var(--text-on-paper-muted);
+  }
+
+  .hack-step code {
+    background: rgba(10, 10, 10, 0.06);
+    color: var(--text-on-paper);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+
   .hacks-eyebrow {
     font-size: 14px;
     font-weight: 500;
@@ -234,10 +310,10 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
 
   .hacks-heading {
     font-size: 40px;
-    font-weight: 400;
+    font-weight: 700;
     line-height: 48px;
     color: var(--text-on-paper);
-    margin: 0;
+    margin: 0 0 20px 0;
     padding: 0;
   }
 
@@ -246,7 +322,7 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     font-weight: 400;
     line-height: 24px;
     color: var(--text-on-paper-muted);
-    margin: 0;
+    margin: 0 0 16px 0;
     padding: 0;
   }
 
@@ -255,7 +331,7 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     font-weight: 400;
     line-height: 1.6;
     color: var(--text-on-paper-muted);
-    margin: 20px 0 0 0;
+    margin: 0;
     padding: 0;
   }
 
@@ -275,47 +351,33 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
   }
 
   .hack-card h2 {
-    font-size: 28px;
-    font-weight: 400;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
     color: var(--text-on-paper);
-    margin: 0;
+    margin: 0 0 8px 0;
     padding: 0;
   }
 
-  .hack-card p {
+  .hack-card > p {
     font-size: 15px;
     font-weight: 400;
     line-height: 1.6;
     color: var(--text-on-paper-muted);
-    margin: 0;
+    margin: 0 0 16px 0;
     padding: 0;
   }
 
-  .no-upsell {
-    font-size: 14px;
-    font-style: italic;
-    color: var(--text-on-paper-muted);
-    margin-top: 8px;
-  }
-
-  .placement {
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    color: var(--text-on-paper);
-    margin-top: 16px;
-    padding-top: 12px;
-    border-top: 1px solid rgba(10, 10, 10, 0.04);
-  }
 
   .hack-card pre {
-    margin: 0;
+    margin: 16px 0 0 0;
     padding: 20px;
-    background: rgba(10, 10, 10, 0.03);
+    background: rgba(10, 10, 10, 0.04);
     border-radius: 8px;
+    border: 1px solid rgba(10, 10, 10, 0.06);
     font-size: 12px;
-    overflow: hidden;
+    line-height: 1.5;
+    overflow-x: auto;
     max-width: 100%;
     box-sizing: border-box;
   }
@@ -325,48 +387,10 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     color: var(--text-on-paper);
     display: block;
     overflow-x: auto;
-    white-space: pre-wrap;
-    word-wrap: break-word;
+    white-space: pre;
   }
 
-  .comparison-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    font-size: 14px;
-    font-weight: 400;
-  }
-
-  .comparison-table thead {
-    border-bottom: 1px solid rgba(10, 10, 10, 0.08);
-  }
-
-  .comparison-table th {
-    text-align: left;
-    padding: 12px 0;
-    font-weight: 600;
-    color: var(--text-on-paper);
-    font-size: 13px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .comparison-table th:first-child {
-    width: 50%;
-  }
-
-  .comparison-table td {
-    padding: 12px 0;
-    color: var(--text-on-paper-muted);
-    line-height: 1.5;
-    border-bottom: 1px solid rgba(10, 10, 10, 0.04);
-  }
-
-  .comparison-table td:first-child {
-    padding-right: 16px;
-  }
-
-  .hack-cta {
+.hack-cta {
     margin-top: 60px;
     padding-top: 40px;
     border-top: 1px solid rgba(10, 10, 10, 0.08);
@@ -377,20 +401,20 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
   }
 
   .cta-text {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 700;
     line-height: 1.3;
     color: var(--text-on-paper);
-    margin: 0;
+    margin: 0 0 8px 0;
     padding: 0;
   }
 
   .cta-subtext {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 1.6;
     color: var(--text-on-paper-muted);
-    margin: 0;
+    margin: 0 0 16px 0;
     padding: 0;
   }
 

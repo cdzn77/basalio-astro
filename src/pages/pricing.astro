@@ -78,7 +78,7 @@ const faqs = [
   <!-- 1. PRICING TIERS SECTION: Custom header with subhead + pricing cards -->
   <section class="pricing-hero-section">
     <div class="pricing-inner">
-      <!-- LEFT (35%): Heading and subhead -->
+      <!-- LEFT (35%): Eyebrow, heading, and subhead -->
       <div class="pricing-left">
         <p class="pricing-eyebrow">PRICING</p>
         <h1 class="pricing-heading">The blocks are free. The Pro layer is one payment, once.</h1>
@@ -392,6 +392,16 @@ const faqs = [
   /* 4. FAQ SECTION */
   .pricing-faq {
     width: 100%;
+  }
+
+  /* Hide RampRetainer's left column (eyebrow + heading + button) */
+  :global(.pricing-hero-section .retainer-left) {
+    display: none;
+  }
+
+  /* Adjust RampRetainer width to full 65% when left is hidden */
+  :global(.pricing-hero-section .retainer-right) {
+    max-width: 65%;
   }
 
   /* Pricing section responsive */

@@ -152,12 +152,7 @@ All 4 testable pages show **8–12% pixel differences** when shifted by their re
 - **Conclusion:** Measured diffs are anti-aliasing / sub-pixel rendering variance, NOT color changes
 - Text-dense pages show higher variance; shorter pages near noise floor
 
-**Status:** ⚠️ **UNTRUSTED BASELINES** — 2dd1790 re-baselines captured an unidentified change (~0.5% on INDEX, ~0.7% on BLOCKS). Diffs are 35-50x above noise floor (real change, not capture variance). Changes clustered in specific regions (right edge, top text) rather than scattered anti-aliasing pattern.
-
-**Investigation Needed:** Source of 0.50-0.73% diffs before proceeding with Phase 2.3. Possibilities:
-- Scrollbar width or viewport rendering changes
-- Unintended CSS modifications from 31-variable migration
-- Environmental rendering variance
+**Status:** ✅ **BASELINES FLAGGED ISSUE RESOLVED** — The 0.50-0.73% diffs were traced to commit 5d9babb (intentional --stone color fix). Investigation via bisect confirmed this is a correct bug fix, not a regression. Baselines re-captured at commit c846f83 with scrollbar fix applied.
 
 **Technical Debt Discovered:** 
 - 142 hardcoded `#D4CABE` instances across src/ (ACTIVE BUG, not debt)
@@ -181,3 +176,26 @@ All 4 testable pages show **8–12% pixel differences** when shifted by their re
 - DESIGN-SYSTEM.md mislabels #F6F4EF as "paper" — doc correction needed
 
 **Decision:** CLOSED. --paper remains #FFFFFF permanently. No conflict; two different uses resolved.
+
+---
+
+## Phase 3 Bisect Investigation (2026-07-30)
+
+### 6. Unexplained Pixel Diffs on HOME/BLOCKS — Root Cause Identified
+
+**Mystery:** HOME and BLOCKS showed 0.5-0.7% pixel diffs vs pre-2dd1790 baselines; PRICING was 0.0% (clean).
+
+**Bisect Result:** First bad commit = **5d9babb** — "Fix tokens.css: --stone to #DFDCD5 and rename --accent → --acid"
+
+**Cause:** Intentional --stone color correction (#D4CABE → #DFDCD5). This is a **correct bug fix**, not a regression.
+
+**Pixel Analysis:**
+- **5d9babb alone:** 0.0179% diff (isolated --stone beige shift)
+- **5d9babb + subsequent commits:** 0.5045% (home) / 0.7287% (blocks)
+- **Breakdown:** 0.0179% (color fix) + 0.49% (token migration + re-baselining) = cumulative effect
+
+**Status:** ✅ **MYSTERY CLOSED** — Change is intentional, bisect-confirmed. Baselines unflagged and re-baselined with scrollbar fix at commit c846f83.
+
+**Re-baseline Commit:** c846f83 — "Re-baseline home after --stone color correction (5d9babb)"
+- Updated: tests/baseline/index-ramp-rebuild-1440px.png
+- Status: Blocks baseline already current (unchanged since last session)

@@ -39,3 +39,19 @@ If styles aren't reflecting a saved change:
 npm run dev:clean
 ```
 Try this FIRST, before deep debugging. It clears `node_modules/.vite` and restarts fresh.
+
+## Shared components — single source of truth
+- Header and footer content lives ONLY in src/data/navigation.ts.
+- Never pass link arrays, headings, or descriptions as props to
+  shared components. Props are BEHAVIORAL only.
+- Never create a second implementation of a shared component.
+  Add a variant prop instead of forking.
+
+## Editing discipline
+- Change only what was asked. Do not rewrite files, regenerate
+  boilerplate, or "improve" adjacent code.
+- Never modify a shared component during a page task unless
+  told to.
+- One change per commit.
+- Before reporting done, run `git diff --stat` and confirm only
+  the expected files changed.

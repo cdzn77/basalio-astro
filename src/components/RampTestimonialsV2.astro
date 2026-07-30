@@ -6,55 +6,93 @@
 
 interface Testimonial {
   image: string;
-  quote: string;
-  name: string;
-  results: string;
+  eyebrow?: string;
+  title: string;
+  description: string;
+  features: string[];
+  icon?: string;
+  quote?: string;
+  name?: string;
+  results?: string;
 }
 
 interface Props {
   testimonials?: Testimonial[];
   sectionHeading?: string;
+  bodyText?: string;
+  eyebrow?: string;
+  closingLine?: string;
 }
 
 const {
+  eyebrow = "WHO IT'S FOR",
+  bodyText = "",
+  closingLine = "",
   testimonials = [
     {
       image: "/assets/uxui_whoitsfor.png",
-      quote: "I stopped explaining hover states to developers. I just build them.",
-      name: "UX/UI Designer",
-      results: "No handoff docs needed"
+      eyebrow: "ROLE",
+      title: "Portfolio & Brand Designers",
+      description: "Your portfolio is the pitch. It has to feel considered before anyone reads a word of it.",
+      features: [
+        "Grid Reveal for the work index",
+        "Case Study Transition between projects",
+        "Text Reveal for the pacing of a long-form write-up",
+        "Magnetic Button where the CTA needs to feel like -\nsoftware rather than a link"
+      ],
+      icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8"></rect><rect x="13" y="3" width="8" height="8"></rect><rect x="3" y="13" width="8" height="8"></rect><rect x="13" y="13" width="8" height="8"></rect></svg>'
     },
     {
-      image: "/assets/testimonial-videographer.jpg",
-      quote: "My reel finally scrolls the way it plays - frame by frame, not just fading in.",
-      name: "Videographer",
-      results: "Scroll Sequence, no video embed"
+      image: "/assets/videographer_whoitsfor.png",
+      eyebrow: "ROLE",
+      title: "Videographers & Motion Designers",
+      description: "Your work moves. Most WordPress themes don't, and an embedded player is a poor substitute for a site that behaves like your reel.",
+      features: [
+        "Scroll Sequence turns a frame set into scroll-driven playback",
+        "Pinned Scroll holds a panel while the story runs past it"
+      ],
+      icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>'
     },
     {
-      image: "/assets/testimonial-director.jpg",
-      quote: "Case studies that morph from the grid instead of just... linking to a new page.",
-      name: "Director",
-      results: "One shared-element transition, zero page reload"
+      image: "/assets/director_whoitsfor.png",
+      eyebrow: "ROLE",
+      title: "Photographers",
+      description: "Image-led sites need presentation, not chrome.",
+      features: [
+        "Before/After for retouching and process work",
+        "Filterable Grid for a body of work with categories",
+        "Grid Reveal so the set arrives with intent instead of all at once"
+      ],
+      icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>'
     },
     {
-      image: "/assets/testimonial-agency.jpg",
-      quote: "Every client site gets the same polish - without rebuilding it every time.",
-      name: "Agency",
-      results: "Nine blocks, unlimited client sites"
+      image: "/assets/agency_whoitsfor.png",
+      eyebrow: "ROLE",
+      title: "Studios & Agencies",
+      description: "You build client sites and then hand them over. Whatever you install has to still work when you're not there.",
+      features: [
+        "Nine blocks, theme-agnostic",
+        "no page builder dependency",
+        "Content survives uninstall",
+        "One license covers every site you build"
+      ],
+      icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>'
     }
   ],
   sectionHeading = "Built for people who\nactually make things."
 } = Astro.props;
 ---
 
-<section class="testimonials-v2" id="testimonials-v2">
+<section class="testimonials-v2 section-with-footer-overlap" id="testimonials-v2">
   <div class="testimonials-v2-inner">
     <!-- LEFT COLUMN: 500px, eyebrow + heading + pagination -->
     <div class="testimonials-v2-left">
       <div class="testimonials-v2-header">
-        <p class="testimonials-v2-eyebrow">WHO IT'S FOR</p>
+        <p class="testimonials-v2-eyebrow">{eyebrow}</p>
         <h2 class="testimonials-v2-heading">{sectionHeading}</h2>
       </div>
+      {bodyText && <p class="testimonials-v2-body">{bodyText}</p>}
+      {closingLine && <p class="testimonials-v2-closing">{closingLine}</p>}
 
       <!-- PAGINATION CONTROLS: Below the heading on the left side -->
       <div class="pagination-controls-v2">
@@ -89,12 +127,22 @@ const {
           {testimonials.map((testimonial, index) => {
             return (
               <div class="testimonial-card-v2">
-                <img src={testimonial.image} alt={testimonial.name} class="testimonial-image-v2" />
-                <blockquote class="testimonial-quote-v2">{testimonial.quote}</blockquote>
-                <span class="testimonial-label-v2">ROLE</span>
-                <p class="testimonial-name-v2">{testimonial.name}</p>
-                <span class="testimonial-label-v2">RESULTS</span>
-                <p class="testimonial-results-v2">{testimonial.results}</p>
+                <img src={testimonial.image} alt={testimonial.title} class="testimonial-image-v2" />
+                {testimonial.eyebrow && <span class="testimonial-label-v2">{testimonial.eyebrow}</span>}
+                <div class="testimonial-title-row-v2">
+                  {testimonial.icon && (
+                    <div class="testimonial-icon-v2" set:html={testimonial.icon}></div>
+                  )}
+                  <h3 class="testimonial-name-v2">{testimonial.title}</h3>
+                </div>
+                {testimonial.description && <p class="testimonial-description-v2">{testimonial.description}</p>}
+                {testimonial.features && testimonial.features.length > 0 && (
+                  <div class="testimonial-features-v2">
+                    {testimonial.features.map((feature) => (
+                      <p class="testimonial-feature-v2">{feature}</p>
+                    ))}
+                  </div>
+                )}
               </div>
             );
           })}
@@ -119,11 +167,6 @@ const {
     background: var(--surface-paper);
     width: 100%;
     box-sizing: border-box;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
-    margin-bottom: -40px;
-    position: relative;
-    z-index: 2;
   }
 
   /* INNER ROW: flex row, space-between, align-items flex-start, two columns */
@@ -136,12 +179,12 @@ const {
     gap: 20px;
   }
 
-  /* LEFT COLUMN: 500px wide, flex column, match carousel height (571px) */
+  /* LEFT COLUMN: 500px wide, flex column, match carousel height (700px) */
   .testimonials-v2-left {
     flex: 0 0 500px;
     display: flex;
     flex-direction: column;
-    height: 571px;
+    height: 700px;
   }
 
   /* Eyebrow + heading block (natural document flow spacing) */
@@ -168,6 +211,23 @@ const {
     color: var(--text-on-paper);
     margin: 0 0 40px 0;
     white-space: pre-line;
+  }
+
+  .testimonials-v2-body {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+    white-space: pre-line;
+  }
+
+  .testimonials-v2-closing {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 20px;
+    color: var(--text-on-paper-muted);
+    margin: 28px 0 20px 0;
   }
 
   /* PAGINATION CONTROLS: At bottom of left column with spacing */
@@ -220,7 +280,7 @@ const {
     flex: 1;
     position: relative;
     overflow: clip;
-    min-height: 571px;
+    min-height: 700px;
   }
 
   /* Invisible hover zones (left and right edges) */
@@ -253,7 +313,7 @@ const {
     overflow: clip;
     width: 100%;
     max-width: 1020px;
-    height: 571px;
+    height: 700px;
   }
 
   /* Track: position absolute, flex row, gap 20px, width = sum of cards + gaps */
@@ -267,10 +327,10 @@ const {
     transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
-  /* Testimonial cards: fixed size 500x571px */
+  /* Testimonial cards: fixed size 500x700px */
   .testimonial-card-v2 {
     flex: 0 0 500px;
-    height: 571px;
+    height: 700px;
     background: #FFFFFF;
     border: 1px solid #E8E8E8;
     border-radius: 6px;
@@ -315,6 +375,27 @@ const {
     display: block;
   }
 
+  .testimonial-title-row-v2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .testimonial-icon-v2 {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .testimonial-icon-v2 svg {
+    width: 100%;
+    height: 100%;
+  }
+
   .testimonial-name-v2 {
     font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 14px;
@@ -334,6 +415,35 @@ const {
     margin: 0;
     padding: 0;
     display: block;
+  }
+
+  .testimonial-description-v2 {
+    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 22px;
+    color: #000000;
+    margin: 0 0 16px 0;
+    padding: 0;
+  }
+
+  .testimonial-features-v2 {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .testimonial-feature-v2 {
+    font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 18px;
+    color: #666666;
+    margin: 0;
+    padding: 0;
+    white-space: pre-line;
   }
 </style>
 
@@ -430,4 +540,36 @@ const {
       });
     }
   }
+
+  // SCROLL REVEAL ANIMATION - Section scrolls up and reveals footer underneath
+  const section = document.querySelector('.testimonials-v2');
+  if (section) {
+    const handleScroll = () => {
+      const sectionRect = section.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      // Calculate how far the section is from the bottom of the viewport
+      const distanceFromViewportBottom = sectionRect.bottom - windowHeight;
+
+      // Reveal range: 0px to -400px from viewport bottom
+      // At 0px: no reveal (section bottom at viewport bottom)
+      // At -400px: fully revealed (section moved up 40px)
+      if (distanceFromViewportBottom <= 0 && distanceFromViewportBottom > -400) {
+        // Calculate progress: 0 to 1
+        const progress = Math.abs(distanceFromViewportBottom) / 400;
+        const translateAmount = progress * 40; // Match the negative margin
+        section.style.transform = `translateY(${translateAmount}px)`;
+      } else if (distanceFromViewportBottom <= -400) {
+        // Fully revealed and locked
+        section.style.transform = 'translateY(40px)';
+      } else {
+        // Not yet in reveal zone
+        section.style.transform = 'translateY(0)';
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial call
+  }
+
 </script>

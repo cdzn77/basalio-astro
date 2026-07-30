@@ -1,7 +1,7 @@
 ---
-// Ramp Roles - Adapted from proven RampTestimonialsV2 structure
-// Two-column layout: LEFT (500px heading/text) | RIGHT (roles grid)
-// Showing all 4 roles at once without carousel
+// Ramp Roles - Based on proven RampTestimonialsV2 structure
+// Two-column layout with left heading + right grid of role cards
+// Each role card has colored header block with emoji + title
 
 interface Role {
   title: string;
@@ -12,15 +12,13 @@ interface Role {
 }
 
 interface Props {
-  sectionLabel?: string;
   sectionHeading?: string;
   bodyText?: string;
-  roles?: Role[];
   closingLine?: string;
+  roles?: Role[];
 }
 
 const {
-  sectionLabel = "WHO IT'S FOR",
   sectionHeading = "Built for people whose work has to move.",
   bodyText = "Basalio is nine blocks, not ninety. That only works if the nine are the right ones — so they were picked for a specific kind of site: the portfolio, the case study, the reel.",
   roles = [
@@ -57,32 +55,36 @@ const {
 } = Astro.props;
 ---
 
-<section class="roles" id="roles">
+<section class="roles">
   <div class="roles-inner">
-    <!-- LEFT COLUMN: Eyebrow + Heading + Description -->
+    <!-- LEFT COLUMN: 400px wide heading + description -->
     <div class="roles-left">
       <div class="roles-header">
-        <p class="roles-eyebrow">{sectionLabel}</p>
+        <p class="roles-eyebrow">WHO IT'S FOR</p>
         <h2 class="roles-heading">{sectionHeading}</h2>
       </div>
       <p class="roles-body">{bodyText}</p>
       <p class="roles-closing">{closingLine}</p>
     </div>
 
-    <!-- RIGHT COLUMN: Roles Grid (2 columns, 2 rows) -->
+    <!-- RIGHT COLUMN: 2x2 grid of role cards -->
     <div class="roles-right">
       <div class="roles-grid">
-        {roles.map((role, index) => (
-          <div class="role-card" style={`--accent-color: ${role.accentColor}`}>
-            <div class="role-header-block">
+        {roles.map((role) => (
+          <div class="role-card">
+            <!-- Colored header block with emoji + title -->
+            <div class="role-header" style={`background-color: ${role.accentColor}`}>
               <div class="role-emoji">{role.emoji}</div>
               <h3 class="role-title">{role.title}</h3>
             </div>
-            <p class="role-description">{role.description}</p>
-            <div class="role-blocks">
-              {role.blocks.map((block) => (
-                <p class="role-block">{block}</p>
-              ))}
+            <!-- Content section: description + blocks -->
+            <div class="role-content">
+              <p class="role-description">{role.description}</p>
+              <div class="role-blocks">
+                {role.blocks.map((block) => (
+                  <p class="role-block">{block}</p>
+                ))}
+              </div>
             </div>
           </div>
         ))}
@@ -92,18 +94,20 @@ const {
 </section>
 
 <style>
+  /* SECTION SHELL */
   .roles {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 80px 40px;
+    padding: 200px 40px;
     gap: 40px;
     background: var(--surface-paper);
     width: 100%;
     box-sizing: border-box;
   }
 
+  /* INNER ROW: two columns */
   .roles-inner {
     display: flex;
     flex-direction: row;
@@ -114,6 +118,7 @@ const {
     gap: 60px;
   }
 
+  /* LEFT COLUMN: 400px wide */
   .roles-left {
     flex: 0 0 400px;
     display: flex;
@@ -162,6 +167,7 @@ const {
     margin: 0;
   }
 
+  /* RIGHT COLUMN: Grid */
   .roles-right {
     flex: 1;
   }
@@ -172,7 +178,7 @@ const {
     gap: 24px;
   }
 
-  /* Role card: header block (colored) + content (white) */
+  /* Role card */
   .role-card {
     background: #FFFFFF;
     border: 1px solid #E8E8E8;
@@ -188,9 +194,8 @@ const {
     transform: translateY(-4px);
   }
 
-  /* Colored header block with emoji + title */
-  .role-header-block {
-    background: var(--accent-color);
+  /* Colored header block */
+  .role-header {
     padding: 40px 24px;
     display: flex;
     flex-direction: column;
@@ -213,10 +218,16 @@ const {
     line-height: 1.3;
     color: #FFFFFF;
     margin: 0;
-    padding: 0;
   }
 
-  /* Content section: white background */
+  /* Content section */
+  .role-content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
   .role-description {
     font-family: Switzer, sans-serif;
     font-size: 14px;
@@ -224,16 +235,14 @@ const {
     line-height: 20px;
     color: #666666;
     margin: 0;
-    padding: 24px 24px 0 24px;
   }
 
   .role-blocks {
     display: flex;
     flex-direction: column;
     gap: 6px;
-    padding: 16px 24px 24px 24px;
+    padding-top: 12px;
     border-top: 1px solid #E8E8E8;
-    margin-top: 12px;
   }
 
   .role-block {
@@ -244,12 +253,11 @@ const {
     line-height: 18px;
     color: #666666;
     margin: 0;
-    padding: 0;
   }
 
   @media (max-width: 1024px) {
     .roles {
-      padding: 60px 20px;
+      padding: 120px 40px;
     }
 
     .roles-inner {
@@ -273,7 +281,7 @@ const {
 
   @media (max-width: 768px) {
     .roles {
-      padding: 40px 20px;
+      padding: 60px 20px;
     }
 
     .roles-heading {
@@ -281,17 +289,13 @@ const {
       line-height: 36px;
     }
 
-    .role-header-block {
+    .role-header {
       padding: 32px 20px;
       min-height: auto;
     }
 
     .role-emoji {
       font-size: 40px;
-    }
-
-    .role-title {
-      font-size: 14px;
     }
   }
 </style>

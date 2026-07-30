@@ -185,17 +185,46 @@ CONTACT → /contact
 
 ---
 
+## Phase 3 Prerequisites: Type Scale Token Fork
+
+**Critical Discovery (2026-07-30):**
+
+Four pages consume `--font-size-*` tokens from tokens.css:
+- roadmap.astro, support.astro, terms.astro, privacy.astro
+
+Four pages hardcode all font-sizes in scoped CSS:
+- blocks.astro, contact.astro, pricing.astro, resources.astro
+
+**Impact:** During Phase 3 pattern extraction, new components placed on content pages (blocks, pricing, contact, resources) will collide with page-level CSS font-size rules. Scoped CSS specificity will prevent token inheritance.
+
+**Recommendation for Phase 3:**
+- Either adopt type scale tokens site-wide (modify 4 content pages to use `--font-size-*` tokens)
+- OR ensure new components use inline styles with explicit token references
+- Document this fork in component extraction guidelines
+
+**Status:** Do not expand this task now. Flag for Phase 3 planning.
+
+---
+
 ## Continuation Checklist for Next Session
 
+**Completed (2026-07-30):**
+- [x] Phase 3 token audit completed (all --basalio-* variables migrated or removed)
+- [x] --stone value corrected (#D4CABE → #DFDCD5, logged to DIVERGENCE-LOG.md)
+- [x] --accent renamed to --acid for single-value enforcement
+- [x] All 6 component files migrated to canonical design tokens
+- [x] --basalio-duration orphan removed from documentation
+- [x] Type scale token fork discovered and documented
+
 **Before starting Phase 2.3:**
-1. [ ] Read and verify REFACTOR-STATUS.md and DIVERGENCE-LOG.md
-2. [ ] Confirm blocks.astro token isolation investigation (find all --basalio-* usage)
-3. [ ] Determine if token duplication is site-wide or blocks.astro-only
+1. [ ] Read REFACTOR-STATUS.md and DIVERGENCE-LOG.md for Phase 3 context
+2. [ ] Verify --stone fix visually (expect beige tone shift across all stone-colored elements)
+3. [ ] Re-baseline pages affected by --stone color correction
 
 **Then proceed with:**
 1. Phase 2.3: Migrate 7 remaining pages (one commit each, pixel-verified)
 2. Delete InlineHeader.astro
-3. Phase 3: Pattern extraction (blocked until blocks.astro token issue resolved)
+3. Phase 3: Pattern extraction (Type scale token fork documented for planning)
 
 ---
 

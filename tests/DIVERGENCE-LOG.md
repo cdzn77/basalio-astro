@@ -97,3 +97,24 @@ All 4 testable pages show **8–12% pixel differences** when shifted by their re
 - [ ] modules inertness explained ⚠️ (partial — CSS has explicit sizes, but height still grows)
 
 **Status:** Do NOT re-baseline until pixel divergence root cause is found and fixed.
+
+---
+
+## Bug Fixes (Phase 3 Token Audit)
+
+### 4. --stone Color Correction (Phase 3 Audit)
+
+**Date:** 2026-07-30  
+**Issue:** tokens.css --stone value was #D4CABE (muted brown), diverging from canonical DESIGN-SYSTEM.md value #DFDCD5 (true beige)
+
+**Root Cause:** Phase 1 token transcription error — value extracted incorrectly from production CSS
+
+**Fix:** Updated tokens.css --stone to #DFDCD5 (commit 5d9babb)
+
+**Impact:** Visual diff expected — beige tones across all stone-colored elements will shift to proper canonical value. This is a CORRECT fix, not a regression.
+
+**Pages affected:** Any component using `var(--stone)` or migrated `--basalio-stone` references
+
+**Re-baselining:** Required after --stone fix applied. Baseline diff will show intentional color correction.
+
+**Status:** ✅ Fixed — awaiting pixel verification

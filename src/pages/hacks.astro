@@ -24,7 +24,32 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
         <div class="hack-card">
           <h2>Reveal on Scroll</h2>
           <p>Fade in elements as the user scrolls</p>
-          <pre><code>{{SNIPPET_PLACEHOLDER}}</code></pre>
+          <pre><code>{`// [Code snippet goes here]`}</code></pre>
+        </div>
+
+        <div class="hack-card">
+          <h2>Color-Peek Image</h2>
+          <p>Reveal color under grayscale on hover</p>
+          <pre><code>{`// [Code snippet goes here]`}</code></pre>
+        </div>
+
+        <div class="hack-card">
+          <h2>Pin a Panel</h2>
+          <p>Sticky section that unpins at scroll end</p>
+          <pre><code>{`// [Code snippet goes here]`}</code></pre>
+        </div>
+
+        <div class="hack-card">
+          <h2>Grain Overlay</h2>
+          <p>SVG filter effect for texture</p>
+          <p class="no-upsell">No upsell here. This one's just yours.</p>
+          <pre><code>{`// [Code snippet goes here]`}</code></pre>
+        </div>
+
+        <div class="hack-cta">
+          <p class="cta-text">The other twelve are in the vault.</p>
+          <p class="cta-subtext">Unlock premium hacks with a founder license.</p>
+          <a href="/early-access" class="cta-button">Get founder access →</a>
         </div>
       </div>
     </div>
@@ -91,6 +116,21 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     padding: 0;
   }
 
+  .hack-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(10, 10, 10, 0.08);
+  }
+
+  .hack-card:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
   .hack-card h2 {
     font-size: 28px;
     font-weight: 400;
@@ -99,11 +139,139 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     padding: 0;
   }
 
+  .hack-card p {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+    padding: 0;
+  }
+
+  .no-upsell {
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text-on-paper-muted);
+    margin-top: 8px;
+  }
+
   .hack-card pre {
     margin: 0;
     padding: 20px;
     background: rgba(10, 10, 10, 0.03);
     border-radius: 8px;
     overflow-x: auto;
+    font-size: 12px;
+  }
+
+  .hack-card code {
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--text-on-paper);
+  }
+
+  .hack-cta {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(10, 10, 10, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .cta-text {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--text-on-paper);
+    margin: 0;
+    padding: 0;
+  }
+
+  .cta-subtext {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+    padding: 0;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    min-height: 43.6px;
+    background: var(--acid);
+    color: var(--text-on-paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 150ms ease, box-shadow 150ms ease;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .cta-button:focus-visible {
+    outline: 2px solid var(--text-on-paper);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 1024px) {
+    .hacks-inner {
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .hacks-heading {
+      font-size: 32px;
+      line-height: 40px;
+    }
+
+    .hack-card h2 {
+      font-size: 24px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hacks-section {
+      padding: 60px 20px;
+    }
+
+    .hacks-inner {
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .hacks-heading {
+      font-size: 28px;
+      line-height: 36px;
+    }
+
+    .hack-card h2 {
+      font-size: 20px;
+    }
+
+    .hack-card p {
+      font-size: 14px;
+    }
+
+    .cta-text {
+      font-size: 18px;
+    }
+
+    .cta-button {
+      width: 100%;
+    }
   }
 </style>

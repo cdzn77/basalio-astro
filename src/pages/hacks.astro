@@ -212,7 +212,9 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     console.log('Found copy buttons:', buttons.length);
 
     buttons.forEach((button, index) => {
+      console.log(`Attaching click handler to button ${index}`);
       button.addEventListener('click', async (e) => {
+        console.log(`Button ${index} clicked!`);
         e.preventDefault();
 
         const preElement = button.previousElementSibling;
@@ -228,17 +230,21 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
         }
 
         const text = codeBlock.textContent;
+        console.log(`Code text length: ${text.length}`);
 
         try {
           await navigator.clipboard.writeText(text);
+          console.log('Successfully copied to clipboard');
 
           const originalText = button.textContent;
           button.textContent = 'Copied!';
           button.classList.add('copied');
+          console.log('Button text changed to Copied!');
 
           setTimeout(() => {
             button.textContent = originalText;
             button.classList.remove('copied');
+            console.log('Button text reset to Copy');
           }, 2000);
         } catch (err) {
           console.error('Failed to copy to clipboard:', err);

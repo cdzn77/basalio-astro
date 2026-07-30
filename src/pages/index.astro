@@ -146,16 +146,33 @@ const faqs = [
   <!-- PRICING TIERS SECTION: PricingCards component (compact variant) -->
   <section class="pricing-hero-section">
     <div class="pricing-inner">
-      <!-- LEFT (28%): Eyebrow, heading, and subhead -->
+      <!-- LEFT (28%): Eyebrow, heading, subhead, and CTA -->
       <div class="pricing-left">
         <p class="pricing-eyebrow">PRICING</p>
-        <h1 class="pricing-heading">The blocks are free. The Pro layer is one payment, once.</h1>
-        <p class="pricing-subhead">Nine interaction blocks, free forever on WordPress.org: no locked blocks, no watermarks, no instance limits. The Pro control center and the full Hacks vault are a single {founderPrice} founder license for the first 100 people.</p>
+        <h1 class="pricing-heading">There's no catch.</h1>
+        <p class="pricing-subhead">Nine interaction blocks, complete, free forever on WordPress.org. No locked blocks, no watermarks, no instance limits. What costs money is the control center — live-tuning every block from the editor sidebar — and the full Hacks vault.</p>
+        <a href="/pricing" class="pricing-cta">SEE THE FULL BREAKDOWN →</a>
       </div>
 
-      <!-- RIGHT (72%): PricingCards component (compact variant) -->
+      <!-- RIGHT (72%): PricingCards component (compact variant, no CTA) -->
       <div style="flex: 1; width: 100%;">
         <PricingCards variant="compact" />
+      </div>
+    </div>
+
+    <!-- DIVIDER LIST: Full width below section -->
+    <div class="pricing-divider-list">
+      <div class="divider-item">
+        <span class="divider-label">FREE FOREVER</span>
+        <span class="divider-text">Nine blocks, complete. Not a trial, not a demo.</span>
+      </div>
+      <div class="divider-item">
+        <span class="divider-label">NO RENEWAL</span>
+        <span class="divider-text">One payment. The license never expires.</span>
+      </div>
+      <div class="divider-item">
+        <span class="divider-label">100 ONLY</span>
+        <span class="divider-text">Founder price, then $249/year.</span>
       </div>
     </div>
   </section>
@@ -265,6 +282,70 @@ const faqs = [
     color: #575757;
     margin: 0;
     padding: 0;
+  }
+
+  .pricing-cta {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 24px;
+    background: var(--acid);
+    color: var(--text-on-paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: transform 150ms ease, box-shadow 150ms ease;
+    width: fit-content;
+  }
+
+  .pricing-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* PRICING DIVIDER LIST: Full width below cards */
+  .pricing-divider-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+    padding: 40px 40px;
+    box-sizing: border-box;
+    border-top: 1px solid #E0E0E0;
+    gap: 40px;
+  }
+
+  .divider-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .divider-label {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    color: var(--text-on-paper);
+    margin: 0;
+    padding: 0;
+    display: block;
+  }
+
+  .divider-text {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #575757;
+    margin: 0;
+    padding: 0;
+    display: block;
   }
 
   /* BUILD LEDGER SECTION */

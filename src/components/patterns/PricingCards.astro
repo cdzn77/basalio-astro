@@ -8,8 +8,9 @@ interface Props {
 const { variant } = Astro.props;
 ---
 
-<div class="pricing-cards-grid">
-  {pricingTiers.map((tier) => (
+<div class="pricing-wrapper">
+  <div class="pricing-cards-grid">
+    {pricingTiers.map((tier) => (
     <div class="pricing-card" class:list={{ featured: tier.featured }}>
       {/* Tier Label */}
       <div class="card-header">
@@ -26,7 +27,9 @@ const { variant } = Astro.props;
 
       {/* Content */}
       <div class="card-content">
-        <p class="one-liner">{tier.oneLiner}</p>
+        {variant === 'compact' && (
+          <p class="one-liner">{tier.oneLiner}</p>
+        )}
 
         {tier.leadLine && variant === 'full' && (
           <p class="lead-line">{tier.leadLine}</p>
@@ -41,15 +44,7 @@ const { variant } = Astro.props;
         )}
       </div>
 
-      {/* CTA Section */}
-      {variant === 'compact' && (
-        <div class="card-cta">
-          <a href="/pricing" class="cta-button">
-            See what's included →
-          </a>
-        </div>
-      )}
-
+      {/* CTA Section (full variant only) */}
       {variant === 'full' && (
         <div class="card-cta">
           {tier.cta && (
@@ -77,17 +72,21 @@ const { variant } = Astro.props;
           {tier.microLine && <p class="micro-line">{tier.microLine}</p>}
         </div>
       )}
-
-      {variant === 'compact' && tier.teaser && (
-        <div class="card-footer">
-          <p class="teaser-compact">{tier.teaser}</p>
-        </div>
-      )}
     </div>
   ))}
+  </div>
+
 </div>
 
 <style scoped>
+  .pricing-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+  }
+
   .pricing-cards-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -103,7 +102,6 @@ const { variant } = Astro.props;
     display: flex;
     flex-direction: column;
     background: var(--surface-paper);
-    border: 1px solid var(--stone);
     border-radius: 8px;
     padding: 32px;
     gap: 24px;
@@ -186,6 +184,13 @@ const { variant } = Astro.props;
     font-size: 14px;
     color: var(--text-on-paper-muted);
     margin: 0;
+  }
+
+  .pricing-card:not(.featured) .teaser {
+    font-style: normal;
+  }
+
+  .pricing-card.featured .teaser {
     font-style: italic;
   }
 
@@ -238,11 +243,11 @@ const { variant } = Astro.props;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-top: auto;
   }
 
   .cta-button {
-    display: inline-block;
+    display: block;
+    width: 100%;
     padding: 12px 24px;
     background: var(--acid);
     color: var(--text-on-paper);
@@ -265,6 +270,17 @@ const { variant } = Astro.props;
     outline-offset: 2px;
   }
 
+  /* Paid tier secondary CTA on full variant */
+  .pricing-card.featured .cta-button {
+    background: var(--text-on-paper);
+    color: var(--surface-paper);
+    outline-color: var(--text-on-paper);
+  }
+
+  .pricing-card.featured .cta-button:hover {
+    box-shadow: 0 4px 12px rgba(10, 10, 10, 0.25);
+  }
+
   .cta-secondary {
     font-size: 13px;
     color: var(--text-on-paper);
@@ -284,6 +300,11 @@ const { variant } = Astro.props;
     gap: 8px;
     border-top: 1px solid var(--stone);
     padding-top: 16px;
+    margin-top: auto;
+  }
+
+  /* Full variant: anchor footer (and CTA above it) to bottom */
+  .pricing-card .card-cta + .card-footer {
     margin-top: auto;
   }
 
@@ -328,6 +349,7 @@ const { variant } = Astro.props;
     }
   }
 
+
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .cta-button {
@@ -340,6 +362,25 @@ const { variant } = Astro.props;
 
     .cta-secondary {
       transition: none;
+    }
+
+    .compact-cta-button {
+      transition: none;
+    }
+
+    .compact-cta-button:hover {
+      transform: none;
+    }
+  }
+
+  /* Mobile: Adjust wrapper and CTA */
+  @media (max-width: 768px) {
+    .pricing-wrapper {
+      gap: 32px;
+    }
+
+    .compact-cta-button {
+      width: 100%;
     }
   }
 </style>

@@ -23,6 +23,7 @@ export const pricingTiers: PricingTier[] = [
     name: 'The blocks',
     price: '$0',
     oneLiner: 'All nine interaction blocks. Every one complete.',
+    teaser: 'No locked blocks, no watermarks, no limits.',
     features: [
       'Grid Reveal',
       'Case Study Transition',

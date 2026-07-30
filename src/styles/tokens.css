@@ -34,10 +34,11 @@
   --color-gray-neutral: #26221E;
   --color-gray-cool: #17171A;
 
-  /* Semantic colors */
-  --ink: #0A0A0A;
-  --paper: #FFFFFF;
-  --paper-inverse: #F6F4EF;
+  /* Semantic colors — surface-aware naming */
+  --surface-paper: #FFFFFF;
+  --surface-ink: #1C1917;
+  --text-on-paper: #0A0A0A;
+  --text-on-ink: #F6F4EF;
   --stone: #DFDCD5;
   --acid: #DFFF00;
 

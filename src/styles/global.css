@@ -124,8 +124,8 @@ html {
 
 body {
   font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: var(--ink);
-  background-color: var(--paper);
+  color: var(--text-on-paper);
+  background-color: var(--surface-paper);
   line-height: var(--line-height-relaxed);
 }
 
@@ -134,7 +134,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 700;
   line-height: var(--line-height-tight);
-  color: var(--ink);
+  color: var(--text-on-paper);
 }
 
 h1 {
@@ -169,7 +169,7 @@ p {
 
 /* Links */
 a {
-  color: var(--ink);
+  color: var(--text-on-paper);
   text-decoration: none;
   transition: var(--transition-color-fast);
 }
@@ -179,7 +179,7 @@ a:hover {
 }
 
 a:visited {
-  color: var(--ink);
+  color: var(--text-on-paper);
 }
 
 a:focus-visible {

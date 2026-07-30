@@ -1,0 +1,65 @@
+---
+/* InlineHeader – Preserves fixed nav + header for privacy/roadmap/support/terms pages
+   Accepts slot for custom header content
+   Handles nav styling and mobile menu
+*/
+
+interface Props {
+  title?: string;
+}
+
+const { title = "Page" } = Astro.props;
+---
+
+<nav style="position:fixed;top:14px;left:0;right:0;z-index:50;padding:0 20px;pointer-events:none;">
+  <div style="max-width:1120px;margin:0 auto;background:rgba(28,25,23,0.92);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:8px 8px 8px 22px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 24px 48px -24px rgba(0,0,0,0.55);pointer-events:auto;">
+    <a href="/" style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;color:#F6F4EF;">
+      <svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true" style="flex:none;"><polygon points="8,56 56,56 46,44 18,44" fill="#F6F4EF"></polygon><rect x="23" y="20" width="18" height="24" fill="#DFFF00"></rect></svg>
+      Basalio
+    </a>
+    <button id="mobileMenuBtn" aria-label="Toggle menu" style="pointer-events:auto;margin-right:8px;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="6" x2="22" y2="6"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="18" x2="22" y2="18"></line></svg></button>
+    <div style="display:flex;gap:22px;align-items:center;">
+      <a href="/modules" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Modules</a>
+      <a href="/roadmap" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Roadmap</a>
+      <a href="/pricing" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Pricing</a>
+      <a href="/support" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Support</a>
+      <a href="/contact" style="display:inline-flex;align-items:center;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;padding:9px 18px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease;">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<div id="mobileMenu" style="display:none;position:fixed;top:0;left:0;right:0;width:100%;height:100vh;background:#1C1917;overflow-y:auto;z-index:48;flex-direction:column;padding-top:80px;">
+  <a href="/modules" style="display:block;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);color:#D4CABE;font-size:16px;font-weight:500;">Modules</a>
+  <a href="/roadmap" style="display:block;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);color:#D4CABE;font-size:16px;font-weight:500;">Roadmap</a>
+  <a href="/pricing" style="display:block;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);color:#D4CABE;font-size:16px;font-weight:500;">Pricing</a>
+  <a href="/support" style="display:block;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);color:#D4CABE;font-size:16px;font-weight:500;">Support</a>
+  <a href="/contact" style="display:block;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);color:#D4CABE;font-size:16px;font-weight:500;">Contact</a>
+</div>
+
+<header style="padding:220px 0 40px;background:#1C1917;">
+  <slot />
+</header>
+
+<script>
+  const menuToggle = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.style.display = 'none';
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!menuToggle.contains(e.target) && !mobileMenu.contains(e.target)) {
+        mobileMenu.style.display = 'none';
+      }
+    });
+  }
+</script>

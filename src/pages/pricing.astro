@@ -15,16 +15,29 @@ const description = "The nine blocks are free forever. The Pro control center is
 const supportEmail = "hello@basalio.com";
 const founderPrice = "$149";
 const postCapPrice = "$249";
-const proShipTarget = "October 2026";
+const proShipTarget = "February 2027";
 const refundWindow = "30";
+
+// Correct nine block names from src/data/pricing.ts
+const blockNames = [
+  "Grid Reveal",
+  "Case Study Transition",
+  "Text Reveal",
+  "Magnetic Button",
+  "Before/After",
+  "Filterable Grid",
+  "Custom Cursor",
+  "Scroll Sequence",
+  "Pinned Scroll"
+];
 
 // Build status rows - verified against actual repo state
 const buildStatus = [
-  { item: "Nine interaction blocks", status: "LIVE", note: "Grid Reveal, Case Study Transition, Scroll Sequence, Image Counter, Timeline, Image Carousel, Fullscreen Video, Smooth Scroll, Hover Effects. In testing, shipping free." },
+  { item: "Nine interaction blocks", status: "LIVE", note: `${blockNames.join(", ")}. In testing, shipping free.` },
   { item: "Four free Hacks", status: "LIVE", note: "Copy-paste snippets available now on /hacks." },
-  { item: "WordPress.org listing", status: "IN REVIEW", note: "Plugin submitted. Public download coming at launch." },
-  { item: "Pro control center sidebar", status: "IN BUILD", note: `Target ship date: ${proShipTarget}. Editor sidebar for live tuning.` },
-  { item: "Full Hacks vault (12+)", status: "IN BUILD", note: "Grows continuously post-launch." },
+  { item: "WordPress.org listing", status: "IN REVIEW", note: "Submission planned after launch." },
+  { item: "Pro control center sidebar", status: "NOT STARTED", note: `Target ship date: ${proShipTarget}. Editor sidebar for live tuning.` },
+  { item: "Full Hacks vault (12+)", status: "IN PROGRESS", note: "Four available now. The full vault grows post-launch." },
   { item: "One-click hack-trailer effects", status: "PLANNED", note: "Follows Pro sidebar launch." },
   { item: "WordPress version compatibility", status: "ONGOING", note: "Testing against beta and RC releases before launch." }
 ];
@@ -122,7 +135,7 @@ const faqs = [
       <div class="risk-content">
         <p>Basalio is built by one person. You should know what that means before you pay.</p>
 
-        <p>The nine blocks are free whether or not you buy anything. They don't depend on me staying in business. The Pro layer does. So: a {refundWindow}-day refund, no questions, no form. If the Pro control center hasn't shipped by {proShipTarget}, email {supportEmail} for a full refund. I'll do it.</p>
+        <p>The nine blocks are free whether or not you buy anything. They don't depend on me staying in business. The Pro layer does. So: refundable at any time until the Pro control center ships. If it never ships, you never lose your money.</p>
 
         <p>Everything is GPL-2.0-or-later. If I disappear tomorrow, the code you have keeps working and stays yours to fork.</p>
       </div>
@@ -134,7 +147,10 @@ const faqs = [
 
   <!-- FOOTER -->
   <Fragment slot="footer">
-    <RampFooter address="Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark" />
+    <RampFooter
+      description="Nine curated interaction blocks for WordPress portfolios. Nothing you'd need Framer for."
+      address="Østerbrogade 45, 2100 København Ø, Copenhagen, Denmark"
+    />
   </Fragment>
 </BaseLayout>
 

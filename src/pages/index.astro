@@ -16,19 +16,32 @@ import PricingCards from '../components/patterns/PricingCards.astro';
 const title = "Basalio - WordPress Portfolio Modules";
 const description = "Nine curated interaction modules for portfolio and case-study sites. Built for WordPress, not Framer.";
 
+// Correct nine block names from src/data/pricing.ts
+const blockNames = [
+  "Grid Reveal",
+  "Case Study Transition",
+  "Text Reveal",
+  "Magnetic Button",
+  "Before/After",
+  "Filterable Grid",
+  "Custom Cursor",
+  "Scroll Sequence",
+  "Pinned Scroll"
+];
+
 // Pricing page data
 const supportEmail = "hello@basalio.com";
 const founderPrice = "$149";
 const postCapPrice = "$249";
-const proShipTarget = "October 2026";
+const proShipTarget = "February 2027";
 const refundWindow = "30";
 
 const buildStatus = [
-  { item: "Nine interaction blocks", status: "LIVE", note: "Grid Reveal, Case Study Transition, Scroll Sequence, Image Counter, Timeline, Image Carousel, Fullscreen Video, Smooth Scroll, Hover Effects. In testing, shipping free." },
+  { item: "Nine interaction blocks", status: "LIVE", note: `${blockNames.join(", ")}. In testing, shipping free.` },
   { item: "Four free Hacks", status: "LIVE", note: "Copy-paste snippets available now on /hacks." },
-  { item: "WordPress.org listing", status: "IN REVIEW", note: "Plugin submitted. Public download coming at launch." },
-  { item: "Pro control center sidebar", status: "IN BUILD", note: `Target ship date: ${proShipTarget}. Editor sidebar for live tuning.` },
-  { item: "Full Hacks vault (12+)", status: "IN BUILD", note: "Grows continuously post-launch." },
+  { item: "WordPress.org listing", status: "IN REVIEW", note: "Submission planned after launch." },
+  { item: "Pro control center sidebar", status: "NOT STARTED", note: `Target ship date: ${proShipTarget}. Editor sidebar for live tuning.` },
+  { item: "Full Hacks vault (12+)", status: "IN PROGRESS", note: "Four available now. The full vault grows post-launch." },
   { item: "One-click hack-trailer effects", status: "PLANNED", note: "Follows Pro sidebar launch." },
   { item: "WordPress version compatibility", status: "ONGOING", note: "Testing against beta and RC releases before launch." }
 ];

@@ -281,12 +281,6 @@ const faqs = [
   .pricing-hero-section {
     width: 100%;
     background: #FAFAFA;
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
-    margin-bottom: -40px;
-    padding-bottom: 200px;
-    position: relative;
-    z-index: 2;
   }
 
   .pricing-inner {
@@ -765,5 +759,15 @@ const faqs = [
     .risk-container {
       gap: 30px;
     }
+  }
+
+  /* TESTIMONIALS SECTION: Last section with rounded bottom corners and footer overlap */
+  :global(.ramp-testimonials) {
+    border-bottom-left-radius: 40px !important;
+    border-bottom-right-radius: 40px !important;
+    margin-bottom: -40px !important;
+    padding-bottom: 200px !important;
+    position: relative !important;
+    z-index: 2 !important;
   }
 </style>

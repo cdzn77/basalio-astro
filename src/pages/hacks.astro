@@ -310,13 +310,19 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     padding: 20px;
     background: rgba(10, 10, 10, 0.03);
     border-radius: 8px;
-    overflow-x: auto;
     font-size: 12px;
+    overflow: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .hack-card code {
     font-family: 'IBM Plex Mono', monospace;
     color: var(--text-on-paper);
+    display: block;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
   }
 
   .comparison-table {

@@ -38,8 +38,8 @@
   /* Semantic colors */
   --ink: #0A0A0A;
   --paper: #FFFFFF;
-  --stone: #D4CABE;
-  --accent: #DFFF00;
+  --stone: #DFDCD5;
+  --acid: #DFFF00;
 
   /* Semi-transparent overlays */
   --overlay-dark-05: rgba(0, 0, 0, 0.05);

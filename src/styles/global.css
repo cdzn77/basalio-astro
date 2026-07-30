@@ -123,7 +123,7 @@ html {
 }
 
 body {
-  font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: var(--ink);
   background-color: var(--paper);
   line-height: var(--line-height-relaxed);
@@ -165,7 +165,6 @@ h6 {
 p {
   font-size: var(--font-size-16);
   line-height: var(--line-height-relaxed);
-  margin-bottom: var(--space-16);
 }
 
 /* Links */
@@ -176,7 +175,7 @@ a {
 }
 
 a:hover {
-  color: var(--accent);
+  color: var(--acid);
 }
 
 a:visited {
@@ -184,19 +183,19 @@ a:visited {
 }
 
 a:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--acid);
   outline-offset: 2px;
   border-radius: var(--radius-4);
 }
 
 /* Lists */
 ol, ul {
-  margin-left: var(--space-20);
-  margin-bottom: var(--space-16);
+  margin: 0;
+  padding-left: var(--space-20);
 }
 
 li {
-  margin-bottom: var(--space-8);
+  margin: 0;
 }
 
 /* Code blocks and monospace */
@@ -217,7 +216,7 @@ pre {
   padding: var(--space-16);
   border-radius: var(--radius-8);
   overflow-x: auto;
-  margin-bottom: var(--space-16);
+  margin: 0;
 }
 
 pre code {
@@ -231,8 +230,7 @@ pre code {
 blockquote {
   border-left: 4px solid var(--stone);
   padding-left: var(--space-16);
-  margin-left: 0;
-  margin-bottom: var(--space-16);
+  margin: 0;
   font-style: italic;
   color: var(--color-gray-dark);
 }
@@ -241,7 +239,7 @@ blockquote {
 hr {
   border: none;
   border-top: 1px solid var(--color-gray-light);
-  margin: var(--space-32) 0;
+  margin: 0;
 }
 
 /* Button reset */
@@ -254,7 +252,7 @@ button {
 }
 
 button:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--acid);
   outline-offset: 2px;
   border-radius: var(--radius-4);
 }
@@ -267,7 +265,7 @@ input, textarea, select {
 }
 
 input:focus-visible, textarea:focus-visible, select:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--acid);
   outline-offset: 2px;
   border-radius: var(--radius-4);
 }
@@ -281,7 +279,7 @@ img {
 
 /* Figure */
 figure {
-  margin-bottom: var(--space-16);
+  margin: 0;
 }
 
 figcaption {

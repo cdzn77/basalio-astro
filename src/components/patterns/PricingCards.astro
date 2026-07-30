@@ -1,0 +1,345 @@
+---
+import { pricingTiers } from '../../data/pricing';
+
+interface Props {
+  variant: 'compact' | 'full';
+}
+
+const { variant } = Astro.props;
+---
+
+<div class="pricing-cards-grid">
+  {pricingTiers.map((tier) => (
+    <div class="pricing-card" class:list={{ featured: tier.featured }}>
+      {/* Tier Label */}
+      <div class="card-header">
+        <p class="tier-label">{tier.label}</p>
+        <h3 class="card-name">{tier.name}</h3>
+
+        {/* Price Block */}
+        <div class="price-block">
+          <p class="price">{tier.price}</p>
+          {tier.billing && <p class="billing">{tier.billing}</p>}
+          {tier.teaser && <p class="teaser">{tier.teaser}</p>}
+        </div>
+      </div>
+
+      {/* Content */}
+      <div class="card-content">
+        <p class="one-liner">{tier.oneLiner}</p>
+
+        {tier.leadLine && variant === 'full' && (
+          <p class="lead-line">{tier.leadLine}</p>
+        )}
+
+        {variant === 'full' && tier.features.length > 0 && (
+          <ul class="features-list">
+            {tier.features.map((feature) => (
+              <li class="feature-item">{feature}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {/* CTA Section */}
+      {variant === 'compact' && (
+        <div class="card-cta">
+          <a href="/pricing" class="cta-button">
+            See what's included →
+          </a>
+        </div>
+      )}
+
+      {variant === 'full' && (
+        <div class="card-cta">
+          {tier.cta && (
+            <a href={tier.cta.href} class="cta-button">
+              {tier.cta.label}
+            </a>
+          )}
+          {tier.ctaPrimary && (
+            <a href={tier.ctaPrimary.href} class="cta-button">
+              {tier.ctaPrimary.label}
+            </a>
+          )}
+          {tier.ctaSecondary && (
+            <a href={tier.ctaSecondary.href} class="cta-secondary">
+              {tier.ctaSecondary.label}
+            </a>
+          )}
+        </div>
+      )}
+
+      {/* Footer */}
+      {variant === 'full' && (
+        <div class="card-footer">
+          {tier.footnote && <p class="footnote">{tier.footnote}</p>}
+          {tier.microLine && <p class="micro-line">{tier.microLine}</p>}
+        </div>
+      )}
+
+      {variant === 'compact' && tier.teaser && (
+        <div class="card-footer">
+          <p class="teaser-compact">{tier.teaser}</p>
+        </div>
+      )}
+    </div>
+  ))}
+</div>
+
+<style scoped>
+  .pricing-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px;
+    box-sizing: border-box;
+  }
+
+  .pricing-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-paper);
+    border: 1px solid var(--stone);
+    border-radius: 8px;
+    padding: 32px;
+    gap: 24px;
+  }
+
+  .pricing-card.featured {
+    background: var(--acid);
+    border-color: var(--acid);
+  }
+
+  .pricing-card.featured .tier-label,
+  .pricing-card.featured .card-name,
+  .pricing-card.featured .price,
+  .pricing-card.featured .billing,
+  .pricing-card.featured .teaser,
+  .pricing-card.featured .one-liner,
+  .pricing-card.featured .lead-line,
+  .pricing-card.featured .feature-item,
+  .pricing-card.featured .footnote,
+  .pricing-card.featured .micro-line,
+  .pricing-card.featured .teaser-compact {
+    color: var(--text-on-paper);
+  }
+
+  .pricing-card.featured .billing {
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .pricing-card.featured .micro-line {
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .tier-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-on-paper);
+    margin: 0;
+  }
+
+  .card-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--text-on-paper);
+    margin: 0;
+  }
+
+  .price-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .price {
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--text-on-paper);
+    margin: 0;
+  }
+
+  .billing {
+    font-size: 14px;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  .teaser {
+    font-size: 14px;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+    font-style: italic;
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .one-liner {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  .lead-line {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-on-paper);
+    margin: 0;
+  }
+
+  .features-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .feature-item {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-on-paper);
+    margin: 0;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .feature-item::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--text-on-paper);
+  }
+
+  .card-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: auto;
+  }
+
+  .cta-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: var(--acid);
+    color: var(--text-on-paper);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 150ms ease, box-shadow 150ms ease;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .cta-button:focus-visible {
+    outline: 2px solid var(--acid);
+    outline-offset: 2px;
+  }
+
+  .cta-secondary {
+    font-size: 13px;
+    color: var(--text-on-paper);
+    text-decoration: none;
+    border-bottom: 1px solid var(--stone);
+    padding-bottom: 4px;
+    transition: border-color 150ms ease, color 150ms ease;
+  }
+
+  .cta-secondary:hover {
+    border-color: var(--text-on-paper);
+  }
+
+  .card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-top: 1px solid var(--stone);
+    padding-top: 16px;
+    margin-top: auto;
+  }
+
+  .footnote {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  .micro-line {
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  .teaser-compact {
+    font-size: 12px;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  /* Mobile: Stack to 1 column */
+  @media (max-width: 768px) {
+    .pricing-cards-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 0 20px;
+    }
+
+    .pricing-card {
+      padding: 24px;
+    }
+
+    .card-name {
+      font-size: 20px;
+    }
+
+    .price {
+      font-size: 32px;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .cta-button {
+      transition: none;
+    }
+
+    .cta-button:hover {
+      transform: none;
+    }
+
+    .cta-secondary {
+      transition: none;
+    }
+  }
+</style>

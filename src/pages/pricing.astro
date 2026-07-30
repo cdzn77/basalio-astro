@@ -7,6 +7,7 @@ import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
 import Button from '../components/Button.astro';
 import FAQ from '../components/FAQ.astro';
+import PricingCards from '../components/patterns/PricingCards.astro';
 
 const title = "Pricing - Basalio";
 const description = "The nine blocks are free forever. The Pro control center is one payment for the first 100 people.";
@@ -81,77 +82,9 @@ const faqs = [
         <p class="pricing-subhead">Nine interaction blocks, free forever on WordPress.org: no locked blocks, no watermarks, no instance limits. The Pro control center and the full Hacks vault are a single {founderPrice} founder license for the first 100 people.</p>
       </div>
 
-      <!-- RIGHT (65%): Custom pricing cards with new content structure -->
-      <div class="pricing-cards-grid">
-        <!-- CARD A: Free -->
-        <div class="pricing-card">
-          <div class="card-header">
-            <span class="card-label">FREE · FOREVER</span>
-            <h3 class="card-name">The blocks</h3>
-            <p class="card-price">$0</p>
-          </div>
-
-          <div class="card-content">
-            <p class="card-deck">All nine interaction blocks. Every one complete.</p>
-
-            <div class="card-features">
-              <p class="feature-item">✓ Grid Reveal</p>
-              <p class="feature-item">✓ Case Study Transition</p>
-              <p class="feature-item">✓ Text Reveal</p>
-              <p class="feature-item">✓ Magnetic Button</p>
-              <p class="feature-item">✓ Before/After</p>
-              <p class="feature-item">✓ Filterable Grid</p>
-              <p class="feature-item">✓ Custom Cursor</p>
-              <p class="feature-item">✓ Scroll Sequence</p>
-              <p class="feature-item">✓ Pinned Scroll</p>
-            </div>
-
-            <p class="card-benefit">Works with any theme. No page builder, no premium theme</p>
-            <p class="card-benefit">Keyboard-operable and reduced-motion aware by default</p>
-            <p class="card-benefit">Shared script loads only on pages that use a block</p>
-            <p class="card-benefit">Four Hacks as copy-paste snippets</p>
-
-            <p class="card-footnote">Free is not a trial. Nothing here expires, phones home, or gets pulled into Pro later.</p>
-          </div>
-
-          <div class="card-cta">
-            <Button label="Get the 4 free Hacks" href="/hacks" />
-            <Button label="Notify me at launch" href="#waitlist" />
-          </div>
-        </div>
-
-        <!-- CARD B: Founder Lifetime -->
-        <div class="pricing-card pricing-card-founder">
-          <div class="card-header">
-            <span class="card-label">FOUNDER · 100 LICENSES</span>
-            <h3 class="card-name">The control center</h3>
-            <div class="card-price-block">
-              <span class="price-main">{founderPrice}</span>
-              <span class="price-note">one time</span>
-              <span class="price-after">Adjacent: <s>{postCapPrice}</s> after the first 100</span>
-            </div>
-          </div>
-
-          <div class="card-content">
-            <p class="card-deck">Everything in the free version, plus the Pro layer.<br />For as long as Basalio exists. No renewal.</p>
-
-            <div class="card-features">
-              <p class="feature-item">✓ Full Hacks vault: 12+ recipes, growing</p>
-              <p class="feature-item">✓ Pro control center: live-tune all nine blocks from the editor sidebar</p>
-              <p class="feature-item">✓ One-click versions of the three hack-trailer effects</p>
-              <p class="feature-item">✓ Every future block and Hack included, no upgrade fee</p>
-              <p class="feature-item">✓ Direct line to the person building it</p>
-              <p class="feature-item">✓ Unlimited sites, no renewal</p>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <div class="card-cta">
-              <Button label="Claim founder access" href="#early-access" />
-            </div>
-            <p class="card-micro">{Math.floor(Math.random() * 20) + 1} of 100 left · {refundWindow}-day refund</p>
-          </div>
-        </div>
+      <!-- RIGHT (65%): PricingCards component (full variant) -->
+      <div style="flex: 1; width: 100%;">
+        <PricingCards variant="full" />
       </div>
     </div>
   </section>

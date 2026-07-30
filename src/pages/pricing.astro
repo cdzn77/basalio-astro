@@ -6,6 +6,7 @@ import RampTemplateLayout from '../layouts/RampTemplateLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampFAQ from '../components/RampFAQ.astro';
 import RampFooter from '../components/RampFooter.astro';
+import Button from '../components/Button.astro';
 
 const title = "Pricing — Basalio";
 const description = "The nine blocks are free forever. The Pro control center is one payment for the first 100 people.";
@@ -118,8 +119,8 @@ const faqs = [
           </div>
 
           <div class="card-cta">
-            <a href="/hacks" class="cta-primary">Get the 4 free Hacks → →</a>
-            <a href="#waitlist" class="cta-secondary">Notify me at launch → →</a>
+            <Button label="Get the 4 free Hacks" href="/hacks" />
+            <Button label="Notify me at launch" href="#waitlist" />
           </div>
         </div>
 
@@ -150,7 +151,7 @@ const faqs = [
 
           <div class="card-footer">
             <div class="card-cta">
-              <a href="#early-access" class="cta-primary">Claim founder access → →</a>
+              <Button label="Claim founder access" href="#early-access" />
             </div>
             <p class="card-micro">{Math.floor(Math.random() * 20) + 1} of 100 left · {refundWindow}-day refund</p>
           </div>
@@ -626,46 +627,6 @@ const faqs = [
     display: flex;
     flex-direction: column;
     gap: 10px;
-  }
-
-  .cta-primary,
-  .cta-secondary {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 2.8px;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 12px 16px;
-    border-radius: 6px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 200ms ease;
-  }
-
-  .cta-primary {
-    background: #000000;
-    color: #FFFFFF;
-  }
-
-  .cta-primary:hover {
-    background: #333333;
-  }
-
-  .pricing-card-founder .cta-primary {
-    background: #000000;
-    color: #FFFFFF;
-  }
-
-  .cta-secondary {
-    background: transparent;
-    color: #000000;
-    border: 1px solid #000000;
-  }
-
-  .cta-secondary:hover {
-    background: rgba(0, 0, 0, 0.05);
   }
 
   /* Micro text under CTA */

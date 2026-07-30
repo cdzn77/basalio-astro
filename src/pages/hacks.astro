@@ -1,4 +1,5 @@
 ---
+import { Fragment } from 'astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
@@ -174,9 +175,14 @@ const description = "Four free CSS/JS snippets you can paste into your site righ
   }
 
   .hacks-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
     width: 100%;
     max-width: 1786px;
     margin: 0 auto;
+    gap: 60px;
     box-sizing: border-box;
   }
 

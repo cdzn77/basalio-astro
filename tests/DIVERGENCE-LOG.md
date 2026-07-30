@@ -152,9 +152,18 @@ All 4 testable pages show **8–12% pixel differences** when shifted by their re
 - **Conclusion:** Measured diffs are anti-aliasing / sub-pixel rendering variance, NOT color changes
 - Text-dense pages show higher variance; shorter pages near noise floor
 
-**Status:** Re-baseline commit 2dd1790 is valid. Pixel diffs logged as capture noise, not unexplained changes.
+**Status:** ⚠️ **UNTRUSTED BASELINES** — 2dd1790 re-baselines captured an unidentified change (~0.5% on INDEX, ~0.7% on BLOCKS). Diffs are 35-50x above noise floor (real change, not capture variance). Changes clustered in specific regions (right edge, top text) rather than scattered anti-aliasing pattern.
 
-**Technical Debt Discovered:** 142 hardcoded `#D4CABE` instances across src/ (Footer fixed in commit 942de31; remaining 133 for Phase 2.3+).
+**Investigation Needed:** Source of 0.50-0.73% diffs before proceeding with Phase 2.3. Possibilities:
+- Scrollbar width or viewport rendering changes
+- Unintended CSS modifications from 31-variable migration
+- Environmental rendering variance
+
+**Technical Debt Discovered:** 
+- 142 hardcoded `#D4CABE` instances across src/ (ACTIVE BUG, not debt)
+- 133 instances remain after Footer fix (commit 942de31)
+- Concentrated in: privacy.astro (30), support.astro (38), roadmap.astro (35), terms.astro (29), InlineHeader.astro (9)
+- Also found: 112 hardcoded `#000000`, 84 hardcoded `#F6F4EF`, others for verification
 
 ---
 

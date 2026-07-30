@@ -101,23 +101,74 @@ CONTACT → /contact
 
 ---
 
-## Pending Work: Phase 2.3 (Page Migration)
+## Phase 2.3 (CANCELLED)
 
-**Task:** Migrate remaining 7 pages from RampTemplateLayout to BaseLayout
+**Original task:** Migrate remaining 7 pages from RampTemplateLayout to BaseLayout
 
-**Pages (one commit each, pixel-verified):**
-1. contact.astro
-2. pricing.astro
-3. resources.astro
-4. roadmap.astro
-5. support.astro
-6. terms.astro
-7. privacy.astro
+**DECISION:** Dark pages (privacy, roadmap, support, terms) are being REPLACED, not migrated. These pages will be rebuilt from extracted components in Phase 3, not migrated to BaseLayout.
 
-**Cleanup:**
-- Delete InlineHeader.astro (transitional component, no longer needed)
+**Status:** ✅ CANCELLED
+- #D4CABE color sweep (132 instances) — removed from scope
+- Page-level migrations — deferred (will rebuild via components instead)
+- InlineHeader.astro cleanup — still needed when dark pages are replaced
 
-**Baseline coverage:** All 7 pages have baseline screenshots (1440px + 390px) from Phase 0 reset
+---
+
+## Phase 3a: Token Rename (PREREQUISITE)
+
+**Critical:** Surface-aware token names prevent future color-pairing mistakes (dark tokens on light surfaces, etc.)
+
+**Rename task (one pass, verified clean):**
+1. Rename across entire codebase:
+   - `--ink` → `--text-on-paper` (#0A0A0A)
+   - `--paper` → `--surface-paper` (#FFFFFF)
+   - Add `--surface-ink` (#1C1917)
+   - Add `--text-on-paper-muted` (var(--text-on-paper) @ 60% opacity)
+   - Rename `--paper-inverse` → `--text-on-ink` (#F6F4EF)
+   - Rename `--basalio-stone` / hardcoded #D4CABE → `--text-on-ink-muted` (#D4CABE)
+   - Keep `--acid` #DFFF00 (fill only, text on dark surface only)
+   - Keep `--stone` #DFDCD5 (borders/dividers, not text)
+
+2. Verify zero references to old names
+3. Pixel-verify all pages match baseline (expect zero diff; only CSS variable names changed)
+4. One commit: "Rename tokens to surface-aware naming scheme"
+
+**Status:** Pending implementation
+
+---
+
+## Phase 3b: Component Extraction (AFTER token rename)
+
+**Goal:** Extract reusable components from Ramp pages, then rebuild dark pages (privacy, roadmap, support, terms) using those components.
+
+**Token Discipline:**
+- ✅ All components MUST use surface-aware tokens: `var(--text-on-paper)`, `var(--text-on-ink)`, `var(--acid)`, `var(--stone)`, etc.
+- ✅ Zero raw hex literals in component files (enforce via grep: `grep -r '#[0-9A-Fa-f]{6}' src/components/ → build failure`)
+- ✅ tokens.css is the single source of truth; brand swap is a 4-line edit
+
+**Acid usage rule (nonnegotiable):**
+- ❌ Acid as text on light surfaces (FORBIDDEN, ~1.1:1 fails WCAG)
+- ✅ Acid as text on dark surfaces (ALLOWED, ~15.4:1)
+- ✅ Acid as fill behind ink text (always fine)
+
+**Copy-Layer Fixes (before component extraction):**
+- [ ] "modules" → "blocks" everywhere (nav, headings, stats, footer, resource lists, page copy)
+- [ ] DELETE two fake homepage testimonials (fabricated quotes/images)
+- [ ] "1 of 100 left" counter — remove entirely. State 100-license cap as fact.
+- [ ] "Our Resources" section — fix or cut (six documents don't exist)
+- [ ] Domain fixes: basalio.so → basalio.com (every instance across src/)
+- [ ] Homepage pricing section → teaser (PricingCards.astro compact variant)
+- [ ] "CLAIM FOUNDER ACCESS" → "Join the founder list"
+
+**Component Inventory (pending):**
+- Report all repeated section patterns across Ramp pages
+- Propose prop APIs before implementation
+- Build ONE component first: PricingCards.astro (compact/full variants)
+
+**Dark Page Rebuild (after components):**
+- Rebuild privacy, roadmap, support, terms using extracted components
+- Delete old inline HTML versions
+- No migration — full rebuild from scratch
 
 ---
 

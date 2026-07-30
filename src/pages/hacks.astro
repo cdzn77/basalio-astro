@@ -207,62 +207,49 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
 </BaseLayout>
 
 <script>
-  function initializeCopyButtons() {
-    const buttons = document.querySelectorAll('.copy-code-btn');
-    console.log('Found copy buttons:', buttons.length);
+  // Use event delegation to handle copy button clicks
+  document.addEventListener('click', async (e) => {
+    const button = e.target.closest('.copy-code-btn');
+    if (!button) return;
 
-    buttons.forEach((button, index) => {
-      console.log(`Attaching click handler to button ${index}`);
-      button.addEventListener('click', async (e) => {
-        console.log(`Button ${index} clicked!`);
-        e.preventDefault();
+    console.log('Copy button clicked!');
+    e.preventDefault();
 
-        const preElement = button.previousElementSibling;
-        if (!preElement) {
-          console.error('No pre element found before button', index);
-          return;
-        }
+    const preElement = button.previousElementSibling;
+    if (!preElement) {
+      console.error('No pre element found before button');
+      return;
+    }
 
-        const codeBlock = preElement.querySelector('code');
-        if (!codeBlock) {
-          console.error('No code element found in pre', index);
-          return;
-        }
+    const codeBlock = preElement.querySelector('code');
+    if (!codeBlock) {
+      console.error('No code element found in pre');
+      return;
+    }
 
-        const text = codeBlock.textContent;
-        console.log(`Code text length: ${text.length}`);
+    const text = codeBlock.textContent;
+    console.log(`Code text length: ${text.length}`);
 
-        try {
-          await navigator.clipboard.writeText(text);
-          console.log('Successfully copied to clipboard');
+    try {
+      await navigator.clipboard.writeText(text);
+      console.log('Successfully copied to clipboard');
 
-          const originalText = button.textContent;
-          button.textContent = 'Copied!';
-          button.classList.add('copied');
-          console.log('Button text changed to Copied!');
+      const originalText = button.textContent;
+      button.textContent = 'Copied!';
+      button.classList.add('copied');
 
-          setTimeout(() => {
-            button.textContent = originalText;
-            button.classList.remove('copied');
-            console.log('Button text reset to Copy');
-          }, 2000);
-        } catch (err) {
-          console.error('Failed to copy to clipboard:', err);
-          button.textContent = 'Failed!';
-          setTimeout(() => {
-            button.textContent = 'Copy';
-          }, 2000);
-        }
-      });
-    });
-  }
-
-  // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeCopyButtons);
-  } else {
-    initializeCopyButtons();
-  }
+      setTimeout(() => {
+        button.textContent = originalText;
+        button.classList.remove('copied');
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy to clipboard:', err);
+      button.textContent = 'Failed!';
+      setTimeout(() => {
+        button.textContent = 'Copy';
+      }, 2000);
+    }
+  });
 </script>
 
 <style>

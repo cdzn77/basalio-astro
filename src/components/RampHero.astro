@@ -38,6 +38,16 @@ const colorMap = {
 
 const scrimOpacity = background.type === 'image' || background.type === 'video' ? (background.scrim ?? 0.4) : 0;
 const showPortrait = background.type === 'color';
+
+// Scrim color derives from surface to push background away from text
+// ink (light text) → dark scrim darkens background further
+// paper/acid (dark text) → light scrim lightens background further
+const scrimColorMap = {
+  ink: 'var(--surface-ink)',
+  paper: 'var(--surface-paper)',
+  acid: 'var(--surface-paper)'
+};
+const scrimColor = scrimColorMap[surface];
 ---
 
 <section class="hero" id="hero" data-surface={surface}>
@@ -61,7 +71,7 @@ const showPortrait = background.type === 'color';
       <div class="hero-bg-gradient" style={{ background: `linear-gradient(${background.angle || '135deg'}, ${background.from}, ${background.to})` }} />
     )}
     {scrimOpacity > 0 && (
-      <div class="hero-bg-scrim" style={{ opacity: scrimOpacity.toString() }} />
+      <div class="hero-bg-scrim" style={{ backgroundColor: scrimColor, opacity: scrimOpacity.toString() }} />
     )}
   </div>
 
@@ -142,7 +152,6 @@ const showPortrait = background.type === 'color';
   }
 
   .hero-bg-scrim {
-    background-color: var(--surface-ink);
     pointer-events: none;
   }
 

@@ -356,13 +356,21 @@ const { hideNewsletter = false } = Astro.props;
     }
 
     .footer-content-row {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 40px;
     }
 
+    .footer-left-section {
+      grid-column: 1 / -1;
+    }
+
     .footer-links-section {
-      flex-direction: column;
+      grid-column: auto;
       gap: 30px;
+    }
+
+    .footer-right-section {
+      grid-column: 1 / -1;
     }
 
     .footer-newsletter-form {
@@ -376,8 +384,8 @@ const { hideNewsletter = false } = Astro.props;
     }
 
     .footer-branding-row {
-      margin: 40px -20px -20px -20px;
-      padding: 40px 20px;
+      margin: 0;
+      padding: 0;
     }
 
     .footer-brand-word {

@@ -24,19 +24,6 @@ interface Props {}
 </div>
 
 <script>
-  // Add scroll handler for header background change
-  const header = document.querySelector('.ramp-header');
-
-  function handleScroll() {
-    if (window.scrollY > 100) {
-      header?.classList.add('scrolled');
-    } else {
-      header?.classList.remove('scrolled');
-    }
-  }
-
-  window.addEventListener('scroll', handleScroll, { passive: true });
-
   // Menu toggle functionality
   const menuToggle = document.getElementById('menu-toggle');
   const menuDropdown = document.getElementById('menu-dropdown');

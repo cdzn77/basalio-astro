@@ -1,491 +1,336 @@
 ---
-// Basalio Support page with search filtering and accordion FAQs
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RampHeader from '../components/RampHeader.astro';
+import RampFooter from '../components/RampFooter.astro';
+
+const title = "Support & Help Center - Basalio";
+const description = "Basalio support documentation, FAQs, and troubleshooting guides for WordPress portfolio blocks.";
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Basalio - Support & Help Center</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@1,9..144,500&display=swap" rel="stylesheet">
-	<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpolygon points='8,56 56,56 46,44 18,44' fill='%23F6F4EF'/%3E%3Crect x='23' y='20' width='18' height='24' fill='%23DFFF00'/%3E%3C/svg%3E">
-	<style>
-		:root{
-			--smp-grid-width-desktop: 1440px;
-			--smp-grid-outer-desktop: 3.333rem;
-			--smp-grid-gap-desktop: 2.222rem;
-			--smp-grid-gap-mobile: 1.667rem;
-			--font-size-xs: 0.722rem;
-			--font-size-sm: 0.889rem;
-			--font-size-base: 1.111rem;
-			--font-size-md: 1.556rem;
-			--font-size-lg: 2rem;
-			--font-size-xl: 3.056rem;
-			--font-size-2xl: 6.222rem;
-			--spacing-micro: 0.556rem;
-			--spacing-small: 0.889rem;
-			--spacing-base: 1.111rem;
-			--spacing-md: 1.389rem;
-			--spacing-lg: 1.667rem;
-			--spacing-xl: 2.222rem;
-			--spacing-2xl: 2.5rem;
-			--spacing-3xl: 3.333rem;
-		}
-		html{scroll-behavior:smooth;}
-		body{margin:0;background:#1C1917;color:#F6F4EF;font-family:'Inter',sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;}
-		a{color:inherit;text-decoration:none;}
-		a:hover{color:#F6F4EF;}
-		a:focus,button:focus,input:focus,select:focus,textarea:focus{outline:2px solid #DFFF00;outline-offset:2px;}
-		a:focus:not(:focus-visible),button:focus:not(:focus-visible),input:focus:not(:focus-visible){outline:none;}
-		*:focus-visible{outline:2px solid #DFFF00;outline-offset:2px;}
-		#backToTop{position:fixed;bottom:32px;right:32px;z-index:40;width:44px;height:44px;border-radius:22px;background:#DFFF00;color:#17171A;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;opacity:0;pointer-events:none;transition:opacity .3s ease;box-shadow:0 4px 12px rgba(0,0,0,0.3);}#backToTop.show{opacity:1;pointer-events:auto;}#backToTop:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.4);}
-		.accordion-button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;background:none;border:0;padding:20px 0;cursor:pointer;text-align:left;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;color:#F6F4EF;border-bottom:1px solid #3A352E;transition:color .2s ease;}
-		.accordion-button:hover{color:#DFFF00;}
-		.accordion-button .toggle-icon{font-family:'Inter',sans-serif;font-weight:400;font-size:20px;color:#D4CABE;flex:none;transition:transform .3s ease;}
-		.accordion-button.open .toggle-icon{transform:rotate(45deg);}
-		/* Apply Semplice spacing system */
-		section {
-			padding: var(--spacing-3xl) 0 !important;
-		}
-		section > div, section > div > div {
-			max-width: var(--smp-grid-width-desktop);
-			margin: 0 auto !important;
-			padding: 0 var(--smp-grid-outer-desktop) !important;
-		}
-		/* Grid layouts */
-		[style*="display:grid"] {
-			gap: var(--smp-grid-gap-desktop) !important;
-		}
-		/* Eyebrow text styling */
-		section p[style*="IBM Plex Mono"] {
-			font-size: var(--font-size-xs);
-			letter-spacing: 0.08em;
-			text-transform: uppercase;
-			margin-bottom: var(--spacing-lg);
-		}
-		/* Section headings */
-		section h2 {
-			font-size: var(--font-size-xl);
-			line-height: 1.1;
-			margin-bottom: var(--spacing-xl);
-			letter-spacing: -0.02em;
-		}
-		/* Text content spacing */
-		section p[style*="color:#D4CABE"] {
-			font-size: var(--font-size-base);
-			line-height: 1.6;
-			margin-bottom: var(--spacing-lg);
-			max-width: 65ch;
-		}
-		header {
-			max-width: 100%;
-		}
-		header > div {
-			max-width: var(--smp-grid-width-desktop);
-			margin: 0 auto;
-			padding: 0 var(--smp-grid-outer-desktop) !important;
-		}
-		.accordion-content{overflow:hidden;max-height:0;transition:max-height .3s ease;}
-		.accordion-content.open{max-height:1000px;}
-		#mobileMenuBtn{display:none;background:none;border:none;color:#F6F4EF;cursor:pointer;padding:0;width:44px;height:44px;min-width:44px;min-height:44px;}
-		#mobileMenu{display:none;position:fixed;top:0;left:0;right:0;width:100%;height:100vh;background:#1C1917;overflow-y:auto;z-index:48;flex-direction:column;padding-top:80px;}
-		#mobileMenu.open{display:flex;}
-		#mobileMenu a{display:block;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);color:#D4CABE;font-size:16px;font-weight:500;}
-		#mobileMenu a:hover{background:rgba(255,255,255,0.05);color:#F6F4EF;}
-		@media (max-width:900px){
-		  #mobileMenuBtn{display:block;}
-		  nav>div>div:last-child{display:none !important;}
-		}
-		@media (max-width:1024px){
-		  .accordion-content>div{grid-template-columns:1fr !important;}
-		}
-		@media (max-width:768px){
-		  #backToTop{bottom:16px;right:16px;width:40px;height:40px;}
-		  nav{padding:0 12px;}
-		  nav>div{padding:6px 6px 6px 14px;}
-		  header{padding:56px 0 32px !important;}
-		  header h1{font-size:clamp(28px,3.8vw,40px) !important;margin:12px 0 !important;}
-		  header>div{padding:0 16px !important;}
-		  .accordion-content{padding:16px 0 20px !important;}
-		  .accordion-content>div{display:grid !important;grid-template-columns:1fr !important;gap:16px !important;padding:16px 0 !important;}
-		  .accordion-content>div>div{margin-bottom:12px;}
-		  section{padding:40px 0 !important;}
-		  section>div{padding:0 16px !important;}
-		  #searchInput{font-size:13px;width:100%;}
-		  .accordion-button{font-size:15px;padding:16px 0;}
-		  h2{font-size:clamp(22px,2.8vw,30px) !important;}
-		  #hacks>div>div:last-of-type{display:grid !important;grid-template-columns:1fr !important;gap:16px !important;}
-		  footer>div{grid-template-columns:1fr !important;gap:28px !important;}
-		  div[style*="padding:24px"]{padding:16px !important;}
-		  .accordion-content>div>div{padding:12px 0 !important;}
-		}
-		@media (max-width:480px){
-		  header{padding:40px 0 24px !important;}
-		  header h1{font-size:clamp(22px,3vw,32px) !important;}
-		  section{padding:32px 0 !important;}
-		  section>div{padding:0 12px !important;}
-		  #searchInput{padding:11px 14px 11px 36px !important;}
-		  .accordion-button{padding:14px 0;font-size:14px;}
-		  div[style*="padding:24px"]{padding:12px !important;}
-		}
-		@keyframes driftGrad{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-		@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
-	</style>
-</head>
-<body>
+<BaseLayout {title} {description}>
+  <Fragment slot="header">
+    <RampHeader />
+  </Fragment>
 
-<nav style="position:fixed;top:14px;left:0;right:0;z-index:50;padding:0 20px;pointer-events:none;">
-	<div style="max-width:1120px;margin:0 auto;background:rgba(28,25,23,0.92);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:8px 8px 8px 22px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 24px 48px -24px rgba(0,0,0,0.55);pointer-events:auto;">
-		<a href="/" style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;color:#F6F4EF;">
-			<svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true" style="flex:none;"><polygon points="8,56 56,56 46,44 18,44" fill="#F6F4EF"></polygon><rect x="23" y="20" width="18" height="24" fill="#DFFF00"></rect></svg>
-			Basalio
-		</a>
-		<button id="mobileMenuBtn" aria-label="Toggle menu" style="pointer-events:auto;margin-right:8px;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="6" x2="22" y2="6"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="18" x2="22" y2="18"></line></svg></button>
-		<div style="display:flex;gap:22px;align-items:center;">
-			<a href="/#exhibits" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Modules</a>
-			<a href="/#bench" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Performance</a>
-			<a href="/roadmap" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Roadmap</a>
-			<a href="/pricing" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Pricing</a>
-			<a href="/support" style="font-size:14px;color:#F6F4EF;">Support</a>
-			<a href="/#waitlist" style="display:inline-flex;align-items:center;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;padding:9px 18px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease;">Join the beta</a>
-		</div>
-	</div>
-</nav>
+  <section class="support-header">
+    <div class="support-container">
+      <p class="support-eyebrow">Help Center</p>
+      <h1 class="support-heading">Support & Documentation</h1>
+      <p class="support-subheading">Find answers to common questions and get help with Basalio blocks.</p>
+    </div>
+  </section>
 
-<div id="mobileMenu">
-	<a href="/#exhibits">Modules</a>
-	<a href="/#bench">Performance</a>
-	<a href="/roadmap">Roadmap</a>
-	<a href="/pricing">Pricing</a>
-	<a href="/support">Support</a>
-	<a href="/#waitlist">Join the beta</a>
-</div>
+  <section class="support-search">
+    <div class="support-container">
+      <div class="search-box">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search documentation...">
+      </div>
+    </div>
+  </section>
 
-<header style="position:relative;overflow:hidden;background:#1C1917;padding:220px 0 40px;">
-	<div aria-hidden="true" style="position:absolute;top:-180px;right:-160px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(223,255,0,0.12),transparent 70%);filter:blur(10px);pointer-events:none;"></div>
-	<div style="position:relative;max-width:900px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">Support</p>
-		<h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em;line-height:1.05;font-size:clamp(32px,4.2vw,50px);margin:16px 0 16px;color:#F6F4EF;">When something looks off, start here.</h1>
-		<p style="color:#D4CABE;font-size:17px;max-width:60ch;margin:0 0 32px;">Every symptom we've seen in beta, its likely cause, and the fix. If yours isn't listed, email us and we'll add it.</p>
+  <section class="support-faq">
+    <div class="support-container">
+      <div class="faq-section">
+        <h2 class="faq-heading">Frequently Asked Questions</h2>
 
-		<div style="position:relative;max-width:520px;">
-			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);pointer-events:none;"><circle cx="11" cy="11" r="7" stroke="#C9BEB2" stroke-width="1.8"></circle><path d="M20 20l-4.3-4.3" stroke="#C9BEB2" stroke-width="1.8" stroke-linecap="round"></path></svg>
-			<input type="text" placeholder="Search troubleshooting" aria-label="Search troubleshooting" id="searchInput" style="width:100%;box-sizing:border-box;padding:13px 16px 13px 42px;border-radius:999px;border:1px solid rgba(255,255,255,0.16);background:rgba(255,255,255,0.05);color:#F6F4EF;font-family:'Inter',sans-serif;font-size:14px;">
-		</div>
+        <div class="accordion">
+          <button class="accordion-button" data-index="0">
+            <span>How do I install Basalio blocks?</span>
+            <span class="toggle-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Basalio blocks are installed as a WordPress plugin. Download from WordPress.org, upload to your site, and activate. Once activated, all nine blocks appear in your block editor immediately.</p>
+          </div>
 
-		<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;">
-			<a href="#installation" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;">Installation</a>
-			<a href="#modules" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;">Module behavior</a>
-			<a href="#performance" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;">Performance &amp; conflicts</a>
-			<a href="#accessibility" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;">Accessibility</a>
-			<a href="#licensing" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;">Licensing</a>
-			<a href="#hacks" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#17171A;background:#DFFF00;border:1px solid #DFFF00;border-radius:999px;padding:6px 14px;">Power-user hacks</a>
-		</div>
-	</div>
-</header>
+          <button class="accordion-button" data-index="1">
+            <span>Do I need coding experience to use Basalio?</span>
+            <span class="toggle-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>No. Basalio is designed for WordPress users with no coding knowledge. All interactions work through the block editor interface. Click, drag, customize—no code required.</p>
+          </div>
 
-<section id="installation" style="padding:56px 0;border-top:1px solid #3A352E;background:#1C1917;">
-	<div style="max-width:900px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">Installation & setup</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">Getting it running.</h2>
+          <button class="accordion-button" data-index="2">
+            <span>Are the nine blocks free forever?</span>
+            <span class="toggle-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Yes. All nine blocks are free forever on WordPress.org. No locked features, no watermarks, no upgrades. The Pro tier (control center sidebar) is optional.</p>
+          </div>
 
-		<div style="display:grid;gap:0;">
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
-				Plugin activates but no exhibits show up on the front end
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding-bottom:20px;">
-				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#D4CABE;">Browser or page cache is still serving an old version of the page</li><li style="font-size:14px;color:#D4CABE;">The module is switched off under Basalio > Modules</li><li style="font-size:14px;color:#D4CABE;">A full-page caching plugin hasn't purged since activation</li></ul></div>
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Hard-refresh the page (Cmd/Ctrl + Shift + R)</li><li style="font-size:14px;color:#F6F4EF;">Confirm the module is toggled on in Basalio > Modules</li><li style="font-size:14px;color:#F6F4EF;">Purge your caching plugin once after activation</li></ol></div>
-				</div>
-			</div>
+          <button class="accordion-button" data-index="3">
+            <span>Which themes do the blocks work with?</span>
+            <span class="toggle-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Basalio blocks work with any modern WordPress theme that supports the block editor (Gutenberg). They're theme-agnostic and don't require a specific theme.</p>
+          </div>
 
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
-				The beta license key won't validate
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding-bottom:20px;">
-				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#D4CABE;">Key was pasted with a trailing space or line break</li><li style="font-size:14px;color:#D4CABE;">The site URL doesn't match the one the key was issued for</li><li style="font-size:14px;color:#D4CABE;">Keys take a few minutes to go live after signup</li></ul></div>
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Retype the key instead of pasting it</li><li style="font-size:14px;color:#F6F4EF;">Check Basalio > License for the exact domain on file</li><li style="font-size:14px;color:#F6F4EF;">Wait a few minutes after signup, then try again</li></ol></div>
-				</div>
-			</div>
+          <button class="accordion-button" data-index="4">
+            <span>Can I use multiple blocks on one page?</span>
+            <span class="toggle-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Yes. Combine blocks however you like. Stack multiple Grid Reveals, Scroll Sequences, Case Study Transitions—they all work together seamlessly.</p>
+          </div>
 
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
-				Basalio doesn't appear in the Plugins list after upload
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding-bottom:20px;">
-				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#D4CABE;">The uploaded file was a GitHub source snapshot, not the built release .zip</li><li style="font-size:14px;color:#D4CABE;">PHP version is below the 7.4 minimum</li></ul></div>
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Download the release build from your beta email, not a repo download</li><li style="font-size:14px;color:#F6F4EF;">Check Tools > Site Health for your PHP version and upgrade if needed</li></ol></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+          <button class="accordion-button" data-index="5">
+            <span>How do I customize block colors and timing?</span>
+            <span class="toggle-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Each block has a settings panel in the editor sidebar. Adjust colors, easing, duration, and other parameters directly without touching code. Save changes instantly.</p>
+          </div>
 
-<section id="accessibility" style="padding:56px 0;border-top:1px solid #3A352E;background:#1C1917;">
-	<div style="max-width:900px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">Accessibility</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">Keeping every module usable for everyone.</h2>
+          <button class="accordion-button" data-index="6">
+            <span>What's the performance impact?</span>
+            <span class="toggle-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Basalio is optimized for performance. One shared script loads only on pages that use blocks. Check our detailed performance report at /resources for benchmarks.</p>
+          </div>
 
-		<div style="display:grid;gap:0;">
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
-				A module still animates when reduced motion is on
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding-bottom:20px;">
-				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#D4CABE;">An older browser isn't reporting the OS-level setting</li><li style="font-size:14px;color:#D4CABE;">Custom CSS is reintroducing motion the module already disabled</li></ul></div>
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Update to the latest version of your browser</li><li style="font-size:14px;color:#F6F4EF;">Confirm the override under Basalio > Settings > Accessibility</li><li style="font-size:14px;color:#F6F4EF;">Remove any custom CSS re-adding the animation</li></ol></div>
-				</div>
-			</div>
+          <button class="accordion-button" data-index="7">
+            <span>Does Basalio support WooCommerce?</span>
+            <span class="toggle-icon">+</span>
+          </button>
+          <div class="accordion-content">
+            <p>Basalio blocks work in WooCommerce, but they're optimized for portfolio and case-study sites. For store-specific functionality, check WooCommerce's native block library.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
-				Keyboard focus disappears inside a module
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding-bottom:20px;">
-				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#D4CABE;">A theme-wide CSS reset sets outline: none globally</li><li style="font-size:14px;color:#D4CABE;">The module's focus ring color is too close to the background</li></ul></div>
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Add a focus-visible style in your theme instead of removing outlines globally</li><li style="font-size:14px;color:#F6F4EF;">Report the contrast issue so we can patch the default</li></ol></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+  <section class="support-contact">
+    <div class="support-container">
+      <h2 class="contact-heading">Still need help?</h2>
+      <p class="contact-text">Can't find what you're looking for? Email us at <a href="mailto:hello@basalio.com" class="contact-link">hello@basalio.com</a> and we'll get back to you within 24 hours.</p>
+    </div>
+  </section>
 
-<section id="performance" style="padding:56px 0;border-top:1px solid #3A352E;background:#1C1917;">
-	<div style="max-width:900px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">Performance & conflicts</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">When something else on the site gets in the way.</h2>
+  <Fragment slot="footer">
+    <RampFooter hideNewsletter={true} />
+  </Fragment>
+</BaseLayout>
 
-		<div style="display:grid;gap:0;">
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
-				The page feels slower after adding a module
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding-bottom:20px;">
-				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#D4CABE;">Several heavy modules stacked on one page</li><li style="font-size:14px;color:#D4CABE;">A caching plugin isn't deferring or minifying the new script</li></ul></div>
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Use two or three modules per page, not all nine at once</li><li style="font-size:14px;color:#F6F4EF;">Set your cache plugin to defer non-critical JS, Basalio already lazy-loads its own</li></ol></div>
-				</div>
-			</div>
+<style>
+  .support-header {
+    background: #1C1917;
+    padding: 120px 32px 60px;
+  }
 
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
-				The console shows a script error mentioning Basalio
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding-bottom:20px;">
-				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#D4CABE;">Another plugin also declares a global with the same name</li><li style="font-size:14px;color:#D4CABE;">A child theme overrides a hook that Basalio also uses</li></ul></div>
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Disable other plugins one at a time to confirm the naming conflict</li><li style="font-size:14px;color:#F6F4EF;">Compare your child theme's functions.php against the parent theme</li></ol></div>
-				</div>
-			</div>
+  .support-container {
+    max-width: 760px;
+    margin: 0 auto;
+  }
 
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
-				It works locally but breaks in production
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding-bottom:20px;">
-				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#D4CABE;">Production runs an aggressive JS combiner or minifier</li><li style="font-size:14px;color:#D4CABE;">Mixed-content blocking, an asset is loading over HTTP on an HTTPS page</li></ul></div>
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Exclude Basalio's script handle from the combiner/minifier</li><li style="font-size:14px;color:#F6F4EF;">Confirm asset URLs resolve over HTTPS in Basalio > Settings</li></ol></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+  .support-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #D4CABE;
+    margin: 0 0 16px 0;
+  }
 
-<section id="modules" style="padding:56px 0;border-top:1px solid #3A352E;background:#1C1917;">
-	<div style="max-width:900px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">Module behavior</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">When a module isn't doing what it should.</h2>
+  .support-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-size: clamp(30px, 4vw, 44px);
+    margin: 0 0 12px 0;
+    color: #F6F4EF;
+  }
 
-		<div style="display:grid;gap:0;">
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
-				Grid reveal doesn't trigger on hover
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding-bottom:20px;">
-				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#D4CABE;">Touch devices have no hover state to trigger</li><li style="font-size:14px;color:#D4CABE;">A theme's own hover CSS is overriding the module with !important</li><li style="font-size:14px;color:#D4CABE;">Reduced motion is enabled at the OS level, which the module respects on purpose</li></ul></div>
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">On touch, the reveal triggers on tap instead, check that first</li><li style="font-size:14px;color:#F6F4EF;">Inspect the element for a competing !important rule and raise specificity</li><li style="font-size:14px;color:#F6F4EF;">This is expected under reduced motion, not a bug</li></ol></div>
-				</div>
-			</div>
+  .support-subheading {
+    color: #C9BEB2;
+    font-size: 16px;
+    margin: 0;
+  }
 
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
-				The exhibit-numbered module list shows the wrong order
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding-bottom:20px;">
-				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#D4CABE;">Order is set by position in Basalio > Modules, not by placement on the page</li><li style="font-size:14px;color:#D4CABE;">The same module block was placed twice on one page</li></ul></div>
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Drag modules into the order you want inside Basalio > Modules</li><li style="font-size:14px;color:#F6F4EF;">Remove the duplicate block from the page</li></ol></div>
-				</div>
-			</div>
+  .support-search {
+    background: #1C1917;
+    padding: 40px 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
 
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
-				A module loads but looks unstyled or broken
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding-bottom:20px;">
-				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#D4CABE;">A security plugin's HTML sanitizer is stripping inline styles</li><li style="font-size:14px;color:#D4CABE;">Another plugin enqueues a conflicting version of the same font</li></ul></div>
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Whitelist Basalio's output in your security plugin's sanitizer settings</li><li style="font-size:14px;color:#F6F4EF;">Disable the duplicate font enqueue in the conflicting plugin</li></ol></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+  .search-box {
+    width: 100%;
+  }
 
-<section id="licensing" style="padding:56px 0;border-top:1px solid #3A352E;background:#1C1917;">
-	<div style="max-width:900px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">Licensing & updates</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">Activation, transfers, and staying current.</h2>
+  .search-input {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    color: #F6F4EF;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    box-sizing: border-box;
+  }
 
-		<div style="display:grid;gap:0;">
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
-				The update button is greyed out
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding-bottom:20px;">
-				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#D4CABE;">The license isn't activated on this specific site</li><li style="font-size:14px;color:#D4CABE;">The beta build is already the newest version available</li></ul></div>
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Activate under Basalio > License</li><li style="font-size:14px;color:#F6F4EF;">Check the changelog, you may already be current</li></ol></div>
-				</div>
-			</div>
+  .search-input:focus {
+    outline: none;
+    border-color: #DFFF00;
+    background: rgba(255, 255, 255, 0.08);
+  }
 
-			<button class="accordion-button" style="border-bottom:1px solid #3A352E;">
-				Moved to a new domain and the license won't follow
-				<span class="toggle-icon">+</span>
-			</button>
-			<div class="accordion-content" style="padding-bottom:20px;">
-				<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:20px 0;">
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Likely cause</p><ul style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#D4CABE;">Each activation is tied to a specific URL</li><li style="font-size:14px;color:#D4CABE;">A staging-to-production move counts as a new site</li></ul></div>
-					<div><p style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#C9BEB2;margin:0 0 10px;">Fix</p><ol style="margin:0;padding-left:18px;"><li style="font-size:14px;color:#F6F4EF;">Deactivate on the old URL first, inside Basalio > License</li><li style="font-size:14px;color:#F6F4EF;">Then activate on the new ones, Studio and Agency tiers can hold both without deactivating</li></ol></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
+  .search-input::placeholder {
+    color: #D4CABE;
+  }
 
-<section id="hacks" style="padding:56px 0;border-top:1px solid #3A352E;background:#1C1917;">
-	<div style="max-width:900px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">Power-user hacks</p>
-		<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.01em;line-height:1.1;font-size:clamp(24px,2.8vw,32px);margin:14px 0 28px;">Five ways to bend it, if you know where to look.</h2>
-		<p style="color:#D4CABE;font-size:15px;margin:0 0 32px;">None of this is required. It's here for the studios who want a little more control.</p>
+  .support-faq {
+    background: #1C1917;
+    padding: 60px 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
 
-		<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:28px;">
-			<div style="background:#26221E;border:1px solid #3A352E;border-radius:8px;padding:24px;">
-				<div style="display:inline-block;background:#DFFF00;color:#17171A;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:4px 10px;border-radius:3px;margin-bottom:16px;">HACK</div>
-				<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin:0 0 12px;color:#F6F4EF;">Preview reduced motion without changing your OS setting</h3>
-				<p style="color:#D4CABE;font-size:14px;margin:0 0 16px;">Forces every module into its accessible state so you can sanity-check the fallback while testing.</p>
-				<code style="font-family:'IBM Plex Mono',monospace;font-size:12px;display:block;background:#1C1917;padding:12px;border-radius:4px;color:#DFFF00;overflow-x:auto;">yoursite.com/page/?basalio_reduced_motion=1</code>
-			</div>
+  .faq-section {
+    width: 100%;
+  }
 
-			<div style="background:#26221E;border:1px solid #3A352E;border-radius:8px;padding:24px;">
-				<div style="display:inline-block;background:#DFFF00;color:#17171A;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:4px 10px;border-radius:3px;margin-bottom:16px;">HACK</div>
-				<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin:0 0 12px;color:#F6F4EF;">Turn off one module on a single page</h3>
-				<p style="color:#D4CABE;font-size:14px;margin:0 0 16px;">Drop this in a site-specific plugin, not functions.php, so it survives a theme switch.</p>
-				<code style="font-family:'IBM Plex Mono',monospace;font-size:12px;display:block;background:#1C1917;padding:12px;border-radius:4px;color:#DFFF00;overflow-x:auto;">add_filter('basalio/blocks/enabled', function($m){<br/>  unset($m['cursor']);<br/>  return $m;<br/>});</code>
-			</div>
+  .faq-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    margin: 0 0 40px 0;
+    color: #F6F4EF;
+  }
 
-			<div style="background:#26221E;border:1px solid #3A352E;border-radius:8px;padding:24px;">
-				<div style="display:inline-block;background:#DFFF00;color:#17171A;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:4px 10px;border-radius:3px;margin-bottom:16px;">HACK</div>
-				<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin:0 0 12px;color:#F6F4EF;">Jump straight to a module's settings</h3>
-				<p style="color:#D4CABE;font-size:14px;margin:0 0 16px;">Deep-link past the dashboard's landing tab, handy for support screenshots and repeat visits.</p>
-				<code style="font-family:'IBM Plex Mono',monospace;font-size:12px;display:block;background:#1C1917;padding:12px;border-radius:4px;color:#DFFF00;overflow-x:auto;">/wp-admin/admin.php?page=basalio-modules#grid-reveal</code>
-			</div>
+  .accordion {
+    width: 100%;
+  }
 
-			<div style="background:#26221E;border:1px solid #3A352E;border-radius:8px;padding:24px;">
-				<div style="display:inline-block;background:#DFFF00;color:#17171A;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:4px 10px;border-radius:3px;margin-bottom:16px;">HACK</div>
-				<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin:0 0 12px;color:#F6F4EF;">Preview a roadmap module before it ships</h3>
-				<p style="color:#D4CABE;font-size:14px;margin:0 0 16px;">An experimental toggle renders the planned module's settings screen, not live front-end behavior.</p>
-				<code style="font-family:'IBM Plex Mono',monospace;font-size:12px;display:block;background:#1C1917;padding:12px;border-radius:4px;color:#DFFF00;overflow-x:auto;">Basalio > Settings > Show planned modules (preview only)</code>
-			</div>
-		</div>
-	</div>
-</section>
+  .accordion-button {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    background: none;
+    border: none;
+    padding: 20px 0;
+    cursor: pointer;
+    text-align: left;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #F6F4EF;
+    border-bottom: 1px solid #3A352E;
+    transition: color 0.2s ease;
+  }
 
-<button id="backToTop" aria-label="Back to top">↑</button>
+  .accordion-button:hover {
+    color: #DFFF00;
+  }
+
+  .accordion-button .toggle-icon {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: #D4CABE;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+
+  .accordion-button.open .toggle-icon {
+    transform: rotate(45deg);
+  }
+
+  .accordion-content {
+    display: none;
+    padding: 0 0 20px 0;
+    color: #D4CABE;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .accordion-content.show {
+    display: block;
+  }
+
+  .accordion-content p {
+    margin: 0;
+  }
+
+  .support-contact {
+    background: #1C1917;
+    padding: 60px 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+  }
+
+  .contact-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    margin: 0 0 16px 0;
+    color: #F6F4EF;
+  }
+
+  .contact-text {
+    color: #D4CABE;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .contact-link {
+    color: #DFFF00;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .contact-link:hover {
+    color: #F6F4EF;
+  }
+
+  @media (max-width: 768px) {
+    .support-header {
+      padding: 80px 20px 40px;
+    }
+
+    .support-search,
+    .support-faq,
+    .support-contact {
+      padding: 40px 20px;
+    }
+
+    .support-heading {
+      font-size: clamp(26px, 3.6vw, 38px);
+    }
+
+    .faq-heading,
+    .contact-heading {
+      font-size: 22px;
+    }
+
+    .accordion-button {
+      font-size: 15px;
+      padding: 16px 0;
+    }
+  }
+</style>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-	// Accordion functionality
-	const accordionButtons = document.querySelectorAll('.accordion-button');
-	accordionButtons.forEach(button => {
-		button.addEventListener('click', () => {
-			const content = button.nextElementSibling;
-			if (!content.classList.contains('accordion-content')) return;
+  document.querySelectorAll('.accordion-button').forEach(button => {
+    button.addEventListener('click', () => {
+      const content = button.nextElementSibling;
+      const isOpen = content.classList.contains('show');
 
-			const isOpen = button.classList.contains('open');
+      document.querySelectorAll('.accordion-content').forEach(c => {
+        c.classList.remove('show');
+      });
+      document.querySelectorAll('.accordion-button').forEach(b => {
+        b.classList.remove('open');
+      });
 
-			// Close other accordions in the same section
-			const section = button.closest('section');
-			if (section) {
-				section.querySelectorAll('.accordion-button.open').forEach(otherBtn => {
-					if (otherBtn !== button) {
-						otherBtn.classList.remove('open');
-						otherBtn.nextElementSibling.classList.remove('open');
-					}
-				});
-			}
-
-			// Toggle current accordion
-			button.classList.toggle('open');
-			content.classList.toggle('open');
-		});
-	});
-
-	// Back to top button
-	const backToTopBtn = document.getElementById('backToTop');
-	window.addEventListener('scroll', () => {
-		if (window.scrollY > 300) {
-			backToTopBtn.classList.add('show');
-		} else {
-			backToTopBtn.classList.remove('show');
-		}
-	});
-	backToTopBtn.addEventListener('click', () => {
-		window.scrollTo({ top: 0, behavior: 'smooth' });
-	});
-
-	// Mobile menu
-	const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-	const mobileMenu = document.getElementById('mobileMenu');
-	if (mobileMenuBtn) {
-		mobileMenuBtn.addEventListener('click', () => {
-			mobileMenu.classList.toggle('open');
-		});
-		mobileMenu.querySelectorAll('a').forEach(link => {
-			link.addEventListener('click', () => {
-				mobileMenu.classList.remove('open');
-			});
-		});
-	}
-
-	// Search functionality
-	const searchInput = document.getElementById('searchInput');
-	const sections = document.querySelectorAll('section[id]');
-
-	if (searchInput) {
-		searchInput.addEventListener('input', (e) => {
-			const query = e.target.value.toLowerCase();
-			sections.forEach(section => {
-				const text = section.textContent.toLowerCase();
-				section.style.display = text.includes(query) ? 'block' : 'none';
-			});
-		});
-	}
-});
+      if (!isOpen) {
+        content.classList.add('show');
+        button.classList.add('open');
+      }
+    });
+  });
 </script>
-
-
-</body>
-</html>

@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
+import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 
 const title = "Privacy Policy - Basalio";
 const description = "Privacy Policy for Basalio. Applies to basalio.so and the Basalio plugin dashboard.";
@@ -12,11 +13,12 @@ const description = "Privacy Policy for Basalio. Applies to basalio.so and the B
     <RampHeader />
   </Fragment>
 
-  <section class="privacy-header">
-    <div class="privacy-container">
-      <p class="privacy-eyebrow">Legal</p>
-      <h1 class="privacy-heading">Privacy Policy</h1>
-      <p class="privacy-effective">Effective July 9, 2026. Applies to basalio.so and the Basalio plugin dashboard.</p>
+  <HeaderSplit
+    eyebrow="Legal"
+    heading="Privacy Policy"
+    body="Effective July 9, 2026. Applies to basalio.so and the Basalio plugin dashboard."
+    surface="alt"
+  >
 
       <div class="privacy-scope">
         <span class="scope-label">Scope</span>
@@ -30,8 +32,7 @@ const description = "Privacy Policy for Basalio. Applies to basalio.so and the B
         <a href="#thirdparty" class="privacy-nav-link">Third parties</a>
         <a href="#rights" class="privacy-nav-link">Your rights</a>
       </div>
-    </div>
-  </section>
+  </HeaderSplit>
 
   <section class="privacy-content">
     <div class="privacy-container">
@@ -111,46 +112,16 @@ const description = "Privacy Policy for Basalio. Applies to basalio.so and the B
 </BaseLayout>
 
 <style>
-  .privacy-header {
-    background: var(--surface-ink);
-    padding: 220px 32px 40px;
-  }
-
   .privacy-container {
     max-width: 760px;
     margin: 0 auto;
   }
 
-  .privacy-eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-on-ink-muted);
-    margin: 0 0 16px 0;
-  }
-
-  .privacy-heading {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
-    font-size: clamp(30px, 4vw, 44px);
-    margin: 0 0 12px 0;
-    color: var(--text-on-ink);
-  }
-
-  .privacy-effective {
-    color: var(--text-on-ink-muted);
-    font-size: 14px;
-    margin: 0 0 24px 0;
-  }
-
   .privacy-scope {
     display: flex;
     gap: 14px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     padding: 16px 18px;
     margin-bottom: 24px;
@@ -161,8 +132,8 @@ const description = "Privacy Policy for Basalio. Applies to basalio.so and the B
     font-size: 11px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--text-on-ink-muted);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-on-paper-muted);
+    border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 999px;
     padding: 3px 10px;
     flex-shrink: 0;
@@ -170,7 +141,7 @@ const description = "Privacy Policy for Basalio. Applies to basalio.so and the B
 
   .scope-text {
     font-size: 13.5px;
-    color: var(--text-on-ink-muted);
+    color: var(--text-on-paper-muted);
     margin: 0;
   }
 
@@ -183,8 +154,8 @@ const description = "Privacy Policy for Basalio. Applies to basalio.so and the B
   .privacy-nav-link {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
-    color: var(--text-on-ink-muted);
-    border: 1px solid var(--border-on-ink);
+    color: var(--text-on-paper-muted);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 999px;
     padding: 6px 14px;
     transition: border-color 0.15s ease, color 0.15s ease;
@@ -193,12 +164,12 @@ const description = "Privacy Policy for Basalio. Applies to basalio.so and the B
 
   .privacy-nav-link:hover {
     border-color: var(--acid);
-    color: var(--text-on-ink);
+    color: var(--text-on-paper);
   }
 
   .privacy-content {
-    background: var(--surface-ink);
-    padding: 24px 32px 80px;
+    background: var(--surface-paper);
+    padding: 40px;
   }
 
   .privacy-section {
@@ -206,33 +177,33 @@ const description = "Privacy Policy for Basalio. Applies to basalio.so and the B
   }
 
   .privacy-section:first-child {
-    padding-top: 24px;
+    padding-top: 0;
   }
 
   .section-number {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
-    color: var(--text-on-ink-muted);
+    color: var(--text-on-paper-muted);
     margin: 0 0 8px 0;
   }
 
   .section-heading {
-    font-family: 'Space Grotesk', sans-serif;
     font-weight: 600;
-    font-size: 22px;
+    font-size: 20px;
     margin: 0 0 14px 0;
-    color: var(--text-on-ink);
+    color: var(--text-on-paper);
+    line-height: 1.4;
   }
 
   .section-text {
-    color: var(--text-on-ink-muted);
+    color: var(--text-on-paper-muted);
     font-size: 15px;
     line-height: 1.7;
     margin: 0 0 12px 0;
   }
 
   .section-list {
-    color: var(--text-on-ink-muted);
+    color: var(--text-on-paper-muted);
     font-size: 15px;
     line-height: 1.7;
     margin: 0 0 16px 0;
@@ -249,24 +220,22 @@ const description = "Privacy Policy for Basalio. Applies to basalio.so and the B
   }
 
   .section-list a:hover {
-    color: var(--text-on-ink);
+    color: var(--text-on-paper);
   }
 
-  @media (max-width: 768px) {
-    .privacy-header {
-      padding: 100px 20px 30px;
-    }
-
+  @media (max-width: 1024px) {
     .privacy-content {
-      padding: 24px 20px 50px;
+      padding: 30px;
     }
+  }
 
-    .privacy-heading {
-      font-size: clamp(26px, 3.6vw, 38px);
+  @media (max-width: 640px) {
+    .privacy-content {
+      padding: 20px;
     }
 
     .section-heading {
-      font-size: 18px;
+      font-size: 16px;
     }
   }
 </style>

@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
+import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 
 const title = "Terms of Service - Basalio";
 const description = "Basalio Terms of Service. Legal terms for using the WordPress plugin and blocks.";
@@ -12,13 +13,12 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
     <RampHeader />
   </Fragment>
 
-  <section class="terms-header">
-    <div class="terms-container">
-      <p class="terms-eyebrow">Legal</p>
-      <h1 class="terms-heading">Terms of Service</h1>
-      <p class="terms-effective">Last updated: July 2026</p>
-    </div>
-  </section>
+  <HeaderSplit
+    eyebrow="Legal"
+    heading="Terms of Service"
+    body="Last updated: July 2026"
+    surface="alt"
+  />
 
   <section class="terms-content">
     <div class="terms-container">
@@ -88,44 +88,14 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
 </BaseLayout>
 
 <style>
-  .terms-header {
-    background: var(--surface-ink);
-    padding: 220px 32px 40px;
-  }
-
   .terms-container {
     max-width: 760px;
     margin: 0 auto;
   }
 
-  .terms-eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-on-ink-muted);
-    margin: 0 0 16px 0;
-  }
-
-  .terms-heading {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
-    font-size: clamp(30px, 4vw, 44px);
-    margin: 0 0 12px 0;
-    color: var(--text-on-ink);
-  }
-
-  .terms-effective {
-    color: var(--text-on-ink-muted);
-    font-size: 14px;
-    margin: 0;
-  }
-
   .terms-content {
-    background: var(--surface-ink);
-    padding: 60px 32px 80px;
+    background: var(--surface-paper);
+    padding: 60px 40px 80px;
   }
 
   .terms-section {
@@ -137,22 +107,22 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
   }
 
   .section-heading {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 600;
     font-size: 20px;
-    margin: 0 0 12px 0;
-    color: var(--text-on-ink);
+    font-weight: 600;
+    margin: 0 0 16px 0;
+    color: var(--text-on-paper);
+    line-height: 1.4;
   }
 
   .section-text {
-    color: var(--text-on-ink-muted);
+    color: var(--text-on-paper-muted);
     font-size: 15px;
     line-height: 1.7;
     margin: 0 0 12px 0;
   }
 
   .section-list {
-    color: var(--text-on-ink-muted);
+    color: var(--text-on-paper-muted);
     font-size: 15px;
     line-height: 1.7;
     margin: 0 0 12px 0;
@@ -170,20 +140,18 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
   }
 
   .terms-link:hover {
-    color: var(--text-on-ink);
+    color: var(--text-on-paper);
   }
 
-  @media (max-width: 768px) {
-    .terms-header {
-      padding: 100px 20px 30px;
-    }
-
+  @media (max-width: 1024px) {
     .terms-content {
-      padding: 40px 20px 50px;
+      padding: 40px 30px 60px;
     }
+  }
 
-    .terms-heading {
-      font-size: clamp(26px, 3.6vw, 38px);
+  @media (max-width: 640px) {
+    .terms-content {
+      padding: 30px 20px 50px;
     }
 
     .section-heading {

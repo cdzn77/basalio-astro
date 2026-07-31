@@ -215,12 +215,14 @@ const description = "Privacy Policy for Basalio. Applies to basalio.so and the B
   }
 
   .section-list a {
-    color: var(--acid);
-    text-decoration: none;
+    color: var(--text-on-paper);
+    text-decoration: underline;
+    text-decoration-color: var(--acid);
+    transition: text-decoration-thickness 0.2s ease;
   }
 
   .section-list a:hover {
-    color: var(--text-on-paper);
+    text-decoration-thickness: 2px;
   }
 
   @media (max-width: 1024px) {

@@ -134,13 +134,14 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
   }
 
   .terms-link {
-    color: var(--acid);
-    text-decoration: none;
-    transition: color 0.2s ease;
+    color: var(--text-on-paper);
+    text-decoration: underline;
+    text-decoration-color: var(--acid);
+    transition: text-decoration-thickness 0.2s ease;
   }
 
   .terms-link:hover {
-    color: var(--text-on-paper);
+    text-decoration-thickness: 2px;
   }
 
   @media (max-width: 1024px) {

@@ -167,15 +167,17 @@ p {
   line-height: var(--line-height-relaxed);
 }
 
-/* Links */
+/* Links – paper surface (default) */
 a {
   color: var(--text-on-paper);
-  text-decoration: none;
-  transition: var(--transition-color-fast);
+  text-decoration: underline;
+  text-decoration-color: var(--acid);
+  text-underline-offset: 3px;
+  transition: text-decoration-thickness 0.2s ease;
 }
 
 a:hover {
-  color: var(--acid);
+  text-decoration-thickness: 2px;
 }
 
 a:visited {
@@ -186,6 +188,23 @@ a:focus-visible {
   outline: 2px solid var(--acid);
   outline-offset: 2px;
   border-radius: var(--radius-4);
+}
+
+/* Links – ink surface */
+.surface-ink a {
+  color: var(--text-on-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--acid);
+  text-underline-offset: 3px;
+  transition: text-decoration-thickness 0.2s ease;
+}
+
+.surface-ink a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.surface-ink a:visited {
+  color: var(--text-on-ink);
 }
 
 /* Lists */

@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
-import Accordion from '../components/patterns/Accordion.astro';
 
 const title = "Support & Help Center - Basalio";
 const description = "Basalio support documentation, FAQs, and troubleshooting guides for WordPress portfolio blocks.";
@@ -61,13 +60,39 @@ const faqs = [
     </div>
   </HeaderSplit>
 
-  <!-- FAQ: Accordion disclosure widget -->
-  <Accordion
-    eyebrow="QUESTIONS"
-    title="Frequently Asked Questions"
-    items={faqs}
-    surface="paper"
-  />
+  <!-- FAQ: 35/65 grid with questions in left rail, accordion items in right column -->
+  <section class="faq-section">
+    <div class="faq-inner">
+      <div class="faq-left">
+        <p class="faq-eyebrow">QUESTIONS</p>
+        <h2 class="faq-title">Frequently Asked Questions</h2>
+      </div>
+      <div class="faq-right">
+        <div class="accordion-list">
+          {faqs.map((item, index) => (
+            <div class="accordion-item" id={`accordion-item-${index}`}>
+              <button
+                id={`accordion-button-${index}`}
+                aria-expanded="false"
+                aria-controls={`accordion-item-${index}-panel`}
+                class="accordion-button"
+              >
+                <span class="accordion-question">{item.question}</span>
+                <span class="accordion-icon" aria-hidden="true">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor">
+                    <path fill-rule="evenodd" d="M 8 2 A 0.5 0.5 0 0 1 8.5 2.5 V 7.5 H 13.5 A 0.5 0.5 0 0 1 13.5 8.5 H 8.5 V 13.5 A 0.5 0.5 0 0 1 7.5 13.5 V 8.5 H 2.5 A 0.5 0.5 0 0 1 2.5 7.5 H 7.5 V 2.5 A 0.5 0.5 0 0 1 8 2"/>
+                  </svg>
+                </span>
+              </button>
+              <div id={`accordion-item-${index}-panel`} role="region" aria-labelledby={`accordion-button-${index}`} class="accordion-panel" hidden>
+                <p class="accordion-answer">{item.answer}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- CONTACT: Still need help section -->
   <section class="support-contact">
@@ -83,6 +108,146 @@ const faqs = [
 </BaseLayout>
 
 <style>
+  /* FAQ SECTION: 35/65 grid layout with questions in left rail */
+  .faq-section {
+    width: 100%;
+    padding: 60px 40px;
+    box-sizing: border-box;
+    background: var(--surface-paper);
+  }
+
+  .faq-inner {
+    display: grid;
+    grid-template-columns: 35% 65%;
+    gap: 60px;
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    align-items: flex-start;
+  }
+
+  .faq-left {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .faq-eyebrow {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    color: var(--text-on-paper);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+
+  .faq-title {
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 48px;
+    letter-spacing: -0.8px;
+    color: var(--text-on-paper);
+    margin: 0;
+    padding: 0;
+  }
+
+  .faq-right {
+    min-width: 0;
+  }
+
+  .accordion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .accordion-item {
+    width: 100%;
+  }
+
+  .accordion-button {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    font-family: inherit;
+  }
+
+  .accordion-button:hover {
+    border-color: var(--acid);
+  }
+
+  .accordion-button:focus-visible {
+    outline: 3px solid var(--acid);
+    outline-offset: 2px;
+  }
+
+  .accordion-question {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 25.2px;
+    letter-spacing: -0.36px;
+    color: var(--text-on-paper);
+    flex-grow: 1;
+    margin: 0;
+  }
+
+  .accordion-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+    color: var(--text-on-paper-muted);
+    transition: transform 0.3s ease, color 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .accordion-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .accordion-button[aria-expanded="true"] .accordion-icon {
+    transform: rotate(45deg);
+    color: var(--acid);
+  }
+
+  .accordion-panel {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .accordion-panel[hidden] {
+    display: none;
+  }
+
+  .accordion-answer {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+    padding: 20px 20px 20px 20px;
+    background: transparent;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
   .support-container {
     max-width: 760px;
     margin: 0 auto;
@@ -179,3 +344,28 @@ const faqs = [
     }
   }
 </style>
+
+<script>
+  document.querySelectorAll('.accordion-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      const panelId = button.getAttribute('aria-controls');
+      const panel = document.getElementById(panelId);
+
+      if (isExpanded) {
+        button.setAttribute('aria-expanded', 'false');
+        panel.hidden = true;
+      } else {
+        button.setAttribute('aria-expanded', 'true');
+        panel.hidden = false;
+      }
+    });
+
+    button.addEventListener('keydown', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') {
+        e.preventDefault();
+        button.click();
+      }
+    });
+  });
+</script>

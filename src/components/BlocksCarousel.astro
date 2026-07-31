@@ -181,7 +181,7 @@ const {
     width: 70px;
     height: 70px;
     border-radius: 8px;
-    background: #FFFFFF;
+    background: var(--surface-paper);
     color: var(--text-on-paper);
     border: 1px solid var(--surface-alt);
     cursor: pointer;
@@ -199,9 +199,9 @@ const {
   }
 
   .carousel-button:hover:not(:disabled) {
-    background: #1C1917;
-    color: #FFFFFF;
-    border-color: #1C1917;
+    background: var(--surface-ink);
+    color: var(--surface-paper);
+    border-color: var(--surface-ink);
   }
 
   /* RIGHT COLUMN: Carousel (1109px wide, or fill remaining space) */
@@ -259,7 +259,7 @@ const {
   .course-card {
     flex: 0 0 500px;
     height: 571px;
-    background: #DFFF00;
+    background: var(--acid);
     border-radius: 6px;
     padding: 40px;
     display: flex;
@@ -274,7 +274,7 @@ const {
   .course-image-wrapper {
     width: 100%;
     flex: 1;
-    background: #1C1917;
+    background: var(--surface-ink);
     border-radius: 8px;
     overflow: hidden;
     display: flex;
@@ -303,7 +303,7 @@ const {
     letter-spacing: 2.8px;
     line-height: 19.6px;
     text-transform: uppercase;
-    color: #1C1917;
+    color: var(--text-on-acid);
     margin: 0;
     background-color: rgba(0, 0, 0, 0);
     text-align: left;
@@ -317,7 +317,7 @@ const {
     font-size: 14px;
     font-weight: 400;
     line-height: 19.6px;
-    color: #1C1917;
+    color: var(--text-on-acid);
     margin: 0;
     background-color: rgba(0, 0, 0, 0);
     text-align: left;

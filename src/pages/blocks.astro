@@ -6,6 +6,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampTestimonialsV2 from '../components/RampTestimonialsV2.astro';
 import RampFooter from '../components/RampFooter.astro';
+import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 
 const title = "Blocks - Basalio";
 const description = "Nine curated interaction blocks built for WordPress portfolios. Grid reveals, case study transitions, scroll sequences, and more.";
@@ -77,25 +78,22 @@ const descriptionWords = description.split(' ');
     <RampHeader />
   </Fragment>
 
-  <!-- HERO SECTION: Left sidebar (dot + label) + Right (description) -->
-  <section class="courses-hero">
-    <!-- LEFT SIDEBAR: Dot indicator + "OUR BLOCKS" label (was "OUR COURSES") -->
-    <div class="hero-left">
-      <div class="dot-indicator" aria-hidden="true"></div>
-      <p class="courses-label">OUR BLOCKS</p>
-    </div>
-
-    <!-- RIGHT: Description with per-word spans -->
-    <div class="hero-right">
-      <p class="hero-description">
-        {descriptionWords.map((word, index) => (
-          <span key={index} class="word-span" style={`--word-index: ${index}`}>
-            {word}
-          </span>
-        ))}
-      </p>
-    </div>
-  </section>
+  <!-- HERO SECTION: HeaderSplit pattern with eyebrow, headline, and description in right column -->
+  <HeaderSplit
+    eyebrow="OUR BLOCKS"
+    heading="Nine blocks. Nothing you don't need."
+    body={description}
+    surface="paper"
+  >
+    <!-- RIGHT SLOT: Description with per-word animation -->
+    <p class="hero-description">
+      {descriptionWords.map((word, index) => (
+        <span key={index} class="word-span" style={`--word-index: ${index}`}>
+          {word}
+        </span>
+      ))}
+    </p>
+  </HeaderSplit>
 
   <!-- BLOCKS GRID -->
   <section class="courses-grid-section">
@@ -149,78 +147,13 @@ const descriptionWords = description.split(' ');
 </BaseLayout>
 
 <style>
-  /* HERO SECTION: 2-column layout (35% left + 65% right) */
-  .courses-hero {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 120px 40px;
-    padding-top: 120px;
-    background: var(--surface-paper);
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    gap: 40px;
-    margin: 0 auto;
-    margin-top: 0;
-  }
-
-  /* LEFT SIDEBAR: Dot indicator + "OUR BLOCKS" label (28%) */
-  .hero-left {
-    flex: 0 1 28%;
-    max-width: 28%;
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    align-items: flex-start;
-    padding-right: 40px;
-  }
-
-  .dot-indicator {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: var(--acid);
-    flex: 0 0 auto;
-    opacity: 0;
-    transform: scale(0.5);
-    animation: dotIndicatorIn 0.6s ease-out forwards;
-  }
-
-  @keyframes dotIndicatorIn {
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  .courses-label {
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-  }
-
-  /* RIGHT: Description (65%) */
-  .hero-right {
-    flex: 0 1 65%;
-    max-width: 65%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    min-width: 0;
-  }
-
+  /* HERO DESCRIPTION: Right slot content in HeaderSplit (animates on page load) */
   .hero-description {
-    font-size: 48px;
+    font-size: 18px;
     font-weight: 400;
-    line-height: 1.2;
+    line-height: 1.5;
     letter-spacing: -0.01em;
-    color: var(--text-on-paper);
+    color: var(--text-on-paper-muted);
     margin: 0;
     padding: 0;
     width: 100%;
@@ -233,7 +166,6 @@ const descriptionWords = description.split(' ');
     margin-right: 0.3em;
     opacity: 0;
     filter: blur(8px);
-    /* Staggered animation: ~60-80ms per word (FLAGGED AS ESTIMATE - verify against live source) */
     animation: wordBlurIn 0.8s ease-out forwards;
     animation-delay: calc(var(--word-index) * 70ms);
   }
@@ -245,12 +177,13 @@ const descriptionWords = description.split(' ');
     }
   }
 
-  /* BLOCKS GRID SECTION: Full width container, content stays in right 65% */
+  /* BLOCKS GRID SECTION: Full width container, content centered via HeaderSplit layout above */
   .courses-grid-section {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 80px 40px;
+    padding-left: calc(35% + 40px);
     background: var(--surface-paper);
     width: 100%;
     max-width: 1792px;
@@ -258,9 +191,6 @@ const descriptionWords = description.split(' ');
     gap: 80px;
     overflow-x: hidden;
     margin: 0 auto;
-    margin-left: auto;
-    margin-right: 0;
-    padding-left: calc(35% + 40px);
   }
 
   /* BLOCKS GRID: 2 columns, full width of right container */

@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
+import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 
 const title = "Early Access - Basalio";
 const description = "Get on the Basalio founder list. Nine blocks in testing, Pro control center in planning.";
@@ -12,19 +13,14 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
     <RampHeader />
   </Fragment>
 
-  <section class="early-access-section">
-    <div class="early-access-inner">
-      <!-- LEFT (35%): Copy -->
-      <div class="early-access-left">
-        <p class="early-access-eyebrow">EARLY ACCESS</p>
-        <h1 class="early-access-heading">Get on the list.</h1>
-        <p class="early-access-body">
-          Basalio isn't on WordPress.org yet. The nine blocks are built and in testing; the Pro control center isn't started. When the free plugin lands, you'll be the first to know. If you want a founder license, say so below — the first 100 are $149, one payment, and the price goes up after that.
-        </p>
-      </div>
-
-      <!-- RIGHT (65%): Form -->
-      <div class="early-access-right">
+  <!-- EARLY ACCESS: HeaderSplit with form in right slot -->
+  <HeaderSplit
+    eyebrow="EARLY ACCESS"
+    heading="Get on the list."
+    body="Basalio isn't on WordPress.org yet. The nine blocks are built and in testing; the Pro control center isn't started. When the free plugin lands, you'll be the first to know. If you want a founder license, say so below — the first 100 are $149, one payment, and the price goes up after that."
+    surface="paper"
+  >
+    <div class="early-access-form-wrapper">
         <form name="early-access" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="early-access-form">
           <!-- Netlify form detection -->
           <input type="hidden" name="form-name" value="early-access" />
@@ -94,9 +90,8 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
           <p class="success-heading">You're on the list.</p>
           <p class="success-body">I'll email you when the plugin ships.</p>
         </div>
-      </div>
     </div>
-  </section>
+  </HeaderSplit>
 
   <Fragment slot="footer">
     <RampFooter hideNewsletter={true} />
@@ -105,71 +100,8 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
 
 
 <style>
-  .early-access-section {
+  .early-access-form-wrapper {
     width: 100%;
-    background: var(--surface-paper);
-    padding: 80px 40px;
-    box-sizing: border-box;
-    border-radius: 0 0 40px 40px;
-    margin-bottom: -40px;
-    padding-bottom: 200px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .early-access-inner {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    max-width: 1786px;
-    margin: 0 auto;
-    gap: 60px;
-    box-sizing: border-box;
-  }
-
-  .early-access-left {
-    flex: 0 1 28%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .early-access-eyebrow {
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 2.8px;
-    text-transform: uppercase;
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-  }
-
-  .early-access-heading {
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 48px;
-    letter-spacing: -0.8px;
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-  }
-
-  .early-access-body {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    color: var(--text-on-paper-muted);
-    margin: 0;
-    padding: 0;
-  }
-
-  .early-access-right {
-    flex: 1;
-    width: 100%;
-    min-width: 0;
   }
 
   .early-access-form {

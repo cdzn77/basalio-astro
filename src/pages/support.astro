@@ -393,7 +393,7 @@
 				<div style="display:inline-block;background:#DFFF00;color:#17171A;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;padding:4px 10px;border-radius:3px;margin-bottom:16px;">HACK</div>
 				<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin:0 0 12px;color:#F6F4EF;">Turn off one module on a single page</h3>
 				<p style="color:#D4CABE;font-size:14px;margin:0 0 16px;">Drop this in a site-specific plugin, not functions.php, so it survives a theme switch.</p>
-				<code style="font-family:'IBM Plex Mono',monospace;font-size:12px;display:block;background:#1C1917;padding:12px;border-radius:4px;color:#DFFF00;overflow-x:auto;">add_filter('basalio/modules/enabled', function($m){<br/>  unset($m['cursor']);<br/>  return $m;<br/>});</code>
+				<code style="font-family:'IBM Plex Mono',monospace;font-size:12px;display:block;background:#1C1917;padding:12px;border-radius:4px;color:#DFFF00;overflow-x:auto;">add_filter('basalio/blocks/enabled', function($m){<br/>  unset($m['cursor']);<br/>  return $m;<br/>});</code>
 			</div>
 
 			<div style="background:#26221E;border:1px solid #3A352E;border-radius:8px;padding:24px;">

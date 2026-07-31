@@ -2,9 +2,55 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
+import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 
 const title = "Roadmap - Basalio";
 const description = "Basalio development roadmap. See what's coming next for the nine interaction blocks.";
+
+const roadmapItems = [
+  {
+    status: 'IN TESTING',
+    title: 'Nine Core Blocks',
+    date: 'June 2026',
+    description: 'Grid Reveal, Case Study Transition, Text Reveal, Magnetic Button, Before/After, Filterable Grid, Custom Cursor, Scroll Sequence, Pinned Scroll. Built and in testing. Shipping free forever on WordPress.org when submission completes.'
+  },
+  {
+    status: 'SHIPPED',
+    title: 'Free Hacks Vault',
+    date: 'June 2026',
+    description: 'Four free CSS/JS snippets. Reveal on Scroll, Color Peek, Tilt Effect, Typewriter Text. Copy-paste into any site.'
+  },
+  {
+    status: 'NOT STARTED',
+    title: 'Pro Control Center',
+    date: 'February 2027',
+    description: 'Editor sidebar for live-tuning every block. Adjust timing, easing, colors, and behavior without leaving WordPress. Target ship date: February 2027. Launch date is a hard commitment.'
+  },
+  {
+    status: 'IN PROGRESS',
+    title: 'Full Hacks Vault (12+)',
+    date: 'Q2 2027',
+    description: '12+ CSS/JS effects. Refraction, Glitch, 3D Flip, Hover Trail, and more. Four available now. The full vault grows post-launch. Open-source, free to copy-paste.'
+  },
+  {
+    status: 'PLANNED',
+    title: 'Block Pack #2',
+    date: 'Q3 2027',
+    description: 'Five new blocks. Parallax Reveal, Stagger Load, Morphing Button, Video Timeline, Infinite Carousel. Free forever on WordPress.org.'
+  },
+  {
+    status: 'PLANNED',
+    title: 'Design System Template',
+    date: 'Q4 2027',
+    description: 'Pre-made design tokens library. Colors, typography, spacing, animations. Download, customize for your brand, apply to all blocks at once.'
+  },
+  {
+    status: 'IN REVIEW',
+    title: 'WordPress.org Listing',
+    date: 'Post-launch',
+    description: 'Official WordPress plugin directory. Submission planned after launch. Makes discovery and updates simpler.'
+  }
+];
 ---
 
 <BaseLayout {title} {description}>
@@ -12,67 +58,33 @@ const description = "Basalio development roadmap. See what's coming next for the
     <RampHeader />
   </Fragment>
 
-  <section class="roadmap-header">
-    <div class="roadmap-container">
-      <p class="roadmap-eyebrow">Coming Soon</p>
-      <h1 class="roadmap-heading">Roadmap</h1>
-      <p class="roadmap-subheading">Here's what we're building next. Priorities can shift, but we ship what we promise.</p>
-    </div>
-  </section>
+  <!-- HERO: Light background header with eyebrow, heading, body -->
+  <HeaderSplit
+    eyebrow="Coming Soon"
+    heading="Roadmap"
+    body="Here's what we're building next. Priorities can shift, but we ship what we promise."
+    surface="alt"
+  />
 
+  <!-- TIMELINE: Roadmap items on light background -->
   <section class="roadmap-content">
     <div class="roadmap-container">
-      <div class="roadmap-item">
-        <div class="roadmap-marker roadmap-in-progress">IN TESTING</div>
-        <h2 class="roadmap-item-title">Nine Core Blocks</h2>
-        <p class="roadmap-item-date">June 2026</p>
-        <p class="roadmap-item-description">Grid Reveal, Case Study Transition, Text Reveal, Magnetic Button, Before/After, Filterable Grid, Custom Cursor, Scroll Sequence, Pinned Scroll. Built and in testing. Shipping free forever on WordPress.org when submission completes.</p>
-      </div>
-
-      <div class="roadmap-item">
-        <div class="roadmap-marker roadmap-shipped">SHIPPED</div>
-        <h2 class="roadmap-item-title">Free Hacks Vault</h2>
-        <p class="roadmap-item-date">June 2026</p>
-        <p class="roadmap-item-description">Four free CSS/JS snippets. Reveal on Scroll, Color Peek, Tilt Effect, Typewriter Text. Copy-paste into any site.</p>
-      </div>
-
-      <div class="roadmap-item">
-        <div class="roadmap-marker roadmap-planned">NOT STARTED</div>
-        <h2 class="roadmap-item-title">Pro Control Center</h2>
-        <p class="roadmap-item-date">February 2027</p>
-        <p class="roadmap-item-description">Editor sidebar for live-tuning every block. Adjust timing, easing, colors, and behavior without leaving WordPress. Target ship date: February 2027. Launch date is a hard commitment.</p>
-      </div>
-
-      <div class="roadmap-item">
-        <div class="roadmap-marker roadmap-in-progress">IN PROGRESS</div>
-        <h2 class="roadmap-item-title">Full Hacks Vault (12+)</h2>
-        <p class="roadmap-item-date">Q2 2027</p>
-        <p class="roadmap-item-description">12+ CSS/JS effects. Refraction, Glitch, 3D Flip, Hover Trail, and more. Four available now. The full vault grows post-launch. Open-source, free to copy-paste.</p>
-      </div>
-
-      <div class="roadmap-item">
-        <div class="roadmap-marker roadmap-planned">PLANNED</div>
-        <h2 class="roadmap-item-title">Block Pack #2</h2>
-        <p class="roadmap-item-date">Q3 2027</p>
-        <p class="roadmap-item-description">Five new blocks. Parallax Reveal, Stagger Load, Morphing Button, Video Timeline, Infinite Carousel. Free forever on WordPress.org.</p>
-      </div>
-
-      <div class="roadmap-item">
-        <div class="roadmap-marker roadmap-planned">PLANNED</div>
-        <h2 class="roadmap-item-title">Design System Template</h2>
-        <p class="roadmap-item-date">Q4 2027</p>
-        <p class="roadmap-item-description">Pre-made design tokens library. Colors, typography, spacing, animations. Download, customize for your brand, apply to all blocks at once.</p>
-      </div>
-
-      <div class="roadmap-item">
-        <div class="roadmap-marker roadmap-in-review">IN REVIEW</div>
-        <h2 class="roadmap-item-title">WordPress.org Listing</h2>
-        <p class="roadmap-item-date">Post-launch</p>
-        <p class="roadmap-item-description">Official WordPress plugin directory. Submission planned after launch. Makes discovery and updates simpler.</p>
-      </div>
+      {roadmapItems.map((item) => (
+        <div class="roadmap-item">
+          <div class={`roadmap-marker roadmap-${item.status.toLowerCase().replace(/\s+/g, '-')}`}>
+            {item.status}
+          </div>
+          <div class="roadmap-item-content">
+            <h2 class="roadmap-item-title">{item.title}</h2>
+            <p class="roadmap-item-date">{item.date}</p>
+            <p class="roadmap-item-description">{item.description}</p>
+          </div>
+        </div>
+      ))}
     </div>
   </section>
 
+  <!-- NOTES: Explanatory text on light background -->
   <section class="roadmap-notes">
     <div class="roadmap-container">
       <h2 class="notes-heading">Notes</h2>
@@ -92,52 +104,26 @@ const description = "Basalio development roadmap. See what's coming next for the
 </BaseLayout>
 
 <style>
-  .roadmap-header {
-    background: var(--surface-ink);
-    padding: 120px 32px 60px;
-  }
-
   .roadmap-container {
     max-width: 760px;
     margin: 0 auto;
   }
 
-  .roadmap-eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-on-ink-muted);
-    margin: 0 0 16px 0;
-  }
-
-  .roadmap-heading {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    font-size: clamp(30px, 4vw, 44px);
-    margin: 0 0 12px 0;
-    color: var(--text-on-ink);
-  }
-
-  .roadmap-subheading {
-    color: var(--text-on-ink-muted);
-    font-size: 16px;
-    margin: 0;
-  }
-
   .roadmap-content {
-    background: var(--surface-ink);
-    padding: 60px 32px;
+    background: var(--surface-paper);
+    padding: 60px 40px;
   }
 
   .roadmap-item {
-    padding: 40px 0;
-    border-bottom: 1px solid var(--border-on-ink);
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   }
 
   .roadmap-item:last-child {
     border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
 
   .roadmap-marker {
@@ -146,7 +132,7 @@ const description = "Basalio development roadmap. See what's coming next for the
     font-size: 11px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    padding: 4px 10px;
+    padding: 5px 10px;
     border-radius: 4px;
     margin-bottom: 12px;
     font-weight: 600;
@@ -160,8 +146,8 @@ const description = "Basalio development roadmap. See what's coming next for the
 
   .roadmap-in-progress {
     background: transparent;
-    color: var(--text-on-ink);
-    border: 1px solid var(--text-on-ink);
+    color: var(--text-on-paper);
+    border: 1px solid rgba(0, 0, 0, 0.2);
   }
 
   .roadmap-planned {
@@ -170,72 +156,102 @@ const description = "Basalio development roadmap. See what's coming next for the
     border: none;
   }
 
+  .roadmap-in-review {
+    background: transparent;
+    color: var(--text-on-paper);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  .roadmap-not-started {
+    background: transparent;
+    color: var(--text-on-paper);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+
+  .roadmap-item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
   .roadmap-item-title {
-    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
     font-weight: 600;
-    font-size: 22px;
-    margin: 0 0 8px 0;
-    color: var(--text-on-ink);
+    margin: 0;
+    color: var(--text-on-paper);
   }
 
   .roadmap-item-date {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
-    color: var(--text-on-ink-muted);
-    margin: 0 0 12px 0;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   .roadmap-item-description {
-    color: var(--text-on-ink-muted);
+    color: var(--text-on-paper-muted);
     font-size: 15px;
     line-height: 1.7;
     margin: 0;
   }
 
   .roadmap-notes {
-    background: var(--surface-ink);
-    padding: 60px 32px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--surface-paper);
+    padding: 60px 40px;
   }
 
   .notes-heading {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 28px;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 48px;
+    letter-spacing: -0.8px;
     margin: 0 0 24px 0;
-    color: var(--text-on-ink);
+    color: var(--text-on-paper);
   }
 
   .notes-list {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
   }
 
   .notes-list li {
-    color: var(--text-on-ink-muted);
+    color: var(--text-on-paper-muted);
     font-size: 15px;
     line-height: 1.7;
-    margin-bottom: 16px;
-    padding-left: 0;
+    margin: 0;
   }
 
   .notes-list li strong {
-    color: var(--text-on-ink);
+    color: var(--text-on-paper);
   }
 
-  @media (max-width: 768px) {
-    .roadmap-header {
-      padding: 80px 20px 40px;
-    }
-
+  @media (max-width: 1024px) {
     .roadmap-content,
     .roadmap-notes {
-      padding: 40px 20px;
+      padding: 40px 30px;
     }
 
-    .roadmap-heading {
-      font-size: clamp(26px, 3.6vw, 38px);
+    .notes-heading {
+      font-size: 32px;
+      line-height: 40px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .roadmap-content,
+    .roadmap-notes {
+      padding: 30px 20px;
+    }
+
+    .roadmap-item {
+      padding-bottom: 30px;
+      margin-bottom: 30px;
     }
 
     .roadmap-item-title {
@@ -243,7 +259,8 @@ const description = "Basalio development roadmap. See what's coming next for the
     }
 
     .notes-heading {
-      font-size: 22px;
+      font-size: 24px;
+      line-height: 32px;
     }
   }
 </style>

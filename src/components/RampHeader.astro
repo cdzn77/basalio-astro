@@ -100,8 +100,8 @@ interface Props {}
   }
 
   .menu-btn {
-    background: #1C1917;
-    color: #FFFFFF;
+    background: var(--surface-ink);
+    color: var(--surface-paper);
     border: none;
     padding: 0px 16px;
     border-radius: 6px;
@@ -137,7 +137,7 @@ interface Props {}
     right: 0;
     width: 182px;
     height: auto;
-    background: #1C1917;
+    background: var(--surface-ink);
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 20px 0px;
@@ -180,7 +180,7 @@ interface Props {}
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: #FFFFFF;
+    color: var(--surface-paper);
     text-decoration: none;
     cursor: pointer;
     box-sizing: border-box;
@@ -189,7 +189,7 @@ interface Props {}
   }
 
   .menu-item:hover {
-    color: #DFFF00;
+    color: var(--acid);
   }
 
   @media (max-width: 768px) {

@@ -10,6 +10,7 @@ import BlocksCarousel from '../components/BlocksCarousel.astro';
 import RampTestimonialsV2 from '../components/RampTestimonialsV2.astro';
 import RampFooter from '../components/RampFooter.astro';
 import PricingCards from '../components/patterns/PricingCards.astro';
+import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 
 const title = "Basalio - WordPress Portfolio Blocks";
 const description = "Nine curated interaction blocks for portfolio and case-study sites. Built for WordPress, not Framer.";
@@ -151,39 +152,32 @@ const faqs = [
     ctaLink="/blocks"
   />
 
-  <!-- PRICING TIERS SECTION: PricingCards component (compact variant) -->
-  <section class="pricing-hero-section">
-    <div class="pricing-inner">
-      <!-- LEFT (28%): Eyebrow, heading, subhead, and CTA -->
-      <div class="pricing-left">
-        <p class="pricing-eyebrow">PRICING</p>
-        <h1 class="pricing-heading">There's no catch.</h1>
-        <p class="pricing-subhead">Nine interaction blocks, complete, free forever on WordPress.org. No locked blocks, no watermarks, no instance limits. What costs money is the control center - live-tuning every block from the editor sidebar - and the full Hacks vault.</p>
-        <a href="/pricing" class="pricing-cta">SEE THE FULL BREAKDOWN →</a>
-      </div>
+  <!-- PRICING TIERS SECTION: HeaderSplit with PricingCards component -->
+  <HeaderSplit
+    eyebrow="PRICING"
+    heading="There's no catch."
+    body="Nine interaction blocks, complete, free forever on WordPress.org. No locked blocks, no watermarks, no instance limits. What costs money is the control center - live-tuning every block from the editor sidebar - and the full Hacks vault."
+    cta={{ label: 'SEE THE FULL BREAKDOWN →', href: '/pricing', variant: 'acid' }}
+    surface="paper"
+  >
+    <PricingCards variant="compact" />
+  </HeaderSplit>
 
-      <!-- RIGHT (72%): PricingCards component (compact variant, no CTA) -->
-      <div style="flex: 1; width: 100%;">
-        <PricingCards variant="compact" />
-      </div>
+  <!-- DIVIDER LIST: Full width below section -->
+  <div class="pricing-divider-list">
+    <div class="divider-item">
+      <span class="divider-label">FREE FOREVER</span>
+      <span class="divider-text">Nine blocks, complete. Not a trial, not a demo.</span>
     </div>
-
-    <!-- DIVIDER LIST: Full width below section -->
-    <div class="pricing-divider-list">
-      <div class="divider-item">
-        <span class="divider-label">FREE FOREVER</span>
-        <span class="divider-text">Nine blocks, complete. Not a trial, not a demo.</span>
-      </div>
-      <div class="divider-item">
-        <span class="divider-label">NO RENEWAL</span>
-        <span class="divider-text">One payment. The license never expires.</span>
-      </div>
-      <div class="divider-item">
-        <span class="divider-label">100 ONLY</span>
-        <span class="divider-text">Founder price, then $249/year.</span>
-      </div>
+    <div class="divider-item">
+      <span class="divider-label">NO RENEWAL</span>
+      <span class="divider-text">One payment. The license never expires.</span>
     </div>
-  </section>
+    <div class="divider-item">
+      <span class="divider-label">100 ONLY</span>
+      <span class="divider-text">Founder price, then $249/year.</span>
+    </div>
+  </div>
 
   <!-- Roles Section -->
   <section class="testimonials-rounded">
@@ -214,81 +208,6 @@ the case study, the reel."
   }
 
   /* PRICING HERO SECTION */
-  .pricing-hero-section {
-    width: 100%;
-    background: var(--surface-alt);
-  }
-
-  .pricing-inner {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    max-width: 1786px;
-    margin: 0 auto;
-    gap: 60px;
-    padding: 80px 40px;
-    box-sizing: border-box;
-  }
-
-  .pricing-left {
-    flex: 0 1 28%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .pricing-eyebrow {
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 2.8px;
-    text-transform: uppercase;
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-  }
-
-  .pricing-heading {
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 48px;
-    letter-spacing: -0.8px;
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-  }
-
-  .pricing-subhead {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    color: var(--text-on-paper-muted);
-    margin: 0;
-    padding: 0;
-  }
-
-  .pricing-cta {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 12px 24px;
-    background: var(--acid);
-    color: var(--text-on-paper);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: transform 150ms ease, box-shadow 150ms ease;
-    width: fit-content;
-  }
-
-  .pricing-cta:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-
   /* PRICING DIVIDER LIST: Full width below cards */
   .pricing-divider-list {
     display: flex;

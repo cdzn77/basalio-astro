@@ -36,6 +36,48 @@
 
 ---
 
+### Step 2: Pure Black to Warm Dark (#000000 → #1C1917) ✓ COMPLETE
+
+**Files Changed:** 16 files (85 instances)
+
+#### Visual Changes
+- **Button Backgrounds:** Navigation and carousel buttons now use warm dark instead of pure black
+- **Image Placeholders:** BlocksCarousel image wrapper backgrounds now use warm dark
+- **Text Colours:** All text that was pure black now uses the warmer dark tone
+- **Borders:** Button and element borders updated to warm dark
+- **Accents:** Component accents and outlines use the new warm dark
+
+#### Files Modified
+- `src/components/RampHeader.astro` — header backgrounds + text
+- `src/components/RampTestimonialsV2.astro` — carousel accents
+- `src/components/RampHero.astro` — text colors
+- `src/components/BlocksCarousel.astro` — button backgrounds, borders, image wrappers
+- `src/components/PositioningStats.astro` — stat text
+- `src/components/Button.astro` — button backgrounds
+- `src/components/FAQ.astro` — button + text colors
+- `src/components/RampFooter.astro` — text + backgrounds
+- `src/layouts/RampTemplateLayout.astro` — default body color + button styles
+- `src/pages/index.astro` — section text
+- `src/pages/contact.astro` — text + form accents
+- `src/pages/pricing.astro` — table text + accents
+- `src/pages/privacy.astro` — text
+- `src/pages/support.astro` — text
+- `src/pages/roadmap.astro` — status badges + text
+- `src/pages/terms.astro` — text
+- `src/styles/tokens.css` — token value
+
+#### Colour Details
+- **Old:** #000000 (pure black, Ramp template default)
+- **New:** #1C1917 (Basalio warm dark, brown-tinted)
+- **Real Difference:** Subtle warmth, softer than pure black
+- **Semantic:** One black in system, not two
+
+#### Proof
+- `baseline-index-step2.png` — Homepage with warm dark text/buttons
+- `baseline-blocks-step2.png` — Blocks page with warm dark accents
+
+---
+
 ## Standalone Page Integration (2026-07-30)
 
 ## Pages Converted (2026-07-30)

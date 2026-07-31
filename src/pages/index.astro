@@ -7,8 +7,6 @@ import RampHeader from '../components/RampHeader.astro';
 import RampHero from '../components/RampHero.astro';
 import RampWhatWeDo from '../components/RampWhatWeDo.astro';
 import RampCourses from '../components/RampCourses.astro';
-import RampResources from '../components/RampResources.astro';
-import Button from '../components/Button.astro';
 import RampTestimonialsV2 from '../components/RampTestimonialsV2.astro';
 import RampFooter from '../components/RampFooter.astro';
 import PricingCards from '../components/patterns/PricingCards.astro';
@@ -141,19 +139,6 @@ const faqs = [
       }
     ]}
     ctaLink="/blocks"
-  />
-
-  <!-- Resources Section -->
-  <RampResources
-    resources={[
-      { title: "Module Documentation", description: "Complete guides for implementing each of the nine interaction modules" },
-      { title: "Code Templates", description: "Copy-paste ready code snippets and setup examples for all modules" },
-      { title: "Integration Guide", description: "Step-by-step instructions for integrating modules into your WordPress site" },
-      { title: "Performance Checklist", description: "Best practices for optimizing module performance and bundle size" },
-      { title: "Customization Playbook", description: "Advanced techniques for adapting modules to your design system" },
-      { title: "Accessibility Guide", description: "WCAG compliance strategies for all interactive module components" }
-    ]}
-    ctaLink="/resources"
   />
 
   <!-- PRICING TIERS SECTION: PricingCards component (compact variant) -->

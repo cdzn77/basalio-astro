@@ -59,3 +59,15 @@ One commit each, pixel-verified. Shared components before pages — fixing `Ramp
 ## Status: NOT STARTED
 
 Logged for pre-launch execution. Do not begin until homepage is complete and brand colour pass is scheduled.
+
+---
+
+## LAUNCH DAY CHECKLIST
+
+**REQUIRED — All three must be completed before public launch:**
+
+- [ ] **REQUIRED:** Netlify → Site settings → Access & security → Visitor access: change Private → Public
+- [ ] **REQUIRED:** Remove `<meta name="robots" content="noindex, nofollow" />` from `src/layouts/BaseLayout.astro`
+- [ ] **REQUIRED:** Remove or update `public/robots.txt` (currently blocks all crawlers)
+
+**Why:** Site is currently private in Netlify and search engines are blocked. These must be completed to enable public access and organic discovery.

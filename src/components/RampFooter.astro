@@ -15,7 +15,7 @@ const { hideNewsletter = false } = Astro.props;
       <!-- LEFT: Logo, Description, Social Icons -->
       <div class="footer-left-section">
         <div class="footer-logo-block">
-          <h3 class="footer-logo">Basalio</h3>
+          <a href="/" class="footer-logo">Basalio</a>
           <p class="footer-description">{footerCopy.description}</p>
         </div>
 
@@ -143,6 +143,18 @@ const { hideNewsletter = false } = Astro.props;
     color: var(--text-on-acid);
     margin: 0;
     padding: 0;
+    display: inline-block;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    outline-offset: 4px;
+  }
+
+  .footer-logo:hover {
+    opacity: 0.8;
+  }
+
+  .footer-logo:focus-visible {
+    outline: 3px solid var(--text-on-acid);
   }
 
   .footer-description {

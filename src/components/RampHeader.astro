@@ -90,9 +90,14 @@ const { surface = 'acid' } = Astro.props;
     text-align: start;
     text-decoration: none;
     text-wrap-mode: nowrap;
-    transition: color 0.3s cubic-bezier(0, 0, 1, 1);
+    transition: color 0.3s cubic-bezier(0, 0, 1, 1), outline-offset 0.2s ease;
     width: auto;
     -webkit-font-smoothing: antialiased;
+    outline-offset: 4px;
+  }
+
+  .brand-logo:focus-visible {
+    outline: 3px solid currentColor;
   }
 
   /* Menu button - acid and paper are light (dark pill), ink is dark (light pill) */

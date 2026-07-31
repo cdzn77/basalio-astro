@@ -11,6 +11,7 @@ export const headerCta = {
 
 export const footerNav = {
   product: [
+    { label: 'Home',    href: '/' },
     { label: 'Blocks',  href: '/blocks' },
     { label: 'Hacks',   href: '/hacks' },
     { label: 'Pricing', href: '/pricing' },

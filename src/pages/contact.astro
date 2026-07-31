@@ -123,7 +123,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     width: 100%;
     max-width: 1786px;
     padding: 120px 40px;
-    background: #FFFFFF;
+    background: var(--surface-paper);
     box-sizing: border-box;
     gap: 60px;
     margin: 0 auto;
@@ -144,8 +144,8 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
   }
 
   .hero-label {
-    background-color: #FFED00;
-    color: #1C1917;
+    background-color: var(--acid);
+    color: var(--text-on-paper);
     font-family: 'Azeret Mono', monospace;
     font-size: 12px;
     font-weight: 500;
@@ -162,7 +162,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-weight: 400;
     letter-spacing: -0.96px;
     line-height: 52.8px;
-    color: #1C1917;
+    color: var(--text-on-paper);
     margin: 0;
     padding: 0;
     text-wrap: balance;
@@ -174,7 +174,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
-    color: #575757;
+    color: var(--text-on-paper-muted);
     margin: 0;
     padding: 0;
     max-width: 600px;
@@ -197,7 +197,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-family: Switzer, sans-serif;
     font-size: 14px;
     font-weight: 500;
-    color: #1C1917;
+    color: var(--text-on-paper);
     margin: 0;
     padding: 0;
   }
@@ -207,7 +207,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-family: Switzer, sans-serif;
     font-size: 14px;
     font-weight: 400;
-    color: #1C1917;
+    color: var(--text-on-paper);
     background: var(--surface-alt);
     border: 1px solid var(--surface-alt);
     padding: 12px 16px;
@@ -219,13 +219,13 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
 
   .form-input:focus,
   .form-textarea:focus {
-    background: #FFFFFF;
-    border-color: #1C1917;
+    background: var(--surface-paper);
+    border-color: var(--text-on-paper);
   }
 
   .form-input::placeholder,
   .form-textarea::placeholder {
-    color: #888888;
+    color: var(--text-on-paper-muted);
   }
 
   .form-textarea {
@@ -239,8 +239,8 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-weight: 500;
     letter-spacing: 2.8px;
     text-transform: uppercase;
-    color: #FFFFFF;
-    background: #1C1917;
+    color: var(--surface-paper);
+    background: var(--text-on-paper);
     border: none;
     padding: 14px 28px;
     border-radius: 6px;
@@ -250,7 +250,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
   }
 
   .submit-button:hover {
-    background: #333333;
+    background: var(--text-on-paper);
   }
 
   .submit-button:active {
@@ -263,7 +263,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     width: 100%;
     max-width: 1786px;
     padding: 80px 40px 200px 40px;
-    background: #FFFFFF;
+    background: var(--surface-paper);
     box-sizing: border-box;
     margin: 0 auto;
     justify-content: flex-start;
@@ -284,7 +284,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-weight: 400;
     letter-spacing: -0.64px;
     line-height: 38.4px;
-    color: #1C1917;
+    color: var(--text-on-paper);
     margin: 0 0 12px 0;
     padding: 0;
   }
@@ -294,7 +294,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
-    color: #575757;
+    color: var(--text-on-paper-muted);
     margin: 0 0 40px 0;
     padding: 0;
   }
@@ -307,7 +307,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
 
   .resource-card {
     padding: 24px;
-    background: #F9F9F9;
+    background: var(--surface-alt);
     border: 1px solid var(--surface-alt);
     border-radius: 8px;
     transition: all 200ms ease;
@@ -315,14 +315,14 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
 
   .resource-card:hover {
     background: var(--surface-alt);
-    border-color: #D0D0D0;
+    border-color: var(--stone);
   }
 
   .resource-card .resource-title {
     font-family: Switzer, sans-serif;
     font-size: 18px;
     font-weight: 500;
-    color: #1C1917;
+    color: var(--text-on-paper);
     margin: 0 0 8px 0;
     padding: 0;
   }
@@ -332,7 +332,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
-    color: #666666;
+    color: var(--text-on-paper-muted);
     margin: 0 0 16px 0;
     padding: 0;
   }
@@ -341,13 +341,13 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-family: Switzer, sans-serif;
     font-size: 14px;
     font-weight: 500;
-    color: #1C1917;
+    color: var(--text-on-paper);
     text-decoration: none;
     transition: color 200ms ease;
   }
 
   .resource-link:hover {
-    color: #666666;
+    color: var(--text-on-paper-muted);
   }
 
   /* FOLLOW US SECTION IN HERO COLUMN */
@@ -361,7 +361,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-weight: 400;
     letter-spacing: -0.48px;
     line-height: 28.8px;
-    color: #1C1917;
+    color: var(--text-on-paper);
     margin: 0 0 8px 0;
     padding: 0;
   }
@@ -371,7 +371,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
-    color: #575757;
+    color: var(--text-on-paper-muted);
     margin: 0 0 16px 0;
     padding: 0;
   }
@@ -387,7 +387,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-family: Switzer, sans-serif;
     font-size: 16px;
     font-weight: 500;
-    color: #1C1917;
+    color: var(--text-on-paper);
     text-decoration: none;
     padding: 8px 0;
     border-bottom: 2px solid transparent;
@@ -395,7 +395,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
   }
 
   .social-link:hover {
-    border-bottom-color: #1C1917;
+    border-bottom-color: var(--text-on-paper);
   }
 
   /* Responsive */

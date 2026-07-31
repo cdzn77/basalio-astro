@@ -64,7 +64,7 @@ const Component = href ? 'a' : 'button';
   }
 
   .btn-text {
-    background-color: #1C1917 !important;
+    background-color: var(--surface-ink) !important;
     height: 100% !important;
     padding: 0 12px !important;
     display: flex !important;
@@ -81,14 +81,14 @@ const Component = href ? 'a' : 'button';
     letter-spacing: var(--letterSpacing);
     line-height: 19.6px;
     text-transform: uppercase;
-    color: #FFFFFF;
+    color: var(--surface-paper);
     margin: 0;
     padding: 0;
     white-space: nowrap;
   }
 
   .btn-arrow-container {
-    background-color: #1C1917 !important;
+    background-color: var(--surface-ink) !important;
     height: 100% !important;
     width: 43.6px !important;
     display: flex !important;
@@ -123,7 +123,7 @@ const Component = href ? 'a' : 'button';
   .btn-arrow svg {
     height: 100%;
     width: 100%;
-    stroke: #FFFFFF;
+    stroke: var(--surface-paper);
     stroke-width: 1.5px;
     fill: none;
     stroke-miterlimit: 10;

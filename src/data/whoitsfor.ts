@@ -35,12 +35,13 @@ export const whoIsThisFor: WhoItsFor[] = [
   {
     image: "/assets/director_whoitsfor.png",
     eyebrow: "ROLE",
-    title: "Photographers",
-    description: "Image-led sites need presentation, not chrome.",
+    title: "Art & Creative Directors",
+    description: "The work has to read as directed, not assembled. Pacing is part of the argument.",
     features: [
-      "Before/After for retouching and process work",
-      "Filterable Grid for a body of work with categories",
-      "Grid Reveal so the set arrives with intent, not all at once"
+      "Case Study Transition between projects",
+      "Pinned Scroll to hold a frame while the reasoning runs past it",
+      "Text Reveal for the rhythm of a long-form write-up",
+      "Custom Cursor where the whole surface should feel authored"
     ],
     icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>'
   },

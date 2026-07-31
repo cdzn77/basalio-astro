@@ -24,53 +24,18 @@ interface Props {}
 </div>
 
 <script>
-  // Detect if a background color is dark (luminance < 0.5)
-  function isColorDark(rgbString) {
-    const match = rgbString.match(/\d+/g);
-    if (!match || match.length < 3) return false;
-    const [r, g, b] = match.slice(0, 3).map(Number);
-    // Standard luminance formula
-    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-    return luminance < 0.5;
-  }
+  // Add scroll handler for header background change
+  const header = document.querySelector('.ramp-header');
 
-  // Initialize header state based on first section's background
-  const headerContainer = document.querySelector('.header-container');
-  const baseMain = document.querySelector('.base-main');
-
-  function updateHeaderState() {
-    if (!headerContainer || !baseMain) return;
-
-    // Find the section currently visible under the header
-    const sections = baseMain.querySelectorAll('section');
-    let shouldInvert = false;
-
-    for (const section of sections) {
-      const rect = section.getBoundingClientRect();
-      // Check if this section is under the header (top of section < 100px from top)
-      if (rect.top < 100 && rect.bottom > 100) {
-        const bgColor = window.getComputedStyle(section).backgroundColor;
-        shouldInvert = isColorDark(bgColor);
-        break;
-      }
-    }
-
-    if (shouldInvert) {
-      headerContainer.classList.add('is-inverted');
+  function handleScroll() {
+    if (window.scrollY > 100) {
+      header?.classList.add('scrolled');
     } else {
-      headerContainer.classList.remove('is-inverted');
+      header?.classList.remove('scrolled');
     }
   }
 
-  // Set initial state on page load
-  updateHeaderState();
-
-  // Update on scroll with throttling
-  let scrollTimeout;
-  window.addEventListener('scroll', () => {
-    if (scrollTimeout) clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(updateHeaderState, 50);
-  }, { passive: true });
+  window.addEventListener('scroll', handleScroll, { passive: true });
 
   // Menu toggle functionality
   const menuToggle = document.getElementById('menu-toggle');
@@ -112,7 +77,7 @@ interface Props {}
   .brand-logo {
     background-color: rgba(0, 0, 0, 0);
     box-sizing: border-box;
-    color: var(--text-on-paper);
+    color: rgb(0, 0, 0);
     cursor: pointer;
     display: inline;
     font-family: Manrope, "Manrope Placeholder", sans-serif;
@@ -131,15 +96,7 @@ interface Props {}
   }
 
   .brand-logo:hover {
-    color: var(--text-on-paper);
-  }
-
-  .header-container.is-inverted .brand-logo {
-    color: var(--surface-paper);
-  }
-
-  .header-container.is-inverted .brand-logo:hover {
-    color: var(--surface-paper);
+    color: rgb(0, 0, 0);
   }
 
   .menu-btn {
@@ -159,16 +116,10 @@ interface Props {}
     justify-content: space-between;
     width: 182px;
     height: 41px;
-    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   .menu-btn:hover {
     opacity: 0.8;
-  }
-
-  .header-container.is-inverted .menu-btn {
-    background: var(--surface-paper);
-    color: var(--surface-ink);
   }
 
   .plus-icon {
@@ -201,7 +152,7 @@ interface Props {}
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.3s ease, visibility 0.3s ease, background-color 0.3s ease;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
     z-index: 10;
   }
 
@@ -209,10 +160,6 @@ interface Props {}
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-  }
-
-  .header-container.is-inverted .menu-dropdown {
-    background: var(--surface-paper);
   }
 
   .menu-item {
@@ -238,18 +185,10 @@ interface Props {}
     cursor: pointer;
     box-sizing: border-box;
     white-space: nowrap;
-    transition: color 0.2s ease;
+    transition: opacity 0.2s ease;
   }
 
   .menu-item:hover {
-    color: var(--acid);
-  }
-
-  .header-container.is-inverted .menu-item {
-    color: var(--surface-ink);
-  }
-
-  .header-container.is-inverted .menu-item:hover {
     color: var(--acid);
   }
 

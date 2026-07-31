@@ -61,3 +61,28 @@ The product is **BLOCKS**. Never "modules," never "courses" — not in copy, met
 - One change per commit.
 - Before reporting done, run `git diff --stat` and confirm only
   the expected files changed.
+
+## Deployment verification steps
+
+Before pushing to main (and before reporting any layout/styling task complete):
+
+1. **Footer overlap integrity** — Run the structural test:
+   ```bash
+   npm run build
+   npm run dev -- --port 4321 &
+   sleep 5
+   node scripts/verify-footer-overlap.mjs
+   ```
+   All 8 routes must show `✓ PASS`. If any route fails, the page's last section is missing footer-overlap styling (40px bottom radius, -40px margin, non-transparent background). Fix before pushing.
+   
+   **Why:** Footer overlap selector uses `:last-of-type` which is fragile if pages add wrapper divs or component nesting changes. The test prevents silent breakage.
+
+2. **Type checking** — No errors:
+   ```bash
+   npx astro check
+   ```
+
+3. **Build verification** — Production build succeeds:
+   ```bash
+   npm run build
+   ```

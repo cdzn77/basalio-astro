@@ -116,6 +116,56 @@
 
 ---
 
+### Step 4: Add Surface Tokens ✓ COMPLETE
+
+**Status:** Already defined in tokens.css
+
+No action needed. Surface tokens already exist:
+- `--surface-paper: #FFFFFF` (white background)
+- `--surface-ink: #1C1917` (warm dark background)
+- `--text-on-paper: #0A0A0A` (off-black text on white)
+- `--text-on-paper-muted: rgba(10, 10, 10, 0.6)` (muted text on white)
+- `--text-on-ink: #F6F4EF` (cream text on dark)
+- `--text-on-ink-muted: rgba(246, 244, 239, 0.6)` (muted text on dark)
+- `--acid: #DFFF00` (brand yellow)
+- `--stone: #DFDCD5` (stone/beige)
+- `--surface-alt: #FAFAFA` (light grey)
+
+---
+
+### Step 5: Delete Orphaned --color-* Tokens ⏸ DEFERRED
+
+**Status:** Pending audit of legacy CSS file usage
+
+Found active --color-* references in legacy files:
+- utilities.css (10+ references)
+- global.css (4 references)
+- components.css (40+ references)
+- layout.css (1 reference)
+
+**Decision:** Defer token deletion until legacy CSS audit determines if these files are actively used. Tokens that are only referenced in unused CSS can then be safely removed.
+
+**Tokens to eventually remove:**
+- `--color-off-white-95` (now var(--surface-alt))
+- `--color-gray-light` (now var(--surface-alt))
+- Legacy --color-primary, --color-text, --color-light, --color-accent tokens
+- Any others unused after audit
+
+---
+
+### Step 6: Resume Token Migration ⏳ NEXT
+
+After surface tokens are confirmed and legacy CSS audit is complete, begin systematic token migration across remaining components:
+
+Priority order (based on instance count):
+1. RampTemplateLayout (36+ instances)
+2. index.astro (38+ instances)
+3. pricing.astro (32+ instances)
+4. contact.astro (32+ instances)
+5. Others (roadmap, support, terms, privacy, blocks)
+
+---
+
 ## Standalone Page Integration (2026-07-30)
 
 ## Pages Converted (2026-07-30)

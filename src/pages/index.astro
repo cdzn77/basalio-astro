@@ -18,10 +18,9 @@ const description = "Nine curated interaction blocks for portfolio and case-stud
 const heroBackground = { type: 'color', token: 'acid' };
 const heroSurface = 'acid';
 
-// Header surface automatically syncs with hero background
-// - acid background → acid header (dark text)
-// - image/video/gradient → ink header (light text) by default
-const headerSurface = heroBackground.type === 'color' ? heroSurface : 'ink';
+// Header surface syncs directly with hero surface
+// Surface prop encodes the correct light/dark surface independent of media type
+const headerSurface = heroSurface;
 
 // Correct nine block names from src/data/pricing.ts
 const blockNames = [

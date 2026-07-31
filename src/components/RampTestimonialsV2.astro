@@ -68,14 +68,14 @@ const {
     </div>
 
     <!-- RIGHT COLUMN: Carousel (1109px, or fill remaining) -->
-    <div class="testimonials-v2-right">
+    <div class="testimonials-v2-right" tabindex="0" role="region" aria-label="WHO IT'S FOR carousel">
       <!-- Invisible left hover zone -->
       <div class="carousel-zone-v2 carousel-zone-left-v2" data-direction="prev"></div>
 
       <!-- Carousel viewport (overflow clip) -->
       <div class="carousel-viewport-v2">
         <!-- Track: position absolute, flex row, gap 20px, overflowing -->
-        <div class="carousel-track-v2">
+        <div class="carousel-track-v2" aria-live="polite" aria-label="Carousel cards">
           {testimonials.map((testimonial, index) => {
             return (
               <div class="testimonial-card-v2">
@@ -233,12 +233,22 @@ const {
     border-color: #000000;
   }
 
+  .carousel-button-v2:focus-visible {
+    outline: 2px solid #000000;
+    outline-offset: 2px;
+  }
+
   /* RIGHT COLUMN: Carousel (1109px wide, or fill remaining space) */
   .testimonials-v2-right {
     flex: 1;
     position: relative;
     overflow: clip;
     min-height: 700px;
+  }
+
+  .testimonials-v2-right:focus-visible {
+    outline: 2px solid #000000;
+    outline-offset: 2px;
   }
 
   /* Invisible hover zones (left and right edges) */
@@ -283,6 +293,12 @@ const {
     flex-direction: row;
     gap: 20px;
     transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .carousel-track-v2 {
+      transition: none;
+    }
   }
 
   /* Testimonial cards: fixed size 500x700px */
@@ -489,6 +505,18 @@ const {
       // Attach mouseenter handlers to invisible hover zones
       leftZone?.addEventListener('mouseenter', () => navigate('prev'));
       rightZone?.addEventListener('mouseenter', () => navigate('next'));
+
+      // Keyboard navigation: Arrow keys
+      const carouselContainer = testimonialsV2.querySelector('.testimonials-v2-right');
+      carouselContainer?.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          navigate('prev');
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          navigate('next');
+        }
+      });
 
       // Recalculate paging on window resize
       window.addEventListener('resize', () => {

@@ -541,35 +541,29 @@ const {
     }
   }
 
-  // SCROLL REVEAL ANIMATION - Section scrolls up and reveals footer underneath
-  const section = document.querySelector('.testimonials-v2');
-  if (section) {
-    const handleScroll = () => {
-      const sectionRect = section.getBoundingClientRect();
+  // SCROLL OVERLAP ANIMATION - Section moves up to reveal footer
+  const testimonialSection = document.querySelector('.testimonials-v2');
+  if (testimonialSection) {
+    const updateScroll = () => {
+      const rect = testimonialSection.getBoundingClientRect();
+      const sectionBottom = rect.bottom;
       const windowHeight = window.innerHeight;
 
-      // Calculate how far the section is from the bottom of the viewport
-      const distanceFromViewportBottom = sectionRect.bottom - windowHeight;
+      // Calculate scroll progress - how far past the viewport bottom
+      const distancePastViewport = sectionBottom - windowHeight;
 
-      // Reveal range: 0px to -400px from viewport bottom
-      // At 0px: no reveal (section bottom at viewport bottom)
-      // At -400px: fully revealed (section moved up 40px)
-      if (distanceFromViewportBottom <= 0 && distanceFromViewportBottom > -400) {
-        // Calculate progress: 0 to 1
-        const progress = Math.abs(distanceFromViewportBottom) / 400;
-        const translateAmount = progress * 40; // Match the negative margin
-        section.style.transform = `translateY(${translateAmount}px)`;
-      } else if (distanceFromViewportBottom <= -400) {
-        // Fully revealed and locked
-        section.style.transform = 'translateY(40px)';
+      // Animate when section is exiting bottom of viewport
+      if (distancePastViewport < 0) {
+        // Clamp between 0 and -40px (moving up)
+        const moveAmount = Math.max(-40, distancePastViewport * 0.1);
+        testimonialSection.style.transform = `translateY(${moveAmount}px)`;
       } else {
-        // Not yet in reveal zone
-        section.style.transform = 'translateY(0)';
+        testimonialSection.style.transform = 'translateY(0)';
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial call
+    window.addEventListener('scroll', updateScroll, { passive: true });
+    updateScroll();
   }
 
 </script>

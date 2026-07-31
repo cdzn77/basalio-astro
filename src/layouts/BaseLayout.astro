@@ -112,6 +112,15 @@ const {
     z-index: 1;
   }
 
+  /* Sticky footer reveal on desktop/large tablet (min-width 900px and min-height 800px) */
+  @media (min-width: 900px) and (min-height: 800px) {
+    .base-footer {
+      position: sticky;
+      bottom: 0;
+      z-index: 1;
+    }
+  }
+
   /* Footer overlap effect - automatically applied to last section via structural selector */
   .base-main > section:last-child {
     border-radius: 0 0 40px 40px;

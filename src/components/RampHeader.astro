@@ -1,10 +1,14 @@
 ---
 import { headerNav } from '../data/navigation';
 
-interface Props {}
+interface Props {
+  surface?: 'paper' | 'ink';
+}
+
+const { surface = 'paper' } = Astro.props;
 ---
 
-<div class="header-container">
+<div class="header-container" data-surface={surface}>
   <a href="/" class="brand-logo">Basalio.</a>
   <div class="menu-wrapper">
     <button id="menu-toggle" class="menu-btn" aria-label="Toggle menu">
@@ -61,10 +65,18 @@ interface Props {}
     box-sizing: border-box;
   }
 
+  /* Logo - surface-specific color */
+  .header-container[data-surface='paper'] .brand-logo {
+    color: var(--text-on-paper);
+  }
+
+  .header-container[data-surface='ink'] .brand-logo {
+    color: var(--text-on-ink);
+  }
+
   .brand-logo {
     background-color: rgba(0, 0, 0, 0);
     box-sizing: border-box;
-    color: rgb(0, 0, 0);
     cursor: pointer;
     display: inline;
     font-family: Manrope, "Manrope Placeholder", sans-serif;
@@ -82,13 +94,18 @@ interface Props {}
     -webkit-font-smoothing: antialiased;
   }
 
-  .brand-logo:hover {
-    color: rgb(0, 0, 0);
+  /* Menu button - pill must contrast with hero background */
+  .header-container[data-surface='paper'] .menu-btn {
+    background: var(--surface-ink);
+    color: var(--text-on-ink);
+  }
+
+  .header-container[data-surface='ink'] .menu-btn {
+    background: var(--surface-paper);
+    color: var(--text-on-paper);
   }
 
   .menu-btn {
-    background: var(--surface-ink);
-    color: var(--surface-paper);
     border: none;
     padding: 0px 16px;
     border-radius: 6px;

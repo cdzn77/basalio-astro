@@ -11,6 +11,12 @@ interface Props {
   teaserButton?: string;
   teaserLink?: string;
   heroImage?: string;
+  background?:
+    | { type: 'color'; token: 'acid' | 'paper' | 'ink' | 'alt' }
+    | { type: 'image'; src: string; position?: string; scrim?: number }
+    | { type: 'video'; src: string; poster: string; position?: string; scrim?: number }
+    | { type: 'gradient'; from: string; to: string; angle?: string };
+  surface?: 'paper' | 'ink';
 }
 
 const {
@@ -18,12 +24,52 @@ const {
   teaserText = "This course helps you design clear, compelling offers that people actually understand and want to buy.",
   teaserButton = "VIEW COURSE",
   teaserLink = "#blocks",
-  heroImage = "https://framerusercontent.com/images/WAxIIZFwFsal6BUSuk7mft7nN7U.png"
+  heroImage = "https://framerusercontent.com/images/WAxIIZFwFsal6BUSuk7mft7nN7U.png",
+  background = { type: 'color', token: 'acid' },
+  surface = 'paper'
 } = Astro.props;
+
+const colorMap = {
+  acid: 'var(--acid)',
+  paper: 'var(--surface-paper)',
+  ink: 'var(--surface-ink)',
+  alt: 'var(--surface-alt)'
+};
+
+const textTokens = {
+  paper: { primary: 'var(--text-on-paper)', secondary: 'var(--text-on-paper-muted)' },
+  ink: { primary: 'var(--text-on-ink)', secondary: 'var(--text-on-ink-muted)' }
+};
+
+const scrimOpacity = background.type === 'image' || background.type === 'video' ? (background.scrim ?? 0.4) : 0;
 ---
 
-<section class="hero" id="hero">
-  <!-- HERO IMAGE: Static centered image -->
+<section class="hero" id="hero" data-surface={surface}>
+  <!-- BACKGROUND LAYER: Color, image, video, or gradient -->
+  <div class="hero-background">
+    {background.type === 'color' && (
+      <div class="hero-bg-color" style={{ backgroundColor: colorMap[background.token] }} />
+    )}
+    {background.type === 'image' && (
+      <img src={background.src} alt="" class="hero-bg-image" style={{ objectPosition: background.position || 'center' }} />
+    )}
+    {background.type === 'video' && (
+      <>
+        <video preload="none" poster={background.poster} muted autoplay loop playsinline class="hero-bg-video" style={{ objectPosition: background.position || 'center' }}>
+          <source src={background.src} type="video/mp4" />
+        </video>
+        <img src={background.poster} alt="" class="hero-bg-poster" />
+      </>
+    )}
+    {background.type === 'gradient' && (
+      <div class="hero-bg-gradient" style={{ background: `linear-gradient(${background.angle || '135deg'}, ${background.from}, ${background.to})` }} />
+    )}
+    {scrimOpacity > 0 && (
+      <div class="hero-bg-scrim" style={{ opacity: scrimOpacity.toString() }} />
+    )}
+  </div>
+
+  <!-- HERO IMAGE: Static centered image (CONTENT, not background) -->
   <div class="hero-image-wrapper">
     <img src={heroImage} alt="Hero" class="hero-image-bg" />
   </div>
@@ -48,7 +94,6 @@ const {
 <style>
   /* EXACT PIXEL SPECIFICATIONS - RESPONSIVE VERSION */
   .hero {
-    background: var(--acid);
     width: 100%;
     max-width: 1791px;
     min-height: 100vh;
@@ -61,6 +106,45 @@ const {
     overflow: visible;
     position: relative;
     padding-top: 80px;
+  }
+
+  /* Background layer - z-index 0 */
+  .hero-background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .hero-bg-color,
+  .hero-bg-image,
+  .hero-bg-video,
+  .hero-bg-gradient,
+  .hero-bg-scrim {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-bg-image,
+  .hero-bg-video {
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-bg-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+  }
+
+  .hero-bg-scrim {
+    pointer-events: none;
   }
 
   /* Hero uses layout's universal header via slot */
@@ -80,7 +164,7 @@ const {
     z-index: 1;
   }
 
-  /* Image wrapper - static centered image */
+  /* Image wrapper - static centered image (CONTENT, not background) */
   .hero-image-wrapper {
     position: absolute;
     left: 50%;
@@ -90,7 +174,7 @@ const {
     max-width: 400px;
     aspect-ratio: 0.7;
     overflow: hidden;
-    z-index: 0;
+    z-index: 2;
     pointer-events: none;
     border-radius: 8px;
   }
@@ -117,13 +201,21 @@ const {
     z-index: 1;
   }
 
+  /* Surface-specific heading color */
+  .hero[data-surface='paper'] .hero-heading {
+    color: var(--text-on-paper);
+  }
+
+  .hero[data-surface='ink'] .hero-heading {
+    color: var(--text-on-ink);
+  }
+
   .hero-heading {
     font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 72px;
     font-weight: 400;
     line-height: 72px;
     letter-spacing: -1.44px;
-    color: var(--text-on-acid);
     margin: 0;
     padding: 0;
     margin-top: 80px;
@@ -155,6 +247,15 @@ const {
     justify-content: center;
   }
 
+  /* Surface-specific course label color */
+  .hero[data-surface='paper'] .course-label {
+    color: var(--text-on-paper);
+  }
+
+  .hero[data-surface='ink'] .course-label {
+    color: var(--text-on-ink);
+  }
+
   .course-label {
     font-family: 'Azeret Mono', monospace;
     font-size: 14px;
@@ -162,7 +263,6 @@ const {
     line-height: 19.6px;
     letter-spacing: 2.8px;
     text-transform: uppercase;
-    color: var(--text-on-acid);
     display: block;
     width: auto;
     height: auto;
@@ -173,18 +273,37 @@ const {
     text-wrap-style: balance;
   }
 
+  /* Surface-specific course description color */
+  .hero[data-surface='paper'] .course-description {
+    color: var(--text-on-paper);
+  }
+
+  .hero[data-surface='ink'] .course-description {
+    color: var(--text-on-ink);
+  }
+
   .course-description {
     font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 16px;
     font-weight: 400;
     line-height: 22.4px;
-    color: var(--text-on-acid);
     width: 500px;
     margin: 0;
     padding: 0;
     text-wrap-style: balance;
   }
 
+
+  /* Reduced motion — show poster, hide video */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bg-video {
+      display: none;
+    }
+
+    .hero-bg-poster {
+      display: block;
+    }
+  }
 
   /* RESPONSIVE OVERRIDES */
   @media (max-width: 1024px) {
@@ -229,4 +348,26 @@ const {
   /* Menu dropdown is now in RampHeader component */
 </style>
 
-<!-- Menu functionality is now in RampHeader component -->
+<script>
+  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const videoEl = document.querySelector('.hero-bg-video') as HTMLVideoElement;
+
+  function setVideoPreference(e: MediaQueryListEvent | MediaQueryList) {
+    if (!videoEl) return;
+
+    if (e.matches) {
+      videoEl.src = '';
+      videoEl.pause();
+    } else {
+      const source = videoEl.querySelector('source');
+      if (source) {
+        videoEl.src = source.getAttribute('src') || '';
+      }
+    }
+  }
+
+  if (videoEl) {
+    mediaQuery.addEventListener('change', setVideoPreference);
+    setVideoPreference(mediaQuery);
+  }
+</script>

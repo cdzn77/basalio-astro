@@ -32,3 +32,8 @@ export const footerCopy = {
   email: 'hello@basalio.com',
   brandWord: 'BASALIO',
 };
+
+export const socialLinks = {
+  github: 'https://github.com/getbasalio',
+  twitter: 'https://twitter.com/getbasalio',
+};

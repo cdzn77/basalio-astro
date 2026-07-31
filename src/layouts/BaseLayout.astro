@@ -122,9 +122,10 @@ const {
   }
 
   /* Footer overlap effect - automatically applied to last section via structural selector */
-  .base-main > section:last-child {
+  /* Uses :last-of-type to skip <script> tags injected by Astro */
+  /* Pages must declare background-color on their last section (white for light, --surface-ink for dark) */
+  .base-main > section:last-of-type {
     border-radius: 0 0 40px 40px;
-    background-color: var(--surface-paper);
     margin-bottom: -40px;
     position: relative;
     z-index: 2;

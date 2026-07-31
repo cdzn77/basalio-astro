@@ -5,7 +5,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampHero from '../components/RampHero.astro';
-import RampWhatWeDo from '../components/RampWhatWeDo.astro';
+import PositioningStats from '../components/PositioningStats.astro';
 import BlocksCarousel from '../components/BlocksCarousel.astro';
 import RampTestimonialsV2 from '../components/RampTestimonialsV2.astro';
 import RampFooter from '../components/RampFooter.astro';
@@ -96,11 +96,11 @@ const faqs = [
   />
 
   <!-- What We Do Section -->
-  <RampWhatWeDo
+  <PositioningStats
     eyebrow="Positioning • 01"
-    introText="Nine curated interaction modules, built only for portfolio and case-study sites. Each module solves one specific problem-no bloat, no learning curve."
+    introText="Nine curated interaction blocks, built only for portfolio and case-study sites. Each block solves one specific problem — no bloat, no learning curve."
     services={[
-      { value: 9, description: "Modules, not 90" },
+      { value: 9, description: "Blocks, not 90" },
       { value: 1, description: "Plugin, zero page-builder lock-in" },
       { value: 0, description: "Generic presets, only opinionated ones" }
     ]}

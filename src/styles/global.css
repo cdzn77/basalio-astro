@@ -167,17 +167,15 @@ p {
   line-height: var(--line-height-relaxed);
 }
 
-/* Links – paper surface (default) */
+/* Links – default (no underline for navigation/structural links) */
 a {
   color: var(--text-on-paper);
-  text-decoration: underline;
-  text-decoration-color: var(--acid);
-  text-underline-offset: 3px;
-  transition: text-decoration-thickness 0.2s ease;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 a:hover {
-  text-decoration-thickness: 2px;
+  color: var(--acid);
 }
 
 a:visited {
@@ -190,20 +188,36 @@ a:focus-visible {
   border-radius: var(--radius-4);
 }
 
-/* Links – ink surface */
-.surface-ink a {
-  color: var(--text-on-ink);
+/* Links in prose – add underline for WCAG 1.4.1 (color + underline for identification) */
+p a,
+li a {
   text-decoration: underline;
   text-decoration-color: var(--acid);
   text-underline-offset: 3px;
   transition: text-decoration-thickness 0.2s ease;
 }
 
-.surface-ink a:hover {
+p a:hover,
+li a:hover {
   text-decoration-thickness: 2px;
 }
 
-.surface-ink a:visited {
+/* Links on ink surface (prose only) */
+.surface-ink p a,
+.surface-ink li a {
+  color: var(--text-on-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--acid);
+  text-underline-offset: 3px;
+}
+
+.surface-ink p a:hover,
+.surface-ink li a:hover {
+  text-decoration-thickness: 2px;
+}
+
+.surface-ink p a:visited,
+.surface-ink li a:visited {
   color: var(--text-on-ink);
 }
 

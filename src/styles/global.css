@@ -175,7 +175,9 @@ a {
 }
 
 a:hover {
-  color: var(--acid);
+  /* Hover state removed: acid text on light backgrounds fails contrast (19.8:1) */
+  /* Prose links use underline thickening via text-decoration-thickness */
+  /* Navigation links have component-specific hover states */
 }
 
 a:visited {

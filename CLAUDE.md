@@ -47,6 +47,12 @@ Try this FIRST, before deep debugging. It clears `node_modules/.vite` and restar
 - Never create a second implementation of a shared component.
   Add a variant prop instead of forking.
 
+## Terminology — locked
+
+The product is **BLOCKS**. Never "modules," never "courses" — not in copy, meta tags, comments, props, variable names, or interface types. CSS class names and placeholder image filenames are the only exceptions.
+
+**Why:** Phantom terminology in comments, variable names, and component props becomes invisible confusion in future sessions. A developer reading `courseButton` concludes we sell courses. A comment referencing deleted `RampCourses` creates search noise. Locked terminology in code prevents this drift.
+
 ## Editing discipline
 - Change only what was asked. Do not rewrite files, regenerate
   boilerplate, or "improve" adjacent code.

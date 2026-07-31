@@ -2,9 +2,11 @@
 
 ## LAUNCH BLOCKERS
 
-### TOKEN MIGRATION — ~300 hardcoded hex across 27 files
+### TOKEN MIGRATION — 282 hardcoded hex across multiple files (BASELINE AFTER CLEANUP)
 
-**Why it blocks launch:** The brand colour pass (Ramp yellow → acid #DFFF00) is deferred to launch-end. With tokens working, it's 4 edits to tokens.css. As-is it's a 300-instance hunt across 27 files, landing exactly when we're trying to ship.
+**Cleanup completed (52 instances removed):** Dead component deletions + empty array defaults + fake data removal = reduction from 334 → 282.
+
+**Why it blocks launch:** The brand colour pass (Ramp yellow → acid #DFFF00) is deferred to launch-end. With tokens working, it's 4 edits to tokens.css. As-is it's a hunt across remaining files, landing exactly when we're trying to ship.
 
 **Sequence when we get to it:**
 

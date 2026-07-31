@@ -139,14 +139,8 @@ const descriptionWords = description.split(' ');
     </div>
   </section>
 
-  <!-- TESTIMONIALS SECTION: Disabled until real testimonials exist -->
-  <!--
-    Component kept for future real testimonials.
-    Fake quotes removed: "I stopped explaining hover states..." (UX/UI Designer)
-    and "My reel finally scrolls..." (Videographer).
-    Renders nothing with empty testimonials array.
-  -->
-  <RampTestimonialsV2 testimonials={[]} />
+  <!-- WHO IT'S FOR CAROUSEL: Uses default whoIsThisFor data from RampTestimonialsV2 -->
+  <RampTestimonialsV2 />
 
   <!-- FOOTER: Reused from homepage -->
   <Fragment slot="footer">

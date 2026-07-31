@@ -8,6 +8,7 @@ import RampFooter from '../components/RampFooter.astro';
 import Button from '../components/Button.astro';
 import FAQ from '../components/FAQ.astro';
 import PricingCards from '../components/patterns/PricingCards.astro';
+import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 
 const title = "Pricing - Basalio";
 const description = "The nine blocks are free forever. The Pro control center is one payment for the first 100 people.";
@@ -85,22 +86,15 @@ const faqs = [
     <RampHeader />
   </Fragment>
 
-  <!-- 1. PRICING TIERS SECTION: Custom header with subhead + pricing cards -->
-  <section class="pricing-hero-section">
-    <div class="pricing-inner">
-      <!-- LEFT (35%): Eyebrow, heading, and subhead -->
-      <div class="pricing-left">
-        <p class="pricing-eyebrow">PRICING</p>
-        <h1 class="pricing-heading">The blocks are free. The Pro layer is one payment, once.</h1>
-        <p class="pricing-subhead">Nine interaction blocks, free forever on WordPress.org: no locked blocks, no watermarks, no instance limits. The Pro control center and the full Hacks vault are a single {founderPrice} founder license for the first 100 people.</p>
-      </div>
-
-      <!-- RIGHT (65%): PricingCards component (full variant) -->
-      <div style="flex: 1; width: 100%;">
-        <PricingCards variant="full" />
-      </div>
-    </div>
-  </section>
+  <!-- 1. PRICING TIERS SECTION: HeaderSplit with pricing cards in right slot -->
+  <HeaderSplit
+    eyebrow="PRICING"
+    heading="The blocks are free. The Pro layer is one payment, once."
+    body={`Nine interaction blocks, free forever on WordPress.org: no locked blocks, no watermarks, no instance limits. The Pro control center and the full Hacks vault are a single ${founderPrice} founder license for the first 100 people.`}
+    surface="paper"
+  >
+    <PricingCards variant="full" />
+  </HeaderSplit>
 
   <!-- 2. BUILD LEDGER SECTION -->
   <section class="ledger-section">
@@ -182,63 +176,6 @@ const faqs = [
 
 <style>
   /* PRICING HERO SECTION: Top padding for breathing room from header */
-  .pricing-hero-section {
-    width: 100%;
-    padding-top: 250px;
-    background: var(--surface-alt);
-  }
-
-  .pricing-inner {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    max-width: 1786px;
-    margin: 0 auto;
-    gap: 60px;
-    padding: 0 40px 40px 40px;
-    box-sizing: border-box;
-  }
-
-  /* LEFT (35%): Heading and subhead */
-  .pricing-left {
-    flex: 0 1 28%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .pricing-eyebrow {
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 2.8px;
-    text-transform: uppercase;
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-  }
-
-  .pricing-heading {
-    font-size: 40px;
-    font-weight: 400;
-    line-height: 48px;
-    letter-spacing: -0.8px;
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-  }
-
-  .pricing-subhead {
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
-    color: var(--text-on-paper-muted);
-    margin: 0;
-    padding: 0;
-  }
-
   /* 2. BUILD LEDGER SECTION */
   .ledger-section {
     width: 100%;

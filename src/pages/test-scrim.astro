@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RampHeader from '../components/RampHeader.astro';
+import RampHero from '../components/RampHero.astro';
+---
+
+<BaseLayout title="Scrim Test">
+  <Fragment slot="header">
+    <RampHeader surface="ink" />
+  </Fragment>
+
+  <RampHero
+    teaserLabel="Test Scrim Rendering"
+    teaserText="Dark image with ink surface and scrim overlay. Should show darkened background."
+    teaserButton="CONTINUE"
+    teaserLink="/"
+    heroImage="https://framerusercontent.com/images/WAxIIZFwFsal6BUSuk7mft7nN7U.png"
+    background={{ type: 'image', src: 'https://framerusercontent.com/images/EfAjOx2CaYWOJ3EJBfD6TRJ5Ams.png', position: 'center', scrim: 0.35 }}
+    surface="ink"
+  />
+</BaseLayout>

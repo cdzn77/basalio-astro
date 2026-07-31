@@ -2,9 +2,46 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
+import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+import Accordion from '../components/patterns/Accordion.astro';
 
 const title = "Support & Help Center - Basalio";
 const description = "Basalio support documentation, FAQs, and troubleshooting guides for WordPress portfolio blocks.";
+
+const faqs = [
+  {
+    question: "How do I install Basalio blocks?",
+    answer: "Basalio blocks are installed as a WordPress plugin. Download from WordPress.org, upload to your site, and activate. Once activated, all nine blocks appear in your block editor immediately."
+  },
+  {
+    question: "Do I need coding experience to use Basalio?",
+    answer: "No. Basalio is designed for WordPress users with no coding knowledge. All interactions work through the block editor interface. Click, drag, customize—no code required."
+  },
+  {
+    question: "Are the nine blocks free forever?",
+    answer: "Yes. All nine blocks are free forever on WordPress.org. No locked features, no watermarks, no upgrades. The Pro tier (control center sidebar) is optional."
+  },
+  {
+    question: "Which themes do the blocks work with?",
+    answer: "Basalio blocks work with any modern WordPress theme that supports the block editor (Gutenberg). They're theme-agnostic and don't require a specific theme."
+  },
+  {
+    question: "Can I use multiple blocks on one page?",
+    answer: "Yes. Combine blocks however you like. Stack multiple Grid Reveals, Scroll Sequences, Case Study Transitions—they all work together seamlessly."
+  },
+  {
+    question: "How do I customize block colors and timing?",
+    answer: "Each block has a settings panel in the editor sidebar. Adjust colors, easing, duration, and other parameters directly without touching code. Save changes instantly."
+  },
+  {
+    question: "What's the performance impact?",
+    answer: "Basalio is optimized for performance. One shared script loads only on pages that use blocks, keeping the overhead minimal across your site."
+  },
+  {
+    question: "Does Basalio support WooCommerce?",
+    answer: "Basalio blocks work in WooCommerce, but they're optimized for portfolio and case-study sites. For store-specific functionality, check WooCommerce's native block library."
+  }
+];
 ---
 
 <BaseLayout {title} {description}>
@@ -12,96 +49,27 @@ const description = "Basalio support documentation, FAQs, and troubleshooting gu
     <RampHeader />
   </Fragment>
 
-  <section class="support-header">
-    <div class="support-container">
-      <p class="support-eyebrow">Help Center</p>
-      <h1 class="support-heading">Support & Documentation</h1>
-      <p class="support-subheading">Find answers to common questions and get help with Basalio blocks.</p>
+  <!-- HERO: Header with light background, search integration -->
+  <HeaderSplit
+    eyebrow="Help Center"
+    heading="Support & Documentation"
+    body="Find answers to common questions and get help with Basalio blocks."
+    surface="alt"
+  >
+    <div class="search-box">
+      <input type="text" id="searchInput" class="search-input" placeholder="Search documentation..." aria-label="Search documentation">
     </div>
-  </section>
+  </HeaderSplit>
 
-  <section class="support-search">
-    <div class="support-container">
-      <div class="search-box">
-        <input type="text" id="searchInput" class="search-input" placeholder="Search documentation...">
-      </div>
-    </div>
-  </section>
+  <!-- FAQ: Accordion disclosure widget -->
+  <Accordion
+    eyebrow="QUESTIONS"
+    title="Frequently Asked Questions"
+    items={faqs}
+    surface="paper"
+  />
 
-  <section class="support-faq">
-    <div class="support-container">
-      <div class="faq-section">
-        <h2 class="faq-heading">Frequently Asked Questions</h2>
-
-        <div class="accordion">
-          <button class="accordion-button" data-index="0">
-            <span>How do I install Basalio blocks?</span>
-            <span class="toggle-icon">+</span>
-          </button>
-          <div class="accordion-content">
-            <p>Basalio blocks are installed as a WordPress plugin. Download from WordPress.org, upload to your site, and activate. Once activated, all nine blocks appear in your block editor immediately.</p>
-          </div>
-
-          <button class="accordion-button" data-index="1">
-            <span>Do I need coding experience to use Basalio?</span>
-            <span class="toggle-icon">+</span>
-          </button>
-          <div class="accordion-content">
-            <p>No. Basalio is designed for WordPress users with no coding knowledge. All interactions work through the block editor interface. Click, drag, customize—no code required.</p>
-          </div>
-
-          <button class="accordion-button" data-index="2">
-            <span>Are the nine blocks free forever?</span>
-            <span class="toggle-icon">+</span>
-          </button>
-          <div class="accordion-content">
-            <p>Yes. All nine blocks are free forever on WordPress.org. No locked features, no watermarks, no upgrades. The Pro tier (control center sidebar) is optional.</p>
-          </div>
-
-          <button class="accordion-button" data-index="3">
-            <span>Which themes do the blocks work with?</span>
-            <span class="toggle-icon">+</span>
-          </button>
-          <div class="accordion-content">
-            <p>Basalio blocks work with any modern WordPress theme that supports the block editor (Gutenberg). They're theme-agnostic and don't require a specific theme.</p>
-          </div>
-
-          <button class="accordion-button" data-index="4">
-            <span>Can I use multiple blocks on one page?</span>
-            <span class="toggle-icon">+</span>
-          </button>
-          <div class="accordion-content">
-            <p>Yes. Combine blocks however you like. Stack multiple Grid Reveals, Scroll Sequences, Case Study Transitions—they all work together seamlessly.</p>
-          </div>
-
-          <button class="accordion-button" data-index="5">
-            <span>How do I customize block colors and timing?</span>
-            <span class="toggle-icon">+</span>
-          </button>
-          <div class="accordion-content">
-            <p>Each block has a settings panel in the editor sidebar. Adjust colors, easing, duration, and other parameters directly without touching code. Save changes instantly.</p>
-          </div>
-
-          <button class="accordion-button" data-index="6">
-            <span>What's the performance impact?</span>
-            <span class="toggle-icon">+</span>
-          </button>
-          <div class="accordion-content">
-            <p>Basalio is optimized for performance. One shared script loads only on pages that use blocks, keeping the overhead minimal across your site.</p>
-          </div>
-
-          <button class="accordion-button" data-index="7">
-            <span>Does Basalio support WooCommerce?</span>
-            <span class="toggle-icon">+</span>
-          </button>
-          <div class="accordion-content">
-            <p>Basalio blocks work in WooCommerce, but they're optimized for portfolio and case-study sites. For store-specific functionality, check WooCommerce's native block library.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <!-- CONTACT: Still need help section -->
   <section class="support-contact">
     <div class="support-container">
       <h2 class="contact-heading">Still need help?</h2>
@@ -115,57 +83,23 @@ const description = "Basalio support documentation, FAQs, and troubleshooting gu
 </BaseLayout>
 
 <style>
-  .support-header {
-    background: var(--surface-ink);
-    padding: 120px 32px 60px;
-  }
-
   .support-container {
     max-width: 760px;
     margin: 0 auto;
   }
 
-  .support-eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-on-ink-muted);
-    margin: 0 0 16px 0;
-  }
-
-  .support-heading {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    font-size: clamp(30px, 4vw, 44px);
-    margin: 0 0 12px 0;
-    color: var(--text-on-ink);
-  }
-
-  .support-subheading {
-    color: #C9BEB2;
-    font-size: 16px;
-    margin: 0;
-  }
-
-  .support-search {
-    background: var(--surface-ink);
-    padding: 40px 32px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
   .search-box {
     width: 100%;
+    max-width: 100%;
   }
 
   .search-input {
     width: 100%;
     padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 8px;
-    color: var(--text-on-ink);
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    color: var(--text-on-paper);
     font-family: 'Inter', sans-serif;
     font-size: 16px;
     transition: border-color 0.2s ease, background-color 0.2s ease;
@@ -175,106 +109,33 @@ const description = "Basalio support documentation, FAQs, and troubleshooting gu
   .search-input:focus {
     outline: none;
     border-color: var(--acid);
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.06);
   }
 
   .search-input::placeholder {
-    color: var(--text-on-ink-muted);
-  }
-
-  .support-faq {
-    background: var(--surface-ink);
-    padding: 60px 32px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .faq-section {
-    width: 100%;
-  }
-
-  .faq-heading {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 28px;
-    margin: 0 0 40px 0;
-    color: var(--text-on-ink);
-  }
-
-  .accordion {
-    width: 100%;
-  }
-
-  .accordion-button {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    background: none;
-    border: none;
-    padding: 20px 0;
-    cursor: pointer;
-    text-align: left;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-on-ink);
-    border-bottom: 1px solid var(--border-on-ink);
-    transition: color 0.2s ease;
-  }
-
-  .accordion-button:hover {
-    color: var(--acid);
-  }
-
-  .accordion-button .toggle-icon {
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-    color: var(--text-on-ink-muted);
-    flex-shrink: 0;
-    transition: transform 0.3s ease;
-  }
-
-  .accordion-button.open .toggle-icon {
-    transform: rotate(45deg);
-  }
-
-  .accordion-content {
-    display: none;
-    padding: 0 0 20px 0;
-    color: var(--text-on-ink-muted);
-    font-size: 15px;
-    line-height: 1.7;
-  }
-
-  .accordion-content.show {
-    display: block;
-  }
-
-  .accordion-content p {
-    margin: 0;
+    color: var(--text-on-paper-muted);
   }
 
   .support-contact {
-    background: var(--surface-ink);
-    padding: 60px 32px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--surface-paper);
+    padding: 80px 40px;
     text-align: center;
   }
 
   .contact-heading {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 28px;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 48px;
+    letter-spacing: -0.8px;
     margin: 0 0 16px 0;
-    color: var(--text-on-ink);
+    color: var(--text-on-paper);
   }
 
   .contact-text {
-    color: var(--text-on-ink-muted);
+    color: var(--text-on-paper-muted);
     font-size: 16px;
     margin: 0;
+    line-height: 24px;
   }
 
   .contact-link {
@@ -284,53 +145,32 @@ const description = "Basalio support documentation, FAQs, and troubleshooting gu
   }
 
   .contact-link:hover {
-    color: var(--text-on-ink);
+    color: var(--text-on-paper);
   }
 
-  @media (max-width: 768px) {
-    .support-header {
-      padding: 80px 20px 40px;
+  @media (max-width: 1024px) {
+    .support-contact {
+      padding: 60px 30px;
     }
 
-    .support-search,
-    .support-faq,
+    .contact-heading {
+      font-size: 32px;
+      line-height: 40px;
+    }
+  }
+
+  @media (max-width: 640px) {
     .support-contact {
       padding: 40px 20px;
     }
 
-    .support-heading {
-      font-size: clamp(26px, 3.6vw, 38px);
-    }
-
-    .faq-heading,
     .contact-heading {
-      font-size: 22px;
+      font-size: 24px;
+      line-height: 32px;
     }
 
-    .accordion-button {
+    .contact-text {
       font-size: 15px;
-      padding: 16px 0;
     }
   }
 </style>
-
-<script>
-  document.querySelectorAll('.accordion-button').forEach(button => {
-    button.addEventListener('click', () => {
-      const content = button.nextElementSibling;
-      const isOpen = content.classList.contains('show');
-
-      document.querySelectorAll('.accordion-content').forEach(c => {
-        c.classList.remove('show');
-      });
-      document.querySelectorAll('.accordion-button').forEach(b => {
-        b.classList.remove('open');
-      });
-
-      if (!isOpen) {
-        content.classList.add('show');
-        button.classList.add('open');
-      }
-    });
-  });
-</script>

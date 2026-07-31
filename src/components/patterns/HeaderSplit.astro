@@ -1,0 +1,208 @@
+---
+// HeaderSplit: 35-65 flex header section with eyebrow, heading, body left, slot right
+// Always light surface for header legibility
+// Constrained spacing to prevent drift
+
+interface Props {
+  eyebrow: string;
+  heading: string;
+  body: string | string[];
+  cta?: {
+    label: string;
+    href: string;
+    variant?: 'acid' | 'ink';
+  };
+  surface?: 'paper' | 'ink' | 'alt';
+}
+
+const { eyebrow, heading, body, cta, surface = 'paper' } = Astro.props;
+
+const surfaceClass = {
+  paper: 'var(--surface-paper)',
+  ink: 'var(--surface-ink)',
+  alt: 'var(--surface-alt)',
+}[surface] || 'var(--surface-paper)';
+
+const bodyArray = Array.isArray(body) ? body : [body];
+---
+
+<section class="header-split" style={`background: ${surfaceClass};`}>
+  <div class="header-split-inner">
+    <!-- LEFT: Eyebrow, heading, body -->
+    <div class="header-split-left">
+      <p class="eyebrow">{eyebrow}</p>
+      <h1 class="heading">{heading}</h1>
+      <div class="body">
+        {bodyArray.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </div>
+      {cta && (
+        <a href={cta.href} class={`cta cta-${cta.variant || 'acid'}`}>
+          {cta.label}
+        </a>
+      )}
+    </div>
+
+    <!-- RIGHT: Slot for right-column content -->
+    <div class="header-split-right">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style define:vars={{ surfaceClass }}>
+  .header-split {
+    width: 100%;
+    padding-top: 250px;
+    padding-bottom: 40px;
+  }
+
+  .header-split-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+    gap: 60px;
+    padding: 0 40px;
+    box-sizing: border-box;
+  }
+
+  .header-split-left {
+    flex: 0 1 28%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .eyebrow {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    color: var(--text-on-paper);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+  }
+
+  .heading {
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 48px;
+    letter-spacing: -0.8px;
+    color: var(--text-on-paper);
+    margin: 0;
+    padding: 0;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .body p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+    padding: 0;
+  }
+
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    width: fit-content;
+  }
+
+  .cta-acid {
+    background: var(--acid);
+    color: var(--text-on-acid);
+  }
+
+  .cta-acid:hover {
+    opacity: 0.8;
+  }
+
+  .cta-ink {
+    background: var(--surface-ink);
+    color: var(--text-on-ink);
+  }
+
+  .cta-ink:hover {
+    opacity: 0.8;
+  }
+
+  .header-split-right {
+    flex: 1;
+    width: 100%;
+  }
+
+  @media (max-width: 1024px) {
+    .header-split {
+      padding-top: 180px;
+      padding-bottom: 30px;
+    }
+
+    .header-split-inner {
+      flex-direction: column;
+      gap: 40px;
+      padding: 0 30px;
+    }
+
+    .header-split-left {
+      flex: 1 1 100%;
+    }
+
+    .header-split-right {
+      flex: 1 1 100%;
+    }
+
+    .heading {
+      font-size: 32px;
+      line-height: 40px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .header-split {
+      padding-top: 120px;
+      padding-bottom: 20px;
+    }
+
+    .header-split-inner {
+      padding: 0 20px;
+      gap: 30px;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 2.4px;
+    }
+
+    .heading {
+      font-size: 24px;
+      line-height: 32px;
+    }
+
+    .body p {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
+</style>

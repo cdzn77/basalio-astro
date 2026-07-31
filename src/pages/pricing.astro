@@ -87,14 +87,16 @@ const faqs = [
   </Fragment>
 
   <!-- 1. PRICING TIERS SECTION: HeaderSplit with pricing cards in right slot -->
-  <HeaderSplit
-    eyebrow="PRICING"
-    heading="The blocks are free. The Pro layer is one payment, once."
-    body={`Nine interaction blocks, free forever on WordPress.org: no locked blocks, no watermarks, no instance limits. The Pro control center and the full Hacks vault are a single ${founderPrice} founder license for the first 100 people.`}
-    surface="paper"
-  >
-    <PricingCards variant="full" />
-  </HeaderSplit>
+  <section class="pricing-hero-section">
+    <HeaderSplit
+      eyebrow="PRICING"
+      heading="The blocks are free. The Pro layer is one payment, once."
+      body={`Nine interaction blocks, free forever on WordPress.org: no locked blocks, no watermarks, no instance limits. The Pro control center and the full Hacks vault are a single ${founderPrice} founder license for the first 100 people.`}
+      surface="paper"
+    >
+      <PricingCards variant="full" />
+    </HeaderSplit>
+  </section>
 
   <!-- 2. BUILD LEDGER SECTION -->
   <section class="ledger-section">
@@ -176,6 +178,12 @@ const faqs = [
 
 <style>
   /* PRICING HERO SECTION: Top padding for breathing room from header */
+  .pricing-hero-section {
+    width: 100%;
+    padding-top: 250px;
+    background: var(--surface-alt);
+  }
+
   /* 2. BUILD LEDGER SECTION */
   .ledger-section {
     width: 100%;

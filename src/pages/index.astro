@@ -153,31 +153,35 @@ const faqs = [
   />
 
   <!-- PRICING TIERS SECTION: HeaderSplit with PricingCards component -->
-  <HeaderSplit
-    eyebrow="PRICING"
-    heading="There's no catch."
-    body="Nine interaction blocks, complete, free forever on WordPress.org. No locked blocks, no watermarks, no instance limits. What costs money is the control center - live-tuning every block from the editor sidebar - and the full Hacks vault."
-    cta={{ label: 'SEE THE FULL BREAKDOWN →', href: '/pricing', variant: 'acid' }}
-    surface="paper"
-  >
-    <PricingCards variant="compact" />
-  </HeaderSplit>
+  <section class="pricing-hero-section">
+    <div class="pricing-inner">
+      <HeaderSplit
+        eyebrow="PRICING"
+        heading="There's no catch."
+        body="Nine interaction blocks, complete, free forever on WordPress.org. No locked blocks, no watermarks, no instance limits. What costs money is the control center - live-tuning every block from the editor sidebar - and the full Hacks vault."
+        cta={{ label: 'SEE THE FULL BREAKDOWN →', href: '/pricing', variant: 'acid' }}
+        surface="paper"
+      >
+        <PricingCards variant="compact" />
+      </HeaderSplit>
+    </div>
 
-  <!-- DIVIDER LIST: Full width below section -->
-  <div class="pricing-divider-list">
-    <div class="divider-item">
-      <span class="divider-label">FREE FOREVER</span>
-      <span class="divider-text">Nine blocks, complete. Not a trial, not a demo.</span>
+    <!-- DIVIDER LIST: Full width below section -->
+    <div class="pricing-divider-list">
+      <div class="divider-item">
+        <span class="divider-label">FREE FOREVER</span>
+        <span class="divider-text">Nine blocks, complete. Not a trial, not a demo.</span>
+      </div>
+      <div class="divider-item">
+        <span class="divider-label">NO RENEWAL</span>
+        <span class="divider-text">One payment. The license never expires.</span>
+      </div>
+      <div class="divider-item">
+        <span class="divider-label">100 ONLY</span>
+        <span class="divider-text">Founder price, then $249/year.</span>
+      </div>
     </div>
-    <div class="divider-item">
-      <span class="divider-label">NO RENEWAL</span>
-      <span class="divider-text">One payment. The license never expires.</span>
-    </div>
-    <div class="divider-item">
-      <span class="divider-label">100 ONLY</span>
-      <span class="divider-text">Founder price, then $249/year.</span>
-    </div>
-  </div>
+  </section>
 
   <!-- Roles Section -->
   <section class="testimonials-rounded">
@@ -208,6 +212,24 @@ the case study, the reel."
   }
 
   /* PRICING HERO SECTION */
+  .pricing-hero-section {
+    width: 100%;
+    background: var(--surface-alt);
+  }
+
+  .pricing-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+    gap: 60px;
+    padding: 80px 40px;
+    box-sizing: border-box;
+  }
+
   /* PRICING DIVIDER LIST: Full width below cards */
   .pricing-divider-list {
     display: flex;

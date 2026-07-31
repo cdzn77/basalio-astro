@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
 
-const routes = ['/', '/blocks', '/pricing', '/contact', '/roadmap', '/support', '/terms', '/privacy'];
+const routes = ['/', '/blocks', '/pricing', '/contact', '/hacks', '/early-access', '/roadmap', '/support', '/terms', '/privacy'];
 
 async function verifyFooterOverlap(browser, route) {
   const page = await browser.newPage();

@@ -14,12 +14,13 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
   </Fragment>
 
   <!-- EARLY ACCESS: HeaderSplit with form in right slot -->
-  <HeaderSplit
-    eyebrow="EARLY ACCESS"
-    heading="Get on the list."
-    body="Basalio isn't on WordPress.org yet. The nine blocks are built and in testing; the Pro control center isn't started. When the free plugin lands, you'll be the first to know. If you want a founder license, say so below — the first 100 are $149, one payment, and the price goes up after that."
-    surface="paper"
-  >
+  <section class="early-access-section">
+    <HeaderSplit
+      eyebrow="EARLY ACCESS"
+      heading="Get on the list."
+      body="Basalio isn't on WordPress.org yet. The nine blocks are built and in testing; the Pro control center isn't started. When the free plugin lands, you'll be the first to know. If you want a founder license, say so below — the first 100 are $149, one payment, and the price goes up after that."
+      surface="paper"
+    >
     <div class="early-access-form-wrapper">
         <form name="early-access" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" class="early-access-form">
           <!-- Netlify form detection -->
@@ -91,7 +92,8 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
           <p class="success-body">I'll email you when the plugin ships.</p>
         </div>
     </div>
-  </HeaderSplit>
+    </HeaderSplit>
+  </section>
 
   <Fragment slot="footer">
     <RampFooter hideNewsletter={true} />
@@ -100,6 +102,18 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
 
 
 <style>
+  .early-access-section {
+    width: 100%;
+    background: var(--surface-paper);
+    padding: 80px 40px;
+    box-sizing: border-box;
+    border-radius: 0 0 40px 40px;
+    margin-bottom: -40px;
+    padding-bottom: 200px;
+    position: relative;
+    z-index: 2;
+  }
+
   .early-access-form-wrapper {
     width: 100%;
   }

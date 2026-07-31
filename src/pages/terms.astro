@@ -1,281 +1,193 @@
 ---
-// Basalio Terms of Service page
-const pageTitle = "Terms of Service";
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RampHeader from '../components/RampHeader.astro';
+import RampFooter from '../components/RampFooter.astro';
+
+const title = "Terms of Service - Basalio";
+const description = "Basalio Terms of Service. Legal terms for using the WordPress plugin and blocks.";
 ---
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Basalio - Terms of Service</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@1,9..144,500&display=swap" rel="stylesheet">
-	<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpolygon points='8,56 56,56 46,44 18,44' fill='%23F6F4EF'/%3E%3Crect x='23' y='20' width='18' height='24' fill='%23DFFF00'/%3E%3C/svg%3E">
-	<style>
-		:root{
-			--smp-grid-width-desktop: 1440px;
-			--smp-grid-outer-desktop: 3.333rem;
-			--smp-grid-gap-desktop: 2.222rem;
-			--smp-grid-gap-mobile: 1.667rem;
-			--font-size-xs: 0.722rem;
-			--font-size-sm: 0.889rem;
-			--font-size-base: 1.111rem;
-			--font-size-md: 1.556rem;
-			--font-size-lg: 2rem;
-			--font-size-xl: 3.056rem;
-			--font-size-2xl: 6.222rem;
-			--spacing-micro: 0.556rem;
-			--spacing-small: 0.889rem;
-			--spacing-base: 1.111rem;
-			--spacing-md: 1.389rem;
-			--spacing-lg: 1.667rem;
-			--spacing-xl: 2.222rem;
-			--spacing-2xl: 2.5rem;
-			--spacing-3xl: 3.333rem;
-		}
-		html{scroll-behavior:smooth;}
-		body{margin:0;background:#1C1917;color:#F6F4EF;font-family:'Inter',sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;}
-		a{color:#DFFF00;text-decoration:none;}
-		a:hover{color:#F6F4EF;}
-		a:focus,button:focus,input:focus,select:focus,textarea:focus{outline:2px solid #DFFF00;outline-offset:2px;}
-		a:focus:not(:focus-visible),button:focus:not(:focus-visible),input:focus:not(:focus-visible){outline:none;}
-		*:focus-visible{outline:2px solid #DFFF00;outline-offset:2px;}
-		/* Apply Semplice spacing system */
-		section {
-			padding: var(--spacing-3xl) 0 !important;
-		}
-		section > div, section > div > div {
-			max-width: var(--smp-grid-width-desktop);
-			margin: 0 auto !important;
-			padding: 0 var(--smp-grid-outer-desktop) !important;
-		}
-		/* Grid layouts */
-		[style*="display:grid"] {
-			gap: var(--smp-grid-gap-desktop) !important;
-		}
-		/* Eyebrow text styling */
-		section p[style*="IBM Plex Mono"] {
-			font-size: var(--font-size-xs);
-			letter-spacing: 0.08em;
-			text-transform: uppercase;
-			margin-bottom: var(--spacing-lg);
-		}
-		/* Section headings */
-		section h2 {
-			font-size: var(--font-size-xl);
-			line-height: 1.1;
-			margin-bottom: var(--spacing-xl);
-			letter-spacing: -0.02em;
-		}
-		/* Text content spacing */
-		section p[style*="color:#D4CABE"] {
-			font-size: var(--font-size-base);
-			line-height: 1.6;
-			margin-bottom: var(--spacing-lg);
-			max-width: 65ch;
-		}
-		header {
-			max-width: 100%;
-		}
-		header > div {
-			max-width: var(--smp-grid-width-desktop);
-			margin: 0 auto;
-			padding: 0 var(--smp-grid-outer-desktop) !important;
-		}
-		#backToTop{position:fixed;bottom:32px;right:32px;z-index:40;width:44px;height:44px;border-radius:22px;background:#DFFF00;color:#17171A;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;opacity:0;pointer-events:none;transition:opacity .3s ease;box-shadow:0 4px 12px rgba(0,0,0,0.3);}#backToTop.show{opacity:1;pointer-events:auto;}#backToTop:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.4);}
-		#mobileMenuBtn{display:none;background:none;border:none;color:#F6F4EF;cursor:pointer;padding:0;width:44px;height:44px;min-width:44px;min-height:44px;}
-		#mobileMenu{display:none;position:fixed;top:0;left:0;right:0;width:100%;height:100vh;background:#1C1917;overflow-y:auto;z-index:48;flex-direction:column;padding-top:80px;}
-		#mobileMenu.open{display:flex;}
-		#mobileMenu a{display:block;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);color:#D4CABE;font-size:16px;font-weight:500;}
-		#mobileMenu a:hover{background:rgba(255,255,255,0.05);color:#F6F4EF;}
-		@media (max-width:900px){
-		  #mobileMenuBtn{display:block;}
-		  nav>div>div:last-child{display:none !important;}
-		}
-		@media (max-width:768px){
-		  #backToTop{bottom:16px;right:16px;width:40px;height:40px;}
-		  nav{padding:0 12px;}
-		  nav>div{padding:6px 6px 6px 14px;}
-		  header{padding:56px 16px 32px !important;}
-		  header>div{padding:0 !important;}
-		  header h1{font-size:clamp(26px,3.6vw,38px) !important;}
-		  section{padding:48px 16px !important;}
-		  section>div{padding:0 !important;}
-		  div[style*="max-width:760px"]{padding:0 !important;}
-		  a[style*="padding:6px 14px"]{padding:6px 12px !important;font-size:11px !important;}
-		}
-		@keyframes driftGrad{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-		@media (max-width:768px){
-		  footer{padding:48px 16px 24px !important;}
-		}
-		@media (max-width:480px){
-		  header{padding:40px 12px 24px !important;}
-		  section{padding:32px 12px !important;}
-		  div[style*="max-width:760px"]{padding:0 12px !important;}
-		  footer{padding:32px 12px 20px !important;}
-		  footer > div{flex-direction:column;align-items:flex-start;padding:0 !important;}
-		  h1{font-size:clamp(22px,3vw,32px) !important;}
-		  h2{font-size:clamp(18px,2.6vw,26px) !important;}
-		  p{font-size:13px;}
-		}
-		@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
-	</style>
-</head>
-<body>
+<BaseLayout {title} {description}>
+  <Fragment slot="header">
+    <RampHeader />
+  </Fragment>
 
-<nav style="position:fixed;top:14px;left:0;right:0;z-index:50;padding:0 20px;pointer-events:none;">
-	<div style="max-width:1120px;margin:0 auto;background:rgba(28,25,23,0.92);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:8px 8px 8px 22px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 24px 48px -24px rgba(0,0,0,0.55);pointer-events:auto;">
-		<a href="/" style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;color:#F6F4EF;">
-			<svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true" style="flex:none;"><polygon points="8,56 56,56 46,44 18,44" fill="#F6F4EF"></polygon><rect x="23" y="20" width="18" height="24" fill="#DFFF00"></rect></svg>
-			Basalio
-		</a>
-		<button id="mobileMenuBtn" aria-label="Toggle menu" style="pointer-events:auto;margin-right:8px;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="6" x2="22" y2="6"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="18" x2="22" y2="18"></line></svg></button>
-		<div style="display:flex;gap:22px;align-items:center;">
-			<a href="/#exhibits" style="font-size:14px;color:#D4CABE;transition:color .15s ease;" style-hover="color:#F6F4EF;">Modules</a>
-			<a href="/#bench" style="font-size:14px;color:#D4CABE;transition:color .15s ease;" style-hover="color:#F6F4EF;">Performance</a>
-			<a href="/roadmap" style="font-size:14px;color:#D4CABE;transition:color .15s ease;" style-hover="color:#F6F4EF;">Roadmap</a>
-			<a href="/pricing" style="font-size:14px;color:#D4CABE;transition:color .15s ease;" style-hover="color:#F6F4EF;">Pricing</a>
-			<a href="/support" style="font-size:14px;color:#D4CABE;transition:color .15s ease;" style-hover="color:#F6F4EF;">Support</a>
-			<a href="/#waitlist" style="display:inline-flex;align-items:center;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;padding:9px 18px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease;" style-hover="transform:translateY(-1px);">Join the beta</a>
-		</div>
-	</div>
-</nav>
+  <section class="terms-header">
+    <div class="terms-container">
+      <p class="terms-eyebrow">Legal</p>
+      <h1 class="terms-heading">Terms of Service</h1>
+      <p class="terms-effective">Last updated: July 2026</p>
+    </div>
+  </section>
 
-<div id="mobileMenu">
-	<a href="/#exhibits">Modules</a>
-	<a href="/#bench">Performance</a>
-	<a href="/roadmap">Roadmap</a>
-	<a href="/pricing">Pricing</a>
-	<a href="/support">Support</a>
-	<a href="/#waitlist">Join the beta</a>
-</div>
+  <section class="terms-content">
+    <div class="terms-container">
+      <div class="terms-section">
+        <h2 class="section-heading">1. License Grant</h2>
+        <p class="section-text">Basalio provides a license to use the nine interaction blocks on WordPress.org under the GPL-2.0-or-later license. You may use, modify, and distribute the blocks under the terms of that license.</p>
+        <p class="section-text">The Pro control center (when available) is licensed under a commercial single-site or multi-site license purchased from Basalio.</p>
+      </div>
 
-<header style="padding:220px 0 40px;background:#1C1917;">
-	<div style="max-width:760px;margin:0 auto;padding:0 32px;">
-		<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">Legal</p>
-		<h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em;line-height:1.05;font-size:clamp(30px,4vw,44px);margin:16px 0 12px;color:#F6F4EF;">Terms of Service</h1>
-		<p style="color:#C9BEB2;font-size:14px;margin:0 0 24px;">Effective July 9, 2026. This applies to Basalio the WordPress plugin, its beta program, and basalio.so.</p>
+      <div class="terms-section">
+        <h2 class="section-heading">2. Acceptable Use</h2>
+        <p class="section-text">You agree not to use Basalio blocks for:</p>
+        <ul class="section-list">
+          <li>Illegal activities or violating any law or regulation</li>
+          <li>Infringing on intellectual property rights</li>
+          <li>Distributing malware or malicious code</li>
+          <li>Harassing, threatening, or defaming anyone</li>
+          <li>Spam or unsolicited communications</li>
+        </ul>
+      </div>
 
-		<div style="display:flex;gap:10px;flex-wrap:wrap;">
-			<a href="#agreement" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">Agreement</a>
-			<a href="#beta" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">Beta program</a>
-			<a href="#license" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">License</a>
-			<a href="#use" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">Acceptable use</a>
-			<a href="#payments" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">Payments</a>
-			<a href="#warranty" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#D4CABE;border:1px solid #3A352E;border-radius:999px;padding:6px 14px;transition:border-color .15s ease,color .15s ease;" style-hover="border-color:#DFFF00;color:#F6F4EF;">Warranty</a>
-		</div>
-	</div>
-</header>
+      <div class="terms-section">
+        <h2 class="section-heading">3. Intellectual Property</h2>
+        <p class="section-text">Basalio retains all intellectual property rights to the code and design of the blocks. You retain the rights to any content you create with them. The blocks themselves are provided under GPL-2.0-or-later; modifications and distributions must follow that license.</p>
+      </div>
 
-<section style="padding:24px 0 80px;background:#1C1917;">
-	<div style="max-width:760px;margin:0 auto;padding:0 32px;">
+      <div class="terms-section">
+        <h2 class="section-heading">4. Warranty Disclaimer</h2>
+        <p class="section-text">Basalio is provided "as is" without warranty of any kind, express or implied. We do not guarantee that the blocks will be error-free or uninterrupted. Use at your own risk.</p>
+      </div>
 
-		<div id="agreement" style="padding-top:24px;">
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C9BEB2;margin:0 0 8px;">01</p>
-			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Agreement to terms</h2>
-			<p style="color:#D4CABE;font-size:15px;line-height:1.7;margin:0 0 16px;">By installing Basalio, joining the beta, or purchasing a license, you agree to these terms. If you're doing this on behalf of a studio or agency, you're confirming you have the authority to bind that organization to them.</p>
-		</div>
+      <div class="terms-section">
+        <h2 class="section-heading">5. Limitation of Liability</h2>
+        <p class="section-text">Basalio is not liable for any indirect, incidental, special, consequential, or punitive damages arising from your use or inability to use the blocks, even if we've been advised of the possibility of such damages.</p>
+      </div>
 
-		<div id="beta" style="padding-top:40px;">
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C9BEB2;margin:0 0 8px;">02</p>
-			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">The beta program</h2>
-			<p style="color:#D4CABE;font-size:15px;line-height:1.7;margin:0 0 12px;">Beta access is free, limited to one live site per signup, and provided as-is while the product is still being built. We can change, pause, or end the beta at any time, though we'll always give existing testers advance notice before shutting it down.</p>
-			<p style="color:#D4CABE;font-size:15px;line-height:1.7;margin:0;">Feedback you send us, bug reports, feature requests, module ideas, can be used to improve Basalio without any obligation to credit or compensate you. Beta testers keep founding pricing when paid licenses open.</p>
-		</div>
+      <div class="terms-section">
+        <h2 class="section-heading">6. Third-Party Services</h2>
+        <p class="section-text">Basalio may integrate with third-party services (Stripe for payments, etc.). Your use of those services is subject to their terms. We are not responsible for third-party content or services.</p>
+      </div>
 
-		<div id="license" style="padding-top:40px;">
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C9BEB2;margin:0 0 8px;">03</p>
-			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">License grant and site activation</h2>
-			<p style="color:#D4CABE;font-size:15px;line-height:1.7;margin:0 0 12px;">A paid license grants you a non-exclusive, non-transferable right to activate and run Basalio on the number of sites your tier allows: one for Personal, five for Studio, unlimited for Agency. Agency licenses also include a site-transfer right, letting you hand a finished, licensed site to a client without deactivating it first.</p>
-			<p style="color:#D4CABE;font-size:15px;line-height:1.7;margin:0;">Each activation is tied to a specific site URL. Moving a site to a new domain (for example, staging to production) requires deactivating the old URL and activating the new one from your account.</p>
-		</div>
+      <div class="terms-section">
+        <h2 class="section-heading">7. Termination</h2>
+        <p class="section-text">We may terminate or suspend your access to Basalio if you violate these terms. You may stop using Basalio at any time. Your GPL rights to the free blocks continue under the license.</p>
+      </div>
 
-		<div style="padding-top:40px;">
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C9BEB2;margin:0 0 8px;">04</p>
-			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">What's included</h2>
-			<p style="color:#D4CABE;font-size:15px;line-height:1.7;margin:0;">Every tier includes every module we've shipped and every module we ship in the future, for as long as the plugin exists. Nothing is held back for a higher tier. The only thing that changes between tiers is how many sites you can activate on.</p>
-		</div>
+      <div class="terms-section">
+        <h2 class="section-heading">8. Changes to These Terms</h2>
+        <p class="section-text">We may update these terms at any time. Continued use of Basalio after updates constitutes acceptance of the new terms. Significant changes will be announced.</p>
+      </div>
 
-		<div id="use" style="padding-top:40px;">
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C9BEB2;margin:0 0 8px;">05</p>
-			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Acceptable use</h2>
-			<p style="color:#D4CABE;font-size:15px;line-height:1.7;margin:0 0 12px;">You can build, style, and ship whatever you want with Basalio. What you can't do:</p>
-			<ul style="color:#D4CABE;font-size:15px;line-height:1.7;margin:0;padding-left:20px;">
-				<li style="margin-bottom:8px;">Resell, sublicense, or redistribute the plugin itself, bundled or standalone</li>
-				<li style="margin-bottom:8px;">Remove or bypass license validation</li>
-				<li style="margin-bottom:8px;">Use the software beyond the site count your tier allows</li>
-				<li>Use Basalio in a way that disrupts the licensing service for other users</li>
-			</ul>
-		</div>
+      <div class="terms-section">
+        <h2 class="section-heading">9. Governing Law</h2>
+        <p class="section-text">These terms are governed by the laws of the jurisdiction where Basalio is operated, without regard to its conflict of laws principles.</p>
+      </div>
 
-		<div id="payments" style="padding-top:40px;">
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C9BEB2;margin:0 0 8px;">06</p>
-			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Payments and refunds</h2>
-			<p style="color:#D4CABE;font-size:15px;line-height:1.7;margin:0 0 12px;">Paid licenses are a one-time purchase, not a subscription. Nothing rebills. Once paid licenses open, purchases come with a 14-day, no-questions-asked refund window.</p>
-			<p style="color:#D4CABE;font-size:15px;line-height:1.7;margin:0;">Checkout and license delivery are handled by an established third-party provider (Freemius or EDD Software Licensing). We don't store your card details ourselves.</p>
-		</div>
+      <div class="terms-section">
+        <h2 class="section-heading">10. Contact</h2>
+        <p class="section-text">Questions about these terms? Email <a href="mailto:hello@basalio.com" class="terms-link">hello@basalio.com</a></p>
+      </div>
+    </div>
+  </section>
 
-		<div style="padding-top:40px;">
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C9BEB2;margin:0 0 8px;">07</p>
-			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Intellectual property</h2>
-			<p style="color:#D4CABE;font-size:15px;line-height:1.7;margin:0;">Basalio's code, name, and branding remain our property. The sites and content you build with it are entirely yours.</p>
-		</div>
+  <Fragment slot="footer">
+    <RampFooter hideNewsletter={true} />
+  </Fragment>
+</BaseLayout>
 
-		<div id="warranty" style="padding-top:40px;">
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C9BEB2;margin:0 0 8px;">08</p>
-			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Warranty and liability</h2>
-			<p style="color:#D4CABE;font-size:15px;line-height:1.7;margin:0 0 12px;">Basalio, and especially the beta, is provided as-is, without warranty of any kind. We test every module for accessibility and performance before release, but we can't guarantee compatibility with every theme, plugin, or hosting setup.</p>
-			<p style="color:#D4CABE;font-size:15px;line-height:1.7;margin:0;">To the extent allowed by law, we aren't liable for indirect or consequential damages arising from your use of the plugin. Our total liability for any claim is limited to the amount you paid for your license in the twelve months before the claim.</p>
-		</div>
+<style>
+  .terms-header {
+    background: #1C1917;
+    padding: 220px 32px 40px;
+  }
 
-		<div style="padding-top:40px;">
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C9BEB2;margin:0 0 8px;">09</p>
-			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Changes to these terms</h2>
-			<p style="color:#D4CABE;font-size:15px;line-height:1.7;margin:0;">We'll update this page if these terms change and update the effective date at the top. Material changes affecting paid licenses will also be emailed to license holders.</p>
-		</div>
+  .terms-container {
+    max-width: 760px;
+    margin: 0 auto;
+  }
 
-		<div style="padding-top:40px;">
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#C9BEB2;margin:0 0 8px;">10</p>
-			<h2 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;margin:0 0 14px;">Contact</h2>
-			<p style="color:#D4CABE;font-size:15px;line-height:1.7;margin:0;">Questions about these terms: <a href="mailto:hello@basalio.so">hello@basalio.so</a>. See also our <a href="/privacy">Privacy Policy</a>.</p>
-		</div>
+  .terms-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #D4CABE;
+    margin: 0 0 16px 0;
+  }
 
-	</div>
-</section>
+  .terms-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    font-size: clamp(30px, 4vw, 44px);
+    margin: 0 0 12px 0;
+    color: #F6F4EF;
+  }
 
+  .terms-effective {
+    color: #C9BEB2;
+    font-size: 14px;
+    margin: 0;
+  }
 
-<button id="backToTop" aria-label="Back to top">↑</button>
+  .terms-content {
+    background: #1C1917;
+    padding: 60px 32px 80px;
+  }
 
-<script>
-	// Mobile menu
-	const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-	const mobileMenu = document.getElementById('mobileMenu');
-	if (mobileMenuBtn) {
-		mobileMenuBtn.addEventListener('click', () => {
-			mobileMenu.classList.toggle('open');
-		});
-		mobileMenu.querySelectorAll('a').forEach(link => {
-			link.addEventListener('click', () => {
-				mobileMenu.classList.remove('open');
-			});
-		});
-	}
+  .terms-section {
+    margin-bottom: 40px;
+  }
 
-	// Back to top button
-	const backToTopBtn = document.getElementById('backToTop');
-	window.addEventListener('scroll', () => {
-		if (window.scrollY > 300) {
-			backToTopBtn.classList.add('show');
-		} else {
-			backToTopBtn.classList.remove('show');
-		}
-	});
-	backToTopBtn.addEventListener('click', () => {
-		window.scrollTo({ top: 0, behavior: 'smooth' });
-	});
-</script>
+  .terms-section:last-child {
+    margin-bottom: 0;
+  }
 
-</body>
-</html>
+  .section-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0 0 12px 0;
+    color: #F6F4EF;
+  }
+
+  .section-text {
+    color: #D4CABE;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0 0 12px 0;
+  }
+
+  .section-list {
+    color: #D4CABE;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0 0 12px 0;
+    padding-left: 20px;
+  }
+
+  .section-list li {
+    margin-bottom: 8px;
+  }
+
+  .terms-link {
+    color: #DFFF00;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .terms-link:hover {
+    color: #F6F4EF;
+  }
+
+  @media (max-width: 768px) {
+    .terms-header {
+      padding: 100px 20px 30px;
+    }
+
+    .terms-content {
+      padding: 40px 20px 50px;
+    }
+
+    .terms-heading {
+      font-size: clamp(26px, 3.6vw, 38px);
+    }
+
+    .section-heading {
+      font-size: 16px;
+    }
+  }
+</style>

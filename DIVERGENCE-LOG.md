@@ -17,10 +17,10 @@ Four pages were converted from standalone HTML to use BaseLayout with shared Ram
 
 ### Pages Affected
 
-1. **privacy.astro** — 303 → ~380 lines (expanded with BaseLayout wrapper)
-2. **support.astro** — 491 → ~550 lines (estimated)
-3. **terms.astro** — 281 → ~360 lines (estimated)
-4. **roadmap.astro** — 354 → ~430 lines (estimated)
+1. **privacy.astro** — 303 → ~380 lines (expanded with BaseLayout wrapper) ✓ COMMITTED
+2. **support.astro** — 491 → ~550 lines (estimated) ✓ COMMITTED
+3. **roadmap.astro** — 354 → ~430 lines (estimated) ✓ COMMITTED
+4. **terms.astro** — 281 → 194 lines (BaseLayout + styled sections) ✓ COMMITTED
 
 ### Rationale
 

@@ -191,16 +191,18 @@ const faqs = [
   </section>
 
   <!-- Roles Section -->
-  <RampTestimonialsV2
-    eyebrow="WHO IT'S FOR"
-    sectionHeading="Built for people whose
+  <section class="testimonials-rounded">
+    <RampTestimonialsV2
+      eyebrow="WHO IT'S FOR"
+      sectionHeading="Built for people whose
 work has to move."
-    bodyText="Basalio is nine blocks, not ninety. That only works
+      bodyText="Basalio is nine blocks, not ninety. That only works
 if the nine are the right ones, so they were picked
 for a specific kind of site: the portfolio,
 the case study, the reel."
-    closingLine="If you need a general-purpose animation engine, this isn't it. Nine blocks, opinionated, built for one kind of site."
-  />
+      closingLine="If you need a general-purpose animation engine, this isn't it. Nine blocks, opinionated, built for one kind of site."
+    />
+  </section>
 
 
   <Fragment slot="footer">
@@ -209,6 +211,18 @@ the case study, the reel."
 </BaseLayout>
 
 <style>
+  /* TESTIMONIALS WRAPPER: Rounded corners and footer overlap */
+  .testimonials-rounded {
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+    overflow: visible;
+    position: relative;
+    z-index: 2;
+    margin-bottom: -40px;
+    padding-bottom: 200px;
+    background: #FFFFFF;
+  }
+
   /* PRICING HERO SECTION */
   .pricing-hero-section {
     width: 100%;

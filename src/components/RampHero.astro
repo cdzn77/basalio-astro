@@ -16,7 +16,7 @@ interface Props {
     | { type: 'image'; src: string; position?: string; scrim?: number }
     | { type: 'video'; src: string; poster: string; position?: string; scrim?: number }
     | { type: 'gradient'; from: string; to: string; angle?: string };
-  surface?: 'paper' | 'ink';
+  surface?: 'acid' | 'paper' | 'ink';
 }
 
 const {
@@ -26,7 +26,7 @@ const {
   teaserLink = "#blocks",
   heroImage = "https://framerusercontent.com/images/WAxIIZFwFsal6BUSuk7mft7nN7U.png",
   background = { type: 'color', token: 'acid' },
-  surface = 'paper'
+  surface = 'acid'
 } = Astro.props;
 
 const colorMap = {
@@ -34,11 +34,6 @@ const colorMap = {
   paper: 'var(--surface-paper)',
   ink: 'var(--surface-ink)',
   alt: 'var(--surface-alt)'
-};
-
-const textTokens = {
-  paper: { primary: 'var(--text-on-paper)', secondary: 'var(--text-on-paper-muted)' },
-  ink: { primary: 'var(--text-on-ink)', secondary: 'var(--text-on-ink-muted)' }
 };
 
 const scrimOpacity = background.type === 'image' || background.type === 'video' ? (background.scrim ?? 0.4) : 0;
@@ -202,6 +197,10 @@ const scrimOpacity = background.type === 'image' || background.type === 'video' 
   }
 
   /* Surface-specific heading color */
+  .hero[data-surface='acid'] .hero-heading {
+    color: var(--text-on-acid);
+  }
+
   .hero[data-surface='paper'] .hero-heading {
     color: var(--text-on-paper);
   }
@@ -248,6 +247,10 @@ const scrimOpacity = background.type === 'image' || background.type === 'video' 
   }
 
   /* Surface-specific course label color */
+  .hero[data-surface='acid'] .course-label {
+    color: var(--text-on-acid);
+  }
+
   .hero[data-surface='paper'] .course-label {
     color: var(--text-on-paper);
   }
@@ -274,6 +277,10 @@ const scrimOpacity = background.type === 'image' || background.type === 'video' 
   }
 
   /* Surface-specific course description color */
+  .hero[data-surface='acid'] .course-description {
+    color: var(--text-on-acid);
+  }
+
   .hero[data-surface='paper'] .course-description {
     color: var(--text-on-paper);
   }

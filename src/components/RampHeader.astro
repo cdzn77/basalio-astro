@@ -2,10 +2,10 @@
 import { headerNav } from '../data/navigation';
 
 interface Props {
-  surface?: 'paper' | 'ink';
+  surface?: 'acid' | 'paper' | 'ink';
 }
 
-const { surface = 'paper' } = Astro.props;
+const { surface = 'acid' } = Astro.props;
 ---
 
 <div class="header-container" data-surface={surface}>
@@ -65,9 +65,10 @@ const { surface = 'paper' } = Astro.props;
     box-sizing: border-box;
   }
 
-  /* Logo - surface-specific color */
+  /* Logo - acid and paper are light backgrounds (dark text), ink is dark (light text) */
+  .header-container[data-surface='acid'] .brand-logo,
   .header-container[data-surface='paper'] .brand-logo {
-    color: var(--text-on-paper);
+    color: rgb(0, 0, 0);
   }
 
   .header-container[data-surface='ink'] .brand-logo {
@@ -94,7 +95,8 @@ const { surface = 'paper' } = Astro.props;
     -webkit-font-smoothing: antialiased;
   }
 
-  /* Menu button - pill must contrast with hero background */
+  /* Menu button - acid and paper are light (dark pill), ink is dark (light pill) */
+  .header-container[data-surface='acid'] .menu-btn,
   .header-container[data-surface='paper'] .menu-btn {
     background: var(--surface-ink);
     color: var(--text-on-ink);

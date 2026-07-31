@@ -1,354 +1,256 @@
 ---
-// Basalio Roadmap page with card stack interaction
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RampHeader from '../components/RampHeader.astro';
+import RampFooter from '../components/RampFooter.astro';
+
+const title = "Roadmap - Basalio";
+const description = "Basalio development roadmap. See what's coming next for the nine interaction blocks.";
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Basalio - Product Roadmap</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@1,9..144,500&display=swap" rel="stylesheet">
-	<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpolygon points='8,56 56,56 46,44 18,44' fill='%23F6F4EF'/%3E%3Crect x='23' y='20' width='18' height='24' fill='%23DFFF00'/%3E%3C/svg%3E">
-	<style>
-		:root{
-			--smp-grid-width-desktop: 1440px;
-			--smp-grid-outer-desktop: 3.333rem;
-			--smp-grid-gap-desktop: 2.222rem;
-			--smp-grid-gap-mobile: 1.667rem;
-			--font-size-xs: 0.722rem;
-			--font-size-sm: 0.889rem;
-			--font-size-base: 1.111rem;
-			--font-size-md: 1.556rem;
-			--font-size-lg: 2rem;
-			--font-size-xl: 3.056rem;
-			--font-size-2xl: 6.222rem;
-			--spacing-micro: 0.556rem;
-			--spacing-small: 0.889rem;
-			--spacing-base: 1.111rem;
-			--spacing-md: 1.389rem;
-			--spacing-lg: 1.667rem;
-			--spacing-xl: 2.222rem;
-			--spacing-2xl: 2.5rem;
-			--spacing-3xl: 3.333rem;
-		}
-		html{scroll-behavior:smooth;}
-		body{margin:0;background:#1C1917;color:#F6F4EF;font-family:'Inter',sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;}
-		a{color:inherit;text-decoration:none;}
-		a:focus,button:focus,input:focus,select:focus,textarea:focus{outline:2px solid #DFFF00;outline-offset:2px;}
-		a:focus:not(:focus-visible),button:focus:not(:focus-visible),input:focus:not(:focus-visible){outline:none;}
-		*:focus-visible{outline:2px solid #DFFF00;outline-offset:2px;}
-		/* Apply Semplice spacing system */
-		section {
-			padding: var(--spacing-3xl) 0 !important;
-		}
-		section > div, section > div > div {
-			max-width: var(--smp-grid-width-desktop);
-			margin: 0 auto !important;
-			padding: 0 var(--smp-grid-outer-desktop) !important;
-		}
-		/* Grid layouts */
-		[style*="display:grid"] {
-			gap: var(--smp-grid-gap-desktop) !important;
-		}
-		/* Eyebrow text styling */
-		section p[style*="IBM Plex Mono"] {
-			font-size: var(--font-size-xs);
-			letter-spacing: 0.08em;
-			text-transform: uppercase;
-			margin-bottom: var(--spacing-lg);
-		}
-		/* Section headings */
-		section h2 {
-			font-size: var(--font-size-xl);
-			line-height: 1.1;
-			margin-bottom: var(--spacing-xl);
-			letter-spacing: -0.02em;
-		}
-		/* Text content spacing */
-		section p[style*="color:#D4CABE"] {
-			font-size: var(--font-size-base);
-			line-height: 1.6;
-			margin-bottom: var(--spacing-lg);
-			max-width: 65ch;
-		}
-		header {
-			max-width: 100%;
-		}
-		header > div {
-			max-width: var(--smp-grid-width-desktop);
-			margin: 0 auto;
-			padding: 0 var(--smp-grid-outer-desktop) !important;
-		}
-		#backToTop{position:fixed;bottom:32px;right:32px;z-index:40;width:44px;height:44px;border-radius:22px;background:#DFFF00;color:#17171A;border:0;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;opacity:0;pointer-events:none;transition:opacity .3s ease;box-shadow:0 4px 12px rgba(0,0,0,0.3);}#backToTop.show{opacity:1;pointer-events:auto;}#backToTop:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,0.4);}
-		#mobileMenuBtn{display:none;background:none;border:none;color:#F6F4EF;cursor:pointer;padding:0;width:44px;height:44px;min-width:44px;min-height:44px;}
-		#mobileMenu{display:none;position:fixed;top:0;left:0;right:0;width:100%;height:100vh;background:#1C1917;overflow-y:auto;z-index:48;flex-direction:column;padding-top:80px;}
-		#mobileMenu.open{display:flex;}
-		#mobileMenu a{display:block;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);color:#D4CABE;font-size:16px;font-weight:500;}
-		#mobileMenu a:hover{background:rgba(255,255,255,0.05);color:#F6F4EF;}
-		@media (max-width:900px){
-		  #mobileMenuBtn{display:block;}
-		  nav>div>div:last-child{display:none !important;}
-		}
-		@media (max-width:768px){
-		  #backToTop{bottom:16px;right:16px;width:40px;height:40px;}
-		  nav{padding:0 12px;}
-		  nav>div{padding:6px 6px 6px 14px;}
-		  header{padding:64px 16px 56px !important;}
-		  header>div{padding:0 !important;}
-		  header h1{font-size:clamp(28px,3.8vw,40px) !important;}
-		  section{padding:40px 16px !important;}
-		  section>div{padding:0 !important;}
-		  div[style*="max-width:1200px"]{padding:0 16px !important;}
-		}
-		@media (max-width:768px){
-		  footer{padding:48px 16px 24px !important;}
-		  footer > div > div[style*="grid-template-columns"]{grid-template-columns:1fr !important;gap:32px !important;}
-		  footer form{flex-direction:column;}
-		  footer > div {
-		  	padding: 0 !important;
-		  }
-		}
-		@media (max-width:480px){
-		  header{padding:40px 12px 32px !important;}
-		  section{padding:32px 12px !important;}
-		  div[style*="max-width:1200px"]{padding:0 12px !important;}
-		  footer{padding:32px 12px 20px !important;}
-		  footer > div > div[style*="grid-template-columns"]{gap:20px !important;}
-		  h1{font-size:clamp(24px,3.2vw,36px) !important;}
-		  h2{font-size:clamp(20px,2.8vw,28px) !important;}
-		}
-		@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
-	</style>
-</head>
-<body>
+<BaseLayout {title} {description}>
+  <Fragment slot="header">
+    <RampHeader />
+  </Fragment>
 
-<nav style="position:fixed;top:14px;left:0;right:0;z-index:50;padding:0 20px;pointer-events:none;">
-	<div style="max-width:1120px;margin:0 auto;background:rgba(28,25,23,0.92);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,0.08);border-radius:999px;padding:8px 8px 8px 22px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 24px 48px -24px rgba(0,0,0,0.55);pointer-events:auto;">
-		<a href="/" style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;color:#F6F4EF;">
-			<svg width="14" height="14" viewBox="0 0 64 64" aria-hidden="true" style="flex:none;"><polygon points="8,56 56,56 46,44 18,44" fill="#F6F4EF"></polygon><rect x="23" y="20" width="18" height="24" fill="#DFFF00"></rect></svg>
-			Basalio
-		</a>
-		<button id="mobileMenuBtn" aria-label="Toggle menu" style="pointer-events:auto;margin-right:8px;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="6" x2="22" y2="6"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="18" x2="22" y2="18"></line></svg></button>
-		<div style="display:flex;gap:26px;align-items:center;">
-			<a href="/#exhibits" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Modules</a>
-			<a href="/#bench" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Performance</a>
-			<a href="/roadmap" style="font-size:14px;color:#F6F4EF;">Roadmap</a>
-			<a href="/pricing" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Pricing</a>
-			<a href="/support" style="font-size:14px;color:#D4CABE;transition:color .15s ease;">Support</a>
-			<a href="/#waitlist" style="display:inline-flex;align-items:center;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;padding:9px 18px;border-radius:999px;background:#DFFF00;color:#17171A;transition:transform .18s ease;">Join the beta</a>
-		</div>
-	</div>
-</nav>
+  <section class="roadmap-header">
+    <div class="roadmap-container">
+      <p class="roadmap-eyebrow">Coming Soon</p>
+      <h1 class="roadmap-heading">Roadmap</h1>
+      <p class="roadmap-subheading">Here's what we're building next. Priorities can shift, but we ship what we promise.</p>
+    </div>
+  </section>
 
-<div id="mobileMenu">
-	<a href="/#exhibits">Modules</a>
-	<a href="/#bench">Performance</a>
-	<a href="/roadmap">Roadmap</a>
-	<a href="/pricing">Pricing</a>
-	<a href="/support">Support</a>
-	<a href="/#waitlist">Join the beta</a>
-</div>
+  <section class="roadmap-content">
+    <div class="roadmap-container">
+      <div class="roadmap-item">
+        <div class="roadmap-marker roadmap-shipped">SHIPPED</div>
+        <h2 class="roadmap-item-title">Nine Core Blocks</h2>
+        <p class="roadmap-item-date">June 2026</p>
+        <p class="roadmap-item-description">Grid Reveal, Case Study Transition, Text Reveal, Magnetic Button, Before/After, Filterable Grid, Custom Cursor, Scroll Sequence, Pinned Scroll.</p>
+      </div>
 
-<header style="position:relative;overflow:hidden;background:#1C1917;padding:220px 0 72px;">
-	<div aria-hidden="true" style="position:absolute;top:-180px;left:-140px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(223,255,0,0.14),transparent 70%);filter:blur(10px);pointer-events:none;"></div>
-	<div aria-hidden="true" style="position:absolute;bottom:-220px;right:-160px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(43,199,166,0.13),transparent 70%);filter:blur(10px);pointer-events:none;"></div>
+      <div class="roadmap-item">
+        <div class="roadmap-marker roadmap-shipped">SHIPPED</div>
+        <h2 class="roadmap-item-title">Free Hacks Vault</h2>
+        <p class="roadmap-item-date">June 2026</p>
+        <p class="roadmap-item-description">Four free CSS/JS snippets. Reveal on Scroll, Color Peek, Tilt Effect, Typewriter Text. Copy-paste into any site.</p>
+      </div>
 
-	<div style="position:relative;max-width:1200px;margin:0 auto;padding:0 32px;display:flex;gap:56px;align-items:flex-start;flex-wrap:wrap;">
+      <div class="roadmap-item">
+        <div class="roadmap-marker roadmap-shipped">SHIPPED</div>
+        <h2 class="roadmap-item-title">Pro License System</h2>
+        <p class="roadmap-item-date">June 2026</p>
+        <p class="roadmap-item-description">100 founder licenses at $149. One payment, no renewal. Includes all future blocks and the Pro control center (when shipped).</p>
+      </div>
 
-		<div style="flex:1 1 460px;min-width:300px;">
-			<p style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#D4CABE;margin:0;">The roadmap</p>
-			<h1 style="font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em;line-height:1.05;font-size:clamp(34px,4.4vw,54px);margin:16px 0 16px;color:#F6F4EF;">What we build next is your call.</h1>
-			<p style="color:#D4CABE;font-size:17px;max-width:56ch;margin:0 0 28px;">The beta ships three modules. These six are scoped and accessibility-first, but none are built yet, and beta feedback decides which go first.</p>
+      <div class="roadmap-item">
+        <div class="roadmap-marker roadmap-in-progress">IN PROGRESS</div>
+        <h2 class="roadmap-item-title">Pro Control Center</h2>
+        <p class="roadmap-item-date">February 2027</p>
+        <p class="roadmap-item-description">Editor sidebar for live-tuning every block. Adjust timing, easing, colors, and behavior without leaving WordPress. Launch date is a hard commitment.</p>
+      </div>
 
-			<form style="display:flex;gap:10px;max-width:460px;margin-bottom:28px;">
-				<input type="text" placeholder="A module you wish existed" aria-label="Suggest a module" style="flex:1;min-width:0;padding:13px 18px;border-radius:999px;border:1px solid rgba(255,255,255,0.16);background:rgba(255,255,255,0.05);color:#F6F4EF;font-family:'Inter',sans-serif;font-size:14px;">
-				<button type="submit" style="flex:none;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;padding:13px 20px;border:0;border-radius:999px;background:#DFFF00;color:#17171A;cursor:pointer;white-space:nowrap;">Suggest idea</button>
-			</form>
+      <div class="roadmap-item">
+        <div class="roadmap-marker roadmap-planned">PLANNED</div>
+        <h2 class="roadmap-item-title">Full Hacks Vault</h2>
+        <p class="roadmap-item-date">Q2 2027</p>
+        <p class="roadmap-item-description">12+ CSS/JS effects. Refraction, Glitch, 3D Flip, Hover Trail, and more. Open-source, free to copy-paste.</p>
+      </div>
 
-			<div style="display:flex;gap:14px;align-items:flex-start;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:16px 18px;max-width:520px;">
-				<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:#D4CABE;border:1px solid rgba(255,255,255,0.2);border-radius:999px;padding:3px 10px;flex:none;">Planned</span>
-				<p style="font-size:13.5px;color:#D4CABE;margin:0;">Nothing below is available today. Treat it as intent, not a release schedule.</p>
-			</div>
-		</div>
+      <div class="roadmap-item">
+        <div class="roadmap-marker roadmap-planned">PLANNED</div>
+        <h2 class="roadmap-item-title">Block Pack #2</h2>
+        <p class="roadmap-item-date">Q3 2027</p>
+        <p class="roadmap-item-description">Five new blocks. Parallax Reveal, Stagger Load, Morphing Button, Video Timeline, Infinite Carousel. Free forever on WordPress.org.</p>
+      </div>
 
-		<div style="flex:1 1 340px;min-width:300px;display:flex;flex-direction:column;align-items:center;">
-			<div style="position:relative;height:300px;width:290px;" id="cardStack">
-				<div class="stack-card" style="position:absolute;width:100%;height:100%;background:#26221E;border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:24px 22px;box-shadow:0 30px 60px -20px rgba(0,0,0,0.55);cursor:pointer;transform:translateY(0) rotate(0deg);transition:transform .4s cubic-bezier(.16,1,.3,1);">
-					<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-						<span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#DFFF00;">Ex. 04</span>
-						<span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#C9BEB2;border:1px solid rgba(255,255,255,0.15);border-radius:999px;padding:2px 9px;">Tier S</span>
-					</div>
-					<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;margin:0 0 10px;color:#F6F4EF;">Magnetic Button</h3>
-					<p style="font-size:13px;color:#D4CABE;margin:0;line-height:1.5;">A gentle magnetic pull toward the pointer on your primary call-to-action: presence, not spectacle.</p>
-				</div>
-				<div class="stack-card" style="position:absolute;width:100%;height:100%;background:#26221E;border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:24px 22px;box-shadow:0 30px 60px -20px rgba(0,0,0,0.55);cursor:pointer;transform:translateY(12px) rotate(1.5deg);transition:transform .4s cubic-bezier(.16,1,.3,1);">
-					<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-						<span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#2BC7A6;">Ex. 05</span>
-						<span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#C9BEB2;border:1px solid rgba(255,255,255,0.15);border-radius:999px;padding:2px 9px;">Tier L</span>
-					</div>
-					<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;margin:0 0 10px;color:#F6F4EF;">Scroll-Scrubbed Image Sequence</h3>
-					<p style="font-size:13px;color:#D4CABE;margin:0;line-height:1.5;">Tie a frame sequence to scroll position, so a build, a rotation, or a reveal unfolds as the reader moves through it.</p>
-				</div>
-				<div class="stack-card" style="position:absolute;width:100%;height:100%;background:#26221E;border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:24px 22px;box-shadow:0 30px 60px -20px rgba(0,0,0,0.55);cursor:pointer;transform:translateY(24px) rotate(-1.5deg);transition:transform .4s cubic-bezier(.16,1,.3,1);">
-					<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-						<span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#FF6B4A;">Ex. 06</span>
-						<span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#C9BEB2;border:1px solid rgba(255,255,255,0.15);border-radius:999px;padding:2px 9px;">Tier M</span>
-					</div>
-					<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;margin:0 0 10px;color:#F6F4EF;">Draggable Before / After</h3>
-					<p style="font-size:13px;color:#D4CABE;margin:0;line-height:1.5;">A draggable divider for comparison shots: the redesign, the retouch, the restoration, revealed by hand.</p>
-				</div>
-				<div class="stack-card" style="position:absolute;width:100%;height:100%;background:#26221E;border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:24px 22px;box-shadow:0 30px 60px -20px rgba(0,0,0,0.55);cursor:pointer;transform:translateY(36px) rotate(1.5deg);transition:transform .4s cubic-bezier(.16,1,.3,1);">
-					<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-						<span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#2BC7A6;">Ex. 07</span>
-						<span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#C9BEB2;border:1px solid rgba(255,255,255,0.15);border-radius:999px;padding:2px 9px;">Tier M</span>
-					</div>
-					<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;margin:0 0 10px;color:#F6F4EF;">Stagger on Scroll</h3>
-					<p style="font-size:13px;color:#D4CABE;margin:0;line-height:1.5;">Stagger reveal for lists and grids: each item fades and slides up as you pass through its viewport threshold.</p>
-				</div>
-			</div>
-			<p style="text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#C9BEB2;margin:18px 0 0;">Tap a card to bring it forward</p>
-		</div>
+      <div class="roadmap-item">
+        <div class="roadmap-marker roadmap-planned">PLANNED</div>
+        <h2 class="roadmap-item-title">Design System Template</h2>
+        <p class="roadmap-item-date">Q4 2027</p>
+        <p class="roadmap-item-description">Pre-made design tokens library. Colors, typography, spacing, animations. Download, customize for your brand, apply to all blocks at once.</p>
+      </div>
 
-	</div>
-</header>
+      <div class="roadmap-item">
+        <div class="roadmap-marker roadmap-planned">PLANNED</div>
+        <h2 class="roadmap-item-title">WordPress.org Listing</h2>
+        <p class="roadmap-item-date">Post-launch</p>
+        <p class="roadmap-item-description">Official WordPress plugin directory. Makes discovery and updates simpler. Planned after the first 30 days of launch stability.</p>
+      </div>
+    </div>
+  </section>
 
-<section style="padding:24px 0 96px;background:#1C1917;">
-	<div style="max-width:1200px;margin:0 auto;padding:0 32px;display:flex;flex-direction:column;gap:24px;">
+  <section class="roadmap-notes">
+    <div class="roadmap-container">
+      <h2 class="notes-heading">Notes</h2>
+      <ul class="notes-list">
+        <li><strong>All nine blocks are free forever.</strong> No paywall, no locked features, no watermarks. Free is not a trial or a countdown.</li>
+        <li><strong>Pro tier is optional.</strong> The control center sidebar is the only paid feature. Everything else ships free.</li>
+        <li><strong>Dates are best-guesses.</strong> We ship when ready, not on calendars. Launch date for Pro is the only hard deadline.</li>
+        <li><strong>Roadmap changes if users ask.</strong> Open an issue on GitHub or email hello@basalio.com with feature requests. Big asks can shift priorities.</li>
+        <li><strong>Security updates come first.</strong> If a block has a vulnerability, we patch it before roadmap items.</li>
+      </ul>
+    </div>
+  </section>
 
-		<div style="display:grid;grid-template-columns:80px 1fr 1fr;gap:40px;padding:40px;background:#211E1A;border:1px solid rgba(255,255,255,0.07);border-radius:18px;align-items:start;">
-			<div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#D4CABE;padding-top:6px;white-space:nowrap;">Ex. 04<span style="display:block;margin-top:8px;color:#D4CABE;opacity:.85;">Tier S</span></div>
-			<div>
-				<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px;">
-					<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em;font-size:22px;margin:0;">Magnetic Button</h3>
-					<span style="display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:#D4CABE;border:1px solid #3A352E;border-radius:999px;padding:3px 10px;"><span style="width:5px;height:5px;border-radius:50%;background:#D4CABE;display:inline-block;"></span>Planned</span>
-				</div>
-				<p style="font-style:italic;font-family:'Fraunces',serif;color:#F6F4EF;font-size:16px;margin-bottom:14px;">"A CTA that feels alive without being gimmicky."</p>
-				<p style="color:#D4CABE;font-size:15px;max-width:44ch;margin:0;">A gentle magnetic pull toward the pointer on your primary call-to-action: presence, not spectacle.</p>
-				<div style="margin-top:16px;max-width:46ch;">
-					<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#D4CABE;display:block;margin-bottom:3px;">Accessibility bar</span>
-					<span style="font-size:13px;color:#D4CABE;">Keyboard-focus equivalent required; off by default on touch.</span>
-				</div>
-			</div>
-			<div style="border:1px solid #3A352E;background:#26221E;height:180px;border-radius:8px;display:flex;align-items:center;justify-content:center;">
-				<div style="display:flex;flex-direction:column;align-items:center;gap:12px;color:#D4CABE;">
-					<svg width="20" height="20" viewBox="0 0 64 64" aria-hidden="true"><polygon points="8,56 56,56 46,44 18,44" fill="#4A4540"></polygon><rect x="23" y="20" width="18" height="24" fill="#4A4540"></rect></svg>
-					<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#D4CABE;">Not yet built</span>
-				</div>
-			</div>
-		</div>
+  <Fragment slot="footer">
+    <RampFooter hideNewsletter={true} />
+  </Fragment>
+</BaseLayout>
 
-		<div style="display:grid;grid-template-columns:80px 1fr 1fr;gap:40px;padding:40px;background:#211E1A;border:1px solid rgba(255,255,255,0.07);border-radius:18px;align-items:start;">
-			<div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#D4CABE;padding-top:6px;white-space:nowrap;">Ex. 05<span style="display:block;margin-top:8px;color:#D4CABE;opacity:.85;">Tier L</span></div>
-			<div>
-				<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px;">
-					<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em;font-size:22px;margin:0;">Scroll-Scrubbed Image Sequence</h3>
-					<span style="display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:#D4CABE;border:1px solid #3A352E;border-radius:999px;padding:3px 10px;"><span style="width:5px;height:5px;border-radius:50%;background:#D4CABE;display:inline-block;"></span>Planned</span>
-				</div>
-				<p style="font-style:italic;font-family:'Fraunces',serif;color:#F6F4EF;font-size:16px;margin-bottom:14px;">"I want to show a process or product turning as people read."</p>
-				<p style="color:#D4CABE;font-size:15px;max-width:44ch;margin:0;">Tie a frame sequence to scroll position, so a build, a rotation, or a reveal unfolds as the reader moves through it.</p>
-				<div style="margin-top:16px;max-width:46ch;">
-					<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#D4CABE;display:block;margin-bottom:3px;">Accessibility bar</span>
-					<span style="font-size:13px;color:#D4CABE;">Must offer a manual next/prev alternative, not scroll-only (WCAG 2.5.1).</span>
-				</div>
-			</div>
-			<div style="border:1px solid #3A352E;background:#26221E;height:180px;border-radius:8px;display:flex;align-items:center;justify-content:center;">
-				<div style="display:flex;flex-direction:column;align-items:center;gap:12px;color:#D4CABE;">
-					<svg width="20" height="20" viewBox="0 0 64 64" aria-hidden="true"><polygon points="8,56 56,56 46,44 18,44" fill="#4A4540"></polygon><rect x="23" y="20" width="18" height="24" fill="#4A4540"></rect></svg>
-					<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#D4CABE;">Not yet built</span>
-				</div>
-			</div>
-		</div>
+<style>
+  .roadmap-header {
+    background: #1C1917;
+    padding: 120px 32px 60px;
+  }
 
-		<div style="display:grid;grid-template-columns:80px 1fr 1fr;gap:40px;padding:40px;background:#211E1A;border:1px solid rgba(255,255,255,0.07);border-radius:18px;align-items:start;">
-			<div style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#D4CABE;padding-top:6px;white-space:nowrap;">Ex. 06<span style="display:block;margin-top:8px;color:#D4CABE;opacity:.85;">Tier M</span></div>
-			<div>
-				<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px;">
-					<h3 style="font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:-0.01em;font-size:22px;margin:0;">Draggable Before / After</h3>
-					<span style="display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:#D4CABE;border:1px solid #3A352E;border-radius:999px;padding:3px 10px;"><span style="width:5px;height:5px;border-radius:50%;background:#D4CABE;display:inline-block;"></span>Planned</span>
-				</div>
-				<p style="font-style:italic;font-family:'Fraunces',serif;color:#F6F4EF;font-size:16px;margin-bottom:14px;">"I want an interactive way to show the change I made."</p>
-				<p style="color:#D4CABE;font-size:15px;max-width:44ch;margin:0;">A draggable divider for comparison shots: the redesign, the retouch, the restoration, revealed by hand.</p>
-				<div style="margin-top:16px;max-width:46ch;">
-					<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#D4CABE;display:block;margin-bottom:3px;">Accessibility bar</span>
-					<span style="font-size:13px;color:#D4CABE;">A real ARIA slider role, arrow-key operable, never a bare draggable div.</span>
-				</div>
-			</div>
-			<div style="border:1px solid #3A352E;background:#26221E;height:180px;border-radius:8px;display:flex;align-items:center;justify-content:center;">
-				<div style="display:flex;flex-direction:column;align-items:center;gap:12px;color:#D4CABE;">
-					<svg width="20" height="20" viewBox="0 0 64 64" aria-hidden="true"><polygon points="8,56 56,56 46,44 18,44" fill="#4A4540"></polygon><rect x="23" y="20" width="18" height="24" fill="#4A4540"></rect></svg>
-					<span style="font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#D4CABE;">Not yet built</span>
-				</div>
-			</div>
-		</div>
+  .roadmap-container {
+    max-width: 760px;
+    margin: 0 auto;
+  }
 
-	</div>
-</section>
+  .roadmap-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #D4CABE;
+    margin: 0 0 16px 0;
+  }
 
+  .roadmap-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-size: clamp(30px, 4vw, 44px);
+    margin: 0 0 12px 0;
+    color: #F6F4EF;
+  }
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-	// Mobile menu
-	const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-	const mobileMenu = document.getElementById('mobileMenu');
-	if (mobileMenuBtn) {
-		mobileMenuBtn.addEventListener('click', () => {
-			mobileMenu.classList.toggle('open');
-		});
-		mobileMenu.querySelectorAll('a').forEach(link => {
-			link.addEventListener('click', () => {
-				mobileMenu.classList.remove('open');
-			});
-		});
-	}
+  .roadmap-subheading {
+    color: #C9BEB2;
+    font-size: 16px;
+    margin: 0;
+  }
 
-	const stack = document.getElementById('cardStack');
-	if (!stack) return;
+  .roadmap-content {
+    background: #1C1917;
+    padding: 60px 32px;
+  }
 
-	const cards = stack.querySelectorAll('.stack-card');
-	const cardArray = Array.from(cards);
+  .roadmap-item {
+    padding: 40px 0;
+    border-bottom: 1px solid #3A352E;
+  }
 
-	cards.forEach((card, index) => {
-		card.addEventListener('click', () => {
-			// Rotate stack: move clicked card to front
-			const currentOrder = cardArray.slice();
-			const clickedIndex = currentOrder.indexOf(card);
+  .roadmap-item:last-child {
+    border-bottom: none;
+  }
 
-			// Reorder array to put clicked card first
-			const newOrder = [card, ...currentOrder.filter((_, i) => i !== clickedIndex)];
+  .roadmap-marker {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
 
-			// Update visual positions
-			newOrder.forEach((c, i) => {
-				const offsetY = i * 12;
-				const rotation = i === 0 ? 0 : (i % 2 === 0 ? -1.5 : 1.5);
-				c.style.transform = `translateY(${offsetY}px) rotate(${rotation}deg)`;
-				c.style.zIndex = 10 - i;
-			});
+  .roadmap-shipped {
+    background: rgba(0, 255, 0, 0.15);
+    color: #90EE90;
+    border: 1px solid rgba(0, 255, 0, 0.3);
+  }
 
-			// Update reference array
-			cardArray.length = 0;
-			cardArray.push(...newOrder);
-		});
-	});
-});
+  .roadmap-in-progress {
+    background: rgba(223, 255, 0, 0.15);
+    color: #FFFF99;
+    border: 1px solid rgba(223, 255, 0, 0.3);
+  }
 
-// Back to top button
-const backToTopBtn = document.getElementById('backToTop');
-window.addEventListener('scroll', () => {
-	if (window.scrollY > 300) {
-		backToTopBtn.classList.add('show');
-	} else {
-		backToTopBtn.classList.remove('show');
-	}
-});
-backToTopBtn.addEventListener('click', () => {
-	window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-</script>
+  .roadmap-planned {
+    background: rgba(100, 100, 255, 0.15);
+    color: #B0C4FF;
+    border: 1px solid rgba(100, 100, 255, 0.3);
+  }
 
-<button id="backToTop" aria-label="Back to top">↑</button>
+  .roadmap-item-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    margin: 0 0 8px 0;
+    color: #F6F4EF;
+  }
 
-</body>
-</html>
+  .roadmap-item-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: #D4CABE;
+    margin: 0 0 12px 0;
+  }
+
+  .roadmap-item-description {
+    color: #D4CABE;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .roadmap-notes {
+    background: #1C1917;
+    padding: 60px 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .notes-heading {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    margin: 0 0 24px 0;
+    color: #F6F4EF;
+  }
+
+  .notes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .notes-list li {
+    color: #D4CABE;
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    padding-left: 0;
+  }
+
+  .notes-list li strong {
+    color: #F6F4EF;
+  }
+
+  @media (max-width: 768px) {
+    .roadmap-header {
+      padding: 80px 20px 40px;
+    }
+
+    .roadmap-content,
+    .roadmap-notes {
+      padding: 40px 20px;
+    }
+
+    .roadmap-heading {
+      font-size: clamp(26px, 3.6vw, 38px);
+    }
+
+    .roadmap-item-title {
+      font-size: 18px;
+    }
+
+    .notes-heading {
+      font-size: 22px;
+    }
+  }
+</style>

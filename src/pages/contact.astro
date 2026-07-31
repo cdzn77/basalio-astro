@@ -4,6 +4,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
+import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 import { socialLinks } from '../data/navigation';
 
 const title = "Contact Basalio";
@@ -16,29 +17,14 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     <RampHeader />
   </Fragment>
 
-  <!-- HERO + FORM SECTION (2-COLUMN LAYOUT) -->
-  <section class="hero-form-section">
-    <!-- LEFT COLUMN: Header & Copy -->
-    <div class="hero-column">
-      <div class="hero-label">GET IN TOUCH</div>
-      <h1 class="hero-heading">Questions? We're here to help.</h1>
-      <p class="hero-description">We typically respond within 24 hours. For urgent issues,<br />check our documentation or community.</p>
-
-      <!-- FOLLOW US SECTION -->
-      <div class="follow-us-section">
-        <h2 class="follow-us-heading">Follow us</h2>
-        <p class="follow-us-description">Stay updated with news, tips, and updates.</p>
-      </div>
-
-      <!-- SOCIAL LINKS -->
-      <div class="social-links-inline">
-        <a href={socialLinks.twitter} class="social-link" target="_blank" rel="noopener">Twitter</a>
-        <a href={socialLinks.github} class="social-link" target="_blank" rel="noopener">GitHub</a>
-      </div>
-    </div>
-
-    <!-- RIGHT COLUMN: Form -->
-    <div class="form-column">
+  <!-- HERO + FORM SECTION: HeaderSplit with form in right slot -->
+  <HeaderSplit
+    eyebrow="GET IN TOUCH"
+    heading="Questions? We're here to help."
+    body="We typically respond within 24 hours. For urgent issues, check our documentation or community."
+    surface="paper"
+  >
+    <div class="contact-form-wrapper">
       <form class="contact-form" id="contact-form">
         <!-- Name Field -->
         <div class="form-group">
@@ -82,7 +68,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
         <button type="submit" class="submit-button">SEND MESSAGE</button>
       </form>
     </div>
-  </section>
+  </HeaderSplit>
 
   <!-- RESOURCES SECTION -->
   <section class="resources-section">
@@ -117,56 +103,8 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
 
 <style>
   /* HERO + FORM SECTION (2-COLUMN LAYOUT) */
-  .hero-form-section {
-    display: grid;
-    grid-template-columns: 35% 65%;
+  .contact-form-wrapper {
     width: 100%;
-    max-width: 1786px;
-    padding: 120px 40px;
-    background: var(--surface-paper);
-    box-sizing: border-box;
-    gap: 60px;
-    margin: 0 auto;
-    align-items: flex-start;
-  }
-
-  .hero-column {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    max-width: 450px;
-  }
-
-  .form-column {
-    display: flex;
-    flex-direction: column;
-    max-width: 500px;
-  }
-
-  .hero-label {
-    background-color: var(--acid);
-    color: var(--text-on-paper);
-    font-family: 'Azeret Mono', monospace;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 2.8px;
-    text-transform: uppercase;
-    padding: 8px 12px;
-    display: inline-block;
-    width: fit-content;
-  }
-
-  .hero-heading {
-    font-family: Switzer, sans-serif;
-    font-size: 48px;
-    font-weight: 400;
-    letter-spacing: -0.96px;
-    line-height: 52.8px;
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-    text-wrap: balance;
-    max-width: 600px;
   }
 
   .hero-description {

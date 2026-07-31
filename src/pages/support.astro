@@ -140,12 +140,15 @@ const faqs = [
 
   .contact-link {
     color: var(--acid);
-    text-decoration: none;
-    transition: color 0.2s ease;
+    display: inline-block;
+    padding: 8px 12px;
+    min-height: 24px;
+    min-width: 24px;
+    transition: text-decoration-thickness 0.2s ease;
   }
 
   .contact-link:hover {
-    color: var(--text-on-paper);
+    text-decoration-thickness: 2px;
   }
 
   @media (max-width: 1024px) {

@@ -170,7 +170,7 @@ p {
 /* Links – paper surface (default) */
 a {
   color: var(--text-on-paper);
-  text-decoration: underline;
+  text-decoration: underline !important;
   text-decoration-color: var(--acid);
   text-underline-offset: 3px;
   transition: text-decoration-thickness 0.2s ease;
@@ -193,7 +193,7 @@ a:focus-visible {
 /* Links – ink surface */
 .surface-ink a {
   color: var(--text-on-ink);
-  text-decoration: underline;
+  text-decoration: underline !important;
   text-decoration-color: var(--acid);
   text-underline-offset: 3px;
   transition: text-decoration-thickness 0.2s ease;

@@ -296,3 +296,13 @@ figcaption {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Footer overlap effect – structural only, applied to all pages
+   Uses :last-of-type to skip <script> tags injected by Astro
+   Each page declares only background-color on its last section */
+.base-main > section:last-of-type {
+  border-radius: 0 0 40px 40px;
+  margin-bottom: -40px;
+  position: relative;
+  z-index: 2;
+}

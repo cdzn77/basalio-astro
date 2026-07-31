@@ -49,8 +49,8 @@
   --text-on-acid-muted: rgba(28, 25, 23, 0.7);          /* 70% opacity, composites to #575E10, 5.78:1 */
   --border-on-acid: rgba(28, 25, 23, 0.5);              /* 50% opacity, composites to #7D8C0B, 3.30:1 */
 
-  /* Dark ink surface borders & dividers */
-  --border-on-ink: #3A352E;                              /* lighter warm tone, 1.44:1 vs surface-ink, subtle divider */
+  /* Dark ink surface borders & dividers — WCAG 1.4.11 only applies to interactive UI (inputs, focus indicators, control edges) */
+  --border-on-ink: #3A352E;                              /* lighter warm tone, 1.44:1 vs surface-ink, for decorative content dividers */
 
   /* Semi-transparent overlays */
   --overlay-dark-05: rgba(0, 0, 0, 0.05);

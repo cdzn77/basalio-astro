@@ -17,7 +17,7 @@ interface Props {
 const {
   faqs,
   heading = "FAQ",
-  backgroundColor = "#1C1917"
+  backgroundColor = "var(--text-on-paper)"
 } = Astro.props;
 
 // Create a data attribute string for client-side JavaScript
@@ -85,7 +85,7 @@ const faqDataJson = JSON.stringify(faqs);
     font-weight: 400;
     line-height: 48px;
     letter-spacing: -0.8px;
-    color: #FFFFFF;
+    color: var(--surface-paper);
     margin: 0;
     padding: 0;
     flex: 1 1 0%;
@@ -143,7 +143,7 @@ const faqDataJson = JSON.stringify(faqs);
     font-weight: 500;
     line-height: 25.2px;
     letter-spacing: -0.36px;
-    color: #FFFFFF;
+    color: var(--surface-paper);
     flex-grow: 1;
     margin: 0;
   }
@@ -181,7 +181,7 @@ const faqDataJson = JSON.stringify(faqs);
     font-size: 16px;
     font-weight: 400;
     line-height: 22.4px;
-    color: #FFFFFF !important;
+    color: var(--surface-paper) !important;
     margin: 20px 0 0 0;
     padding: 0;
     margin-top: 20px;

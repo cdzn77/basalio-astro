@@ -1,23 +1,23 @@
 ---
 // Ramp Hero - 1:1 PIXEL-PERFECT REPLICA
 // Exact dimensions from original: 1791×914px
-// Hero container: 1791×840px with 74px course teaser
+// Hero container: 1791×840px with 74px blocks teaser
 
 import Button from './Button.astro';
 
 interface Props {
-  courseLabel?: string;
-  courseText?: string;
-  courseButton?: string;
-  courseLink?: string;
+  teaserLabel?: string;
+  teaserText?: string;
+  teaserButton?: string;
+  teaserLink?: string;
   heroImage?: string;
 }
 
 const {
-  courseLabel = "COACHING OFFERS 101",
-  courseText = "This course helps you design clear, compelling offers that people actually understand and want to buy.",
-  courseButton = "VIEW COURSE",
-  courseLink = "#courses",
+  teaserLabel = "COACHING OFFERS 101",
+  teaserText = "This course helps you design clear, compelling offers that people actually understand and want to buy.",
+  teaserButton = "VIEW COURSE",
+  teaserLink = "#blocks",
   heroImage = "https://framerusercontent.com/images/WAxIIZFwFsal6BUSuk7mft7nN7U.png"
 } = Astro.props;
 ---
@@ -35,13 +35,13 @@ const {
     </div>
   </div>
 
-  <!-- BOTTOM: Course Teaser (74px height) -->
+  <!-- BOTTOM: Blocks Teaser (74px height) -->
   <div class="course-teaser">
     <div class="course-left">
-      <p class="course-label">{courseLabel}</p>
-      <p class="course-description">{courseText}</p>
+      <p class="course-label">{teaserLabel}</p>
+      <p class="course-description">{teaserText}</p>
     </div>
-    <Button label={courseButton} href={courseLink} />
+    <Button label={teaserButton} href={teaserLink} />
   </div>
 </section>
 

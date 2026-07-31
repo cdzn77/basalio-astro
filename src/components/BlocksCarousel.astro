@@ -1,10 +1,10 @@
 ---
-// Ramp Courses - Page-based carousel with hover-zones and visible arrow buttons
+// Blocks Carousel - Page-based carousel with hover-zones and visible arrow buttons
 // Two-column layout: LEFT (500px text/button) | RIGHT (carousel 1109px)
 
 import TwoPillButton from './TwoPillButton.astro';
 
-interface Course {
+interface Block {
   title: string;
   description: string;
   image?: string;
@@ -12,7 +12,7 @@ interface Course {
 }
 
 interface Props {
-  courses?: Course[];
+  blocks?: Block[];
   sectionLabel?: string;
   sectionHeading?: string;
   ctaLabel?: string;
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const {
-  courses = [],
+  blocks = [],
   sectionLabel = "OUR BLOCKS",
   sectionHeading = "Blocks",
   ctaLabel = "Explore",
@@ -28,7 +28,7 @@ const {
 } = Astro.props;
 ---
 
-<section class="courses" id="courses">
+<section class="courses" id="blocks">
   <div class="courses-inner">
     <!-- LEFT COLUMN: 500px, eyebrow + heading + button + pagination -->
     <div class="courses-left">
@@ -70,20 +70,20 @@ const {
       <div class="carousel-viewport">
         <!-- Track: position absolute, flex row, gap 20px, overflowing -->
         <div class="carousel-track">
-          {courses.map((course, index) => {
-            const courseImages = [
+          {blocks.map((block, index) => {
+            const blockImages = [
               '/assets/course-1.png',
               '/assets/course-2.png',
               '/assets/course-3.png',
               '/assets/course-4.png'
             ];
             return (
-              <a href={course.link || "#"} class="course-card">
+              <a href={block.link || "#"} class="course-card">
                 <div class="course-image-wrapper">
-                  <img src={courseImages[index] || courseImages[0]} alt={course.title} class="course-image" />
+                  <img src={blockImages[index] || blockImages[0]} alt={block.title} class="course-image" />
                 </div>
-                <h3 class="course-card-title">{course.title}</h3>
-                <p class="course-card-description">{course.description}</p>
+                <h3 class="course-card-title">{block.title}</h3>
+                <p class="course-card-description">{block.description}</p>
               </a>
             );
           })}

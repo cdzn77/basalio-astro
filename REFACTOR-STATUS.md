@@ -58,9 +58,33 @@ One commit each, pixel-verified. Shared components before pages — fixing `Ramp
 
 ---
 
-## Status: NOT STARTED
+## Status: IN PROGRESS — Step 3 Token Migration started
 
-Logged for pre-launch execution. Do not begin until homepage is complete and brand colour pass is scheduled.
+**RampFooter.astro — DEFERRED TO POST-BRAND-PASS**
+Reason: All grey text (#333333, #666666, #999999) sits on Ramp yellow (#FFEA00), which is being replaced with acid #DFFF00. Tokenizing greys against a changing background is wasted work — every contrast relationship shifts when the yellow does.
+
+**WCAG flag for brand pass:** #999999 on #FFEA00 is ~2.1:1 contrast. Used for input border AND ::placeholder text. Placeholder at 2.1:1 fails WCAG AA. Must fix during acid colour swap.
+
+**Token migration order (revised):**
+1. RampHeader.astro (10)
+2. Button.astro (4)
+3. BlocksCarousel.astro
+4. PositioningStats.astro
+5. RampHero.astro (6)
+6. FAQ.astro (4)
+7. components.css (3)
+8. responsive.css (3)
+9. RampTemplateLayout.astro (36)
+10. index.astro (38)
+11. pricing.astro (32)
+12. contact.astro (32)
+13. roadmap.astro (15)
+14. support.astro (15)
+15. terms.astro (12)
+16. privacy.astro (12)
+17. blocks.astro (7)
+18. **RampFooter.astro (24) — AFTER brand colour pass**
+19. Any remaining
 
 ---
 

@@ -1,4 +1,42 @@
-# Divergence Log: Standalone Page Integration
+# Divergence Log
+
+## Brand Colour Pass (2026-07-31)
+
+### Step 1: Yellow Rebrand (#FFEA00 → #DFFF00) ✓ COMPLETE
+
+**Files Changed:** 9 files (12 instances)
+
+#### Visual Changes
+- **Hero Section:** Ramp template yellow (#FFEA00) → Basalio acid yellow (#DFFF00)
+- **Carousel Cards:** BlocksCarousel card backgrounds now use brighter, warmer yellow
+- **Footer Background:** RampFooter now uses acid yellow instead of Ramp yellow
+- **Body Background:** RampTemplateLayout body background updated to acid yellow
+- **Dot Indicator:** Small yellow indicator in blocks.astro uses new acid yellow
+
+#### Files Modified
+- `src/components/RampHeader.astro` — header background
+- `src/components/RampHero.astro` — hero background
+- `src/components/RampFooter.astro` — footer background
+- `src/components/BlocksCarousel.astro` — carousel cards
+- `src/layouts/RampTemplateLayout.astro` — body + first section
+- `src/pages/blocks.astro` — dot indicator
+- `src/pages/index.astro` — pricing section
+- `src/pages/pricing.astro` — hero + ledger sections
+- `src/styles/tokens.css` — token value
+
+#### Colour Details
+- **Old:** #FFEA00 (Ramp yellow, cool-toned lime)
+- **New:** #DFFF00 (Basalio acid, warmer lime-green)
+- **Contrast:** #000000 on #DFFF00 = ~19:1 (WCAG AAA)
+- **Real Difference:** Visibly brighter, warmer cast
+
+#### Proof
+- `baseline-index.png` — Homepage with new yellow
+- `baseline-blocks.png` — Blocks page with new yellow
+
+---
+
+## Standalone Page Integration (2026-07-30)
 
 ## Pages Converted (2026-07-30)
 

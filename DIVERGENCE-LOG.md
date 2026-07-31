@@ -78,6 +78,44 @@
 
 ---
 
+### Step 3: Grey Consolidation (#E8E8E8, #F5F5F5 → var(--surface-alt)) ✓ COMPLETE
+
+**Files Changed:** 8 files (27 instances)
+
+#### Visual Changes
+- **Component Backgrounds:** PositioningStats stat boxes now use canonical light grey
+- **Borders:** All light grey borders updated to use the surface-alt token
+- **Form Backgrounds:** Contact and pricing form backgrounds now use canonical light grey
+- **Dividers:** Pricing table dividers and section separators use the light grey token
+- **Consistency:** All light grey surfaces now use the same colour value (#FAFAFA)
+
+#### Files Modified
+- `src/components/PositioningStats.astro` — stat box backgrounds (1 instance)
+- `src/components/BlocksCarousel.astro` — button borders (1 instance)
+- `src/components/RampTestimonialsV2.astro` — carousel borders (2 instances)
+- `src/layouts/RampTemplateLayout.astro` — light grey token definition + section background (2 instances)
+- `src/pages/index.astro` — pricing section backgrounds + dividers (6 instances)
+- `src/pages/contact.astro` — form background + borders (4 instances)
+- `src/pages/pricing.astro` — table dividers + backgrounds (6 instances)
+- `src/styles/tokens.css` — token references
+
+#### Colour Details
+- **Old:** Mixed greys (#E8E8E8, #F5F5F5 with different RGB values)
+- **New:** Canonical --surface-alt (#FAFAFA)
+- **Real Difference:** Minimal visual change; greys are close in value
+- **Semantic:** Single light grey surface colour, no variation
+
+#### Token Notes
+- Updated `--color-off-white-95` to reference var(--surface-alt)
+- Updated `--color-gray-light` to reference var(--surface-alt)
+- --surface-alt (#FAFAFA) is the canonical light grey
+
+#### Proof
+- `baseline-index-step3.png` — Homepage with consolidated greys
+- `baseline-pricing-step3.png` — Pricing page with canonical light grey
+
+---
+
 ## Standalone Page Integration (2026-07-30)
 
 ## Pages Converted (2026-07-30)

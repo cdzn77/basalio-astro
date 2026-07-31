@@ -14,6 +14,15 @@ import PricingCards from '../components/patterns/PricingCards.astro';
 const title = "Basalio - WordPress Portfolio Blocks";
 const description = "Nine curated interaction blocks for portfolio and case-study sites. Built for WordPress, not Framer.";
 
+// Hero background configuration (centralized)
+const heroBackground = { type: 'color', token: 'acid' };
+const heroSurface = 'acid';
+
+// Header surface automatically syncs with hero background
+// - acid background → acid header (dark text)
+// - image/video/gradient → ink header (light text) by default
+const headerSurface = heroBackground.type === 'color' ? heroSurface : 'ink';
+
 // Correct nine block names from src/data/pricing.ts
 const blockNames = [
   "Grid Reveal",
@@ -83,7 +92,7 @@ const faqs = [
 <BaseLayout title={title} description={description}>
   <!-- HEADER: Navigation bar (universal across all pages) -->
   <Fragment slot="header">
-    <RampHeader surface="acid" />
+    <RampHeader surface={headerSurface} />
   </Fragment>
 
   <!-- Hero Section -->
@@ -93,7 +102,8 @@ const faqs = [
     teaserButton="EXPLORE BLOCKS"
     teaserLink="/blocks"
     heroImage="https://framerusercontent.com/images/WAxIIZFwFsal6BUSuk7mft7nN7U.png"
-    surface="acid"
+    background={heroBackground}
+    surface={heroSurface}
   />
 
   <!-- What We Do Section -->

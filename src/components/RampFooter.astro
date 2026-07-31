@@ -91,7 +91,7 @@ const { hideNewsletter = false } = Astro.props;
 <style>
   /* FOOTER SHELL */
   .footer {
-    background-color: #DFFF00;
+    background-color: var(--acid);
     width: 100%;
     box-sizing: border-box;
     position: relative;
@@ -140,7 +140,7 @@ const { hideNewsletter = false } = Astro.props;
     font-weight: 500;
     letter-spacing: 0.8px;
     text-transform: uppercase;
-    color: #1C1917;
+    color: var(--text-on-acid);
     margin: 0;
     padding: 0;
   }
@@ -168,7 +168,7 @@ const { hideNewsletter = false } = Astro.props;
     justify-content: center;
     width: 24px;
     height: 24px;
-    color: #1C1917;
+    color: var(--text-on-acid);
     text-decoration: none;
     transition: opacity 200ms ease;
   }
@@ -211,7 +211,7 @@ const { hideNewsletter = false } = Astro.props;
     font-size: 14px;
     font-weight: 400;
     line-height: 19.6px;
-    color: #1C1917;
+    color: var(--text-on-acid);
     text-decoration: none;
     cursor: pointer;
     transition: opacity 200ms ease;
@@ -250,8 +250,8 @@ const { hideNewsletter = false } = Astro.props;
     padding: 10px 12px;
     border: 1px solid var(--border-on-acid);
     border-radius: 6px;
-    background-color: #ffffff;
-    color: #1C1917;
+    background-color: var(--surface-paper);
+    color: var(--text-on-acid);
     font-size: 14px;
     font-family: inherit;
   }
@@ -262,8 +262,8 @@ const { hideNewsletter = false } = Astro.props;
 
   .footer-subscribe-btn {
     padding: 10px 16px;
-    background-color: #1C1917;
-    color: #ffffff;
+    background-color: var(--surface-ink);
+    color: var(--surface-paper);
     border: none;
     border-radius: 6px;
     font-size: 14px;
@@ -330,7 +330,7 @@ const { hideNewsletter = false } = Astro.props;
     font-size: clamp(100px, 18vw, 380px);
     font-weight: 400;
     letter-spacing: -0.04em;
-    color: #1C1917;
+    color: var(--text-on-acid);
     margin: 0;
     padding: 0;
     display: block;

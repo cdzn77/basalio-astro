@@ -53,6 +53,19 @@ The product is **BLOCKS**. Never "modules," never "courses" — not in copy, met
 
 **Why:** Phantom terminology in comments, variable names, and component props becomes invisible confusion in future sessions. A developer reading `courseButton` concludes we sell courses. A comment referencing deleted `RampCourses` creates search noise. Locked terminology in code prevents this drift.
 
+## Hero background swaps
+
+When changing the hero background and surface:
+
+- `background` and `surface` are set in `index.astro`. `headerSurface` always equals `heroSurface` — never derive either from `background.type`. A light photo and a dark photo are both `type: 'image'`; the type says nothing about brightness.
+- `surface` names the **SURFACE**, not the text:
+  - `'acid'`  → light background → dark text → paper scrim
+  - `'paper'` → light background → dark text → paper scrim
+  - `'ink'`   → dark background  → light text → ink scrim
+- `surface` changes **COLOUR ONLY** — never layout, order, size, or spacing.
+- The portrait renders only when `background.type === 'color'`. For image/video/gradient backgrounds, the portrait is removed from the DOM (not hidden with CSS).
+- Contrast over a photo is not guaranteed. Sample the lightest region under dark text and the darkest under light text; raise `scrim` opacity until both clear 4.5:1.
+
 ## Editing discipline
 - Change only what was asked. Do not rewrite files, regenerate
   boilerplate, or "improve" adjacent code.

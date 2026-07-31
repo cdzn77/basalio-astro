@@ -4,26 +4,38 @@ Canonical definitions for structural patterns reused across this site. Reference
 
 ---
 
-## PATTERN: `header-split-35-65`
-Used in: What We Do, Our Courses, Our Resources, Monthly Retainer, FAQ
+## PATTERN: `header-split-primary`
+Primary split-column header pattern used across the site. Provides eyebrow, headline, and body text in the left rail with flexible content in the right column.
 
 ```
 ┌─────────────────────────────────────────────────────────┐
 │ ┌─────────────┐  ┌────────────────────────────────────┐ │
 │ │  EYEBROW     │  │  (varies by section — description,  │ │
-│ │  35% width   │  │   heading, cards, list, etc.)       │ │
-│ │              │  │   65% width                         │ │
+│ │  ~26.7%      │  │   search box, etc.)                 │ │
+│ │              │  │   ~65.4%                            │ │
+│ │  HEADLINE    │  │                                     │ │
+│ │  BODY        │  │                                     │ │
 │ └─────────────┘  └────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────┘
 ```
-```css
-.row { display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; }
-.left  { flex: 1 1 0%; max-width: 35%; }
-.right { flex: 1 1 0%; max-width: 65%; }
-```
-Eyebrow text style (always identical): Azeret Mono, 14px, weight 500, uppercase, letter-spacing 2.8px, color ink.
 
-CRITICAL: any content BELOW this header row that should align under the right column (lists, grids) needs to be EXPLICITLY placed inside a matching 35/65 wrapper — it does NOT inherit alignment from the header row above it just by being a sibling. This was the exact bug on Our Resources — verify alignment with getBoundingClientRect, don't assume.
+**Implementation:**
+```css
+.left  { flex: 0 1 28%; }     /* eyebrow, headline, body */
+.right { flex: 1; }            /* flexible content */
+gap: 60px
+```
+
+**Actual measurements:** 26.7% left / 65.4% right (flex-basis 28% shrinks due to gap and container constraints)
+
+**Component:** `src/components/patterns/HeaderSplit.astro`
+**Imported as:** `HeaderSplit`
+**Used by:** /pricing, /hacks, /early-access, /contact, /roadmap, /terms, /privacy, /support, /blocks
+
+**Rules:**
+1. Do NOT hand-author this layout in a page file. Always use the HeaderSplit component.
+2. If you need different layout behavior, extend the HeaderSplit component — do not create a variant layout in the page CSS.
+3. Any content BELOW this header row that should align under the right column (lists, grids) needs to be EXPLICITLY placed inside a matching 35/65 wrapper — it does NOT inherit alignment from the header row above it just by being a sibling. See /support FAQ section for example: eyebrow + title in left rail, accordion items in right column.
 
 ---
 
@@ -117,4 +129,4 @@ If the section order changes, the `border-radius` and the "last section before f
 
 ## How to use this file in prompts
 
-Reference like: *"Use PATTERN: header-split-35-65 for the top row (see LAYOUT_PATTERNS.md)."* Only describe what's DIFFERENT from the canonical pattern in prose — not the whole thing again.
+Reference like: *"Use PATTERN: header-split-primary for the top row (see LAYOUT_PATTERNS.md)."* Only describe what's DIFFERENT from the canonical pattern in prose — not the whole thing again.

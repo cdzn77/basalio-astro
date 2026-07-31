@@ -10,7 +10,7 @@ Prose descriptions of layout ("flex row, 35% left column...") are ambiguous enou
 
 Before writing layout CSS/JSX for any section, require ALL of the following to be present:
 1. An ASCII wireframe box diagram in the prompt showing nesting and column splits — if one isn't provided, ask for it rather than inferring structure from prose alone.
-2. A reference to LAYOUT_PATTERNS.md for any pattern that matches an existing canonical definition (header-split-35-65, divider-list, two-pill-button, accordion, card-grid-2col, sticky-footer-reveal) — implement the canonical CSS from that file, don't re-derive it from a paragraph.
+2. A reference to LAYOUT_PATTERNS.md for any pattern that matches an existing canonical definition (header-split-primary, divider-list, two-pill-button, accordion, card-grid-2col, sticky-footer-reveal) — implement the canonical CSS from that file, don't re-derive it from a paragraph.
 3. If a reference screenshot file exists in /reference/, open and look at it directly before writing code — don't rely solely on the text description of what it shows.
 
 After building, compare your screenshot output against the reference screenshot side by side and describe any visual differences explicitly — don't just confirm the code compiles or that elements are present.

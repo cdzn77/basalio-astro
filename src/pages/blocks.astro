@@ -7,7 +7,6 @@ import RampHeader from '../components/RampHeader.astro';
 import RampTestimonialsV2 from '../components/RampTestimonialsV2.astro';
 import RampFooter from '../components/RampFooter.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
-import Button from '../components/Button.astro';
 
 const title = "Blocks - Basalio";
 const description = "Nine curated interaction blocks built for WordPress portfolios. Grid reveals, case study transitions, scroll sequences, and more.";
@@ -189,8 +188,9 @@ const descriptionWords = description.split(' ');
           </div>
         </div>
         <div class="grid-replay-controls">
-          <Button id="grid-replay-btn" label="Replay" variant="ink" fontSize="13px" fontWeight="600" letterSpacing="0.05em" />
+          <button id="grid-replay-btn" class="replay-btn">REPLAY</button>
         </div>
+        <p class="demo-caption">Recreated for the web. See it running in WordPress →</p>
       </div>
       <div class="block-controls">
         <h3 class="controls-heading">What you can control</h3>
@@ -230,6 +230,7 @@ const descriptionWords = description.split(' ');
           <div class="sequence-item" style="--sequence-step: 1">Step 2</div>
           <div class="sequence-item" style="--sequence-step: 2">Step 3</div>
         </div>
+        <p class="demo-caption">Recreated for the web. See it running in WordPress →</p>
       </div>
       <div class="block-controls">
         <h3 class="controls-heading">What you can control</h3>
@@ -271,6 +272,7 @@ const descriptionWords = description.split(' ');
             <div class="divider" />
           </div>
         </div>
+        <p class="demo-caption">Recreated for the web. See it running in WordPress →</p>
       </div>
       <div class="block-controls">
         <h3 class="controls-heading">What you can control</h3>
@@ -596,6 +598,7 @@ const descriptionWords = description.split(' ');
     width: 100%;
     min-height: 300px;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background: var(--surface-alt);
@@ -603,6 +606,16 @@ const descriptionWords = description.split(' ');
     border: 1px solid var(--stone);
     padding: 40px;
     box-sizing: border-box;
+    gap: 24px;
+  }
+
+  .demo-caption {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+    padding: 0;
+    text-align: center;
   }
 
   /* GRID REVEAL DEMO */
@@ -632,7 +645,7 @@ const descriptionWords = description.split(' ');
   }
 
   .grid-tile[data-surface="alt"] {
-    background: var(--surface-alt);
+    background: var(--surface-paper);
     color: var(--text-on-paper);
   }
 
@@ -677,6 +690,32 @@ const descriptionWords = description.split(' ');
     justify-content: center;
     margin-top: 40px;
     width: 100%;
+  }
+
+  .replay-btn {
+    padding: 0 16px;
+    height: 43.6px;
+    background: var(--surface-ink);
+    color: var(--surface-paper);
+    border: none;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+  }
+
+  .replay-btn:hover {
+    opacity: 0.8;
+  }
+
+  .replay-btn:focus-visible {
+    outline: 2px solid var(--text-on-paper);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--surface-paper);
   }
 
   /* SCROLL SEQUENCE DEMO */

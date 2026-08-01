@@ -185,8 +185,9 @@ a:visited {
 }
 
 a:focus-visible {
-  outline: 2px solid var(--acid);
+  outline: 2px solid var(--text-on-paper);
   outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--surface-paper);
   border-radius: var(--radius-4);
 }
 
@@ -312,6 +313,14 @@ input:focus-visible, textarea:focus-visible, select:focus-visible {
 .surface-ink :focus-visible {
   outline-color: var(--acid);
   box-shadow: 0 0 0 4px var(--surface-ink);
+}
+
+/* Acid surface focus rings: dark ring matches accent background */
+[data-surface="acid"] :focus-visible,
+.surface-acid :focus-visible,
+.btn-acid:focus-visible {
+  outline-color: var(--text-on-paper);
+  box-shadow: 0 0 0 4px var(--acid);
 }
 
 /* Image */

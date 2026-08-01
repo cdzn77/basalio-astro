@@ -19,7 +19,7 @@ const { surface = 'acid' } = Astro.props;
     </button>
 
     <!-- Menu Dropdown -->
-    <div class="menu-dropdown" id="menu-dropdown">
+    <div class="menu-dropdown" id="menu-dropdown" data-surface="ink">
       {headerNav.map((item) => (
         <a href={item.href} class="menu-item">{item.label}</a>
       ))}

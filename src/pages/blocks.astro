@@ -758,7 +758,7 @@ const descriptionWords = description.split(' ');
     display: flex;
     flex-direction: column;
     justify-content: center;
-    opacity: 0.35;
+    opacity: 0.6;
     transition: opacity 0.4s ease-out;
   }
 
@@ -876,7 +876,6 @@ const descriptionWords = description.split(' ');
 
   /* BEFORE/AFTER DEMO */
   .before-after-demo {
-    display: flex;
     position: relative;
     width: 100%;
     max-width: 480px;
@@ -885,11 +884,13 @@ const descriptionWords = description.split(' ');
     cursor: col-resize;
     user-select: none;
     touch-action: none;
+    --pos: 50%;
   }
 
   .comparison-before,
   .comparison-after {
-    flex: 1;
+    position: absolute;
+    inset: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -905,6 +906,7 @@ const descriptionWords = description.split(' ');
     background: var(--surface-ink);
     color: var(--text-on-ink);
     border-left: 4px solid var(--acid);
+    clip-path: inset(0 0 0 var(--pos));
   }
 
   .comparison-label {
@@ -951,7 +953,7 @@ const descriptionWords = description.split(' ');
 
   .comparison-divider {
     position: absolute;
-    left: 50%;
+    left: var(--pos);
     top: 0;
     width: 32px;
     height: 100%;
@@ -1192,7 +1194,7 @@ const descriptionWords = description.split(' ');
       pos = Math.max(minPos, Math.min(maxPos, pos));
       if (pos === currentPos) return;
       currentPos = pos;
-      divider.style.left = currentPos + '%';
+      demo.style.setProperty('--pos', currentPos + '%');
       demo.setAttribute('aria-valuenow', currentPos);
     }
 

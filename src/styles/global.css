@@ -287,8 +287,9 @@ button {
 }
 
 button:focus-visible {
-  outline: 2px solid var(--acid);
+  outline: 2px solid var(--text-on-paper);
   outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--surface-paper);
   border-radius: var(--radius-4);
 }
 
@@ -300,9 +301,17 @@ input, textarea, select {
 }
 
 input:focus-visible, textarea:focus-visible, select:focus-visible {
-  outline: 2px solid var(--acid);
+  outline: 2px solid var(--text-on-paper);
   outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--surface-paper);
   border-radius: var(--radius-4);
+}
+
+/* Dark surface focus rings: acid ring on dark background */
+[data-surface="ink"] :focus-visible,
+.surface-ink :focus-visible {
+  outline-color: var(--acid);
+  box-shadow: 0 0 0 4px var(--surface-ink);
 }
 
 /* Image */

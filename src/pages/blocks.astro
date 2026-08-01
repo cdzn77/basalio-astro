@@ -68,9 +68,6 @@ const blocks = [
     slug: "pinned-scroll"
   }
 ];
-
-// Split description text into words for per-word animation
-const descriptionWords = description.split(' ');
 ---
 
 <BaseLayout title={title} description={description}>
@@ -86,53 +83,35 @@ const descriptionWords = description.split(' ');
     body={description}
     surface="paper"
   >
-    <!-- RIGHT SLOT: Description with per-word animation -->
-    <p class="hero-description">
-      {descriptionWords.map((word, index) => (
-        <span key={index} class="word-span" style={`--word-index: ${index}`}>
-          {word}
-        </span>
-      ))}
-    </p>
+    <!-- RIGHT SLOT: Hero copy about block features -->
+    <div class="hero-right-content">
+      <h2 class="hero-right-heading">Every one of them is keyboard-operable, reduced-motion aware, and loaded only on the pages that use it.</h2>
+      <p class="hero-right-subheading">That isn't a Pro feature. That's the floor.</p>
+    </div>
   </HeaderSplit>
 
   <!-- BLOCKS GRID -->
   <section class="courses-grid-section">
     <div class="courses-grid">
       {blocks.map((block, index) => {
-        const imageMap = [
-          'course-1.png',
-          'course-2.png',
-          'course-3.png',
-          'course-4.png',
-          'course-1.png',
-          'course-2.png',
-          'course-3.png',
-          'course-4.png',
-          'course-1.png'
-        ];
         return (
-        <div class={`course-card ${index >= 9 ? 'hidden-course' : ''}`}>
-          <!-- Block Image Placeholder -->
+        <a href={`#${block.slug}`} class={`course-card ${index >= 9 ? 'hidden-course' : ''}`}>
+          <!-- Block Number Tile -->
           <div class="course-image-placeholder">
-            <img
-              src={`/assets/${imageMap[index]}`}
-              alt={block.title}
-              class="course-image"
-            />
+            <div class="block-number-tile">
+              <span class="block-number">{String(index + 1).padStart(2, '0')}</span>
+            </div>
           </div>
 
           <!-- Block Info -->
           <div class="course-info">
-            <a href={`#${block.slug}`} class="course-link">
-              <h2 class="course-title">{block.title}</h2>
-              <p class="course-description">{block.description}</p>
-            </a>
+            <h2 class="course-title">{block.title}</h2>
+            <p class="course-description">{block.description}</p>
 
             <!-- Tag Pill -->
-            <a href={`#${block.slug}`} class="course-tag">{block.tag}</a>
+            <span class="course-tag">{block.tag}</span>
           </div>
-        </div>
+        </a>
       );
       })}
     </div>
@@ -294,14 +273,22 @@ const descriptionWords = description.split(' ');
              data-min-position="10"
              data-max-position="90">
           <div class="comparison-before">
-            <p class="comparison-label">BEFORE</p>
-            <h3 class="comparison-heading">Layout</h3>
-            <p class="comparison-body">A clean grid</p>
+            <h3 class="comparison-heading-before">LAYOUT</h3>
+            <div class="comparison-caption-row">
+              <span>GRID</span>
+              <span>TYPE</span>
+              <span>SPACE</span>
+            </div>
+            <div class="comparison-rule-before"></div>
           </div>
           <div class="comparison-after">
-            <p class="comparison-label">AFTER</p>
-            <h3 class="comparison-heading">Layout</h3>
-            <p class="comparison-body">A clean grid</p>
+            <h3 class="comparison-heading-after">LAYOUT</h3>
+            <div class="comparison-caption-row-after">
+              <span>GRID</span>
+              <span>TYPE</span>
+              <span>SPACE</span>
+            </div>
+            <div class="comparison-rule-after"></div>
           </div>
           <div class="comparison-divider" aria-hidden="true">
             <svg class="comparison-handle" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -359,21 +346,29 @@ const descriptionWords = description.split(' ');
     word-wrap: break-word;
   }
 
-  /* Per-word span animation */
-  .word-span {
-    display: inline-block;
-    margin-right: 0.3em;
-    opacity: 0;
-    filter: blur(8px);
-    animation: wordBlurIn 0.8s ease-out forwards;
-    animation-delay: calc(var(--word-index) * 70ms);
+  /* Hero Right Content */
+  .hero-right-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
 
-  @keyframes wordBlurIn {
-    to {
-      opacity: 1;
-      filter: blur(0px);
-    }
+  .hero-right-heading {
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--text-on-paper);
+    margin: 0;
+    padding: 0;
+  }
+
+  .hero-right-subheading {
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+    padding: 0;
   }
 
   /* BLOCKS GRID SECTION: Full width container, content centered via HeaderSplit layout above */
@@ -410,6 +405,12 @@ const descriptionWords = description.split(' ');
     overflow: visible;
   }
 
+  .course-card:focus-visible {
+    outline: 2px solid var(--text-on-paper);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--surface-paper);
+  }
+
   /* Hide courses 4-9 initially */
   .course-card.hidden-course {
     display: none;
@@ -428,28 +429,29 @@ const descriptionWords = description.split(' ');
     border-radius: 6px;
     overflow: hidden;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     position: relative;
   }
 
-  .course-image {
+  .block-number-tile {
+    position: relative;
+    overflow: hidden;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-    border-radius: 6px;
-    transition: transform 300ms ease;
   }
 
-  .course-card:hover .course-image {
-    transform: scale(1.08);
-  }
-
-  .course-image:not([src]),
-  .course-image[src=""] {
-    display: none;
+  .block-number {
+    font-family: var(--font-mono);
+    font-size: clamp(80px, 20vw, 200px);
+    font-weight: 800;
+    line-height: 0.8;
+    letter-spacing: -0.04em;
+    color: var(--text-on-acid);
+    position: absolute;
+    left: 0.05em;
+    bottom: -0.12em;
+    white-space: nowrap;
   }
 
   /* Block Info */
@@ -472,20 +474,9 @@ const descriptionWords = description.split(' ');
     font-size: 14px;
     font-weight: 400;
     line-height: 1.5;
-    color: rgb(87, 87, 87);
+    color: var(--text-on-paper-muted);
     margin: 0;
     padding: 0;
-  }
-
-  /* Block Link */
-  .course-link {
-    text-decoration: none;
-    cursor: pointer;
-    transition: opacity 200ms ease;
-  }
-
-  .course-link:hover {
-    opacity: 0.8;
   }
 
   /* Tag Pill */
@@ -499,15 +490,13 @@ const descriptionWords = description.split(' ');
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 2.8px;
-    color: rgb(87, 87, 87);
+    color: var(--text-on-paper-muted);
     text-transform: uppercase;
-    text-decoration: none;
-    cursor: pointer;
     transition: all 200ms ease;
   }
 
-  .course-tag:hover {
-    background: rgb(87, 87, 87);
+  .course-card:hover .course-tag {
+    background: var(--text-on-paper-muted);
     color: var(--surface-paper);
   }
 
@@ -899,56 +888,81 @@ const descriptionWords = description.split(' ');
 
   .comparison-before {
     background: var(--surface-paper);
-    color: var(--text-on-paper);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 16px;
   }
 
   .comparison-after {
     background: var(--surface-ink);
-    color: var(--text-on-ink);
-    border-left: 4px solid var(--acid);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 16px;
     clip-path: inset(0 0 0 var(--pos));
   }
 
-  .comparison-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    position: absolute;
-    top: 12px;
-    margin: 0;
-    padding: 0;
-  }
-
-  .comparison-before .comparison-label {
-    left: 24px;
-    color: var(--text-on-paper);
-  }
-
-  .comparison-after .comparison-label {
-    right: 24px;
-    color: var(--text-on-ink);
-  }
-
-  .comparison-heading {
-    font-size: 18px;
-    font-weight: 700;
-    margin: 0 0 8px 0;
-    padding: 0;
-    line-height: 1.2;
-  }
-
-  .comparison-body {
-    font-size: 14px;
+  .comparison-heading-before {
+    font-family: var(--font-sans);
+    font-size: 56px;
     font-weight: 400;
+    letter-spacing: normal;
+    color: var(--text-on-paper);
     margin: 0;
     padding: 0;
+    line-height: 1;
+    word-spacing: 9999px;
+  }
+
+  .comparison-heading-after {
+    font-family: var(--font-sans);
+    font-size: 56px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--text-on-ink);
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    word-spacing: 9999px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+  }
+
+  .comparison-caption-row,
+  .comparison-caption-row-after {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 12px;
+    font-weight: 400;
+  }
+
+  .comparison-caption-row {
+    color: var(--text-on-paper-muted);
+    font-family: var(--font-sans);
+  }
+
+  .comparison-caption-row-after {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     color: var(--text-on-ink-muted);
   }
 
-  .comparison-before .comparison-body {
-    color: var(--text-on-paper-muted);
+  .comparison-rule-before {
+    width: 100%;
+    height: 1px;
+    background: var(--stone);
+  }
+
+  .comparison-rule-after {
+    width: 100%;
+    height: 2px;
+    background: var(--acid);
   }
 
   .comparison-divider {

@@ -71,16 +71,12 @@ const {
         <!-- Track: position absolute, flex row, gap 20px, overflowing -->
         <div class="carousel-track">
           {blocks.map((block, index) => {
-            const blockImages = [
-              '/assets/course-1.png',
-              '/assets/course-2.png',
-              '/assets/course-3.png',
-              '/assets/course-4.png'
-            ];
             return (
               <a href={block.link || "#"} class="course-card">
                 <div class="course-image-wrapper">
-                  <img src={blockImages[index] || blockImages[0]} alt={block.title} class="course-image" />
+                  <div class="block-number-tile">
+                    <span class="block-number">{String(index + 1).padStart(2, '0')}</span>
+                  </div>
                 </div>
                 <h3 class="course-card-title">{block.title}</h3>
                 <p class="course-card-description">{block.description}</p>
@@ -269,6 +265,13 @@ const {
     color: inherit;
     text-align: center;
     box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .course-card:focus-visible {
+    outline: 2px solid var(--text-on-paper);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--surface-paper);
   }
 
   .course-image-wrapper {
@@ -334,6 +337,26 @@ const {
   .course-card:hover .course-card-description {
     opacity: 1;
     transform: translateY(0);
+  }
+
+  .block-number-tile {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+  }
+
+  .block-number {
+    font-family: var(--font-mono);
+    font-size: clamp(80px, 20vw, 200px);
+    font-weight: 800;
+    line-height: 0.8;
+    letter-spacing: -0.04em;
+    color: var(--text-on-acid);
+    position: absolute;
+    left: 0.05em;
+    bottom: -0.12em;
+    white-space: nowrap;
   }
 
 </style>

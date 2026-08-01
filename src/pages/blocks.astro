@@ -7,6 +7,7 @@ import RampHeader from '../components/RampHeader.astro';
 import RampTestimonialsV2 from '../components/RampTestimonialsV2.astro';
 import RampFooter from '../components/RampFooter.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+import Button from '../components/Button.astro';
 
 const title = "Blocks - Basalio";
 const description = "Nine curated interaction blocks built for WordPress portfolios. Grid reveals, case study transitions, scroll sequences, and more.";
@@ -188,7 +189,7 @@ const descriptionWords = description.split(' ');
           </div>
         </div>
         <div class="grid-replay-controls">
-          <button id="grid-replay-btn" class="replay-btn">REPLAY</button>
+          <Button id="grid-replay-btn" label="Replay" variant="ink" fontSize="13px" fontWeight="600" letterSpacing="0.05em" type="button" />
         </div>
         <p class="demo-caption">Recreated for the web. See it running in WordPress →</p>
       </div>
@@ -635,8 +636,14 @@ const descriptionWords = description.split(' ');
     padding: 20px;
     border-radius: 0;
     opacity: 0;
-    animation: tileReveal 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-    animation-delay: calc(var(--tile-index) * 100ms);
+    transform: translateY(24px);
+    animation: tileReveal 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: calc(var(--tile-index) * 180ms);
+  }
+
+  .grid-tile.is-revealed {
+    animation: tileReveal 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: calc(var(--tile-index) * 180ms);
   }
 
   .grid-tile[data-surface="ink"] {
@@ -676,12 +683,14 @@ const descriptionWords = description.split(' ');
     .grid-tile {
       animation: none;
       opacity: 1;
+      transform: translateY(0);
     }
   }
 
   @keyframes tileReveal {
     to {
       opacity: 1;
+      transform: translateY(0);
     }
   }
 
@@ -690,32 +699,6 @@ const descriptionWords = description.split(' ');
     justify-content: center;
     margin-top: 40px;
     width: 100%;
-  }
-
-  .replay-btn {
-    padding: 0 16px;
-    height: 43.6px;
-    background: var(--surface-ink);
-    color: var(--surface-paper);
-    border: none;
-    border-radius: 6px;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-  }
-
-  .replay-btn:hover {
-    opacity: 0.8;
-  }
-
-  .replay-btn:focus-visible {
-    outline: 2px solid var(--text-on-paper);
-    outline-offset: 2px;
-    box-shadow: 0 0 0 4px var(--surface-paper);
   }
 
   /* SCROLL SEQUENCE DEMO */
@@ -886,11 +869,19 @@ const descriptionWords = description.split(' ');
     const tiles = gridDemo.querySelectorAll('.grid-tile');
     const replayBtn = document.getElementById('grid-replay-btn');
 
-    function resetTiles() {
+    function playAnimation() {
       tiles.forEach(tile => {
-        tile.style.animation = 'none';
-        tile.offsetHeight; // Trigger reflow
-        tile.style.animation = 'tileReveal 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards';
+        tile.classList.add('is-revealed');
+      });
+    }
+
+    function resetAndReplay() {
+      tiles.forEach(tile => {
+        tile.classList.remove('is-revealed');
+      });
+      void gridDemo.offsetHeight; // Force reflow
+      requestAnimationFrame(() => {
+        playAnimation();
       });
     }
 
@@ -898,7 +889,7 @@ const descriptionWords = description.split(' ');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          resetTiles();
+          playAnimation();
           observer.unobserve(gridDemo);
         }
       });
@@ -908,8 +899,9 @@ const descriptionWords = description.split(' ');
 
     // Replay button handler
     if (replayBtn) {
-      replayBtn.addEventListener('click', () => {
-        resetTiles();
+      replayBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        resetAndReplay();
       });
     }
   }

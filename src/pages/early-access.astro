@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+import Button from '../components/Button.astro';
 
 const title = "Early Access - Basalio";
 const description = "Get on the Basalio founder list. Nine blocks in testing, Pro control center in planning.";
@@ -80,7 +81,7 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
           </fieldset>
 
           <!-- Submit Button -->
-          <button type="submit" class="submit-button">Join the list →</button>
+          <Button type="submit" label="Join the list →" variant="acid" fontSize="13px" fontWeight="600" letterSpacing="0.05em" />
 
           <!-- Disclaimer -->
           <p class="form-disclaimer">No spam. One email when the plugin ships, one if the founder price is about to change. Unsubscribe in every email.</p>
@@ -231,40 +232,6 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
     padding: 0;
   }
 
-  .submit-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    align-self: flex-start;
-    padding: 12px 24px;
-    min-height: 43.6px;
-    background: var(--acid);
-    color: var(--text-on-paper);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 150ms ease, box-shadow 150ms ease;
-  }
-
-  .submit-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-
-  .submit-button:focus-visible {
-    outline: 2px solid var(--text-on-paper);
-    outline-offset: 2px;
-  }
-
-  .submit-button:active {
-    transform: translateY(0);
-  }
 
   .form-disclaimer {
     font-size: 12px;
@@ -346,10 +313,6 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
 
     .radio-item {
       gap: 10px;
-    }
-
-    .submit-button {
-      font-size: 12px;
     }
   }
 </style>

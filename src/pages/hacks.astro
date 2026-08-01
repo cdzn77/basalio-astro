@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+import Button from '../components/Button.astro';
 
 const title = "Hacks - Basalio";
 const description = "Four free CSS/JS snippets you can paste into your site.";
@@ -194,7 +195,7 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
         <div class="hack-cta">
           <p class="cta-text">The other twelve are in the vault.</p>
           <p class="cta-subtext">Unlock premium hacks with a founder license.</p>
-          <a href="/early-access" class="cta-button">Join the founder list →</a>
+          <Button href="/early-access" label="Join the founder list →" variant="acid" fontSize="13px" fontWeight="600" letterSpacing="0.05em" />
         </div>
     </div>
   </HeaderSplit>
@@ -468,38 +469,6 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     padding: 0;
   }
 
-  .cta-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    align-self: flex-start;
-    padding: 12px 24px;
-    min-height: 43.6px;
-    background: var(--acid);
-    color: var(--text-on-paper);
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border: none;
-    border-radius: 8px;
-    text-decoration: none;
-    cursor: pointer;
-    transition: transform 150ms ease, box-shadow 150ms ease;
-  }
-
-  .cta-button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-
-  .cta-button:focus-visible {
-    outline: 2px solid var(--text-on-paper);
-    outline-offset: 2px;
-  }
-
   @media (max-width: 1024px) {
     .hack-card h2 {
       font-size: 24px;
@@ -517,10 +486,6 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
 
     .cta-text {
       font-size: 18px;
-    }
-
-    .cta-button {
-      width: auto;
     }
   }
 </style>

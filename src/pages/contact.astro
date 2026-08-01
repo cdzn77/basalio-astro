@@ -5,6 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+import Button from '../components/Button.astro';
 import { socialLinks } from '../data/navigation';
 
 const title = "Contact Basalio";
@@ -65,7 +66,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
         </div>
 
         <!-- Submit Button -->
-        <button type="submit" class="submit-button">SEND MESSAGE</button>
+        <Button type="submit" label="SEND MESSAGE" variant="ink" fontSize="12px" fontWeight="500" letterSpacing="2.8px" />
       </form>
     </div>
   </HeaderSplit>
@@ -169,33 +170,6 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
   .form-textarea {
     min-height: 160px;
     resize: vertical;
-  }
-
-  .submit-button {
-    display: inline-flex;
-    align-items: center;
-    width: auto;
-    align-self: flex-start;
-    font-family: 'Azeret Mono', monospace;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 2.8px;
-    text-transform: uppercase;
-    color: var(--surface-paper);
-    background: var(--text-on-paper);
-    border: none;
-    padding: 14px 28px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 200ms ease;
-  }
-
-  .submit-button:hover {
-    background: var(--text-on-paper);
-  }
-
-  .submit-button:active {
-    transform: scale(0.98);
   }
 
   /* RESOURCES SECTION */

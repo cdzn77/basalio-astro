@@ -3,6 +3,8 @@
 // Always light surface for header legibility
 // Constrained spacing to prevent drift
 
+import Button from '../Button.astro';
+
 interface Props {
   eyebrow: string;
   heading: string;
@@ -38,9 +40,14 @@ const bodyArray = Array.isArray(body) ? body : [body];
         ))}
       </div>
       {cta && (
-        <a href={cta.href} class={`cta cta-${cta.variant || 'acid'}`}>
-          {cta.label}
-        </a>
+        <Button
+          label={cta.label}
+          href={cta.href}
+          variant={cta.variant || 'acid'}
+          fontSize="14px"
+          fontWeight="600"
+          letterSpacing="0.2em"
+        />
       )}
     </div>
 
@@ -112,40 +119,6 @@ const bodyArray = Array.isArray(body) ? body : [body];
     color: var(--text-on-paper-muted);
     margin: 0;
     padding: 0;
-  }
-
-  .cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 24px;
-    border-radius: 6px;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    text-decoration: none;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-    width: fit-content;
-  }
-
-  .cta-acid {
-    background: var(--acid);
-    color: var(--text-on-acid);
-  }
-
-  .cta-acid:hover {
-    opacity: 0.8;
-  }
-
-  .cta-ink {
-    background: var(--surface-ink);
-    color: var(--text-on-ink);
-  }
-
-  .cta-ink:hover {
-    opacity: 0.8;
   }
 
   .header-split-right {

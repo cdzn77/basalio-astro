@@ -11,6 +11,8 @@ interface Props {
   fontWeight?: string;
   letterSpacing?: string;
   uppercase?: boolean;
+  variant?: 'ink' | 'acid';
+  type?: 'button' | 'submit' | 'reset';
 }
 
 const {
@@ -20,13 +22,15 @@ const {
   fontSize = "14px",
   fontWeight = "500",
   letterSpacing = "2.8px",
-  uppercase = true
+  uppercase = true,
+  variant = 'ink',
+  type = 'button'
 } = Astro.props;
 
 const Component = href ? 'a' : 'button';
 ---
 
-<Component href={href} class="btn-wrapper" {...(onClick && { onclick: onClick })}>
+<Component href={href} type={!href ? type : undefined} class={`btn-wrapper btn-${variant}`} data-variant={variant} {...(onClick && { onclick: onClick })}>
   <div class="btn-text">
     <p class="btn-label">{uppercase ? label.toUpperCase() : label}</p>
   </div>
@@ -74,8 +78,12 @@ const Component = href ? 'a' : 'button';
     border-radius: 6px !important;
   }
 
+  .btn-acid .btn-text {
+    background-color: var(--acid) !important;
+  }
+
   .btn-label {
-    font-family: 'Azeret Mono', monospace;
+    font-family: var(--font-mono);
     font-size: var(--fontSize);
     font-weight: var(--fontWeight);
     letter-spacing: var(--letterSpacing);
@@ -85,6 +93,10 @@ const Component = href ? 'a' : 'button';
     margin: 0;
     padding: 0;
     white-space: nowrap;
+  }
+
+  .btn-acid .btn-label {
+    color: var(--text-on-acid);
   }
 
   .btn-arrow-container {
@@ -98,6 +110,14 @@ const Component = href ? 'a' : 'button';
     border-radius: 6px !important;
     margin-left: 0 !important;
     padding-left: 0 !important;
+  }
+
+  .btn-acid .btn-arrow-container {
+    background-color: var(--acid) !important;
+  }
+
+  .btn-acid .btn-arrow svg {
+    stroke: var(--text-on-acid);
   }
 
   .btn-arrow {

@@ -227,28 +227,26 @@ const descriptionWords = description.split(' ');
     >
       <div class="demo-container">
         <div class="scroll-sequence-demo">
-          <div class="sequence-column-left">
-            <div class="sequence-copy">
+          <div class="sequence-left">
+            <div class="sequence-copy-block" data-state="0">
+              <p class="sequence-number">01</p>
               <p class="sequence-label">THE PROBLEM</p>
+              <p class="sequence-body">Outline the challenge</p>
             </div>
-            <div class="sequence-copy" style="display: none;">
+            <div class="sequence-copy-block" data-state="1">
+              <p class="sequence-number">02</p>
               <p class="sequence-label">THE APPROACH</p>
+              <p class="sequence-body">Describe the strategy</p>
             </div>
-            <div class="sequence-copy" style="display: none;">
+            <div class="sequence-copy-block" data-state="2">
+              <p class="sequence-number">03</p>
               <p class="sequence-label">THE RESULT</p>
+              <p class="sequence-body">Show the outcome</p>
             </div>
           </div>
-          <div class="sequence-column-right">
+          <div class="sequence-right">
             <div class="sequence-panel sequence-state-0"></div>
           </div>
-          <div class="sequence-dots">
-            <div class="sequence-dot is-active"></div>
-            <div class="sequence-dot"></div>
-            <div class="sequence-dot"></div>
-          </div>
-        </div>
-        <div class="scroll-replay-controls">
-          <Button id="scroll-replay-btn" label="Replay" variant="ink" fontSize="13px" fontWeight="600" letterSpacing="0.05em" type="button" />
         </div>
         <p class="demo-caption">Recreated for the web. See it running in WordPress →</p>
       </div>
@@ -285,7 +283,16 @@ const descriptionWords = description.split(' ');
       surface="paper"
     >
       <div class="demo-container">
-        <div class="before-after-demo">
+        <div class="before-after-demo"
+             role="slider"
+             tabindex="0"
+             aria-valuemin="10"
+             aria-valuemax="90"
+             aria-valuenow="50"
+             aria-label="Comparison divider position"
+             data-initial-position="50"
+             data-min-position="10"
+             data-max-position="90">
           <div class="comparison-before">
             <p class="comparison-label">BEFORE</p>
             <h3 class="comparison-heading">Layout</h3>
@@ -296,10 +303,12 @@ const descriptionWords = description.split(' ');
             <h3 class="comparison-heading">Layout</h3>
             <p class="comparison-body">A clean grid</p>
           </div>
-          <div class="comparison-divider"></div>
-        </div>
-        <div class="before-after-replay-controls">
-          <Button id="before-after-replay-btn" label="Replay" variant="ink" fontSize="13px" fontWeight="600" letterSpacing="0.05em" type="button" />
+          <div class="comparison-divider" aria-hidden="true">
+            <svg class="comparison-handle" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <polyline points="6,4 10,8 6,12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              <polyline points="10,4 6,8 10,12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
         </div>
         <p class="demo-caption">Recreated for the web. See it running in WordPress →</p>
       </div>
@@ -731,100 +740,137 @@ const descriptionWords = description.split(' ');
   .scroll-sequence-demo {
     display: flex;
     width: 100%;
-    max-width: 500px;
-    height: 240px;
-    gap: 24px;
+    max-width: 1000px;
+    height: 160vh;
+    gap: 40px;
     position: relative;
   }
 
-  .sequence-column-left {
+  .sequence-left {
     flex: 0 0 40%;
     display: flex;
     flex-direction: column;
+    padding-top: 120px;
+  }
+
+  .sequence-copy-block {
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
+    opacity: 0.35;
+    transition: opacity 0.4s ease-out;
   }
 
-  .sequence-copy {
-    opacity: 0;
+  .sequence-copy-block[data-state="0"],
+  .sequence-copy-block[data-state="1"],
+  .sequence-copy-block[data-state="2"] {
+    opacity: 0.35;
   }
 
-  .sequence-copy:first-child {
+  .sequence-copy-block.is-active {
     opacity: 1;
   }
 
-  .sequence-label {
+  .sequence-number {
     font-family: var(--font-mono);
     font-size: 12px;
     font-weight: 600;
-    color: var(--text-on-paper);
     letter-spacing: 0.1em;
-    margin: 0;
+    color: var(--text-on-paper-muted);
+    margin: 0 0 8px 0;
     padding: 0;
-    text-transform: uppercase;
   }
 
-  .sequence-column-right {
+  .sequence-label {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-on-paper);
+    margin: 0 0 8px 0;
+    padding: 0;
+  }
+
+  .sequence-body {
+    font-size: 14px;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+    padding: 0;
+  }
+
+  .sequence-right {
     flex: 0 0 60%;
+    position: sticky;
+    top: 120px;
+    height: 240px;
     background: var(--surface-ink);
     border-radius: 0;
-    transition: background-color 0.8s ease-out;
   }
 
   .sequence-panel {
     width: 100%;
     height: 100%;
     border-radius: 0;
+    transition: background-color 0.4s ease-out;
+    position: relative;
   }
 
   .sequence-panel::after {
     content: '';
     position: absolute;
-    right: 0;
+    left: 0;
     top: 0;
     width: 0%;
     height: 100%;
     background: var(--acid);
-    transition: width 0.8s ease-out;
+    transition: width 0.4s ease-out;
   }
 
-  .scroll-sequence-demo.is-revealed .sequence-panel.sequence-state-1::after {
+  .sequence-panel.sequence-state-1::after {
     width: 100%;
   }
 
-  .sequence-dots {
-    position: absolute;
-    bottom: -32px;
-    left: 40%;
-    display: flex;
-    gap: 8px;
+  .sequence-panel.sequence-state-2 {
+    background: var(--acid);
   }
 
-  .sequence-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--stone);
-    transition: background-color 0.3s ease;
-  }
-
-  .sequence-dot.is-active {
-    background: var(--text-on-paper);
-  }
-
-  .scroll-replay-controls {
-    display: flex;
-    justify-content: center;
-    margin-top: 60px;
-    width: 100%;
+  .sequence-panel.sequence-state-2::after {
+    display: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .sequence-column-right {
-      background: var(--surface-ink);
+    .sequence-copy-block {
+      transition: none;
     }
 
+    .sequence-panel,
     .sequence-panel::after {
-      display: none;
+      transition: none;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .scroll-sequence-demo {
+      flex-direction: column;
+      height: auto;
+      gap: 0;
+    }
+
+    .sequence-left {
+      flex: 1;
+      padding-top: 0;
+    }
+
+    .sequence-copy-block {
+      height: auto;
+      padding: 40px 0;
+      opacity: 1;
+    }
+
+    .sequence-right {
+      position: static;
+      top: auto;
+      height: 200px;
+      margin-bottom: 0;
     }
   }
 
@@ -836,6 +882,9 @@ const descriptionWords = description.split(' ');
     max-width: 480px;
     height: 200px;
     overflow: hidden;
+    cursor: col-resize;
+    user-select: none;
+    touch-action: none;
   }
 
   .comparison-before,
@@ -864,15 +913,28 @@ const descriptionWords = description.split(' ');
     font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    margin: 0 0 12px 0;
+    position: absolute;
+    top: 12px;
+    margin: 0;
     padding: 0;
+  }
+
+  .comparison-before .comparison-label {
+    left: 24px;
+    color: var(--text-on-paper);
+  }
+
+  .comparison-after .comparison-label {
+    right: 24px;
+    color: var(--text-on-ink);
   }
 
   .comparison-heading {
     font-size: 18px;
-    font-weight: 400;
+    font-weight: 700;
     margin: 0 0 8px 0;
     padding: 0;
+    line-height: 1.2;
   }
 
   .comparison-body {
@@ -885,44 +947,67 @@ const descriptionWords = description.split(' ');
 
   .comparison-divider {
     position: absolute;
-    left: 0;
+    left: 50%;
     top: 0;
-    width: 0%;
+    width: 32px;
     height: 100%;
-    border-right: 2px solid var(--surface-paper);
-    transition: width 0.9s ease-out;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .comparison-divider::after {
+  .comparison-divider::before {
     content: '';
     position: absolute;
-    right: -8px;
-    top: 50%;
-    width: 16px;
-    height: 16px;
+    left: 50%;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: var(--surface-paper);
+    transform: translateX(-50%);
+  }
+
+  .comparison-handle {
+    width: 24px;
+    height: 24px;
     background: var(--surface-paper);
     border-radius: 50%;
-    transform: translateY(-50%);
-  }
-
-  .before-after-demo.is-revealed .comparison-divider {
-    width: 50%;
-  }
-
-  .before-after-replay-controls {
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
-    width: 100%;
+    position: relative;
+    z-index: 1;
+    color: var(--surface-ink);
+    flex-shrink: 0;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .comparison-divider {
-      width: 50%;
+    .before-after-demo {
+      cursor: auto;
     }
 
-    .before-after-demo.is-revealed .comparison-divider {
-      width: 50%;
+    .comparison-divider::before {
+      background: var(--surface-paper);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .before-after-demo {
+      flex-direction: column;
+      height: auto;
+    }
+
+    .comparison-before,
+    .comparison-after {
+      height: 200px;
+    }
+
+    .comparison-label {
+      position: static;
+      margin-bottom: 12px;
+    }
+
+    .comparison-divider {
+      display: none;
     }
   }
 
@@ -1055,117 +1140,111 @@ const descriptionWords = description.split(' ');
     }
   }
 
-  // SCROLL SEQUENCE INTERSECTION OBSERVER
-  function setupScrollSequenceObserver() {
+  // SCROLL SEQUENCE - SCROLL-DRIVEN STICKY PANEL
+  function setupScrollSequence() {
     const demo = document.querySelector('.scroll-sequence-demo');
     if (!demo) return;
 
-    const replayBtn = document.getElementById('scroll-replay-btn');
-    let currentState = 0;
-    let sequenceTimer = null;
+    const blocks = demo.querySelectorAll('.sequence-copy-block');
+    const panel = demo.querySelector('.sequence-panel');
+    let currentState = -1;
 
-    function updateState() {
-      const states = demo.querySelectorAll('.sequence-copy');
-      const dots = demo.querySelectorAll('.sequence-dot');
-      const panel = demo.querySelector('.sequence-panel');
-
-      states.forEach((s, i) => {
-        s.style.display = i === currentState ? 'block' : 'none';
-      });
-
-      dots.forEach((d, i) => {
-        d.classList.toggle('is-active', i === currentState);
-      });
-
-      if (currentState === 0) {
-        panel.className = 'sequence-panel sequence-state-0';
-      } else if (currentState === 1) {
-        panel.className = 'sequence-panel sequence-state-1';
-      } else {
-        panel.style.background = 'var(--acid)';
-      }
+    function updatePanelState(state) {
+      if (state === currentState) return;
+      currentState = state;
+      panel.className = `sequence-panel sequence-state-${state}`;
     }
 
-    function playSequence() {
-      currentState = 0;
-      updateState();
-
-      sequenceTimer = setInterval(() => {
-        currentState = (currentState + 1) % 3;
-        updateState();
-        if (currentState === 0) clearInterval(sequenceTimer);
-      }, 1400);
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          playSequence();
-          observer.unobserve(demo);
+    blocks.forEach((block, index) => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              updatePanelState(index);
+            }
+          });
+        },
+        {
+          rootMargin: '-50% 0px -50% 0px',
+          threshold: 0
         }
-      });
-    }, { threshold: 0.1 });
-
-    observer.observe(demo);
-
-    if (replayBtn) {
-      replayBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (sequenceTimer) clearInterval(sequenceTimer);
-        playSequence();
-      });
-    }
+      );
+      observer.observe(block);
+    });
   }
 
-  // BEFORE/AFTER INTERSECTION OBSERVER
-  function setupBeforeAfterObserver() {
+  // BEFORE/AFTER - DRAGGABLE DIVIDER
+  function setupBeforeAfter() {
     const demo = document.querySelector('.before-after-demo');
     if (!demo) return;
 
-    const replayBtn = document.getElementById('before-after-replay-btn');
+    const divider = demo.querySelector('.comparison-divider');
+    const minPos = parseInt(demo.dataset.minPosition) || 10;
+    const maxPos = parseInt(demo.dataset.maxPosition) || 90;
+    let currentPos = parseInt(demo.dataset.initialPosition) || 50;
+    let isDragging = false;
 
-    function playAnimation() {
-      demo.classList.add('is-revealed');
+    function updateDivider(pos) {
+      pos = Math.max(minPos, Math.min(maxPos, pos));
+      if (pos === currentPos) return;
+      currentPos = pos;
+      divider.style.left = currentPos + '%';
+      demo.setAttribute('aria-valuenow', currentPos);
     }
 
-    function resetAndReplay() {
-      demo.classList.remove('is-revealed');
-      void demo.offsetHeight;
-      requestAnimationFrame(() => {
-        playAnimation();
-      });
+    function onPointerDown(e) {
+      if (e.button && e.button !== 0) return;
+      isDragging = true;
+      demo.setPointerCapture(e.pointerId);
     }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          playAnimation();
-          observer.unobserve(demo);
-        }
-      });
-    }, { threshold: 0.1 });
+    function onPointerMove(e) {
+      if (!isDragging) return;
+      const rect = demo.getBoundingClientRect();
+      const pos = ((e.clientX - rect.left) / rect.width) * 100;
+      updateDivider(pos);
+    }
 
-    observer.observe(demo);
+    function onPointerUp() {
+      isDragging = false;
+    }
 
-    if (replayBtn) {
-      replayBtn.addEventListener('click', (e) => {
+    function onKeyDown(e) {
+      if (e.key === 'ArrowLeft') {
         e.preventDefault();
-        resetAndReplay();
-      });
+        updateDivider(currentPos - 2);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        updateDivider(currentPos + 2);
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        updateDivider(minPos);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        updateDivider(maxPos);
+      }
     }
+
+    demo.addEventListener('pointerdown', onPointerDown);
+    demo.addEventListener('pointermove', onPointerMove);
+    demo.addEventListener('pointerup', onPointerUp);
+    demo.addEventListener('pointercancel', onPointerUp);
+    demo.addEventListener('keydown', onKeyDown);
+
+    updateDivider(currentPos);
   }
 
   // Delay setup to ensure DOM is ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       setupGridRevealObserver();
-      setupScrollSequenceObserver();
-      setupBeforeAfterObserver();
+      setupScrollSequence();
+      setupBeforeAfter();
     });
   } else {
     setupGridRevealObserver();
-    setupScrollSequenceObserver();
-    setupBeforeAfterObserver();
+    setupScrollSequence();
+    setupBeforeAfter();
   }
 </script>
 

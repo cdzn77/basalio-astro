@@ -1,0 +1,129 @@
+---
+/* Welcome Page — Post-Checkout Shell
+
+   DEPENDENCIES (must be resolved before shipping):
+   1. Does Freemius email the license key to the purchaser, or must this page display it?
+      - If emailed: page shows confirmation, links to next steps
+      - If on-page: what URL parameter carries it? (?key=..., ?license=...)
+
+   2. What parameters does the Freemius return URL carry?
+      - Transaction ID? Order ID? Timestamp? Verification token?
+      - Current: no validation of request origin
+
+   3. Does the founder receive a downloadable zip on day one, or only a confirmation?
+      - If zip: how is it delivered? (direct link, email, plugin repo access)
+      - If confirmation only: what's the next-step CTA?
+
+   Until these are known, this page is a redirect target only — content is placeholder.
+*/
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import RampHeader from '../components/RampHeader.astro';
+import RampFooter from '../components/RampFooter.astro';
+import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+
+const title = "Welcome to Basalio";
+const description = "Thank you for your purchase. Your founder license is active.";
+
+// TODO: Validate request origin once Freemius return-URL spec is known
+const params = Astro.url.searchParams;
+---
+
+<BaseLayout {title} {description} noindex>
+  <Fragment slot="header">
+    <RampHeader />
+  </Fragment>
+
+  <HeaderSplit
+    eyebrow="WELCOME"
+    heading="You're in."
+    body="Thank you for joining. Your founder license is active."
+    surface="alt"
+  />
+
+  <section class="welcome-content">
+    <div class="welcome-container">
+      {/* TODO: POST_PURCHASE_COPY — awaiting Freemius response spec */}
+      <p class="welcome-copy">
+        [Purchase confirmation copy will be added once we know what data Freemius returns.]
+      </p>
+
+      <div class="welcome-links">
+        <a href="/hacks" class="welcome-link">Explore the Hacks vault</a>
+        <a href="mailto:hello@basalio.com" class="welcome-link">Questions? Email us</a>
+      </div>
+    </div>
+  </section>
+
+  <Fragment slot="footer">
+    <RampFooter hideNewsletter={true} />
+  </Fragment>
+</BaseLayout>
+
+<style>
+  .welcome-content {
+    background: var(--surface-paper);
+    padding: 80px 40px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .welcome-container {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .welcome-copy {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  .welcome-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .welcome-link {
+    font-family: var(--font-mono-code);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-on-paper);
+    text-decoration: none;
+    border: 1px solid var(--surface-alt);
+    border-radius: 8px;
+    padding: 12px 24px;
+    transition: background 0.15s ease, border-color 0.15s ease;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .welcome-link:hover {
+    background: var(--surface-alt);
+    border-color: var(--text-on-paper);
+  }
+
+  @media (max-width: 1024px) {
+    .welcome-content {
+      padding: 60px 30px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .welcome-content {
+      padding: 40px 20px;
+    }
+
+    .welcome-link {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>

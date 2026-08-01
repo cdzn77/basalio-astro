@@ -7,6 +7,7 @@ import RampHeader from '../components/RampHeader.astro';
 import RampTestimonialsV2 from '../components/RampTestimonialsV2.astro';
 import RampFooter from '../components/RampFooter.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+import Button from '../components/Button.astro';
 
 const title = "Blocks - Basalio";
 const description = "Nine curated interaction blocks built for WordPress portfolios. Grid reveals, case study transitions, scroll sequences, and more.";
@@ -149,9 +150,46 @@ const descriptionWords = description.split(' ');
     >
       <div class="demo-container">
         <div class="grid-reveal-demo">
-          {[...Array(9)].map((_, i) => (
-            <div class="demo-item" style={`--item-index: ${i}`} />
-          ))}
+          {/* Placeholder portfolio tiles — not real client work */}
+          <div class="grid-tile" style={`--tile-index: 0`} data-surface="ink">
+            <div class="tile-content">
+              <h3 class="tile-title">NORTHWIND</h3>
+              <p class="tile-category">IDENTITY</p>
+            </div>
+          </div>
+          <div class="grid-tile" style={`--tile-index: 1`} data-surface="alt">
+            <div class="tile-content">
+              <h3 class="tile-title">SALT & PINE</h3>
+              <p class="tile-category">PACKAGING</p>
+            </div>
+          </div>
+          <div class="grid-tile" style={`--tile-index: 2`} data-surface="ink">
+            <div class="tile-content">
+              <h3 class="tile-title">MERIDIAN</h3>
+              <p class="tile-category">ART DIRECTION</p>
+            </div>
+          </div>
+          <div class="grid-tile" style={`--tile-index: 3`} data-surface="alt">
+            <div class="tile-content">
+              <h3 class="tile-title">FIELD NOTES</h3>
+              <p class="tile-category">EDITORIAL</p>
+            </div>
+          </div>
+          <div class="grid-tile" style={`--tile-index: 4`} data-surface="ink">
+            <div class="tile-content">
+              <h3 class="tile-title">ATLAS & CO</h3>
+              <p class="tile-category">BRAND SYSTEM</p>
+            </div>
+          </div>
+          <div class="grid-tile" style={`--tile-index: 5`} data-surface="alt">
+            <div class="tile-content">
+              <h3 class="tile-title">LOW TIDE</h3>
+              <p class="tile-category">MOTION</p>
+            </div>
+          </div>
+        </div>
+        <div class="grid-replay-controls">
+          <Button id="grid-replay-btn" label="Replay" variant="ink" fontSize="13px" fontWeight="600" letterSpacing="0.05em" />
         </div>
       </div>
       <div class="block-controls">
@@ -530,6 +568,22 @@ const descriptionWords = description.split(' ');
     .course-description {
       font-size: 13px;
     }
+
+    .grid-reveal-demo {
+      max-width: 300px;
+    }
+
+    .grid-tile {
+      aspect-ratio: 0.75;
+    }
+
+    .tile-title {
+      font-size: 12px;
+    }
+
+    .tile-category {
+      font-size: 10px;
+    }
   }
 
   /* BLOCK DETAIL SECTIONS */
@@ -555,26 +609,74 @@ const descriptionWords = description.split(' ');
   .grid-reveal-demo {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    gap: 0;
     width: 100%;
-    max-width: 280px;
+    max-width: 450px;
   }
 
-  .grid-reveal-demo .demo-item {
-    aspect-ratio: 1;
-    background: var(--acid);
-    border-radius: 4px;
+  .grid-tile {
+    aspect-ratio: 0.75;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 20px;
+    border-radius: 0;
     opacity: 0;
-    transform: scale(0.8);
-    animation: gridRevealItem 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-    animation-delay: calc(var(--item-index) * 100ms);
+    animation: tileReveal 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    animation-delay: calc(var(--tile-index) * 100ms);
   }
 
-  @keyframes gridRevealItem {
+  .grid-tile[data-surface="ink"] {
+    background: var(--surface-ink);
+    color: var(--text-on-ink);
+  }
+
+  .grid-tile[data-surface="alt"] {
+    background: var(--surface-alt);
+    color: var(--text-on-paper);
+  }
+
+  .tile-content {
+    width: 100%;
+  }
+
+  .tile-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+    padding: 0;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .tile-category {
+    font-size: 11px;
+    font-weight: 400;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-mono);
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .grid-tile {
+      animation: none;
+      opacity: 1;
+    }
+  }
+
+  @keyframes tileReveal {
     to {
       opacity: 1;
-      transform: scale(1);
     }
+  }
+
+  .grid-replay-controls {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    width: 100%;
   }
 
   /* SCROLL SEQUENCE DEMO */
@@ -736,6 +838,44 @@ const descriptionWords = description.split(' ');
   if (coursesGrid) {
     coursesGrid.classList.add('loaded');
   }
+
+  // GRID REVEAL INTERSECTION OBSERVER
+  function setupGridRevealObserver() {
+    const gridDemo = document.querySelector('.grid-reveal-demo');
+    if (!gridDemo) return;
+
+    const tiles = gridDemo.querySelectorAll('.grid-tile');
+    const replayBtn = document.getElementById('grid-replay-btn');
+
+    function resetTiles() {
+      tiles.forEach(tile => {
+        tile.style.animation = 'none';
+        tile.offsetHeight; // Trigger reflow
+        tile.style.animation = 'tileReveal 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards';
+      });
+    }
+
+    // IntersectionObserver to trigger animation on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          resetTiles();
+          observer.unobserve(gridDemo);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    observer.observe(gridDemo);
+
+    // Replay button handler
+    if (replayBtn) {
+      replayBtn.addEventListener('click', () => {
+        resetTiles();
+      });
+    }
+  }
+
+  setupGridRevealObserver();
 </script>
 
 <style>

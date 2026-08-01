@@ -20,8 +20,8 @@
   --color-brown-dark: #1C1917;
 
   /* Accent – Acid yellow/green */
-  --color-acid: #DFFF00;
-  --color-yellow: #DFFF00;
+  --color-acid: #EDFF10;
+  --color-yellow: #EDFF10;
   --color-yellow-bright: #FFED00;
 
   /* Grays */
@@ -42,9 +42,9 @@
   --text-on-ink: #F6F4EF;
   --text-on-ink-muted: #D4CABE;
   --stone: #DFDCD5;
-  --acid: #DFFF00;
+  --acid: #EDFF10;
 
-  /* Acid surface text & UI — for use on --acid (#DFFF00) background */
+  /* Acid surface text & UI — for use on --acid (#EDFF10) background */
   --text-on-acid: var(--surface-ink);                    /* #1C1917, 14.91:1 */
   --text-on-acid-muted: rgba(28, 25, 23, 0.7);          /* 70% opacity, composites to #575E10, 5.78:1 */
   --border-on-acid: rgba(28, 25, 23, 0.5);              /* 50% opacity, composites to #7D8C0B, 3.30:1 */

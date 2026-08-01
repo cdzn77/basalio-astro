@@ -23,7 +23,7 @@ export function getFaqs(postCapPrice: string, proShipTarget: string): FAQ[] {
     },
     {
       question: "What if my license lapses?",
-      answer: `Your site never stops working. Founder licenses are one payment with no renewal at all. After the first 100, Basalio moves to ${postCapPrice}/year — that covers updates and support, and if you stop paying, everything you've already built stays exactly as it is.`
+      answer: `Your site never stops working. Founder licenses are one payment with no renewal at all. After the first 100, Basalio moves to ${postCapPrice}/year. That covers updates and support, and if you stop paying, everything you've already built stays exactly as it is.`
     },
     {
       question: "Does my content break if I uninstall?",

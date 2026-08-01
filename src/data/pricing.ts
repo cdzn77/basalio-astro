@@ -57,7 +57,7 @@ const freeTier: PricingTier = {
     'Shared script loads only on pages that use a block',
     'Four Hacks as copy-paste snippets',
   ],
-  footnote: 'Free is not a trial. Nothing here expires or gets pulled into Pro later. Usage analytics are opt-in — decline at activation and the plugin never contacts us.',
+  footnote: 'Free is not a trial. Nothing here expires or gets pulled into Pro later. Usage analytics are opt-in. Decline at activation and the plugin never contacts us.',
   ctaPrimary: { label: 'Get the 4 free Hacks →', href: '/hacks' },
   ctaSecondary: { label: 'Notify me at launch →', href: '/early-access' },
 };
@@ -70,9 +70,9 @@ const founderTier: PricingTier = {
   billing: 'one time',
   oneLiner: 'The Pro control center and the full Hacks vault.',
   teaser: '100 founder licenses, then $249/year.',
-  leadLine: 'Everything in the free version, plus the Pro layer. A founder license is one payment, no renewal — your work stays yours.',
+  leadLine: 'Everything in the free version, plus the Pro layer. A founder license is one payment, no renewal. Your work stays yours.',
   features: [
-    'Full Hacks vault — 12+ recipes, growing',
+    'Full Hacks vault, 12+ recipes and growing',
     'Pro control center: live-tune all nine blocks from the editor sidebar',
     'One-click versions of the three hack-trailer effects',
     'Every future block and Hack included, no upgrade fee',
@@ -92,9 +92,9 @@ const standardTier: PricingTier = {
   billing: 'per year',
   oneLiner: 'The Pro control center and the full Hacks vault.',
   teaser: null,
-  leadLine: 'Everything in the free version, plus the Pro layer. Updates and support renew annually — stop paying and everything you have built stays exactly as it is.',
+  leadLine: 'Everything in the free version, plus the Pro layer. Updates and support renew annually. Stop paying and everything you have built stays exactly as it is.',
   features: [
-    'Full Hacks vault — 12+ recipes, growing',
+    'Full Hacks vault, 12+ recipes and growing',
     'Pro control center: live-tune all nine blocks from the editor sidebar',
     'One-click versions of the three hack-trailer effects',
     'Every future block and Hack included, no upgrade fee',

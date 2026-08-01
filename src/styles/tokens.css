@@ -7,10 +7,7 @@
      COLORS
      ============================================================ */
 
-  /* Primary / Neutral */
-  --color-black: #1C1917;
-  --color-white: #FFFFFF;
-  --color-gray-light: var(--surface-alt);
+  /* Legacy color token — secondary text (blockquotes, captions) */
   --color-gray-dark: #999999;
 
   /* Semantic colors — surface-aware naming */

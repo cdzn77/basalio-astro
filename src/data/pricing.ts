@@ -52,7 +52,7 @@ const freeTier: PricingTier = {
     'Custom Cursor',
     'Scroll Sequence',
     'Pinned Scroll',
-    'Works with any theme — no page builder, no premium theme',
+    'Works with any theme. No page builder, no premium theme',
     'Keyboard-operable and reduced-motion aware by default',
     'Shared script loads only on pages that use a block',
     'Four Hacks as copy-paste snippets',

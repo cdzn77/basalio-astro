@@ -7,8 +7,6 @@
      COLORS
      ============================================================ */
 
-  /* Legacy color token — secondary text (blockquotes, captions) */
-  --color-gray-dark: #999999;
 
   /* Semantic colors — surface-aware naming */
   --surface-paper: #FFFFFF;

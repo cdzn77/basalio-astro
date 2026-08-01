@@ -9,29 +9,9 @@
 
   /* Primary / Neutral */
   --color-black: #1C1917;
-  --color-black-95: #0A0A0A;
   --color-white: #FFFFFF;
-  --color-cream: #F6F4EF;
-  --color-off-white-95: var(--surface-alt);
-
-  /* Stone / Earth tones (most frequently used) */
-  --color-stone-medium: #C9BEB2;
-  --color-stone-dark: #3A352E;
-  --color-brown-dark: #1C1917;
-
-  /* Accent – Acid yellow/green */
-  --color-acid: #EDFF10;
-  --color-yellow: #EDFF10;
-  --color-yellow-bright: #FFED00;
-
-  /* Grays */
   --color-gray-light: var(--surface-alt);
-  --color-gray-medium: #D0D0D0;
   --color-gray-dark: #999999;
-  --color-gray-darker: #666666;
-  --color-gray-darkest: #575757;
-  --color-gray-neutral: #26221E;
-  --color-gray-cool: #17171A;
 
   /* Semantic colors — surface-aware naming */
   --surface-paper: #FFFFFF;

@@ -9,6 +9,10 @@ import RampFooter from '../components/RampFooter.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 import Button from '../components/Button.astro';
 
+const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
+  as: 'raw', eager: true
+});
+
 const title = "Blocks - Basalio";
 const description = "Nine curated interaction blocks built for WordPress portfolios. Grid reveals, case study transitions, scroll sequences, and more.";
 
@@ -96,10 +100,10 @@ const blocks = [
       {blocks.map((block, index) => {
         return (
         <a href={`#${block.slug}`} class={`course-card ${index >= 9 ? 'hidden-course' : ''}`}>
-          <!-- Block Number Tile -->
+          <!-- Block Icon Tile -->
           <div class="course-image-placeholder">
-            <div class="block-number-tile">
-              <span class="block-number">{String(index + 1).padStart(2, '0')}</span>
+            <div class="block-icon-tile">
+              <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/${block.slug}.svg`]} aria-hidden="true" />
             </div>
           </div>
 
@@ -434,24 +438,24 @@ const blocks = [
     position: relative;
   }
 
-  .block-number-tile {
-    position: relative;
-    overflow: hidden;
+  .block-icon-tile {
+    background: var(--acid);
+    display: grid;
+    place-items: center;
     width: 100%;
     height: 100%;
   }
 
-  .block-number {
-    font-family: var(--font-mono);
-    font-size: clamp(80px, 20vw, 200px);
-    font-weight: 800;
-    line-height: 0.8;
-    letter-spacing: -0.04em;
+  .block-icon {
     color: var(--text-on-acid);
-    position: absolute;
-    left: 0.05em;
-    bottom: -0.12em;
-    white-space: nowrap;
+    display: block;
+    width: clamp(64px, 18%, 104px);
+  }
+
+  .block-icon svg {
+    width: 100%;
+    height: auto;
+    display: block;
   }
 
   /* Block Info */

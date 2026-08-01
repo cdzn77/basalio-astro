@@ -1,0 +1,8 @@
+<svg viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <!-- Motion lines -->
+  <line x1="6" y1="12" x2="14" y2="12" stroke="currentColor" stroke-width="2"/>
+  <line x1="8" y1="20" x2="16" y2="20" stroke="currentColor" stroke-width="2"/>
+  <line x1="6" y1="28" x2="14" y2="28" stroke="currentColor" stroke-width="2"/>
+  <!-- Driven mark/circle -->
+  <circle cx="32" cy="20" r="6" fill="currentColor"/>
+</svg>

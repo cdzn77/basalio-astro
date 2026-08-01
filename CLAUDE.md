@@ -53,6 +53,15 @@ The product is **BLOCKS**. Never "modules," never "courses" — not in copy, met
 
 **Why:** Phantom terminology in comments, variable names, and component props becomes invisible confusion in future sessions. A developer reading `courseButton` concludes we sell courses. A comment referencing deleted `RampCourses` creates search noise. Locked terminology in code prevents this drift.
 
+## Copy
+
+- No em-dashes in site copy or in reports. Use a full stop where the clause stands alone, a comma where it's parenthetical, parentheses for appositional detail.
+- Avoid AI-writing markers: seamlessly, effortlessly, powerful, robust, elevate, unlock, leverage, dive into, rule-of-three constructions.
+- Copy changes are never bundled with other work. Separate commit, before/after quoted for review.
+- When asked to paste file contents: output the actual file. Never reconstruct, paraphrase, or approximate. If you cannot read the file, say so. Every quoted excerpt must be accompanied by file path and line numbers. Fabricated quotes break trust when the user relies on them to understand their own codebase.
+
+## File quotation discipline
+
 ## Hero background swaps
 
 When changing the hero background and surface:

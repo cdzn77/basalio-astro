@@ -72,7 +72,7 @@ const founderTier: PricingTier = {
   teaser: '100 founder licenses, then $249/year.',
   leadLine: 'Everything in the free version, plus the Pro layer. A founder license is one payment, no renewal. Your work stays yours.',
   features: [
-    'Full Hacks vault, 12+ recipes and growing',
+    'Full Hacks vault. 12+ recipes and growing',
     'Pro control center: live-tune all nine blocks from the editor sidebar',
     'One-click versions of the three hack-trailer effects',
     'Every future block and Hack included, no upgrade fee',
@@ -94,7 +94,7 @@ const standardTier: PricingTier = {
   teaser: null,
   leadLine: 'Everything in the free version, plus the Pro layer. Updates and support renew annually. Stop paying and everything you have built stays exactly as it is.',
   features: [
-    'Full Hacks vault, 12+ recipes and growing',
+    'Full Hacks vault. 12+ recipes and growing',
     'Pro control center: live-tune all nine blocks from the editor sidebar',
     'One-click versions of the three hack-trailer effects',
     'Every future block and Hack included, no upgrade fee',

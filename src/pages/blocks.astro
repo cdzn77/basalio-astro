@@ -861,37 +861,24 @@ const descriptionWords = description.split(' ');
 
   // GRID REVEAL INTERSECTION OBSERVER
   function setupGridRevealObserver() {
-    console.log('[Grid Reveal] setupGridRevealObserver called');
-
     const gridDemo = document.querySelector('.grid-reveal-demo');
-    console.log('[Grid Reveal] gridDemo exists?', !!gridDemo);
     if (!gridDemo) return;
 
     const tiles = gridDemo.querySelectorAll('.grid-tile');
-    console.log('[Grid Reveal] tile count:', tiles.length);
-
     const replayBtn = document.getElementById('grid-replay-btn');
-    console.log('[Grid Reveal] replayBtn element:', replayBtn);
-    console.log('[Grid Reveal] replayBtn by class:', document.querySelector('[id="grid-replay-btn"]'));
 
     function playAnimation() {
-      console.log('[Grid Reveal] playAnimation called');
-      tiles.forEach((tile, i) => {
+      tiles.forEach(tile => {
         tile.classList.add('is-revealed');
       });
-      console.log('[Grid Reveal] After add is-revealed:', tiles[0]?.classList.toString());
     }
 
     function resetAndReplay() {
-      console.log('[Grid Reveal] resetAndReplay called');
       tiles.forEach(tile => {
         tile.classList.remove('is-revealed');
       });
-      console.log('[Grid Reveal] After remove is-revealed:', tiles[0]?.classList.toString());
       void gridDemo.offsetHeight; // Force reflow
-      console.log('[Grid Reveal] After reflow');
       requestAnimationFrame(() => {
-        console.log('[Grid Reveal] In rAF, adding is-revealed');
         playAnimation();
       });
     }
@@ -900,10 +887,8 @@ const descriptionWords = description.split(' ');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          console.log('[Grid Reveal] Intersection detected, playAnimation');
           playAnimation();
           observer.unobserve(gridDemo);
-          console.log('[Grid Reveal] Observer unobserved');
         }
       });
     }, { threshold: 0.1 });
@@ -912,14 +897,10 @@ const descriptionWords = description.split(' ');
 
     // Replay button handler
     if (replayBtn) {
-      console.log('[Grid Reveal] Attaching click listener to replay button');
       replayBtn.addEventListener('click', (e) => {
-        console.log('[Grid Reveal] REPLAY CLICK FIRED');
         e.preventDefault();
         resetAndReplay();
       });
-    } else {
-      console.log('[Grid Reveal] ERROR: replayBtn is null, cannot attach listener');
     }
   }
 

@@ -5,7 +5,7 @@ import RampFooter from '../components/RampFooter.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 
 const title = "Privacy Policy - Basalio";
-const description = "Privacy Policy for Basalio. Applies to basalio.so and the Basalio plugin dashboard.";
+const description = "Privacy Policy for Basalio. Applies to basalio.com and the Basalio plugin dashboard.";
 ---
 
 <BaseLayout {title} {description}>
@@ -16,23 +16,29 @@ const description = "Privacy Policy for Basalio. Applies to basalio.so and the B
   <HeaderSplit
     eyebrow="Legal"
     heading="Privacy Policy"
-    body="Effective July 9, 2026. Applies to basalio.so and the Basalio plugin dashboard."
+    body="Effective July 9, 2026. Applies to basalio.com and the Basalio plugin dashboard."
     surface="alt"
   >
-
-      <div class="privacy-scope">
-        <span class="scope-label">Scope</span>
-        <p class="scope-text">This covers data we collect about you: beta testers, license holders, site visitors. It doesn't cover data your own portfolio visitors generate, Basalio's blocks don't track them, and we never see your site's content.</p>
+      <div class="privacy-scope-content">
+        <p class="scope-label">Scope</p>
+        <p class="scope-statement">This covers data we collect about you: beta testers, license holders, site visitors. It doesn't cover data your own portfolio visitors generate, Basalio's blocks don't track them, and we never see your site's content.</p>
       </div>
+  </HeaderSplit>
 
-      <div class="privacy-nav">
+  <section class="privacy-nav-section">
+    <div class="privacy-nav-inner">
+      <div class="privacy-nav-left">
+        <p class="privacy-nav-label">On this page</p>
+      </div>
+      <nav class="privacy-nav-right" aria-label="On this page">
         <a href="#collect" class="privacy-nav-link">What we collect</a>
         <a href="#use" class="privacy-nav-link">How we use it</a>
         <a href="#dont" class="privacy-nav-link">What we don't do</a>
         <a href="#thirdparty" class="privacy-nav-link">Third parties</a>
         <a href="#rights" class="privacy-nav-link">Your rights</a>
-      </div>
-  </HeaderSplit>
+      </nav>
+    </div>
+  </section>
 
   <section class="privacy-content">
     <div class="privacy-container">
@@ -117,14 +123,10 @@ const description = "Privacy Policy for Basalio. Applies to basalio.so and the B
     margin: 0 auto;
   }
 
-  .privacy-scope {
+  .privacy-scope-content {
     display: flex;
-    gap: 14px;
-    background: rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    padding: 16px 18px;
-    margin-bottom: 24px;
+    flex-direction: column;
+    gap: 12px;
   }
 
   .scope-label {
@@ -133,19 +135,50 @@ const description = "Privacy Policy for Basalio. Applies to basalio.so and the B
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--text-on-paper-muted);
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 999px;
-    padding: 3px 10px;
-    flex-shrink: 0;
+    margin: 0;
   }
 
-  .scope-text {
-    font-size: 13.5px;
+  .scope-statement {
+    font-size: 20px;
+    color: var(--text-on-paper);
+    margin: 0;
+    line-height: 1.6;
+    max-width: 60ch;
+  }
+
+  .privacy-nav-section {
+    background: var(--surface-paper);
+    padding: 40px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .privacy-nav-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+    gap: 60px;
+    box-sizing: border-box;
+  }
+
+  .privacy-nav-left {
+    flex: 0 1 28%;
+  }
+
+  .privacy-nav-label {
+    font-family: var(--font-mono-code);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
     color: var(--text-on-paper-muted);
     margin: 0;
   }
 
-  .privacy-nav {
+  .privacy-nav-right {
+    flex: 1;
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
@@ -174,6 +207,7 @@ const description = "Privacy Policy for Basalio. Applies to basalio.so and the B
 
   .privacy-section {
     padding-top: 40px;
+    scroll-margin-top: 100px;
   }
 
   .privacy-section:first-child {

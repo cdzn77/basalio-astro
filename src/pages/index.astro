@@ -11,6 +11,7 @@ import RampTestimonialsV2 from '../components/RampTestimonialsV2.astro';
 import RampFooter from '../components/RampFooter.astro';
 import PricingCards from '../components/patterns/PricingCards.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+import { getFaqs } from '../data/faq';
 
 const title = "Basalio - WordPress Portfolio Blocks";
 const description = "Nine curated interaction blocks for portfolio and case-study sites. Built for WordPress, not Framer.";
@@ -53,40 +54,7 @@ const buildStatus = [
   { item: "WordPress version compatibility", status: "ONGOING", note: "Testing against beta and RC releases before launch." }
 ];
 
-const faqs = [
-  {
-    question: "Do the nine blocks stay free?",
-    answer: `Yes. All nine, complete, on WordPress.org, forever. No block gets moved behind Pro later. Free is not a trial and the free tier is not a countdown.`
-  },
-  {
-    question: "It's GPL - why pay for it?",
-    answer: `You're not paying for permission; the license already grants that. You're paying for the Hacks vault, the sidebar, and the ongoing work of testing against every WordPress release before it lands. The code is free. Someone maintaining it isn't.`
-  },
-  {
-    question: "How many sites?",
-    answer: `Unlimited sites per license.`
-  },
-  {
-    question: "What happens after the 100 founder licenses?",
-    answer: `Price goes to ${postCapPrice}. Founder licenses stay valid, keep every future block and Hack, and are never re-billed.`
-  },
-  {
-    question: "What if my license lapses?",
-    answer: `It can't. One payment, no renewal, no subscription. Your site keeps working with or without me.`
-  },
-  {
-    question: "Does my content break if I uninstall?",
-    answer: `No. Basalio is theme-agnostic and your content survives uninstall. The interactions stop; the content stays.`
-  },
-  {
-    question: "Is it actually lightweight?",
-    answer: `One shared script, loaded only on pages that use a block. No jQuery, no framework, no bundle you didn't ask for.`
-  },
-  {
-    question: "When does Pro ship?",
-    answer: `${proShipTarget}. If it doesn't, see the refund terms above.`
-  }
-];
+const faqs = getFaqs(postCapPrice, proShipTarget);
 ---
 
 <BaseLayout title={title} description={description}>

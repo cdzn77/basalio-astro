@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+import { licenseScope } from '../data/pricing';
 
 const title = "Terms of Service - Basalio";
 const description = "Basalio Terms of Service. Legal terms for using the WordPress plugin and blocks.";
@@ -18,17 +19,42 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
     heading="Terms of Service"
     body="Last updated: July 2026"
     surface="alt"
-  />
+  >
+    <div class="terms-scope-content">
+      <p class="scope-label">{licenseScope.label}</p>
+      <p class="scope-statement">{licenseScope.statement}</p>
+    </div>
+  </HeaderSplit>
+
+  <section class="terms-nav-section">
+    <div class="terms-nav-inner">
+      <div class="terms-nav-left">
+        <p class="terms-nav-label">On this page</p>
+      </div>
+      <nav class="terms-nav-right" aria-label="On this page">
+        <a href="#grant" class="terms-nav-link">License Grant</a>
+        <a href="#acceptable" class="terms-nav-link">Acceptable Use</a>
+        <a href="#property" class="terms-nav-link">Intellectual Property</a>
+        <a href="#warranty" class="terms-nav-link">Warranty Disclaimer</a>
+        <a href="#liability" class="terms-nav-link">Limitation of Liability</a>
+        <a href="#thirdparty" class="terms-nav-link">Third-Party Services</a>
+        <a href="#termination" class="terms-nav-link">Termination</a>
+        <a href="#changes" class="terms-nav-link">Changes to These Terms</a>
+        <a href="#governing" class="terms-nav-link">Governing Law</a>
+        <a href="#contact" class="terms-nav-link">Contact</a>
+      </nav>
+    </div>
+  </section>
 
   <section class="terms-content">
     <div class="terms-container">
-      <div class="terms-section">
+      <div id="grant" class="terms-section">
         <h2 class="section-heading">1. License Grant</h2>
         <p class="section-text">Basalio provides a license to use the nine interaction blocks on WordPress.org under the GPL-2.0-or-later license. You may use, modify, and distribute the blocks under the terms of that license.</p>
         <p class="section-text">The Pro control center (when available) is licensed under a commercial single-site or multi-site license purchased from Basalio.</p>
       </div>
 
-      <div class="terms-section">
+      <div id="acceptable" class="terms-section">
         <h2 class="section-heading">2. Acceptable Use</h2>
         <p class="section-text">You agree not to use Basalio blocks for:</p>
         <ul class="section-list">
@@ -40,42 +66,42 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
         </ul>
       </div>
 
-      <div class="terms-section">
+      <div id="property" class="terms-section">
         <h2 class="section-heading">3. Intellectual Property</h2>
         <p class="section-text">Basalio retains all intellectual property rights to the code and design of the blocks. You retain the rights to any content you create with them. The blocks themselves are provided under GPL-2.0-or-later; modifications and distributions must follow that license.</p>
       </div>
 
-      <div class="terms-section">
+      <div id="warranty" class="terms-section">
         <h2 class="section-heading">4. Warranty Disclaimer</h2>
         <p class="section-text">Basalio is provided "as is" without warranty of any kind, express or implied. We do not guarantee that the blocks will be error-free or uninterrupted. Use at your own risk.</p>
       </div>
 
-      <div class="terms-section">
+      <div id="liability" class="terms-section">
         <h2 class="section-heading">5. Limitation of Liability</h2>
         <p class="section-text">Basalio is not liable for any indirect, incidental, special, consequential, or punitive damages arising from your use or inability to use the blocks, even if we've been advised of the possibility of such damages.</p>
       </div>
 
-      <div class="terms-section">
+      <div id="thirdparty" class="terms-section">
         <h2 class="section-heading">6. Third-Party Services</h2>
         <p class="section-text">Basalio may integrate with third-party services (Stripe for payments, etc.). Your use of those services is subject to their terms. We are not responsible for third-party content or services.</p>
       </div>
 
-      <div class="terms-section">
+      <div id="termination" class="terms-section">
         <h2 class="section-heading">7. Termination</h2>
         <p class="section-text">We may terminate or suspend your access to Basalio if you violate these terms. You may stop using Basalio at any time. Your GPL rights to the free blocks continue under the license.</p>
       </div>
 
-      <div class="terms-section">
+      <div id="changes" class="terms-section">
         <h2 class="section-heading">8. Changes to These Terms</h2>
         <p class="section-text">We may update these terms at any time. Continued use of Basalio after updates constitutes acceptance of the new terms. Significant changes will be announced.</p>
       </div>
 
-      <div class="terms-section">
+      <div id="governing" class="terms-section">
         <h2 class="section-heading">9. Governing Law</h2>
         <p class="section-text">These terms are governed by the laws of the jurisdiction where Basalio is operated, without regard to its conflict of laws principles.</p>
       </div>
 
-      <div class="terms-section">
+      <div id="contact" class="terms-section">
         <h2 class="section-heading">10. Contact</h2>
         <p class="section-text">Questions about these terms? Email <a href="mailto:hello@basalio.com" class="terms-link">hello@basalio.com</a></p>
       </div>
@@ -88,6 +114,83 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
 </BaseLayout>
 
 <style>
+  .terms-scope-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .scope-label {
+    font-family: var(--font-mono-code);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  .scope-statement {
+    font-size: 20px;
+    color: var(--text-on-paper);
+    margin: 0;
+    line-height: 1.6;
+    max-width: 60ch;
+  }
+
+  .terms-nav-section {
+    background: var(--surface-paper);
+    padding: 40px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .terms-nav-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1786px;
+    margin: 0 auto;
+    gap: 60px;
+    box-sizing: border-box;
+  }
+
+  .terms-nav-left {
+    flex: 0 1 28%;
+  }
+
+  .terms-nav-label {
+    font-family: var(--font-mono-code);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  .terms-nav-right {
+    flex: 1;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .terms-nav-link {
+    font-family: var(--font-mono-code);
+    font-size: 12px;
+    color: var(--text-on-paper-muted);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 999px;
+    padding: 6px 14px;
+    transition: border-color 0.15s ease, color 0.15s ease;
+    text-decoration: none;
+  }
+
+  .terms-nav-link:hover {
+    border-color: var(--acid);
+    color: var(--text-on-paper);
+  }
+
   .terms-container {
     max-width: 760px;
     margin: 0 auto;
@@ -100,6 +203,12 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
 
   .terms-section {
     margin-bottom: 40px;
+    padding-top: 40px;
+    scroll-margin-top: 100px;
+  }
+
+  .terms-section:first-child {
+    padding-top: 0;
   }
 
   .terms-section:last-child {

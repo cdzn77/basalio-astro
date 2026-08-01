@@ -544,9 +544,9 @@ const descriptionWords = description.split(' ');
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(57, 255, 20, 0.05);
+    background: var(--surface-alt);
     border-radius: 8px;
-    border: 1px solid var(--acid);
+    border: 1px solid var(--stone);
     padding: 40px;
     box-sizing: border-box;
   }
@@ -702,7 +702,8 @@ const descriptionWords = description.split(' ');
 
   .accessibility-note {
     padding: 16px;
-    background: rgba(57, 255, 20, 0.08);
+    background: var(--surface-alt);
+    border-left: 2px solid var(--stone);
     border-radius: 4px;
     font-size: 14px;
     line-height: 1.6;

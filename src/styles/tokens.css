@@ -95,6 +95,11 @@
      ============================================================ */
 
   --font-mono: 'Azeret Mono', monospace;
+  --font-mono-code: 'IBM Plex Mono', monospace;
+
+  /* Two monospace fonts by design, not accident:
+     --font-mono (Azeret) for UI labels, buttons, technical labels
+     --font-mono-code (IBM Plex) for code blocks, data tables, legal text */
 
   /* ============================================================
      TYPOGRAPHY – Line Heights

@@ -235,7 +235,7 @@ li {
 
 /* Code blocks and monospace */
 code, pre, kbd, samp {
-  font-family: 'IBM Plex Mono', monospace;
+  font-family: var(--font-mono-code);
   font-size: var(--font-size-14);
 }
 

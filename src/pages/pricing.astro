@@ -10,6 +10,7 @@ import FAQ from '../components/FAQ.astro';
 import PricingCards from '../components/patterns/PricingCards.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 import { getFaqs } from '../data/faq';
+import { CHECKOUT_STATE } from '../data/pricing';
 
 const title = "Pricing - Basalio";
 const description = "The nine blocks are free forever. The Pro control center is one payment for the first 100 people.";
@@ -93,15 +94,24 @@ const faqs = getFaqs(postCapPrice, proShipTarget);
   <!-- 3. RISK REVERSAL SECTION -->
   <section class="risk-section">
     <div class="risk-container">
-      <h2 class="risk-title">If I don't ship it</h2>
-
-      <div class="risk-content">
-        <p>Basalio is built by one person. You should know what that means before you pay.</p>
-
-        <p>The nine blocks are free whether or not you buy anything. They don't depend on me staying in business. The Pro layer does. So: refundable at any time until the Pro control center ships. If it never ships, you never lose your money.</p>
-
-        <p>Everything is GPL-2.0-or-later. If I disappear tomorrow, the code you have keeps working and stays yours to fork.</p>
-      </div>
+      {CHECKOUT_STATE === 'founder' ? (
+        <>
+          <h2 class="risk-title">If I don't ship it</h2>
+          <div class="risk-content">
+            <p>Basalio is built by one person. You should know what that means before you pay.</p>
+            <p>The nine blocks are free whether or not you buy anything. They don't depend on me staying in business. The Pro layer does. So: refundable at any time until the Pro control center ships. If it never ships, you never lose your money.</p>
+            <p>Everything is GPL-2.0-or-later. If I disappear tomorrow, the code you have keeps working and stays yours to fork.</p>
+          </div>
+        </>
+      ) : (
+        <>
+          <h2 class="risk-title">30 days to try it</h2>
+          <div class="risk-content">
+            <p>30-day refund, no questions asked. If it isn't what you expected, tell us and we'll refund it.</p>
+            <p>Everything is GPL-2.0-or-later. If I disappear tomorrow, the code you have keeps working and stays yours to fork.</p>
+          </div>
+        </>
+      )}
     </div>
   </section>
 

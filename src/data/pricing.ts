@@ -18,7 +18,7 @@ export interface PricingTier {
 
 export const licenseScope = {
   label: 'LICENSE SCOPE',
-  statement: 'A license covers unlimited sites and keeps working for as long as you use it. Founder licenses are one payment with no renewal. Refundable at any time until the Pro control center ships.',
+  statement: 'A license covers unlimited sites and keeps working for as long as you use it. Founder licenses are one payment with no renewal, and are refundable at any time until the Pro control center ships. All licenses carry a 30-day refund, no questions asked.',
 };
 
 /* CHECKOUT_STATE: Switch between founder and standard pricing.
@@ -102,7 +102,7 @@ const standardTier: PricingTier = {
     'Unlimited sites',
   ],
   cta: { label: 'Get Pro →', href: '/early-access' },
-  microLine: 'Annual renewal required for updates and support.',
+  microLine: '30-day refund, no questions asked. Renews annually for updates and support.',
   featured: true,
 };
 

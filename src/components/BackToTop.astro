@@ -1,0 +1,144 @@
+---
+// Back-to-Top Button
+// Fixed bottom-right, hidden by IntersectionObserver when footer is visible
+// Shows after scrolling past one viewport height
+---
+
+<button
+  type="button"
+  aria-label="Back to top"
+  class="back-to-top"
+  data-scroll-button
+>
+  <svg
+    viewBox="0 0 48 48"
+    width="24"
+    height="24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M24 8L8 24M24 8L40 24M24 8V40" />
+  </svg>
+</button>
+
+<style>
+  .back-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    background-color: var(--surface-ink);
+    color: var(--text-on-ink);
+    border: none;
+    border-radius: 8px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 40;
+  }
+
+  .back-to-top.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .back-to-top:focus-visible {
+    outline: 2px solid var(--text-on-ink);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .back-to-top {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const button = document.querySelector('[data-scroll-button]') as HTMLButtonElement;
+  const baseFooter = document.querySelector('.base-footer') as HTMLElement;
+
+  if (!button) {
+    throw new Error('Back-to-top button not found');
+  }
+
+  // Check if reduced motion is preferred
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Show button after scrolling past one viewport height, but hide if footer is visible
+  const handleScroll = () => {
+    const scrollPastViewport = window.scrollY > window.innerHeight;
+    const footerVisible = baseFooter && baseFooter.getBoundingClientRect().top < window.innerHeight;
+    const shouldShow = scrollPastViewport && !footerVisible;
+
+    if (shouldShow && !button.classList.contains('visible')) {
+      button.classList.add('visible');
+    } else if (!shouldShow && button.classList.contains('visible')) {
+      button.classList.remove('visible');
+    }
+  };
+
+  // Hide button when footer comes into view
+  let footerObserver: IntersectionObserver | null = null;
+  if (baseFooter) {
+    footerObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          button.classList.remove('visible');
+        } else {
+          // Re-show button if footer goes out of view and scroll position warrants it
+          if (window.scrollY > window.innerHeight) {
+            button.classList.add('visible');
+          }
+        }
+      },
+      { threshold: 0.1 }
+    );
+    footerObserver.observe(baseFooter);
+  }
+
+  // Scroll to top handler
+  button.addEventListener('click', () => {
+    if (prefersReducedMotion) {
+      window.scrollTo(0, 0);
+      // Move focus to top of document
+      const topElement = document.querySelector('main') || document.body;
+      (topElement as HTMLElement).focus({ preventScroll: true });
+      console.log('Back-to-top: instant scroll (prefers-reduced-motion), focus moved to top');
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+      // Move focus to top after smooth scroll completes
+      setTimeout(() => {
+        const topElement = document.querySelector('main') || document.body;
+        (topElement as HTMLElement).focus({ preventScroll: true });
+        console.log('Back-to-top: smooth scroll complete, focus moved to top');
+      }, 1000);
+    }
+  });
+
+  // Listen for scroll events
+  window.addEventListener('scroll', handleScroll, { passive: true });
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', () => {
+    window.removeEventListener('scroll', handleScroll);
+    if (footerObserver) {
+      footerObserver.disconnect();
+    }
+  });
+</script>

@@ -79,7 +79,7 @@
 
   let rafId: number | null = null;
 
-  // Show button after scrolling past one viewport height, hide when near the end of page
+  // Show button after scrolling past one viewport height, hide when footer is visible
   const handleScroll = () => {
     if (rafId !== null) {
       cancelAnimationFrame(rafId);
@@ -87,12 +87,9 @@
 
     rafId = requestAnimationFrame(() => {
       const scrolled = window.scrollY > window.innerHeight;
-      const pageHeight = document.body.scrollHeight;
-      const viewportHeight = window.innerHeight;
-      const scrollTop = window.scrollY;
-      // Hide button in the last viewport-worth of the page
-      const nearEnd = scrollTop + viewportHeight >= pageHeight - viewportHeight;
-      const shouldShow = scrolled && !nearEnd;
+      const footerTop = baseFooter.getBoundingClientRect().top;
+      const footerVisible = footerTop < window.innerHeight - 80;
+      const shouldShow = scrolled && !footerVisible;
 
       button.classList.toggle('visible', shouldShow);
       rafId = null;

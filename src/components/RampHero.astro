@@ -10,7 +10,6 @@ interface Props {
   teaserText?: string;
   teaserButton?: string;
   teaserLink?: string;
-  heroImage?: string;
   background?:
     | { type: 'color'; token: 'acid' | 'paper' | 'ink' | 'alt' }
     | { type: 'image'; src: string; position?: string; scrim?: number }
@@ -24,7 +23,6 @@ const {
   teaserText,
   teaserButton,
   teaserLink,
-  heroImage = undefined,
   background = { type: 'color', token: 'acid' },
   surface = 'acid'
 } = Astro.props;
@@ -37,7 +35,6 @@ const colorMap = {
 };
 
 const scrimOpacity = background.type === 'image' || background.type === 'video' ? (background.scrim ?? 0.4) : 0;
-const showPortrait = background.type === 'color';
 
 // Scrim color derives from surface to push background away from text
 // ink (light text) → dark scrim darkens background further
@@ -74,13 +71,6 @@ const scrimColor = scrimColorMap[surface];
       <div class="hero-bg-scrim" style={{ backgroundColor: scrimColor, opacity: scrimOpacity.toString() }} />
     )}
   </div>
-
-  <!-- HERO IMAGE: Static centered image (CONTENT, not background) -->
-  {showPortrait && (
-    <div class="hero-image-wrapper">
-      <img src={heroImage} alt="Hero" class="hero-image-bg" />
-    </div>
-  )}
 
   <div class="hero-container">
     <!-- LEFT: Heading overlaid on image -->
@@ -172,32 +162,6 @@ const scrimColor = scrimColorMap[surface];
     position: relative;
     overflow: visible;
     z-index: 1;
-  }
-
-  /* Image wrapper - static centered image (CONTENT, not background) */
-  .hero-image-wrapper {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 28%;
-    max-width: 400px;
-    aspect-ratio: 0.7;
-    overflow: hidden;
-    z-index: 2;
-    pointer-events: none;
-    border-radius: 8px;
-  }
-
-  /* Hero image - fills the wrapper */
-  .hero-image-bg {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    filter: sepia(0.25) saturate(1.1) hue-rotate(-15deg);
-    opacity: 0.95;
   }
 
   .hero-left {
@@ -359,11 +323,6 @@ const scrimColor = scrimColorMap[surface];
     .hero-heading {
       font-size: 48px;
       line-height: 48px;
-    }
-
-    .hero-image {
-      width: 100%;
-      height: auto;
     }
   }
 

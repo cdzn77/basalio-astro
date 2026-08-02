@@ -114,3 +114,19 @@ Before pushing to main (and before reporting any layout/styling task complete):
 - **Local verification is not deployment verification.** After pushing, confirm the change on the deployed site before reporting it done. The dev server (`localhost:4321`) is not the source of truth.
 - **Cannot verify deploys via API or curl.** The site is private on Netlify (returns 401). When deploy verification is needed, ask the user to check the live site directly. Do not poll or attempt to read deployed HTML.
 - **Report the deploy status and SHA alongside any "complete."** When the user confirms the fix is live, include that confirmation in the report. Example: "Pushed to main (commit abc123d). User verified fix is live at basalio.netlify.app."
+
+## Contrast ratio verification (required for color claims)
+
+Contrast claims must ALWAYS come from actual computed styles in the browser, never from token lookups or screenshots.
+
+**When reporting contrast:**
+1. Paste the raw `rgb()` values from `getComputedStyle()`:
+   ```javascript
+   getComputedStyle(document.querySelector('h1')).color
+   getComputedStyle(document.querySelector('h1 .accent-word')).color
+   getComputedStyle(document.querySelector('.hero')).backgroundColor
+   ```
+2. Show the rgb() values side by side with the calculated ratio.
+3. Example: "H1: rgb(246, 244, 239) on rgb(28, 25, 23) = 15.91:1 WCAG AAA"
+
+**Why:** Token lookup (e.g. `--text-on-ink #F6F4EF` on `--surface-ink #1C1917`) gives the theoretical value. Screenshots cannot show hex values. Only getComputedStyle reflects the actual color the browser renders after CSS cascade, inheritance, and specificity resolution. Third report with unverified contrast values broke trust; this rule prevents it.

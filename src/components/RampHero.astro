@@ -20,10 +20,10 @@ interface Props {
 }
 
 const {
-  teaserLabel = "COACHING OFFERS 101",
-  teaserText = "This course helps you design clear, compelling offers that people actually understand and want to buy.",
-  teaserButton = "VIEW COURSE",
-  teaserLink = "#blocks",
+  teaserLabel,
+  teaserText,
+  teaserButton,
+  teaserLink,
   heroImage = "https://framerusercontent.com/images/WAxIIZFwFsal6BUSuk7mft7nN7U.png",
   background = { type: 'color', token: 'acid' },
   surface = 'acid'
@@ -89,14 +89,16 @@ const scrimColor = scrimColorMap[surface];
     </div>
   </div>
 
-  <!-- BOTTOM: Blocks Teaser (74px height) -->
-  <div class="course-teaser">
-    <div class="course-left">
-      <p class="course-label">{teaserLabel}</p>
-      <p class="course-description">{teaserText}</p>
+  <!-- BOTTOM: Blocks Teaser (74px height) - only renders if teaserText is provided -->
+  {teaserText && (
+    <div class="course-teaser">
+      <div class="course-left">
+        {teaserLabel && <p class="course-label">{teaserLabel}</p>}
+        <p class="course-description">{teaserText}</p>
+      </div>
+      {teaserButton && teaserLink && <Button label={teaserButton} href={teaserLink} />}
     </div>
-    <Button label={teaserButton} href={teaserLink} />
-  </div>
+  )}
 </section>
 
 <style>

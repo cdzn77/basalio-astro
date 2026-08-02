@@ -367,6 +367,11 @@ figcaption {
   color: var(--text-on-ink);
 }
 
+/* Accent word in heading overrides heading color rule */
+.hero[data-surface='ink'] .hero-heading .accent-word {
+  color: var(--acid);
+}
+
 .hero[data-surface='ink'] .hero-eyebrow,
 .hero[data-surface='ink'] .hero-eyebrow * {
   color: var(--text-on-ink-muted);

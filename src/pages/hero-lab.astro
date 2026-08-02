@@ -16,12 +16,9 @@ function generatePlotterLines() {
   for (let i = 0; i < height; i += spacing) {
     const points: string[] = [];
     for (let x = 0; x <= width; x += 10) {
-      // Distance from attractor
       const dx = x - attractorX;
       const dy = i - attractorY;
       const dist = Math.sqrt(dx * dx + dy * dy);
-
-      // Pull towards or away from attractor
       const pull = Math.max(0, (attractorRadius - dist) / attractorRadius);
       const deflection = pull * 30 * Math.sin(i / 100);
       const y = i + deflection;
@@ -32,42 +29,26 @@ function generatePlotterLines() {
   return lines;
 }
 
-// Generate halftone dots with density gradient
-function generateHaltoneDots() {
-  const dots = [];
-  const width = 1440;
-  const height = 900;
-  const spacing = 12;
-
-  for (let y = 0; y < height; y += spacing) {
-    for (let x = 0; x < width; x += spacing) {
-      // Density: sparse at left, dense at right
-      const densityLeft = 0.1;
-      const densityRight = 0.8;
-      const density = densityLeft + (x / width) * (densityRight - densityLeft);
-
-      if (Math.random() < density) {
-        // Radius varies with density
-        const radius = 1.5 + density * 1.5;
-        dots.push({ x, y, r: radius });
-      }
-    }
-  }
-  return dots;
-}
-
-// Generate grid reveal tiles
+// Generate grid reveal tiles with random acid accents
 function generateGridTiles() {
-  const tiles = [];
   const cols = 6;
   const rows = 4;
-  const tileIndex = Array.from({ length: cols * rows }, (_, i) => i);
+  const total = cols * rows;
+  const acidIndices = new Set();
 
-  return tileIndex;
+  // Randomly pick 1-2 tiles to be acid
+  const acidCount = Math.random() < 0.5 ? 1 : 2;
+  while (acidIndices.size < acidCount) {
+    acidIndices.add(Math.floor(Math.random() * total));
+  }
+
+  return Array.from({ length: total }, (_, i) => ({
+    index: i,
+    isAcid: acidIndices.has(i)
+  }));
 }
 
 const plotterLines = generatePlotterLines();
-const haltoneDots = generateHaltoneDots();
 const gridTiles = generateGridTiles();
 
 const title = 'Hero Lab - Basalio';
@@ -76,85 +57,86 @@ const description = 'Experimental hero background concepts';
 
 <BaseLayout {title} {description} noindex>
   <Fragment slot="header">
-    <RampHeader />
+    <RampHeader surface="ink" />
   </Fragment>
 
-  <!-- CONCEPT 01: MONUMENTAL TYPE -->
-  <section class="hero-concept hero-01" id="concept-01">
-    <div class="hero-bg-monumental">
-      <div class="monumental-text" aria-hidden="true">BASALIO</div>
+  <!-- INK VERSIONS (Dark background with color accents) -->
+
+  <!-- CONCEPT 01: MONUMENTAL TYPE (INK) -->
+  <section class="hero-concept hero-01-ink" id="concept-01-ink">
+    <div class="hero-bg-monumental-ink">
+      <div class="monumental-text-ink" aria-hidden="true">BASALIO</div>
     </div>
     <div class="hero-content">
       <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
-      <h1 class="hero-h1">Framer-quality interactions, native to WordPress.</h1>
-      <button class="hero-cta">Explore Blocks</button>
+      <h1 class="hero-h1">Framer-quality <span class="accent-word">interactions,</span> native to WordPress.</h1>
+      <button class="hero-cta hero-cta-acid">Explore Blocks</button>
     </div>
-    <div class="concept-label">01 MONUMENTAL TYPE</div>
+    <div class="concept-label">01 MONUMENTAL TYPE (Dark)</div>
   </section>
 
-  <!-- CONCEPT 02: HALFTONE FIELD -->
-  <section class="hero-concept hero-02" id="concept-02">
-    <svg class="hero-bg-halftone" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <pattern id="halftone-pattern" x="0" y="0" width="12" height="12" patternUnits="userSpaceOnUse">
-          <circle cx="6" cy="6" r="2" fill="var(--surface-ink)" />
-        </pattern>
-        <mask id="halftone-mask">
-          <linearGradient id="mask-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="black" stop-opacity="0.1" />
-            <stop offset="100%" stop-color="black" stop-opacity="0.8" />
-          </linearGradient>
-          <rect width="1440" height="900" fill="url(#mask-gradient)" />
-        </mask>
-      </defs>
-      <rect width="1440" height="900" fill="var(--acid)" />
-      <g mask="url(#halftone-mask)">
-        {haltoneDots.map(dot => (
-          <circle cx={dot.x} cy={dot.y} r={dot.r} fill="var(--surface-ink)" />
+  <!-- CONCEPT 02: HALFTONE FIELD (INK) -->
+  <section class="hero-concept hero-02-ink" id="concept-02-ink">
+    <div class="hero-bg-halftone-ink"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
+      <h1 class="hero-h1">Framer-quality <span class="accent-word">interactions,</span> native to WordPress.</h1>
+      <button class="hero-cta hero-cta-acid">Explore Blocks</button>
+    </div>
+    <div class="concept-label">02 HALFTONE FIELD (Dark)</div>
+  </section>
+
+  <!-- CONCEPT 03: PLOTTER LINES (INK) -->
+  <section class="hero-concept hero-03-ink" id="concept-03-ink">
+    <svg class="hero-bg-plotter-ink" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+      <rect width="1440" height="900" fill="var(--surface-ink)" />
+      <g stroke="var(--acid)" stroke-width="1.5" fill="none" stroke-linecap="round">
+        {plotterLines.map((pathData) => (
+          <polyline points={pathData} opacity={0.8} />
         ))}
       </g>
     </svg>
     <div class="hero-content">
       <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
-      <h1 class="hero-h1">Framer-quality interactions, native to WordPress.</h1>
-      <button class="hero-cta">Explore Blocks</button>
+      <h1 class="hero-h1">Framer-quality <span class="accent-word">interactions,</span> native to WordPress.</h1>
+      <button class="hero-cta hero-cta-acid">Explore Blocks</button>
     </div>
-    <div class="concept-label">02 HALFTONE FIELD</div>
+    <div class="concept-label">03 PLOTTER LINES (Dark)</div>
   </section>
 
-  <!-- CONCEPT 03: PLOTTER LINES -->
-  <section class="hero-concept hero-03" id="concept-03">
-    <svg class="hero-bg-plotter" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-      <rect width="1440" height="900" fill="var(--acid)" />
-      <g stroke="var(--surface-ink)" stroke-width="1.5" fill="none" stroke-linecap="round">
-        {plotterLines.map((pathData, i) => (
-          <polyline points={pathData} opacity={0.6} />
-        ))}
-      </g>
-    </svg>
-    <div class="hero-content">
-      <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
-      <h1 class="hero-h1">Framer-quality interactions, native to WordPress.</h1>
-      <button class="hero-cta">Explore Blocks</button>
-    </div>
-    <div class="concept-label">03 PLOTTER LINES</div>
-  </section>
-
-  <!-- CONCEPT 04: GRID REVEAL -->
-  <section class="hero-concept hero-04" id="concept-04">
-    <div class="hero-bg-grid">
-      <div class="grid-container">
-        {gridTiles.map((index) => (
-          <div class="grid-tile" style={{ '--tile-index': index } as any}></div>
+  <!-- CONCEPT 04: GRID REVEAL (INK) -->
+  <section class="hero-concept hero-04-ink" id="concept-04-ink">
+    <div class="hero-bg-grid-ink">
+      <div class="grid-container-ink">
+        {gridTiles.map((tile) => (
+          <div class="grid-tile-ink" style={{ '--tile-index': tile.index, '--is-acid': tile.isAcid ? 1 : 0 } as any}></div>
         ))}
       </div>
     </div>
     <div class="hero-content">
       <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
+      <h1 class="hero-h1">Framer-quality <span class="accent-word">interactions,</span> native to WordPress.</h1>
+      <button class="hero-cta hero-cta-acid">Explore Blocks</button>
+    </div>
+    <div class="concept-label">04 GRID REVEAL (Dark)</div>
+  </section>
+
+  <!-- REFERENCE: Best acid version side-by-side -->
+  <section class="hero-concept hero-03-acid-ref" id="concept-03-acid-ref">
+    <svg class="hero-bg-plotter-acid" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+      <rect width="1440" height="900" fill="var(--acid)" />
+      <g stroke="var(--surface-ink)" stroke-width="1.5" fill="none" stroke-linecap="round">
+        {plotterLines.map((pathData) => (
+          <polyline points={pathData} opacity={0.4} />
+        ))}
+      </g>
+    </svg>
+    <div class="hero-content">
+      <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
       <h1 class="hero-h1">Framer-quality interactions, native to WordPress.</h1>
       <button class="hero-cta">Explore Blocks</button>
     </div>
-    <div class="concept-label">04 GRID REVEAL</div>
+    <div class="concept-label">03 PLOTTER LINES (Light) - Reference</div>
   </section>
 
   <Fragment slot="footer">
@@ -205,6 +187,10 @@ const description = 'Experimental hero background concepts';
     padding: 0;
   }
 
+  .accent-word {
+    color: var(--acid);
+  }
+
   .hero-cta {
     font-family: 'Azeret Mono', monospace;
     font-size: 13px;
@@ -222,6 +208,11 @@ const description = 'Experimental hero background concepts';
     transform: translateY(-2px);
   }
 
+  .hero-cta-acid {
+    color: var(--acid);
+    border-color: var(--acid);
+  }
+
   .concept-label {
     position: absolute;
     bottom: 40px;
@@ -235,22 +226,26 @@ const description = 'Experimental hero background concepts';
     z-index: 11;
   }
 
-  /* CONCEPT 01: MONUMENTAL TYPE */
-  .hero-01 {
-    background: var(--acid);
+  /* INK VERSIONS - Dark background */
+
+  /* CONCEPT 01: MONUMENTAL TYPE (INK) */
+  .hero-01-ink {
+    background: var(--surface-ink);
   }
 
-  .hero-01 .hero-eyebrow,
-  .hero-01 .hero-h1,
-  .hero-01 .hero-cta {
-    color: var(--surface-ink);
+  .hero-01-ink .hero-eyebrow {
+    color: var(--text-on-ink-muted);
   }
 
-  .hero-01 .concept-label {
-    color: var(--surface-ink);
+  .hero-01-ink .hero-h1 {
+    color: var(--text-on-ink);
   }
 
-  .hero-bg-monumental {
+  .hero-01-ink .concept-label {
+    color: var(--text-on-ink-muted);
+  }
+
+  .hero-bg-monumental-ink {
     position: absolute;
     inset: 0;
     display: flex;
@@ -259,64 +254,72 @@ const description = 'Experimental hero background concepts';
     overflow: hidden;
   }
 
-  .monumental-text {
+  .monumental-text-ink {
     font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: clamp(400px, 60vw, 1000px);
     font-weight: 800;
     letter-spacing: -0.04em;
-    color: var(--surface-ink);
+    color: var(--stone);
     line-height: 1;
     white-space: nowrap;
-    opacity: 0.08;
+    opacity: 0.15;
     transform: translateY(10%);
   }
 
-  /* CONCEPT 02: HALFTONE FIELD */
-  .hero-02 {
-    background: var(--acid);
+  /* CONCEPT 02: HALFTONE FIELD (INK) - CSS radial gradient, no SVG circles */
+  .hero-02-ink {
+    background: var(--surface-ink);
   }
 
-  .hero-02 .hero-eyebrow,
-  .hero-02 .hero-h1,
-  .hero-02 .hero-cta {
-    color: var(--surface-ink);
+  .hero-02-ink .hero-eyebrow {
+    color: var(--text-on-ink-muted);
   }
 
-  .hero-02 .concept-label {
-    color: var(--surface-ink);
+  .hero-02-ink .hero-h1 {
+    color: var(--text-on-ink);
   }
 
-  .hero-bg-halftone {
+  .hero-02-ink .concept-label {
+    color: var(--text-on-ink-muted);
+  }
+
+  .hero-bg-halftone-ink {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     z-index: 0;
+    background-image: radial-gradient(var(--stone) 1.5px, transparent 1.5px);
+    background-size: 14px 14px;
+    background-attachment: fixed;
+    mask-image: linear-gradient(90deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
     animation: drift-slow 40s linear infinite;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-bg-halftone {
+    .hero-bg-halftone-ink {
       animation: none;
     }
   }
 
-  /* CONCEPT 03: PLOTTER LINES */
-  .hero-03 {
-    background: var(--acid);
+  /* CONCEPT 03: PLOTTER LINES (INK) */
+  .hero-03-ink {
+    background: var(--surface-ink);
   }
 
-  .hero-03 .hero-eyebrow,
-  .hero-03 .hero-h1,
-  .hero-03 .hero-cta {
-    color: var(--surface-ink);
+  .hero-03-ink .hero-eyebrow {
+    color: var(--text-on-ink-muted);
   }
 
-  .hero-03 .concept-label {
-    color: var(--surface-ink);
+  .hero-03-ink .hero-h1 {
+    color: var(--text-on-ink);
   }
 
-  .hero-bg-plotter {
+  .hero-03-ink .concept-label {
+    color: var(--text-on-ink-muted);
+  }
+
+  .hero-bg-plotter-ink {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -326,33 +329,35 @@ const description = 'Experimental hero background concepts';
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-bg-plotter {
+    .hero-bg-plotter-ink {
       animation: none;
     }
   }
 
-  /* CONCEPT 04: GRID REVEAL */
-  .hero-04 {
-    background: var(--acid);
+  /* CONCEPT 04: GRID REVEAL (INK) */
+  .hero-04-ink {
+    background: var(--surface-ink);
   }
 
-  .hero-04 .hero-eyebrow,
-  .hero-04 .hero-h1,
-  .hero-04 .hero-cta {
-    color: var(--surface-ink);
+  .hero-04-ink .hero-eyebrow {
+    color: var(--text-on-ink-muted);
   }
 
-  .hero-04 .concept-label {
-    color: var(--surface-ink);
+  .hero-04-ink .hero-h1 {
+    color: var(--text-on-ink);
   }
 
-  .hero-bg-grid {
+  .hero-04-ink .concept-label {
+    color: var(--text-on-ink-muted);
+  }
+
+  .hero-bg-grid-ink {
     position: absolute;
     inset: 0;
     z-index: 0;
   }
 
-  .grid-container {
+  .grid-container-ink {
     position: absolute;
     inset: -20%;
     display: grid;
@@ -362,21 +367,29 @@ const description = 'Experimental hero background concepts';
     animation: grid-reveal 12s ease-in-out infinite;
   }
 
-  .grid-tile {
-    background: var(--surface-ink);
+  .grid-tile-ink {
     opacity: 0;
     transform: translateY(20px);
-    animation: tile-reveal 700ms cubic-bezier(0.33, 0, 0.66, 1) forwards;
+    animation: tile-reveal-ink 700ms cubic-bezier(0.33, 0, 0.66, 1) forwards;
     animation-delay: calc(var(--tile-index) * 180ms);
   }
 
-  @keyframes tile-reveal {
+  .grid-tile-ink {
+    background: var(--is-acid: 0) ? var(--stone) : var(--stone);
+    background: var(--stone);
+  }
+
+  .grid-tile-ink[style*="--is-acid: 1"] {
+    background: var(--acid);
+  }
+
+  @keyframes tile-reveal-ink {
     0% {
       opacity: 0;
       transform: translateY(20px);
     }
     100% {
-      opacity: 0.6;
+      opacity: 0.7;
       transform: translateY(0);
     }
   }
@@ -397,14 +410,37 @@ const description = 'Experimental hero background concepts';
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .grid-container {
+    .grid-container-ink {
       animation: none;
     }
-    .grid-tile {
+    .grid-tile-ink {
       animation: none;
-      opacity: 0.6;
+      opacity: 0.7;
       transform: translateY(0);
     }
+  }
+
+  /* REFERENCE: ACID VERSION (Light background) */
+  .hero-03-acid-ref {
+    background: var(--acid);
+  }
+
+  .hero-03-acid-ref .hero-eyebrow,
+  .hero-03-acid-ref .hero-h1,
+  .hero-03-acid-ref .hero-cta {
+    color: var(--surface-ink);
+  }
+
+  .hero-03-acid-ref .concept-label {
+    color: var(--surface-ink);
+  }
+
+  .hero-bg-plotter-acid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
   }
 
   /* ANIMATIONS */
@@ -428,7 +464,7 @@ const description = 'Experimental hero background concepts';
       padding: 100px 40px 80px;
     }
 
-    .monumental-text {
+    .monumental-text-ink {
       font-size: clamp(200px, 50vw, 600px);
     }
 
@@ -453,7 +489,7 @@ const description = 'Experimental hero background concepts';
       font-size: 11px;
     }
 
-    .monumental-text {
+    .monumental-text-ink {
       font-size: clamp(120px, 40vw, 300px);
     }
 

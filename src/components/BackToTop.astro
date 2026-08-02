@@ -87,9 +87,11 @@
 
     rafId = requestAnimationFrame(() => {
       const scrolled = window.scrollY > window.innerHeight;
-      const footerTop = baseFooter.getBoundingClientRect().top;
-      const footerVisible = footerTop < window.innerHeight - 80;
-      const shouldShow = scrolled && !footerVisible;
+      // Footer is visible when we're within viewport height of the bottom (when footer becomes sticky)
+      const bodyHeight = document.body.scrollHeight;
+      const distanceToBottom = bodyHeight - (window.scrollY + window.innerHeight);
+      const footerIsInView = distanceToBottom < window.innerHeight;
+      const shouldShow = scrolled && !footerIsInView;
 
       button.classList.toggle('visible', shouldShow);
       rafId = null;

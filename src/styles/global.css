@@ -359,3 +359,35 @@ figcaption {
   position: relative;
   z-index: 2;
 }
+
+/* Hero surface-aware colors – global rules to reach slotted content across scopes
+   These override RampHero's scoped rules, ensuring all hero elements get correct colors */
+.hero[data-surface='ink'] .hero-heading,
+.hero[data-surface='ink'] .hero-heading * {
+  color: var(--text-on-ink);
+}
+
+.hero[data-surface='ink'] .hero-eyebrow,
+.hero[data-surface='ink'] .hero-eyebrow * {
+  color: var(--text-on-ink-muted);
+}
+
+.hero[data-surface='paper'] .hero-heading,
+.hero[data-surface='paper'] .hero-heading * {
+  color: var(--text-on-paper);
+}
+
+.hero[data-surface='paper'] .hero-eyebrow,
+.hero[data-surface='paper'] .hero-eyebrow * {
+  color: var(--text-on-paper);
+}
+
+.hero[data-surface='acid'] .hero-heading,
+.hero[data-surface='acid'] .hero-heading * {
+  color: var(--text-on-acid);
+}
+
+.hero[data-surface='acid'] .hero-eyebrow,
+.hero[data-surface='acid'] .hero-eyebrow * {
+  color: var(--text-on-acid);
+}

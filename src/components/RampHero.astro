@@ -118,6 +118,23 @@ const scrimColor = scrimColorMap[surface];
     overflow: visible;
     position: relative;
     padding-top: 80px;
+    --hero-heading-color: var(--text-on-acid);
+    --hero-eyebrow-color: var(--text-on-acid);
+  }
+
+  .hero[data-surface='ink'] {
+    --hero-heading-color: var(--text-on-ink);
+    --hero-eyebrow-color: var(--text-on-ink-muted);
+  }
+
+  .hero[data-surface='paper'] {
+    --hero-heading-color: var(--text-on-paper);
+    --hero-eyebrow-color: var(--text-on-paper);
+  }
+
+  .hero[data-surface='acid'] {
+    --hero-heading-color: var(--text-on-acid);
+    --hero-eyebrow-color: var(--text-on-acid);
   }
 
   /* Background layer - z-index 0 */
@@ -218,32 +235,12 @@ const scrimColor = scrimColorMap[surface];
     margin: 0 0 20px 0;
     padding: 0;
     line-height: 1.4;
+    color: var(--hero-eyebrow-color);
   }
 
-  /* Surface-specific eyebrow color */
-  .hero[data-surface='acid'] .hero-eyebrow {
-    color: var(--text-on-acid);
-  }
-
-  .hero[data-surface='paper'] .hero-eyebrow {
-    color: var(--text-on-paper);
-  }
-
-  .hero[data-surface='ink'] .hero-eyebrow {
-    color: var(--text-on-ink-muted);
-  }
-
-  /* Surface-specific heading color */
-  .hero[data-surface='acid'] .hero-heading {
-    color: var(--text-on-acid);
-  }
-
-  .hero[data-surface='paper'] .hero-heading {
-    color: var(--text-on-paper);
-  }
-
-  .hero[data-surface='ink'] .hero-heading {
-    color: var(--text-on-ink);
+  /* Heading color uses CSS variable set on .hero, reaches across scope boundaries */
+  .hero-heading {
+    color: var(--hero-heading-color);
   }
 
   .hero-heading {

@@ -17,8 +17,8 @@ const title = "Basalio - WordPress Portfolio Blocks";
 const description = "Nine curated interaction blocks for portfolio and case-study sites. Built for WordPress, not Framer.";
 
 // Hero background configuration (centralized)
-const heroBackground = { type: 'color', token: 'acid' };
-const heroSurface = 'acid';
+const heroBackground = { type: 'monumental' };
+const heroSurface = 'ink';
 
 // Header surface syncs directly with hero surface
 // Surface prop encodes the correct light/dark surface independent of media type
@@ -65,13 +65,16 @@ const faqs = getFaqs(postCapPrice, proShipTarget);
 
   <!-- Hero Section -->
   <RampHero
+    eyebrow="A WORDPRESS PLUGIN FOR CREATIVES"
     teaserLabel="For WordPress • Not a page builder"
     teaserText="Give your work a foundation to stand on. Nine curated interaction blocks, from grid reveals to case-study transitions to scroll-tied sequences, built only for portfolio and case-study sites. Nothing you'd need Framer for. Nothing you don't."
     teaserButton="EXPLORE BLOCKS"
     teaserLink="/blocks"
     background={heroBackground}
     surface={heroSurface}
-  />
+  >
+    <h1 class="hero-heading" slot="heading">Framer-quality <span class="accent-word">interactions,</span><br/>native to WordPress.</h1>
+  </RampHero>
 
   <!-- What We Do Section -->
   <PositioningStats
@@ -200,6 +203,10 @@ the case study, the reel."
 </BaseLayout>
 
 <style>
+  .accent-word {
+    color: var(--acid);
+  }
+
   /* TESTIMONIALS WRAPPER: Background only (structure from BaseLayout) */
   .testimonials-rounded {
     overflow: visible;

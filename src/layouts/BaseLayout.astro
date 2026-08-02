@@ -14,12 +14,14 @@ interface Props {
   title?: string;
   description?: string;
   headerType?: 'ramp' | 'simple';
+  noindex?: boolean;
 }
 
 const {
   title = 'Basalio',
   description = 'Basalio - WordPress Portfolio Blocks',
-  headerType = 'ramp'
+  headerType = 'ramp',
+  noindex = false
 } = Astro.props;
 ---
 
@@ -30,6 +32,7 @@ const {
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  {noindex && <meta name="robots" content="noindex" />}
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />

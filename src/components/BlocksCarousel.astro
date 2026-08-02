@@ -77,14 +77,14 @@ const {
         <div class="carousel-track">
           {blocks.map((block, index) => {
             return (
-              <a href={block.link || "#"} class="course-card">
-                <div class="course-image-wrapper">
+              <a href={block.link || "#"} class="block-card">
+                <div class="block-image-wrapper">
                   <div class="block-icon-tile">
                     <span class="block-icon" set:html={block.slug ? icons[`/public/assets/icons/blocks/${block.slug}.svg`] : ''} aria-hidden="true" />
                   </div>
                 </div>
-                <h3 class="course-card-title">{block.title}</h3>
-                <p class="course-card-description">{block.description}</p>
+                <h3 class="block-card-title">{block.title}</h3>
+                <p class="block-card-description">{block.description}</p>
               </a>
             );
           })}
@@ -257,7 +257,7 @@ const {
   }
 
   /* Course cards: fixed size 500x571px */
-  .course-card {
+  .block-card {
     flex: 0 0 500px;
     height: 571px;
     background: var(--surface-paper);
@@ -273,13 +273,13 @@ const {
     overflow: visible;
   }
 
-  .course-card:focus-visible {
+  .block-card:focus-visible {
     outline: 2px solid var(--text-on-paper);
     outline-offset: 2px;
     box-shadow: 0 0 0 4px var(--surface-paper);
   }
 
-  .course-image-wrapper {
+  .block-image-wrapper {
     width: 100%;
     aspect-ratio: 3 / 2;
     background: var(--acid);
@@ -290,7 +290,7 @@ const {
     justify-content: center;
   }
 
-  .course-image {
+  .block-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -299,12 +299,12 @@ const {
     transition: filter 300ms ease;
   }
 
-  .course-image:not([src]),
-  .course-image[src=""] {
+  .block-image:not([src]),
+  .block-image[src=""] {
     display: none;
   }
 
-  .course-card-title {
+  .block-card-title {
     font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 16px;
     font-weight: 500;
@@ -314,7 +314,7 @@ const {
     text-align: left;
   }
 
-  .course-card-description {
+  .block-card-description {
     font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 14px;
     font-weight: 400;
@@ -328,12 +328,12 @@ const {
     transition: opacity 300ms ease, transform 300ms ease;
   }
 
-  .course-card:hover .course-image {
+  .block-card:hover .block-image {
     transform: scale(1.08);
   }
 
-  .course-card:hover .course-card-title,
-  .course-card:hover .course-card-description {
+  .block-card:hover .block-card-title,
+  .block-card:hover .block-card-description {
     opacity: 1;
     transform: translateY(0);
   }
@@ -366,7 +366,7 @@ const {
 
   const track = document.querySelector('.carousel-track');
   const viewport = document.querySelector('.carousel-viewport');
-  const cards = document.querySelectorAll('.course-card');
+  const cards = document.querySelectorAll('.block-card');
   const prevBtn = document.querySelector('.carousel-button-prev');
   const nextBtn = document.querySelector('.carousel-button-next');
   const leftZone = document.querySelector('.carousel-zone-left');

@@ -24,7 +24,7 @@ const {
   teaserText,
   teaserButton,
   teaserLink,
-  heroImage = "https://framerusercontent.com/images/WAxIIZFwFsal6BUSuk7mft7nN7U.png",
+  heroImage,
   background = { type: 'color', token: 'acid' },
   surface = 'acid'
 } = Astro.props;
@@ -91,10 +91,10 @@ const scrimColor = scrimColorMap[surface];
 
   <!-- BOTTOM: Blocks Teaser (74px height) - only renders if teaserText is provided -->
   {teaserText && (
-    <div class="course-teaser">
-      <div class="course-left">
-        {teaserLabel && <p class="course-label">{teaserLabel}</p>}
-        <p class="course-description">{teaserText}</p>
+    <div class="block-teaser">
+      <div class="block-left">
+        {teaserLabel && <p class="block-label">{teaserLabel}</p>}
+        <p class="block-description">{teaserText}</p>
       </div>
       {teaserButton && teaserLink && <Button label={teaserButton} href={teaserLink} />}
     </div>
@@ -237,7 +237,7 @@ const scrimColor = scrimColorMap[surface];
 
 
   /* COURSE TEASER CARD - Transparent, shows image behind */
-  .course-teaser {
+  .block-teaser {
     width: 100%;
     max-width: 1791px;
     padding: 40px 40px;
@@ -253,7 +253,7 @@ const scrimColor = scrimColorMap[surface];
     flex-shrink: 0;
   }
 
-  .course-left {
+  .block-left {
     flex: 0 1 auto;
     max-width: 365px;
     display: flex;
@@ -262,19 +262,19 @@ const scrimColor = scrimColorMap[surface];
   }
 
   /* Surface-specific course label color */
-  .hero[data-surface='acid'] .course-label {
+  .hero[data-surface='acid'] .block-label {
     color: var(--text-on-acid);
   }
 
-  .hero[data-surface='paper'] .course-label {
+  .hero[data-surface='paper'] .block-label {
     color: var(--text-on-paper);
   }
 
-  .hero[data-surface='ink'] .course-label {
+  .hero[data-surface='ink'] .block-label {
     color: var(--text-on-ink);
   }
 
-  .course-label {
+  .block-label {
     font-family: 'Azeret Mono', monospace;
     font-size: 14px;
     font-weight: 500;
@@ -292,19 +292,19 @@ const scrimColor = scrimColorMap[surface];
   }
 
   /* Surface-specific course description color */
-  .hero[data-surface='acid'] .course-description {
+  .hero[data-surface='acid'] .block-description {
     color: var(--text-on-acid);
   }
 
-  .hero[data-surface='paper'] .course-description {
+  .hero[data-surface='paper'] .block-description {
     color: var(--text-on-paper);
   }
 
-  .hero[data-surface='ink'] .course-description {
+  .hero[data-surface='ink'] .block-description {
     color: var(--text-on-ink);
   }
 
-  .course-description {
+  .block-description {
     font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 16px;
     font-weight: 400;
@@ -344,7 +344,7 @@ const scrimColor = scrimColorMap[surface];
       width: 100%;
     }
 
-    .course-teaser {
+    .block-teaser {
       width: 100%;
       flex-direction: column;
       height: auto;

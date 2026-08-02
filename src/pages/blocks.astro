@@ -99,21 +99,21 @@ const blocks = [
     <div class="courses-grid">
       {blocks.map((block, index) => {
         return (
-        <a href={`#${block.slug}`} class={`course-card ${index >= 9 ? 'hidden-course' : ''}`}>
+        <a href={`#${block.slug}`} class={`block-card ${index >= 9 ? 'hidden-course' : ''}`}>
           <!-- Block Icon Tile -->
-          <div class="course-image-placeholder">
+          <div class="block-image-placeholder">
             <div class="block-icon-tile">
               <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/${block.slug}.svg`]} aria-hidden="true" />
             </div>
           </div>
 
           <!-- Block Info -->
-          <div class="course-info">
-            <h2 class="course-title">{block.title}</h2>
-            <p class="course-description">{block.description}</p>
+          <div class="block-info">
+            <h2 class="block-title">{block.title}</h2>
+            <p class="block-description">{block.description}</p>
 
             <!-- Tag Pill -->
-            <span class="course-tag">{block.tag}</span>
+            <span class="block-tag">{block.tag}</span>
           </div>
         </a>
       );
@@ -467,7 +467,7 @@ const blocks = [
   }
 
   /* BLOCK CARD */
-  .course-card {
+  .block-card {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -475,24 +475,24 @@ const blocks = [
     overflow: visible;
   }
 
-  .course-card:focus-visible {
+  .block-card:focus-visible {
     outline: 2px solid var(--text-on-paper);
     outline-offset: 2px;
     box-shadow: 0 0 0 4px var(--surface-paper);
   }
 
   /* Hide courses 4-9 initially */
-  .course-card.hidden-course {
+  .block-card.hidden-course {
     display: none;
   }
 
   /* Show courses when loaded */
-  .courses-grid.loaded .course-card.hidden-course {
+  .courses-grid.loaded .block-card.hidden-course {
     display: flex;
   }
 
   /* Block Image Placeholder - Yellow background with black icon */
-  .course-image-placeholder {
+  .block-image-placeholder {
     width: 100%;
     aspect-ratio: 2/1;
     background: var(--acid);
@@ -525,13 +525,13 @@ const blocks = [
   }
 
   /* Block Info */
-  .course-info {
+  .block-info {
     display: flex;
     flex-direction: column;
     gap: 16px;
   }
 
-  .course-title {
+  .block-title {
     font-size: 18px;
     font-weight: 400;
     line-height: 1.3;
@@ -540,7 +540,7 @@ const blocks = [
     padding: 0;
   }
 
-  .course-description {
+  .block-description {
     font-size: 14px;
     font-weight: 400;
     line-height: 1.5;
@@ -550,7 +550,7 @@ const blocks = [
   }
 
   /* Tag Pill */
-  .course-tag {
+  .block-tag {
     display: inline-flex;
     width: fit-content;
     padding: 8px;
@@ -565,7 +565,7 @@ const blocks = [
     transition: all 200ms ease;
   }
 
-  .course-card:hover .course-tag {
+  .block-card:hover .block-tag {
     background: var(--text-on-paper-muted);
     color: var(--surface-paper);
   }
@@ -660,11 +660,11 @@ const blocks = [
       padding: 60px 20px;
     }
 
-    .course-title {
+    .block-title {
       font-size: 16px;
     }
 
-    .course-description {
+    .block-description {
       font-size: 13px;
     }
 

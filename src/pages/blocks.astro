@@ -333,8 +333,11 @@ const blocks = [
       eyebrow="CASE STUDY TRANSITION"
       heading="Smooth transitions between case studies"
       body="Smooth transitions between case studies with parallax and fade effects"
-      surface="paper"
+      surface="alt"
     >
+      <div class="block-icon-container">
+        <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/case-study-transition.svg`]} aria-hidden="true" />
+      </div>
     </HeaderSplit>
   </section>
 
@@ -346,6 +349,9 @@ const blocks = [
       body="Reveal text character-by-character or word-by-word as users scroll"
       surface="paper"
     >
+      <div class="block-icon-container">
+        <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/text-reveal.svg`]} aria-hidden="true" />
+      </div>
     </HeaderSplit>
   </section>
 
@@ -355,8 +361,11 @@ const blocks = [
       eyebrow="MAGNETIC BUTTON"
       heading="Interactive button with magnetic attraction"
       body="Interactive button that responds to mouse movement with magnetic attraction"
-      surface="paper"
+      surface="alt"
     >
+      <div class="block-icon-container">
+        <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/magnetic-button.svg`]} aria-hidden="true" />
+      </div>
     </HeaderSplit>
   </section>
 
@@ -368,6 +377,9 @@ const blocks = [
       body="Grid content that filters and animates on category selection"
       surface="paper"
     >
+      <div class="block-icon-container">
+        <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/filterable-grid.svg`]} aria-hidden="true" />
+      </div>
     </HeaderSplit>
   </section>
 
@@ -377,8 +389,11 @@ const blocks = [
       eyebrow="CUSTOM CURSOR"
       heading="Replace the browser cursor with custom feedback"
       body="Replace browser cursor with custom branded interaction feedback"
-      surface="paper"
+      surface="alt"
     >
+      <div class="block-icon-container">
+        <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/custom-cursor.svg`]} aria-hidden="true" />
+      </div>
     </HeaderSplit>
   </section>
 
@@ -390,6 +405,9 @@ const blocks = [
       body="Lock elements in place while content scrolls for immersive narratives"
       surface="paper"
     >
+      <div class="block-icon-container">
+        <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/pinned-scroll.svg`]} aria-hidden="true" />
+      </div>
     </HeaderSplit>
   </section>
 
@@ -524,6 +542,21 @@ const blocks = [
     display: block;
   }
 
+  /* Block Icon Container - for stub sections in HeaderSplit */
+  .block-icon-container {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    background: var(--acid);
+    border-radius: 6px;
+    display: grid;
+    place-items: center;
+  }
+
+  .block-icon-container .block-icon {
+    color: var(--text-on-acid);
+    width: clamp(60px, 20%, 100px);
+  }
+
   /* Block Info */
   .block-info {
     display: flex;
@@ -604,6 +637,11 @@ const blocks = [
 
   .load-more-button:active {
     transform: scale(0.98);
+  }
+
+  /* Block Detail Sections - anchors clear the fixed header */
+  .block-detail-section {
+    scroll-margin-top: 80px;
   }
 
   /* Testimonials section: Background only (structure from BaseLayout) */

@@ -77,68 +77,57 @@
   // Check if reduced motion is preferred
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Show button after scrolling past one viewport height, but hide if footer is visible
+  let rafId: number | null = null;
+
+  // Show button after scrolling past one viewport height, hide when near the end of page
   const handleScroll = () => {
-    const scrollPastViewport = window.scrollY > window.innerHeight;
-    const footerVisible = baseFooter && baseFooter.getBoundingClientRect().top < window.innerHeight;
-    const shouldShow = scrollPastViewport && !footerVisible;
-
-    if (shouldShow && !button.classList.contains('visible')) {
-      button.classList.add('visible');
-    } else if (!shouldShow && button.classList.contains('visible')) {
-      button.classList.remove('visible');
+    if (rafId !== null) {
+      cancelAnimationFrame(rafId);
     }
-  };
 
-  // Hide button when footer comes into view
-  let footerObserver: IntersectionObserver | null = null;
-  if (baseFooter) {
-    footerObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          button.classList.remove('visible');
-        } else {
-          // Re-show button if footer goes out of view and scroll position warrants it
-          if (window.scrollY > window.innerHeight) {
-            button.classList.add('visible');
-          }
-        }
-      },
-      { threshold: 0.1 }
-    );
-    footerObserver.observe(baseFooter);
-  }
+    rafId = requestAnimationFrame(() => {
+      const scrolled = window.scrollY > window.innerHeight;
+      const pageHeight = document.body.scrollHeight;
+      const viewportHeight = window.innerHeight;
+      const scrollTop = window.scrollY;
+      // Hide button in the last viewport-worth of the page
+      const nearEnd = scrollTop + viewportHeight >= pageHeight - viewportHeight;
+      const shouldShow = scrolled && !nearEnd;
+
+      button.classList.toggle('visible', shouldShow);
+      rafId = null;
+    });
+  };
 
   // Scroll to top handler
   button.addEventListener('click', () => {
     if (prefersReducedMotion) {
       window.scrollTo(0, 0);
-      // Move focus to top of document
       const topElement = document.querySelector('main') || document.body;
       (topElement as HTMLElement).focus({ preventScroll: true });
-      console.log('Back-to-top: instant scroll (prefers-reduced-motion), focus moved to top');
     } else {
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
       });
-      // Move focus to top after smooth scroll completes
       setTimeout(() => {
         const topElement = document.querySelector('main') || document.body;
         (topElement as HTMLElement).focus({ preventScroll: true });
-        console.log('Back-to-top: smooth scroll complete, focus moved to top');
       }, 1000);
     }
   });
 
-  // Listen for scroll events
+  // Listen for scroll events with requestAnimationFrame throttling
   window.addEventListener('scroll', handleScroll, { passive: true });
+
+  // Call once on load to set initial state
+  handleScroll();
 
   // Cleanup on page unload
   window.addEventListener('beforeunload', () => {
     window.removeEventListener('scroll', handleScroll);
-    if (footerObserver) {
-      footerObserver.disconnect();
+    if (rafId !== null) {
+      cancelAnimationFrame(rafId);
     }
   });
 </script>

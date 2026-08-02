@@ -108,3 +108,8 @@ Before pushing to main (and before reporting any layout/styling task complete):
    ```bash
    npm run build
    ```
+
+## Verification
+
+- **Local verification is not deployment verification.** After pushing, confirm the change on the deployed site before reporting it done. The dev server (`localhost:4321`) is not the source of truth.
+- **Report the deploy status and SHA alongside any "complete."** Include the Netlify deploy SHA and build status to prove the fix went live. Example: "Pushed to main (commit abc123d), Netlify deployed successfully (build SHA xyz789)."

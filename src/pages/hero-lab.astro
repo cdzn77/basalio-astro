@@ -4,8 +4,8 @@ import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
 import Button from '../components/Button.astro';
 
-const title = 'Hero Lab - Motion Exploration';
-const description = 'Three motion options for the monumental letterform hero';
+const title = 'Hero Lab - Type Performs';
+const description = 'Two concepts: monumental reveal and the switch';
 ---
 
 <BaseLayout {title} {description} noindex>
@@ -13,45 +13,60 @@ const description = 'Three motion options for the monumental letterform hero';
     <RampHeader surface="ink" />
   </Fragment>
 
-  <!-- OPTION A: DRIFT - Slow continuous horizontal movement -->
-  <section class="hero-motion hero-motion-a" id="option-a">
-    <div class="hero-bg-monumental">
-      <div class="monumental-text monumental-drift" aria-hidden="true">BASALIO</div>
-    </div>
+  <!-- H — MONUMENTAL REVEAL: Headline performs word-by-word -->
+  <section class="hero-type hero-h" id="concept-h">
+    <div class="hero-bg" style={{ backgroundColor: 'var(--surface-ink)' }}></div>
+
     <div class="hero-content">
       <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
-      <h1 class="hero-h1">Framer-quality <span class="accent-word">interactions,</span> native to WordPress.</h1>
-      <Button label="Explore Blocks" href="/blocks" variant="acid" />
-    </div>
-    <div class="motion-label">A DRIFT</div>
-  </section>
 
-  <!-- OPTION B: REVEAL - Letters arrive on load -->
-  <section class="hero-motion hero-motion-b" id="option-b">
-    <div class="hero-bg-monumental">
-      <div class="monumental-text monumental-reveal" aria-hidden="true">
-        <span class="letter" style="--letter-index: 0">B</span><span class="letter" style="--letter-index: 1">A</span><span class="letter" style="--letter-index: 2">S</span><span class="letter" style="--letter-index: 3">A</span><span class="letter" style="--letter-index: 4">L</span><span class="letter" style="--letter-index: 5">I</span><span class="letter" style="--letter-index: 6">O</span>
+      <h1 class="hero-headline">
+        <span class="word" style={{ '--word-index': 0 } as any}>Framer-quality</span>
+        <span class="word" style={{ '--word-index': 1 } as any}>interactions,</span>
+        <span class="word" style={{ '--word-index': 2 } as any}>native</span>
+        <span class="word" style={{ '--word-index': 3 } as any}>to</span>
+        <span class="word" style={{ '--word-index': 4 } as any}>WordPress.</span>
+      </h1>
+
+      <div class="hero-cta-wrapper">
+        <Button label="Explore Blocks" href="/blocks" variant="acid" />
       </div>
     </div>
-    <div class="hero-content">
-      <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
-      <h1 class="hero-h1">Framer-quality <span class="accent-word">interactions,</span> native to WordPress.</h1>
-      <Button label="Explore Blocks" href="/blocks" variant="acid" />
-    </div>
-    <div class="motion-label">B REVEAL</div>
+
+    <div class="concept-label">H MONUMENTAL REVEAL</div>
   </section>
 
-  <!-- OPTION C: PARALLAX - Responds to cursor -->
-  <section class="hero-motion hero-motion-c" id="option-c">
-    <div class="hero-bg-monumental">
-      <div class="monumental-text monumental-parallax" aria-hidden="true">BASALIO</div>
-    </div>
+  <!-- J — CURSOR SPOTLIGHT: Headline revealed by cursor movement -->
+  <section class="hero-type hero-j" id="concept-j">
+    <div class="hero-bg" style={{ backgroundColor: 'var(--surface-ink)' }}></div>
+
     <div class="hero-content">
       <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
-      <h1 class="hero-h1">Framer-quality <span class="accent-word">interactions,</span> native to WordPress.</h1>
-      <Button label="Explore Blocks" href="/blocks" variant="acid" />
+
+      <!-- Base headline: ink-on-ink, very low contrast -->
+      <h1 class="hero-headline headline-base">
+        <span class="word">Framer-quality</span>
+        <span class="word">interactions,</span>
+        <span class="word">native</span>
+        <span class="word">to</span>
+        <span class="word">WordPress.</span>
+      </h1>
+
+      <!-- Revealed headline: full contrast, masked by spotlight circle -->
+      <h1 class="hero-headline headline-revealed" aria-hidden="true">
+        <span class="word">Framer-quality</span>
+        <span class="accent-word">interactions,</span>
+        <span class="word">native</span>
+        <span class="word">to</span>
+        <span class="word">WordPress.</span>
+      </h1>
+
+      <div class="hero-cta-wrapper">
+        <Button label="Explore Blocks" href="/blocks" variant="acid" />
+      </div>
     </div>
-    <div class="motion-label">C PARALLAX</div>
+
+    <div class="concept-label">J CURSOR SPOTLIGHT</div>
   </section>
 
   <Fragment slot="footer">
@@ -60,8 +75,8 @@ const description = 'Three motion options for the monumental letterform hero';
 </BaseLayout>
 
 <style>
-  /* SHARED HERO MOTION STYLES */
-  .hero-motion {
+  /* SHARED STYLES */
+  .hero-type {
     position: relative;
     width: 100%;
     height: 100vh;
@@ -72,34 +87,20 @@ const description = 'Three motion options for the monumental letterform hero';
     padding: 80px 40px;
     box-sizing: border-box;
     overflow: hidden;
-    background: var(--surface-ink);
     z-index: 1;
   }
 
-  .hero-bg-monumental {
+  .hero-bg {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .monumental-text {
-    font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: clamp(400px, 60vw, 1000px);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    color: var(--stone);
-    line-height: 1;
-    white-space: nowrap;
-    opacity: 0.15;
+    z-index: 0;
   }
 
   .hero-content {
     position: relative;
     z-index: 10;
-    max-width: 500px;
+    width: 100%;
+    max-width: 100vw;
   }
 
   .hero-eyebrow {
@@ -108,28 +109,172 @@ const description = 'Three motion options for the monumental letterform hero';
     font-weight: 500;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin: 0 0 20px 0;
+    margin: 0 0 40px 0;
     padding: 0;
     line-height: 1.4;
     color: var(--text-on-ink-muted);
+    opacity: 0;
+    animation: eyebrow-fade 600ms cubic-bezier(0.16, 1, 0.3, 1) 0ms forwards;
   }
 
-  .hero-h1 {
+  .hero-headline {
     font-family: 'Switzer', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: clamp(32px, 8vw, 72px);
-    font-weight: 400;
-    line-height: 1.15;
-    letter-spacing: -0.02em;
-    margin: 0 0 40px 0;
+    font-size: clamp(40px, 12vw, 160px);
+    font-weight: 700;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    margin: 0 0 60px 0;
     padding: 0;
     color: var(--text-on-ink);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3em;
   }
 
-  .accent-word {
+  .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.4em);
+    animation: word-reveal 800ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc((var(--word-index) * 90ms) + 100ms);
+    will-change: transform, opacity;
+  }
+
+  /* Last word (interactions) in acid, arrives after all others */
+  .word:nth-child(2) {
+    color: var(--acid);
+    animation-delay: calc((4 * 90ms) + 100ms);
+  }
+
+  @keyframes eyebrow-fade {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes word-reveal {
+    0% {
+      opacity: 0;
+      transform: translateY(0.4em);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .hero-cta-wrapper {
+    opacity: 0;
+    animation: cta-fade 600ms cubic-bezier(0.16, 1, 0.3, 1) 1300ms forwards;
+  }
+
+  @keyframes cta-fade {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  /* CONCEPT J: CURSOR SPOTLIGHT */
+  .headline-base {
+    position: relative;
+    z-index: 1;
+    /* Ink-on-ink: very low contrast using border token */
+    color: var(--border-on-ink);
+  }
+
+  .headline-revealed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--text-on-ink);
+    z-index: 2;
+    -webkit-mask-image: radial-gradient(circle 160px at 50% 50%, white 0%, transparent 100%);
+    mask-image: radial-gradient(circle 160px at 50% 50%, white 0%, transparent 100%);
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    pointer-events: none;
+    /* On-load sweep animation */
+    animation: headline-sweep 2s ease-out forwards;
+  }
+
+  .headline-revealed.idle-return {
+    animation: none;
+    -webkit-mask-image: radial-gradient(circle 9999px at 50% 50%, white 0%, white 100%);
+    mask-image: radial-gradient(circle 9999px at 50% 50%, white 0%, white 100%);
+  }
+
+  @keyframes headline-sweep {
+    0% {
+      -webkit-mask-position: -500px 0;
+      mask-position: -500px 0;
+    }
+    100% {
+      -webkit-mask-position: 50% 0;
+      mask-position: 50% 0;
+    }
+  }
+
+  .headline-revealed .accent-word {
     color: var(--acid);
   }
 
-  .motion-label {
+  /* Cursor spotlight interaction state */
+  .hero-j.interactive .headline-revealed {
+    animation: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .headline-revealed {
+      animation: none;
+      -webkit-mask-image: radial-gradient(circle 9999px at 50% 50%, white 0%, white 100%);
+      mask-image: radial-gradient(circle 9999px at 50% 50%, white 0%, white 100%);
+      color: var(--text-on-ink);
+    }
+  }
+
+  @media (pointer: coarse) {
+    .headline-revealed {
+      animation: none;
+      -webkit-mask-image: radial-gradient(circle 9999px at 50% 50%, white 0%, white 100%);
+      mask-image: radial-gradient(circle 9999px at 50% 50%, white 0%, white 100%);
+    }
+  }
+
+  /* Reduced motion: show final state instantly */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-eyebrow,
+    .word,
+    .hero-cta-wrapper {
+      animation: none;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .opening-state {
+      display: none;
+    }
+
+    .hero-i .revealed-state {
+      animation: none;
+      clip-path: inset(0);
+    }
+
+    .opening-text {
+      animation: none;
+    }
+  }
+
+  .concept-label {
     position: absolute;
     bottom: 40px;
     right: 40px;
@@ -143,102 +288,48 @@ const description = 'Three motion options for the monumental letterform hero';
     color: var(--text-on-ink-muted);
   }
 
-  /* OPTION A: DRIFT - Slow continuous horizontal movement */
-  .monumental-drift {
-    animation: drift 75s linear infinite;
-  }
-
-  @keyframes drift {
-    0% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(-8vw);
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
-
-  /* OPTION B: REVEAL - Letters arrive on load with stagger */
-  .monumental-reveal {
-    display: flex;
-    gap: 0;
-  }
-
-  .letter {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(40px);
-    animation: letter-reveal 700ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    animation-delay: calc(var(--letter-index) * 180ms);
-  }
-
-  @keyframes letter-reveal {
-    0% {
-      opacity: 0;
-      transform: translateY(40px);
-    }
-    100% {
-      opacity: 0.15;
-      transform: translateY(0);
-    }
-  }
-
-  /* OPTION C: PARALLAX - Responds to cursor */
-  .monumental-parallax {
-    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-
-  /* Reduced motion: all options show static state */
-  @media (prefers-reduced-motion: reduce) {
-    .monumental-drift {
-      animation: none;
-      transform: translateX(0);
-    }
-
-    .letter {
-      animation: none;
-      opacity: 0.15;
-      transform: translateY(0);
-    }
-
-    .monumental-parallax {
-      transition: none;
-      transform: translate(0, 0);
-    }
-  }
-
   /* RESPONSIVE */
   @media (max-width: 1024px) {
-    .hero-motion {
+    .hero-type {
       padding: 100px 40px 80px;
     }
 
-    .monumental-text {
-      font-size: clamp(200px, 50vw, 600px);
+    .hero-eyebrow {
+      margin-bottom: 30px;
+    }
+
+    .hero-headline {
+      margin-bottom: 40px;
+      font-size: clamp(36px, 10vw, 120px);
     }
   }
 
   @media (max-width: 540px) {
-    .hero-motion {
+    .hero-type {
       padding: 100px 20px 60px;
-    }
-
-    .hero-h1 {
-      font-size: clamp(24px, 6vw, 36px);
-      margin-bottom: 30px;
     }
 
     .hero-eyebrow {
       font-size: 11px;
+      margin-bottom: 20px;
     }
 
-    .monumental-text {
-      font-size: clamp(120px, 40vw, 300px);
+    .hero-headline {
+      margin-bottom: 30px;
+      font-size: clamp(24px, 8vw, 80px);
+      gap: 0.2em;
     }
 
-    .motion-label {
+    .opening-state {
+      padding-top: 100px;
+      padding-left: 20px;
+    }
+
+    .opening-text {
+      font-size: 14px;
+    }
+
+    .concept-label {
       bottom: 15px;
       right: 15px;
       font-size: 9px;
@@ -247,91 +338,95 @@ const description = 'Three motion options for the monumental letterform hero';
 </style>
 
 <script>
-  // PARALLAX IMPLEMENTATION (Option C only)
-  const parallaxElements = document.querySelectorAll('.monumental-parallax');
-  let ticking = false;
-  let mouseX = 0;
-  let mouseY = 0;
-  let observer: IntersectionObserver | null = null;
-  let listeners: { element: Element; handler: (e: MouseEvent) => void }[] = [];
+  // CONCEPT J: CURSOR SPOTLIGHT - Interaction-driven headline reveal
+  const heroJ = document.querySelector('.hero-j');
+  const headlineRevealed = document.querySelector('.headline-revealed') as HTMLElement;
+  const conceptSection = heroJ?.querySelector('.hero-content') as HTMLElement;
 
-  function updateParallax() {
-    parallaxElements.forEach((el) => {
-      const rect = el.getBoundingClientRect();
-      const heroSection = el.closest('.hero-motion-c');
-      if (!heroSection) return;
+  // Check for pointer fine and reduced motion preferences
+  const hasPointerFine = window.matchMedia('(pointer: fine)').matches;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-      const heroRect = heroSection.getBoundingClientRect();
-      const centerX = heroRect.left + heroRect.width / 2;
-      const centerY = heroRect.top + heroRect.height / 2;
+  // Spotlight state
+  let currentX = 0;
+  let currentY = 0;
+  let targetX = 0;
+  let targetY = 0;
+  let idleTimer: ReturnType<typeof setTimeout> | null = null;
+  let sweepComplete = false;
+  let rafId: number | null = null;
 
-      const distX = (mouseX - centerX) / heroRect.width;
-      const distY = (mouseY - centerY) / heroRect.height;
+  // After sweep animation completes (2s), enable cursor tracking
+  if (hasPointerFine && !prefersReducedMotion && conceptSection) {
+    setTimeout(() => {
+      sweepComplete = true;
+      heroJ?.classList.add('interactive');
+      setupCursorTracking();
+    }, 2000);
+  }
 
-      const maxOffset = 20;
-      const x = distX * maxOffset;
-      const y = distY * maxOffset;
+  function setupCursorTracking() {
+    if (!hasPointerFine || !headlineRevealed) return;
 
-      (el as HTMLElement).style.transform = `translate(${x}px, ${y}px)`;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        document.addEventListener('pointermove', onPointerMove);
+      } else {
+        document.removeEventListener('pointermove', onPointerMove);
+        if (rafId !== null) {
+          cancelAnimationFrame(rafId);
+        }
+      }
     });
-    ticking = false;
-  }
 
-  function handleMouseMove(e: MouseEvent) {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-
-    if (!ticking) {
-      requestAnimationFrame(updateParallax);
-      ticking = true;
+    if (conceptSection) {
+      observer.observe(conceptSection);
     }
   }
 
-  // Only enable parallax on pointer devices, not touch
-  const isPointerDevice = () => {
-    return (
-      window.matchMedia('(pointer:fine)').matches ||
-      navigator.maxTouchPoints === 0
-    );
-  };
+  function onPointerMove(e: PointerEvent) {
+    if (!sweepComplete || !headlineRevealed) return;
 
-  if (isPointerDevice()) {
-    const heroMotionC = document.querySelector('.hero-motion-c');
-    if (heroMotionC) {
-      const handler = handleMouseMove;
-      heroMotionC.addEventListener('mousemove', handler);
-      listeners.push({ element: heroMotionC, handler });
+    targetX = e.clientX;
+    targetY = e.clientY;
+
+    // Clear idle timer and reset
+    if (idleTimer) {
+      clearTimeout(idleTimer);
     }
+    headlineRevealed.classList.remove('idle-return');
 
-    // Intersection Observer: remove listener when hero scrolls out of view
-    if (observer === null) {
-      observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            const heroMotionC = entry.target as HTMLElement;
-            const idx = listeners.findIndex((l) => l.element === heroMotionC);
-            if (idx !== -1) {
-              const { handler } = listeners[idx];
-              if (!entry.isIntersecting) {
-                heroMotionC.removeEventListener('mousemove', handler);
-                listeners.splice(idx, 1);
-                // Reset parallax to center
-                const parallax = heroMotionC.querySelector(
-                  '.monumental-parallax'
-                ) as HTMLElement;
-                if (parallax) {
-                  parallax.style.transform = 'translate(0, 0)';
-                }
-              }
-            }
-          });
-        },
-        { threshold: 0 }
-      );
-
-      document.querySelectorAll('.hero-motion-c').forEach((el) => {
-        observer!.observe(el);
-      });
+    // Request animation frame to throttle updates
+    if (rafId !== null) {
+      cancelAnimationFrame(rafId);
     }
+    rafId = requestAnimationFrame(updateSpotlight);
+
+    // Start idle timer
+    idleTimer = setTimeout(() => {
+      // After 4 seconds of no movement, return to fully revealed
+      headlineRevealed.classList.add('idle-return');
+    }, 4000);
   }
+
+  function updateSpotlight() {
+    if (!headlineRevealed) return;
+
+    // Ease current position toward target (0.1 easing factor for slight trail)
+    currentX += (targetX - currentX) * 0.1;
+    currentY += (targetY - currentY) * 0.1;
+
+    headlineRevealed.style.webkitMaskPosition = `${currentX}px ${currentY}px`;
+    headlineRevealed.style.maskPosition = `${currentX}px ${currentY}px`;
+  }
+
+  // Cleanup on unload
+  window.addEventListener('beforeunload', () => {
+    if (rafId !== null) {
+      cancelAnimationFrame(rafId);
+    }
+    if (idleTimer) {
+      clearTimeout(idleTimer);
+    }
+  });
 </script>

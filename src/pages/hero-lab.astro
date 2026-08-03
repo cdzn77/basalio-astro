@@ -4,56 +4,8 @@ import RampHeader from '../components/RampHeader.astro';
 import RampFooter from '../components/RampFooter.astro';
 import Button from '../components/Button.astro';
 
-// Generate plotter lines at build time
-function generatePlotterLines() {
-  const lines = [];
-  const width = 1440;
-  const height = 900;
-  const spacing = 40;
-  const attractorX = width * 0.6;
-  const attractorY = height * 0.5;
-  const attractorRadius = 300;
-
-  for (let i = 0; i < height; i += spacing) {
-    const points: string[] = [];
-    for (let x = 0; x <= width; x += 10) {
-      const dx = x - attractorX;
-      const dy = i - attractorY;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      const pull = Math.max(0, (attractorRadius - dist) / attractorRadius);
-      const deflection = pull * 30 * Math.sin(i / 100);
-      const y = i + deflection;
-      points.push(`${x},${y}`);
-    }
-    lines.push(points.join(' '));
-  }
-  return lines;
-}
-
-// Generate grid reveal tiles with random acid accents
-function generateGridTiles() {
-  const cols = 6;
-  const rows = 4;
-  const total = cols * rows;
-  const acidIndices = new Set();
-
-  // Randomly pick 1-2 tiles to be acid
-  const acidCount = Math.random() < 0.5 ? 1 : 2;
-  while (acidIndices.size < acidCount) {
-    acidIndices.add(Math.floor(Math.random() * total));
-  }
-
-  return Array.from({ length: total }, (_, i) => ({
-    index: i,
-    isAcid: acidIndices.has(i)
-  }));
-}
-
-const plotterLines = generatePlotterLines();
-const gridTiles = generateGridTiles();
-
-const title = 'Hero Lab - Basalio';
-const description = 'Experimental hero background concepts';
+const title = 'Hero Lab - Motion Exploration';
+const description = 'Three motion options for the monumental letterform hero';
 ---
 
 <BaseLayout {title} {description} noindex>
@@ -61,57 +13,24 @@ const description = 'Experimental hero background concepts';
     <RampHeader surface="ink" />
   </Fragment>
 
-  <!-- INK VERSIONS (Dark background with color accents) -->
-
-  <!-- CONCEPT 01: MONUMENTAL TYPE (INK) -->
-  <section class="hero-concept hero-01-ink" id="concept-01-ink">
-    <div class="hero-bg-monumental-ink">
-      <div class="monumental-text-ink" aria-hidden="true">BASALIO</div>
+  <!-- OPTION A: DRIFT - Slow continuous horizontal movement -->
+  <section class="hero-motion hero-motion-a" id="option-a">
+    <div class="hero-bg-monumental">
+      <div class="monumental-text monumental-drift" aria-hidden="true">BASALIO</div>
     </div>
     <div class="hero-content">
       <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
       <h1 class="hero-h1">Framer-quality <span class="accent-word">interactions,</span> native to WordPress.</h1>
       <Button label="Explore Blocks" href="/blocks" variant="acid" />
     </div>
-    <div class="concept-label">01 MONUMENTAL TYPE (Dark)</div>
+    <div class="motion-label">A DRIFT</div>
   </section>
 
-  <!-- CONCEPT 02: HALFTONE FIELD (INK) -->
-  <section class="hero-concept hero-02-ink" id="concept-02-ink">
-    <div class="hero-bg-halftone-ink"></div>
-    <div class="hero-content">
-      <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
-      <h1 class="hero-h1">Framer-quality <span class="accent-word">interactions,</span> native to WordPress.</h1>
-      <Button label="Explore Blocks" href="/blocks" variant="acid" />
-    </div>
-    <div class="concept-label">02 HALFTONE FIELD (Dark)</div>
-  </section>
-
-  <!-- CONCEPT 03: PLOTTER LINES (INK) -->
-  <section class="hero-concept hero-03-ink" id="concept-03-ink">
-    <svg class="hero-bg-plotter-ink" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-      <rect width="1440" height="900" fill="var(--surface-ink)" />
-      <g stroke="var(--acid)" stroke-width="1.5" fill="none" stroke-linecap="round">
-        {plotterLines.map((pathData) => (
-          <polyline points={pathData} opacity={0.8} />
-        ))}
-      </g>
-    </svg>
-    <div class="hero-content">
-      <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
-      <h1 class="hero-h1">Framer-quality <span class="accent-word">interactions,</span> native to WordPress.</h1>
-      <Button label="Explore Blocks" href="/blocks" variant="acid" />
-    </div>
-    <div class="concept-label">03 PLOTTER LINES (Dark)</div>
-  </section>
-
-  <!-- CONCEPT 04: GRID REVEAL (INK) -->
-  <section class="hero-concept hero-04-ink" id="concept-04-ink">
-    <div class="hero-bg-grid-ink">
-      <div class="grid-container-ink">
-        {gridTiles.map((tile) => (
-          <div class="grid-tile-ink" style={{ '--tile-index': tile.index, '--is-acid': tile.isAcid ? 1 : 0 } as any}></div>
-        ))}
+  <!-- OPTION B: REVEAL - Letters arrive on load -->
+  <section class="hero-motion hero-motion-b" id="option-b">
+    <div class="hero-bg-monumental">
+      <div class="monumental-text monumental-reveal" aria-hidden="true">
+        <span class="letter" style="--letter-index: 0">B</span><span class="letter" style="--letter-index: 1">A</span><span class="letter" style="--letter-index: 2">S</span><span class="letter" style="--letter-index: 3">A</span><span class="letter" style="--letter-index: 4">L</span><span class="letter" style="--letter-index: 5">I</span><span class="letter" style="--letter-index: 6">O</span>
       </div>
     </div>
     <div class="hero-content">
@@ -119,25 +38,20 @@ const description = 'Experimental hero background concepts';
       <h1 class="hero-h1">Framer-quality <span class="accent-word">interactions,</span> native to WordPress.</h1>
       <Button label="Explore Blocks" href="/blocks" variant="acid" />
     </div>
-    <div class="concept-label">04 GRID REVEAL (Dark)</div>
+    <div class="motion-label">B REVEAL</div>
   </section>
 
-  <!-- REFERENCE: Best acid version side-by-side -->
-  <section class="hero-concept hero-03-acid-ref" id="concept-03-acid-ref">
-    <svg class="hero-bg-plotter-acid" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-      <rect width="1440" height="900" fill="var(--acid)" />
-      <g stroke="var(--surface-ink)" stroke-width="1.5" fill="none" stroke-linecap="round">
-        {plotterLines.map((pathData) => (
-          <polyline points={pathData} opacity={0.4} />
-        ))}
-      </g>
-    </svg>
+  <!-- OPTION C: PARALLAX - Responds to cursor -->
+  <section class="hero-motion hero-motion-c" id="option-c">
+    <div class="hero-bg-monumental">
+      <div class="monumental-text monumental-parallax" aria-hidden="true">BASALIO</div>
+    </div>
     <div class="hero-content">
       <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
-      <h1 class="hero-h1">Framer-quality interactions, native to WordPress.</h1>
-      <button class="hero-cta">Explore Blocks</button>
+      <h1 class="hero-h1">Framer-quality <span class="accent-word">interactions,</span> native to WordPress.</h1>
+      <Button label="Explore Blocks" href="/blocks" variant="acid" />
     </div>
-    <div class="concept-label">03 PLOTTER LINES (Light) - Reference</div>
+    <div class="motion-label">C PARALLAX</div>
   </section>
 
   <Fragment slot="footer">
@@ -146,8 +60,8 @@ const description = 'Experimental hero background concepts';
 </BaseLayout>
 
 <style>
-  /* SHARED HERO STYLES */
-  .hero-concept {
+  /* SHARED HERO MOTION STYLES */
+  .hero-motion {
     position: relative;
     width: 100%;
     height: 100vh;
@@ -158,7 +72,28 @@ const description = 'Experimental hero background concepts';
     padding: 80px 40px;
     box-sizing: border-box;
     overflow: hidden;
+    background: var(--surface-ink);
     z-index: 1;
+  }
+
+  .hero-bg-monumental {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .monumental-text {
+    font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: clamp(400px, 60vw, 1000px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--stone);
+    line-height: 1;
+    white-space: nowrap;
+    opacity: 0.15;
   }
 
   .hero-content {
@@ -176,6 +111,7 @@ const description = 'Experimental hero background concepts';
     margin: 0 0 20px 0;
     padding: 0;
     line-height: 1.4;
+    color: var(--text-on-ink-muted);
   }
 
   .hero-h1 {
@@ -186,35 +122,14 @@ const description = 'Experimental hero background concepts';
     letter-spacing: -0.02em;
     margin: 0 0 40px 0;
     padding: 0;
+    color: var(--text-on-ink);
   }
 
   .accent-word {
     color: var(--acid);
   }
 
-  .hero-cta {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    padding: 12px 24px;
-    border: 1px solid currentColor;
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .hero-cta:hover {
-    transform: translateY(-2px);
-  }
-
-  .hero-cta-acid {
-    color: var(--acid);
-    border-color: var(--acid);
-  }
-
-  .concept-label {
+  .motion-label {
     position: absolute;
     bottom: 40px;
     right: 40px;
@@ -225,259 +140,88 @@ const description = 'Experimental hero background concepts';
     text-transform: uppercase;
     opacity: 0.5;
     z-index: 11;
-  }
-
-  /* INK VERSIONS - Dark background */
-
-  /* CONCEPT 01: MONUMENTAL TYPE (INK) */
-  .hero-01-ink {
-    background: var(--surface-ink);
-  }
-
-  .hero-01-ink .hero-eyebrow {
     color: var(--text-on-ink-muted);
   }
 
-  .hero-01-ink .hero-h1 {
-    color: var(--text-on-ink);
+  /* OPTION A: DRIFT - Slow continuous horizontal movement */
+  .monumental-drift {
+    animation: drift 75s linear infinite;
   }
 
-  .hero-01-ink .concept-label {
-    color: var(--text-on-ink-muted);
-  }
-
-  .hero-bg-monumental-ink {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .monumental-text-ink {
-    font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: clamp(400px, 60vw, 1000px);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    color: var(--stone);
-    line-height: 1;
-    white-space: nowrap;
-    opacity: 0.15;
-    transform: translateY(10%);
-  }
-
-  /* CONCEPT 02: HALFTONE FIELD (INK) - CSS radial gradient, no SVG circles */
-  .hero-02-ink {
-    background: var(--surface-ink);
-  }
-
-  .hero-02-ink .hero-eyebrow {
-    color: var(--text-on-ink-muted);
-  }
-
-  .hero-02-ink .hero-h1 {
-    color: var(--text-on-ink);
-  }
-
-  .hero-02-ink .concept-label {
-    color: var(--text-on-ink-muted);
-  }
-
-  .hero-bg-halftone-ink {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    background-image: radial-gradient(var(--stone) 1.5px, transparent 1.5px);
-    background-size: 14px 14px;
-    background-attachment: fixed;
-    mask-image: linear-gradient(90deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%);
-    animation: drift-slow 40s linear infinite;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero-bg-halftone-ink {
-      animation: none;
-    }
-  }
-
-  /* CONCEPT 03: PLOTTER LINES (INK) */
-  .hero-03-ink {
-    background: var(--surface-ink);
-  }
-
-  .hero-03-ink .hero-eyebrow {
-    color: var(--text-on-ink-muted);
-  }
-
-  .hero-03-ink .hero-h1 {
-    color: var(--text-on-ink);
-  }
-
-  .hero-03-ink .concept-label {
-    color: var(--text-on-ink-muted);
-  }
-
-  .hero-bg-plotter-ink {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    animation: drift-slow 45s linear infinite;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero-bg-plotter-ink {
-      animation: none;
-    }
-  }
-
-  /* CONCEPT 04: GRID REVEAL (INK) */
-  .hero-04-ink {
-    background: var(--surface-ink);
-  }
-
-  .hero-04-ink .hero-eyebrow {
-    color: var(--text-on-ink-muted);
-  }
-
-  .hero-04-ink .hero-h1 {
-    color: var(--text-on-ink);
-  }
-
-  .hero-04-ink .concept-label {
-    color: var(--text-on-ink-muted);
-  }
-
-  .hero-bg-grid-ink {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-  }
-
-  .grid-container-ink {
-    position: absolute;
-    inset: -20%;
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 0;
-    animation: grid-reveal 12s ease-in-out infinite;
-  }
-
-  .grid-tile-ink {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: tile-reveal-ink 700ms cubic-bezier(0.33, 0, 0.66, 1) forwards;
-    animation-delay: calc(var(--tile-index) * 180ms);
-  }
-
-  .grid-tile-ink {
-    background: var(--is-acid: 0) ? var(--stone) : var(--stone);
-    background: var(--stone);
-  }
-
-  .grid-tile-ink[style*="--is-acid: 1"] {
-    background: var(--acid);
-  }
-
-  @keyframes tile-reveal-ink {
+  @keyframes drift {
     0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 0.7;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes grid-reveal {
-    0% {
-      opacity: 0;
-    }
-    10% {
-      opacity: 1;
-    }
-    85% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .grid-container-ink {
-      animation: none;
-    }
-    .grid-tile-ink {
-      animation: none;
-      opacity: 0.7;
-      transform: translateY(0);
-    }
-  }
-
-  /* REFERENCE: ACID VERSION (Light background) */
-  .hero-03-acid-ref {
-    background: var(--acid);
-  }
-
-  .hero-03-acid-ref .hero-eyebrow,
-  .hero-03-acid-ref .hero-h1,
-  .hero-03-acid-ref .hero-cta {
-    color: var(--surface-ink);
-  }
-
-  .hero-03-acid-ref .concept-label {
-    color: var(--surface-ink);
-  }
-
-  .hero-bg-plotter-acid {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-  }
-
-  /* ANIMATIONS */
-  @keyframes drift-slow {
-    0% {
-      transform: translate(0, 0);
+      transform: translateX(0);
     }
     50% {
-      transform: translate(20px, -10px);
+      transform: translateX(-8vw);
     }
     100% {
+      transform: translateX(0);
+    }
+  }
+
+  /* OPTION B: REVEAL - Letters arrive on load with stagger */
+  .monumental-reveal {
+    display: flex;
+    gap: 0;
+  }
+
+  .letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: letter-reveal 700ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: calc(var(--letter-index) * 180ms);
+  }
+
+  @keyframes letter-reveal {
+    0% {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 0.15;
+      transform: translateY(0);
+    }
+  }
+
+  /* OPTION C: PARALLAX - Responds to cursor */
+  .monumental-parallax {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Reduced motion: all options show static state */
+  @media (prefers-reduced-motion: reduce) {
+    .monumental-drift {
+      animation: none;
+      transform: translateX(0);
+    }
+
+    .letter {
+      animation: none;
+      opacity: 0.15;
+      transform: translateY(0);
+    }
+
+    .monumental-parallax {
+      transition: none;
       transform: translate(0, 0);
     }
   }
 
   /* RESPONSIVE */
   @media (max-width: 1024px) {
-    .hero-concept {
-      height: auto;
-      min-height: 100vh;
+    .hero-motion {
       padding: 100px 40px 80px;
     }
 
-    .monumental-text-ink {
+    .monumental-text {
       font-size: clamp(200px, 50vw, 600px);
-    }
-
-    .concept-label {
-      bottom: 20px;
-      right: 20px;
-      font-size: 10px;
     }
   }
 
   @media (max-width: 540px) {
-    .hero-concept {
+    .hero-motion {
       padding: 100px 20px 60px;
     }
 
@@ -490,11 +234,11 @@ const description = 'Experimental hero background concepts';
       font-size: 11px;
     }
 
-    .monumental-text-ink {
+    .monumental-text {
       font-size: clamp(120px, 40vw, 300px);
     }
 
-    .concept-label {
+    .motion-label {
       bottom: 15px;
       right: 15px;
       font-size: 9px;
@@ -503,7 +247,91 @@ const description = 'Experimental hero background concepts';
 </style>
 
 <script>
-  // Prefers reduced motion check for logging
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  console.log('Prefers reduced motion:', prefersReduced);
+  // PARALLAX IMPLEMENTATION (Option C only)
+  const parallaxElements = document.querySelectorAll('.monumental-parallax');
+  let ticking = false;
+  let mouseX = 0;
+  let mouseY = 0;
+  let observer: IntersectionObserver | null = null;
+  let listeners: { element: Element; handler: (e: MouseEvent) => void }[] = [];
+
+  function updateParallax() {
+    parallaxElements.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      const heroSection = el.closest('.hero-motion-c');
+      if (!heroSection) return;
+
+      const heroRect = heroSection.getBoundingClientRect();
+      const centerX = heroRect.left + heroRect.width / 2;
+      const centerY = heroRect.top + heroRect.height / 2;
+
+      const distX = (mouseX - centerX) / heroRect.width;
+      const distY = (mouseY - centerY) / heroRect.height;
+
+      const maxOffset = 20;
+      const x = distX * maxOffset;
+      const y = distY * maxOffset;
+
+      (el as HTMLElement).style.transform = `translate(${x}px, ${y}px)`;
+    });
+    ticking = false;
+  }
+
+  function handleMouseMove(e: MouseEvent) {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    if (!ticking) {
+      requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }
+
+  // Only enable parallax on pointer devices, not touch
+  const isPointerDevice = () => {
+    return (
+      window.matchMedia('(pointer:fine)').matches ||
+      navigator.maxTouchPoints === 0
+    );
+  };
+
+  if (isPointerDevice()) {
+    const heroMotionC = document.querySelector('.hero-motion-c');
+    if (heroMotionC) {
+      const handler = handleMouseMove;
+      heroMotionC.addEventListener('mousemove', handler);
+      listeners.push({ element: heroMotionC, handler });
+    }
+
+    // Intersection Observer: remove listener when hero scrolls out of view
+    if (observer === null) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const heroMotionC = entry.target as HTMLElement;
+            const idx = listeners.findIndex((l) => l.element === heroMotionC);
+            if (idx !== -1) {
+              const { handler } = listeners[idx];
+              if (!entry.isIntersecting) {
+                heroMotionC.removeEventListener('mousemove', handler);
+                listeners.splice(idx, 1);
+                // Reset parallax to center
+                const parallax = heroMotionC.querySelector(
+                  '.monumental-parallax'
+                ) as HTMLElement;
+                if (parallax) {
+                  parallax.style.transform = 'translate(0, 0)';
+                }
+              }
+            }
+          });
+        },
+        { threshold: 0 }
+      );
+
+      document.querySelectorAll('.hero-motion-c').forEach((el) => {
+        observer!.observe(el);
+      });
+    }
+  }
 </script>

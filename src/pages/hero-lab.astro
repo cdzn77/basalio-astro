@@ -75,11 +75,14 @@ const description = 'Two concepts: monumental reveal and the switch';
       <video preload="auto" poster="" muted autoplay loop playsinline class="hero-bg-video" style={{ objectPosition: 'center' }}>
         <source src="https://stream.mux.com/s8pMcOvMQXc4GD6AX4e1o01xFogFxipmuKltNfSYza0200.m3u8" type="application/x-mpegURL" />
       </video>
-      <div class="hero-bg-scrim" id="video-scrim" style={{ backgroundColor: 'var(--surface-ink)', opacity: '0.65' }}></div>
+      <div class="hero-bg-scrim" id="video-scrim" style={{ backgroundColor: 'var(--surface-ink)', opacity: '0.25' }}></div>
     </div>
 
     <div class="hero-content">
       <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
+
+      <!-- Gradient scrim behind headline: strong on left, fading to transparent across -->
+      <div class="headline-scrim" id="headline-scrim"></div>
 
       <h1 class="hero-headline">
         <span class="word" style={{ '--word-index': 0 } as any}>Framer-quality</span>
@@ -398,6 +401,27 @@ const description = 'Two concepts: monumental reveal and the switch';
   .hero-m .accent-word {
     color: var(--acid);
     animation-delay: calc((4 * 90ms) + 100ms);
+  }
+
+  /* Gradient scrim behind headline: strong on left edge where text sits, fading to transparent across */
+  .headline-scrim {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 5;
+    background: linear-gradient(90deg,
+      rgba(28, 25, 23, 0.8) 0%,
+      rgba(28, 25, 23, 0.5) 30%,
+      rgba(28, 25, 23, 0.2) 60%,
+      rgba(28, 25, 23, 0) 100%);
+    pointer-events: none;
+  }
+
+  .hero-m .hero-headline {
+    position: relative;
+    z-index: 6;
   }
 </style>
 

@@ -63,8 +63,8 @@ const scrimColor = scrimColorMap[surface];
     )}
     {background.type === 'video' && (
       <>
-        <video preload="none" poster={background.poster} muted autoplay loop playsinline class="hero-bg-video" style={{ objectPosition: background.position || 'center' }}>
-          <source src={background.src} type={background.src.includes('.m3u8') ? 'application/x-mpegURL' : 'video/mp4'} />
+        <video preload="auto" poster={background.poster} muted autoplay loop playsinline class="hero-bg-video" style={{ objectPosition: background.position || 'center' }}>
+          <source src={background.src} type="video/mp4" />
         </video>
         <img src={background.poster} alt="" class="hero-bg-poster" />
       </>

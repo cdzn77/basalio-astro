@@ -77,7 +77,7 @@ const description = 'Two concepts: monumental reveal and the switch';
     teaserButton="EXPLORE BLOCKS"
     teaserLink="/blocks"
     buttonVariant="acid"
-    background={{ type: 'video', src: 'https://stream.mux.com/s8pMcOvMQXc4GD6AX4e1o01xFogFxipmuKltNfSYza0200.m3u8', poster: '/assets/basalio-hero-poster.webp', scrim: 0 }}
+    background={{ type: 'video', src: '/assets/basalio-hero.mp4', poster: '/assets/basalio-hero-poster.webp', scrim: 0 }}
     surface="ink"
   >
     <h1 class="hero-heading hero-m-heading" slot="heading">Framer-quality <span class="accent-word">interactions,</span><br/>native to WordPress.</h1>
@@ -451,52 +451,14 @@ const description = 'Two concepts: monumental reveal and the switch';
     }
   });
 
-  // CONCEPT M: HLS.js for non-Safari browsers
+  // CONCEPT M: Local MP4 playback with fallback
   const videoElement = document.querySelector('.hero-bg-video') as HTMLVideoElement;
-  const hlsUrl = 'https://stream.mux.com/s8pMcOvMQXc4GD6AX4e1o01xFogFxipmuKltNfSYza0200.m3u8';
 
-  // Check if HLS is natively supported (Safari)
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-
-  if (!isSafari && videoElement) {
-    // Load HLS.js for non-Safari browsers
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/hls.js@latest';
-    script.onload = () => {
-      if (window.Hls && window.Hls.isSupported()) {
-        const hls = new (window.Hls as any)();
-        hls.loadSource(hlsUrl);
-        hls.attachMedia(videoElement);
-      }
-    };
-    document.head.appendChild(script);
-  } else if (isSafari && videoElement) {
-    // Safari supports HLS natively
-    videoElement.src = hlsUrl;
-  }
-
-  // Error handler: hide video only on fatal HLS errors
-  // Safari path: native HLS support
-  if (isSafari && videoElement) {
+  // Error handler: hide video on playback error, poster remains visible as background-image
+  if (videoElement) {
     videoElement.addEventListener('error', () => {
-      console.log('[VIDEO] Safari native HLS error, hiding video');
+      console.log('[VIDEO] MP4 playback error, poster fallback active');
       videoElement.style.display = 'none';
     });
-  }
-
-  // Non-Safari path: HLS.js fatal errors only
-  if (!isSafari && videoElement && window.Hls) {
-    // Setup error handler after HLS.js attaches to the video
-    const hlsReadyCheck = setInterval(() => {
-      if (videoElement.hls) {
-        clearInterval(hlsReadyCheck);
-        videoElement.hls.on((window.Hls as any).Events.ERROR, (event: any, data: any) => {
-          if (data.fatal) {
-            console.log('[VIDEO] Fatal HLS error, hiding video');
-            videoElement.style.display = 'none';
-          }
-        });
-      }
-    }, 50);
   }
 </script>

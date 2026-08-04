@@ -77,7 +77,7 @@ const description = 'Two concepts: monumental reveal and the switch';
     teaserButton="EXPLORE BLOCKS"
     teaserLink="/blocks"
     buttonVariant="acid"
-    background={{ type: 'video', src: 'https://stream.mux.com/s8pMcOvMQXc4GD6AX4e1o01xFogFxipmuKltNfSYza0200.m3u8', poster: '/assets/basalio-hero-poster.jpg', scrim: 0 }}
+    background={{ type: 'video', src: 'https://stream.mux.com/s8pMcOvMQXc4GD6AX4e1o01xFogFxipmuKltNfSYza0200.m3u8', poster: '/assets/basalio-hero-poster.webp', scrim: 0 }}
     surface="ink"
   >
     <h1 class="hero-heading hero-m-heading" slot="heading">Framer-quality <span class="accent-word">interactions,</span><br/>native to WordPress.</h1>
@@ -473,5 +473,12 @@ const description = 'Two concepts: monumental reveal and the switch';
   } else if (isSafari && videoElement) {
     // Safari supports HLS natively
     videoElement.src = hlsUrl;
+  }
+
+  // Error handler: hide video on stream failure, poster remains visible
+  if (videoElement) {
+    videoElement.addEventListener('error', () => {
+      videoElement.style.display = 'none';
+    });
   }
 </script>

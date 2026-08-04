@@ -78,9 +78,6 @@ const description = 'Two concepts: monumental reveal and the switch';
       <div class="hero-bg-scrim" id="video-scrim" style={{ backgroundColor: 'var(--surface-ink)', opacity: '0.25' }}></div>
     </div>
 
-    <!-- FULL-BLEED GRADIENT SCRIM: positioned at section level, not constrained to hero-content -->
-    <div class="headline-scrim" id="headline-scrim"></div>
-
     <div class="hero-content">
       <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
 
@@ -392,6 +389,10 @@ const description = 'Two concepts: monumental reveal and the switch';
 
   .hero-m .hero-eyebrow {
     color: var(--text-on-ink-muted);
+    background: rgba(28, 25, 23, 0.44);
+    padding: 2px 6px;
+    display: inline-block;
+    border-radius: 2px;
   }
 
   .hero-m .hero-headline {
@@ -403,23 +404,6 @@ const description = 'Two concepts: monumental reveal and the switch';
     animation-delay: calc((4 * 90ms) + 100ms);
   }
 
-  /* Gradient scrim behind headline: full-bleed at section level, strong on left edge, fading right */
-  .headline-scrim {
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    background: linear-gradient(90deg,
-      rgba(28, 25, 23, 1.0) 0%,
-      rgba(28, 25, 23, 0.6) 30%,
-      rgba(28, 25, 23, 0.2) 60%,
-      rgba(28, 25, 23, 0) 100%);
-    pointer-events: none;
-  }
-
-  .hero-m .hero-headline {
-    position: relative;
-    z-index: 6;
-  }
 </style>
 
 <script>

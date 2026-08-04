@@ -54,7 +54,7 @@ const scrimColor = scrimColorMap[surface];
 
 <section class="hero" id="hero" data-surface={surface}>
   <!-- BACKGROUND LAYER: Color, image, video, gradient, or monumental -->
-  <div class="hero-background">
+  <div class="hero-background" style={background.type === 'video' && background.poster ? { backgroundImage: `url('${background.poster}')` } : {}}>
     {background.type === 'color' && (
       <div class="hero-bg-color" style={{ backgroundColor: colorMap[background.token] }} />
     )}
@@ -146,6 +146,9 @@ const scrimColor = scrimColorMap[surface];
     width: 100%;
     height: 100%;
     z-index: 0;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
   }
 
   .hero-bg-color,

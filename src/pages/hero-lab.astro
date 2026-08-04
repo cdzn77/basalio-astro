@@ -475,10 +475,28 @@ const description = 'Two concepts: monumental reveal and the switch';
     videoElement.src = hlsUrl;
   }
 
-  // Error handler: hide video on stream failure, poster remains visible
-  if (videoElement) {
+  // Error handler: hide video only on fatal HLS errors
+  // Safari path: native HLS support
+  if (isSafari && videoElement) {
     videoElement.addEventListener('error', () => {
+      console.log('[VIDEO] Safari native HLS error, hiding video');
       videoElement.style.display = 'none';
     });
+  }
+
+  // Non-Safari path: HLS.js fatal errors only
+  if (!isSafari && videoElement && window.Hls) {
+    // Setup error handler after HLS.js attaches to the video
+    const hlsReadyCheck = setInterval(() => {
+      if (videoElement.hls) {
+        clearInterval(hlsReadyCheck);
+        videoElement.hls.on((window.Hls as any).Events.ERROR, (event: any, data: any) => {
+          if (data.fatal) {
+            console.log('[VIDEO] Fatal HLS error, hiding video');
+            videoElement.style.display = 'none';
+          }
+        });
+      }
+    }, 50);
   }
 </script>

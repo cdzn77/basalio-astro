@@ -10,6 +10,7 @@ interface Props {
   teaserText?: string;
   teaserButton?: string;
   teaserLink?: string;
+  buttonVariant?: 'acid' | 'paper' | 'ink';
   eyebrow?: string;
   background?:
     | { type: 'color'; token: 'acid' | 'paper' | 'ink' | 'alt' }
@@ -25,6 +26,7 @@ const {
   teaserText,
   teaserButton,
   teaserLink,
+  buttonVariant = 'paper',
   eyebrow,
   background = { type: 'color', token: 'acid' },
   surface = 'acid'
@@ -98,7 +100,7 @@ const scrimColor = scrimColorMap[surface];
         {teaserLabel && <p class="block-label">{teaserLabel}</p>}
         <p class="block-description">{teaserText}</p>
       </div>
-      {teaserButton && teaserLink && <Button label={teaserButton} href={teaserLink} />}
+      {teaserButton && teaserLink && <Button label={teaserButton} href={teaserLink} variant={buttonVariant} />}
     </div>
   )}
 </section>

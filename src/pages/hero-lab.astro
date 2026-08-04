@@ -69,6 +69,34 @@ const description = 'Two concepts: monumental reveal and the switch';
     <div class="concept-label">J CURSOR SPOTLIGHT</div>
   </section>
 
+  <!-- M — VIDEO BACKGROUND: HLS stream with dynamic scrim -->
+  <section class="hero-type hero-m" id="concept-m">
+    <div class="hero-bg">
+      <video preload="auto" poster="" muted autoplay loop playsinline class="hero-bg-video" style={{ objectPosition: 'center' }}>
+        <source src="https://stream.mux.com/s8pMcOvMQXc4GD6AX4e1o01xFogFxipmuKltNfSYza0200.m3u8" type="application/x-mpegURL" />
+      </video>
+      <div class="hero-bg-scrim" id="video-scrim" style={{ backgroundColor: 'var(--surface-ink)', opacity: '0.65' }}></div>
+    </div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">A WORDPRESS PLUGIN FOR CREATIVES</p>
+
+      <h1 class="hero-headline">
+        <span class="word" style={{ '--word-index': 0 } as any}>Framer-quality</span>
+        <span class="accent-word" style={{ '--word-index': 1 } as any}>interactions,</span>
+        <span class="word" style={{ '--word-index': 2 } as any}>native</span>
+        <span class="word" style={{ '--word-index': 3 } as any}>to</span>
+        <span class="word" style={{ '--word-index': 4 } as any}>WordPress.</span>
+      </h1>
+
+      <div class="hero-cta-wrapper">
+        <Button label="Explore Blocks" href="/blocks" variant="acid" />
+      </div>
+    </div>
+
+    <div class="concept-label">M VIDEO BACKGROUND</div>
+  </section>
+
   <Fragment slot="footer">
     <RampFooter hideNewsletter={true} />
   </Fragment>
@@ -335,6 +363,42 @@ const description = 'Two concepts: monumental reveal and the switch';
       font-size: 9px;
     }
   }
+
+  /* CONCEPT M: VIDEO BACKGROUND */
+  .hero-m .hero-bg {
+    background-color: var(--surface-ink);
+  }
+
+  .hero-bg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hero-bg-scrim {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .hero-m .hero-eyebrow {
+    color: var(--text-on-ink-muted);
+  }
+
+  .hero-m .hero-headline {
+    color: var(--text-on-ink);
+  }
+
+  .hero-m .accent-word {
+    color: var(--acid);
+    animation-delay: calc((4 * 90ms) + 100ms);
+  }
 </style>
 
 <script>
@@ -429,4 +493,28 @@ const description = 'Two concepts: monumental reveal and the switch';
       clearTimeout(idleTimer);
     }
   });
+
+  // CONCEPT M: HLS.js for non-Safari browsers
+  const videoElement = document.querySelector('.hero-bg-video') as HTMLVideoElement;
+  const hlsUrl = 'https://stream.mux.com/s8pMcOvMQXc4GD6AX4e1o01xFogFxipmuKltNfSYza0200.m3u8';
+
+  // Check if HLS is natively supported (Safari)
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+  if (!isSafari && videoElement) {
+    // Load HLS.js for non-Safari browsers
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/hls.js@latest';
+    script.onload = () => {
+      if (window.Hls && window.Hls.isSupported()) {
+        const hls = new (window.Hls as any)();
+        hls.loadSource(hlsUrl);
+        hls.attachMedia(videoElement);
+      }
+    };
+    document.head.appendChild(script);
+  } else if (isSafari && videoElement) {
+    // Safari supports HLS natively
+    videoElement.src = hlsUrl;
+  }
 </script>

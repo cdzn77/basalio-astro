@@ -105,6 +105,12 @@ const description = 'Two concepts: monumental reveal and the switch';
     left: 0;
     right: 0;
     z-index: 9999;
+    height: 48px;
+  }
+
+  /* Compensate for fixed banner height — push all content below it */
+  :global(body) {
+    padding-top: 48px;
   }
 
   .lab-banner-text {

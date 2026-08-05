@@ -104,6 +104,85 @@ Component slots containing styled content must either:
 
 ---
 
+## Pixel-Diff Mechanism: Video Animation Timing Race (2026-08-04)
+
+### The Problem
+
+Playwright's default screenshot behavior includes `animations: 'disabled'`, which **freezes** animations at their current playback position — it does not synchronize to a fixed frame or ensure determinism.
+
+**Evidence from this session:**
+- **F3 (CLI):** Captured video at 0.538s and 0.532s → only 6ms gap → **visually identical frames** → bit-identical PNG (0% diff)
+- **G2 (Node API, separate pages):** Captured at 0.613s and 0.530s → 83ms gap → **visibly different frames** → different PNG (43% variance)
+
+Both are correct behavior of a fundamentally non-deterministic method: the screenshot captures whatever frame the video is currently on when the screenshot fires, frozen in place.
+
+### Consequence
+
+**Every pixel-diff against any page containing playing media (video, GIF, CSS animation) has been unreliable for the life of this project.**
+
+This applies to:
+- Hero section (video background)
+- Any animated component
+- Any looped or timed animation
+
+The method was:
+1. Take screenshot at time T₁ → animation frozen at frame A
+2. Take screenshot at time T₂ → animation frozen at frame B
+3. If T₂ - T₁ is significant, frames A and B differ → high variance
+4. If T₂ - T₁ is small (lucky timing), frames are visually identical → false clean result
+
+### The Fix
+
+**Force `reducedMotion: 'reduce'` and assert suppression before capture.**
+
+With reduced-motion active:
+- Video element is hidden (display: none)
+- Poster image is shown (deterministic, static)
+- Suppression must be verified with hard assertions BEFORE screenshot
+
+Race still exists: the media query resolution is asynchronous, so a capture could fire before suppression applies. **Hard assertions prevent this:**
+- Assert video display:none
+- Assert poster is visible
+- Throw non-zero exit if suppression has not applied
+- Never capture without verification
+
+### Tradeoff
+
+**Pixel-diff now verifies the poster/static path only. Video motion is unverifiable by pixel-diff and must be checked visually.**
+
+This is acceptable because:
+- Poster rendering is deterministic and testable
+- Video motion is a separate concern (visual QA)
+- Separation of concerns is cleaner
+
+### Implementation
+
+All capture scripts must:
+1. Use `reducedMotion: 'reduce'` context
+2. Evaluate suppression state before screenshot
+3. Throw if suppression has not applied
+4. Capture only after assertion passes
+
+Example:
+```javascript
+const suppressed = await page.evaluate(() => {
+  const video = document.querySelector('.hero-bg-video');
+  const poster = document.querySelector('.hero-bg-poster');
+  const videoDisplay = window.getComputedStyle(video).display;
+  const posterDisplay = window.getComputedStyle(poster).display;
+  
+  return videoDisplay === 'none' && posterDisplay !== 'none';
+});
+
+if (!suppressed) {
+  throw new Error('reducedMotion suppression NOT applied');
+}
+// Only then take screenshot
+await page.screenshot({ path, fullPage: false });
+```
+
+---
+
 ## Hero Baseline Established — Reduced-Motion Method (2026-08-04)
 
 ### New Deterministic Baseline

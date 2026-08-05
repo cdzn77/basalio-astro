@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import RampHeader from '../components/RampHeader.astro';
+import Header from '../components/Header.astro';
 import RampHero from '../components/RampHero.astro';
 import RampFooter from '../components/RampFooter.astro';
 import Button from '../components/Button.astro';
@@ -11,7 +11,7 @@ const description = 'Two concepts: monumental reveal and the switch';
 
 <BaseLayout {title} {description} noindex>
   <Fragment slot="header">
-    <RampHeader surface="ink" />
+    <Header surface="ink" />
   </Fragment>
 
   <!-- LAB BANNER: Warning that page-scoped CSS does not reproduce production cascade -->

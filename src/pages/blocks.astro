@@ -3,7 +3,7 @@
 // Reuses Nav, Testimonials, Footer from homepage
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-import RampHeader from '../components/RampHeader.astro';
+import Header from '../components/Header.astro';
 import WhoItsFor from '../components/WhoItsFor.astro';
 import RampFooter from '../components/RampFooter.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
@@ -77,7 +77,7 @@ const blocks = [
 <BaseLayout title={title} description={description}>
   <!-- HEADER: Navigation bar -->
   <Fragment slot="header">
-    <RampHeader />
+    <Header />
   </Fragment>
 
   <!-- HERO SECTION: HeaderSplit pattern with eyebrow, headline, and description in right column -->

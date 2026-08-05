@@ -3,7 +3,7 @@
 // Exact replica of the Ramp Studio template
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-import RampHeader from '../components/RampHeader.astro';
+import Header from '../components/Header.astro';
 import RampHero from '../components/RampHero.astro';
 import PositioningStats from '../components/PositioningStats.astro';
 import BlocksCarousel from '../components/BlocksCarousel.astro';
@@ -60,7 +60,7 @@ const faqs = getFaqs(postCapPrice, proShipTarget);
 <BaseLayout title={title} description={description}>
   <!-- HEADER: Navigation bar (universal across all pages) -->
   <Fragment slot="header">
-    <RampHeader surface={headerSurface} />
+    <Header surface={headerSurface} />
   </Fragment>
 
   <!-- Hero Section -->

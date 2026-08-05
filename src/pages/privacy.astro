@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import RampHeader from '../components/RampHeader.astro';
+import Header from '../components/Header.astro';
 import RampFooter from '../components/RampFooter.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 
@@ -10,7 +10,7 @@ const description = "Privacy Policy for Basalio. Applies to basalio.com and the 
 
 <BaseLayout {title} {description}>
   <Fragment slot="header">
-    <RampHeader />
+    <Header />
   </Fragment>
 
   <HeaderSplit

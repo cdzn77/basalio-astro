@@ -3,7 +3,7 @@
 // Cohesive design using existing site components and patterns
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-import RampHeader from '../components/RampHeader.astro';
+import Header from '../components/Header.astro';
 import RampFooter from '../components/RampFooter.astro';
 import Button from '../components/Button.astro';
 import FAQ from '../components/FAQ.astro';
@@ -51,7 +51,7 @@ const faqs = getFaqs(postCapPrice, proShipTarget);
 <BaseLayout {title} {description}>
   <!-- HEADER: Navigation bar -->
   <Fragment slot="header">
-    <RampHeader />
+    <Header />
   </Fragment>
 
   <!-- 1. PRICING TIERS SECTION: HeaderSplit with pricing cards in right slot -->

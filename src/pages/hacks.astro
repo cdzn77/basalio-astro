@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import RampHeader from '../components/RampHeader.astro';
+import Header from '../components/Header.astro';
 import RampFooter from '../components/RampFooter.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 import Button from '../components/Button.astro';
@@ -11,7 +11,7 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
 
 <BaseLayout {title} {description}>
   <Fragment slot="header">
-    <RampHeader />
+    <Header />
   </Fragment>
 
   <!-- HACKS: HeaderSplit with hack cards in right slot -->

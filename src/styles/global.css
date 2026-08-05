@@ -65,52 +65,6 @@ table {
 /* ============================================================
    @FONT-FACE DECLARATIONS
    ============================================================ */
-
-/* Instrument Sans (primary font from codebase) */
-@font-face {
-  font-family: 'Instrument Sans';
-  src: url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Manrope (secondary font) */
-@font-face {
-  font-family: 'Manrope';
-  src: url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Switzer (body text) */
-@font-face {
-  font-family: 'Switzer';
-  src: url('https://fonts.googleapis.com/css2?family=Switzer:wght@400;500;600;700&display=swap');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* IBM Plex Mono (monospace) */
-@font-face {
-  font-family: 'IBM Plex Mono';
-  src: url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Azeret Mono (labels, small caps) */
-@font-face {
-  font-family: 'Azeret Mono';
-  src: url('https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500;600&display=swap');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* ============================================================
    BASE ELEMENT STYLES
    ============================================================ */

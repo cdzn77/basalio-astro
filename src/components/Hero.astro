@@ -16,8 +16,7 @@ interface Props {
     | { type: 'color'; token: 'acid' | 'paper' | 'ink' | 'alt' }
     | { type: 'image'; src: string; position?: string; scrim?: number }
     | { type: 'video'; src: string; poster: string; position?: string; scrim?: number }
-    | { type: 'gradient'; from: string; to: string; angle?: string }
-    | { type: 'monumental' };
+    | { type: 'gradient'; from: string; to: string; angle?: string };
   surface?: 'acid' | 'paper' | 'ink';
 }
 
@@ -72,13 +71,7 @@ const scrimColor = scrimColorMap[surface];
     {background.type === 'gradient' && (
       <div class="hero-bg-gradient" style={{ background: `linear-gradient(${background.angle || '135deg'}, ${background.from}, ${background.to})` }} />
     )}
-    {background.type === 'monumental' && (
-      <>
-        <div class="hero-bg-color" style={{ backgroundColor: colorMap['ink'] }} />
-        <div class="hero-monumental-text" aria-hidden="true">BASALIO</div>
-      </>
-    )}
-    {scrimOpacity > 0 && background.type !== 'monumental' && (
+    {scrimOpacity > 0 && (
       <div class="hero-bg-scrim" style={{ backgroundColor: scrimColor, opacity: scrimOpacity.toString() }} />
     )}
   </div>
@@ -196,28 +189,6 @@ const scrimColor = scrimColorMap[surface];
     position: relative;
     overflow: visible;
     z-index: 1;
-  }
-
-  .hero-monumental-text {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    z-index: 0;
-  }
-
-  .hero-monumental-text {
-    font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: clamp(400px, 60vw, 1000px);
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    color: var(--stone);
-    line-height: 1;
-    white-space: nowrap;
-    opacity: 0.15;
-    transform: translateY(10%);
   }
 
   .hero-left {

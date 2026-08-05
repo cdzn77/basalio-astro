@@ -104,6 +104,27 @@ Component slots containing styled content must either:
 
 ---
 
+## Hero Baseline Established — Reduced-Motion Method (2026-08-04)
+
+### New Deterministic Baseline
+
+**File:** `baseline-hero-section-2026-08-04.png` (289 KB)
+**Capture config:** 1440×900 fixed viewport, fullPage: false, deviceScaleFactor 1
+**Context:** `browser.newContext({ reducedMotion: 'reduce' })`
+**Determinism:** 0% variance across 5 consecutive captures (bit-identical)
+**Date:** 2026-08-04 23:18 UTC
+
+**Method:** Purpose-captured fixed-viewport, NOT cropped from full-page. Exercises shipped code path: reduced-motion suppresses video, renders deterministic poster.
+
+**Prior baseline invalidation:**
+- `baseline-index.png` (2026-07-31): Full-page snapshot predating video feature (commit 3d5f720, 2026-08-04). Invalid for hero region diffs.
+
+**Noise floor:** 0.0000% (practical floor: zero variance under reduced-motion)
+
+**Implication:** Hero region is diffable under reduced-motion. **Video motion is out of scope for pixel-diff; must be verified visually.**
+
+---
+
 ## Pixel-Diff Invalidations (2026-08-04)
 
 **Four void diffs this session:**

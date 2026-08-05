@@ -45,6 +45,29 @@ Whether section tracking returns is a separate decision. Concept M's status is d
 
 ---
 
+## Dead Selector Lesson: .ramp-header (2026-08-05)
+
+### Dormant CSS from Ramp Template, Reactivated
+
+**What Happened:** During component renames, the selector .ramp-header was found in blocks.astro, pointing to a non-existent class. It was repointed to .base-header, which activated a 1-second spring-eased header entrance animation (opacity 0→1, translateY -50px→0).
+
+**The Problem:** The animation had never run on this site. The selector was dead code from the Ramp template consolidation. It was ungated (no prefers-reduced-motion guard), inconsistent with other pages (only /blocks had it), and introduced unverified behavior during a refactoring task.
+
+**Options Considered:**
+1. Add reduced-motion guard → accepts new behavior (entrance animation) that no user requested
+2. Site-wide animation → contradicts accessible-by-default pillar on the blocks showcase page
+3. Revert to dormant → restores the actual state the site has always been in
+
+**Decision:** Removed the dead code entirely. Deleted:
+- The querySelector block and inline style mutations (lines 1205–1214)
+- The @keyframes navBarIn rule (lines 1366–1375)
+
+**Verified:** Header renders immediately with opacity 1, no animation, no entrance delay. Matches all other pages.
+
+**Lesson:** When refactoring, dead selectors found in the codebase are dormant behavior, not bugs. Verify what they do before repointing. A selector matching nothing is not a regression waiting to be fixed — it is an artifact from a prior refactor that does not run. Activating it requires a decision, not a repair.
+
+---
+
 ## Hero-Lab Cascade Path Testing (2026-08-04)
 
 ### Root Cause of Concept M Promotion Failure

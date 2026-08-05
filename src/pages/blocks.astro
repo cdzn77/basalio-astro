@@ -1202,21 +1202,6 @@ const blocks = [
 </style>
 
 <script>
-  // NAV BAR ENTRANCE ANIMATION
-  // opacity: 0→1, y: -50→0, spring, 1000ms, bounce: 0, delay: 0
-  const navHeader = document.querySelector('.base-header');
-  if (navHeader) {
-    navHeader.style.opacity = '0';
-    navHeader.style.transform = 'translateY(-50px)';
-
-    // Use CSS animation for spring effect
-    navHeader.style.animation = 'navBarIn 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
-  }
-
-  // MENU BUTTON LABEL ENTRANCE ANIMATION
-  // opacity: 0→1, y: 10→0, spring, 600ms, bounce: 0, delay: 0
-  // (Applied via CSS with .menu-label class if it exists in nav component)
-
   // Show all blocks on load (no "Load More" button)
   const coursesGrid = document.querySelector('.courses-grid');
   if (coursesGrid) {
@@ -1378,14 +1363,4 @@ const blocks = [
 
 <style>
   /* Spring animation for nav bar */
-  @keyframes navBarIn {
-    from {
-      opacity: 0;
-      transform: translateY(-50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
 </style>

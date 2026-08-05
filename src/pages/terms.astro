@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
-import RampFooter from '../components/RampFooter.astro';
+import Footer from '../components/Footer.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 import { licenseScope } from '../data/pricing';
 
@@ -109,7 +109,7 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
   </section>
 
   <Fragment slot="footer">
-    <RampFooter hideNewsletter={true} />
+    <Footer hideNewsletter={true} />
   </Fragment>
 </BaseLayout>
 

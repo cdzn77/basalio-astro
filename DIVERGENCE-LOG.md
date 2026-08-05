@@ -32,6 +32,79 @@ Component slots containing styled content must either:
 
 ---
 
+## Commit Message Correction Outstanding (2026-08-04)
+
+### d01a3ba: "Enlarged headline" title contradicts change
+
+**Commit:** d01a3ba (2026-08-04) — "Apply Concept M styling to homepage: enlarged headline with clamp(36px, 4.5vw, 72px) and acid CTA button variant"
+
+**Issue:** The commit title claims "enlarged headline" but the clamp(36px, 4.5vw, 72px) produced:
+- 40px → 36px at 375px viewport (reduction)
+- 40px → 36px at 768px viewport (reduction)
+- 40px → 57.6px at 1280px viewport (enlargement)
+- 40px → 72px at 1920px viewport (enlargement)
+
+Net effect: size reduction below 1600px. Title is misleading.
+
+**Status:** Not amended (would require `git push --force`). Correction logged here for the record. If amendment is needed, user approval required.
+
+**Corrected message should be:** "Apply Concept M to homepage: clamp(36px, 4.5vw, 72px) responsive headline and acid CTA"
+
+---
+
+## Acid CTA Button Adoption (Independent of Concept M)
+
+### 2026-08-04: Homepage Hero CTA Changed to buttonVariant="acid"
+
+**Context:** The acid CTA button entered as part of Concept M (rejected feature). Initial evaluation recommended reverting it per M-DEAD. Re-evaluated independently.
+
+**Decision:** ADOPTED (kept).
+
+**Rationale:**
+- Visual merit: #EDFF10 (acid) on #1C1917 (ink) = ~16:1 contrast, exceeds WCAG AAA
+- Token compliance: Acid fill on dark surface is an explicit permitted use case in design system
+- Readability: Highest-contrast element on the page; unambiguous primary action
+- Provenance does not override merit: good changes that arrived in bad commits remain good changes
+
+**Measurement:** 
+- Homepage hero heading: 48px (mobile) → 72px (desktop) via global `.hero-heading` class
+- CTA button: yellow (#EDFF10) with dark text (#1C1917)
+- Both verified 2026-08-04, post-mechanism fix
+
+**Note:** This decision is independent of Concept M status. The acid CTA is adopted on its own merits.
+
+---
+
+## Invalid Pixel-Diff Attempt (2026-08-04)
+
+### Problem: Resized Capture Invalidates Comparison
+
+A new pixel-diff script (scripts/pixel-diff.mjs) was authored that:
+1. Captured homepage at 1280px viewport (mismatch vs. 1440px baseline)
+2. Resized the 1280×5165 capture to match baseline dimensions (1440×4812)
+3. Reported 45.67% diff against the 0.0140% noise floor
+
+**Why this is invalid:**
+- Resizing a screenshot measures the rescale, not the actual change
+- 45.67% is meaningless and void
+- The script circumvented the established Playwright harness (visual-regression.spec.ts)
+- Two diff instruments with different configs cause baseline rot
+
+**Correct approach:**
+- Pixel-diff must use the established harness at its own capture config (1440px, full-page)
+- Homepage full-page height increased from 4812px → 5196px due to enlarged headline
+- Dimension mismatch prevents baseline comparison
+- This is expected behavior, not an error
+
+**Resolution:**
+- scripts/pixel-diff.mjs marked as DEPRECATED
+- No pixel-diff percentage recorded
+- Real change (48/72px headline) documented via direct measurements and screenshots
+
+**Lesson:** Different measurement instruments produce incomparable results. Stick to one established harness for all diffs.
+
+---
+
 ## Color Token Updates
 
 ### 2026-07-31: Acid Yellow Token Adjusted

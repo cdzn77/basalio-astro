@@ -8,6 +8,27 @@ Whether section tracking returns is a separate decision. Concept M's status is d
 
 ---
 
+## Component Renames: Consolidation Preserved (2026-08-05)
+
+### Previous Footer.astro & Hero.astro Deletions Were Not Name Blacklists
+
+**Context:** Footer.astro was deleted commit 15f5275 (2026-07-30) with reason: "Eliminate duplicate footer component... use standard RampHeader/RampFooter structure." Hero.astro was deleted commit ba7b529 (2026-07-23) as part of consolidating to RampHero.
+
+**Initial Interpretation:** Filenames Footer and Hero were "forbidden" and should not be reused.
+
+**Correction:** Deletions eliminated DUPLICATES, not names. The consolidation decision was "do not have two footer components, do not have two hero components." Reusing those filenames for the surviving single component preserves the consolidation decision perfectly.
+
+**Action Taken (2026-08-05):**
+- Renamed RampTestimonialsV2.astro → WhoItsFor.astro (reflects actual component purpose: persona showcase, not testimonials)
+- Renamed RampHeader.astro → Header.astro
+- Renamed RampHero.astro → Hero.astro
+- Renamed RampFooter.astro → Footer.astro
+- Fixed dead selector `.ramp-header` → `.base-header` in blocks.astro
+
+**Result:** Four structural components now use semantic names. One footer, one hero, one header (no duplicates). Consolidation decision preserved. Naming confusion on a product where fabricated testimonials were deliberately removed is eliminated.
+
+---
+
 ## Hero-Lab Cascade Path Testing (2026-08-04)
 
 ### Root Cause of Concept M Promotion Failure

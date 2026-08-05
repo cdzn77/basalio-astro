@@ -1,5 +1,37 @@
 # DIVERGENCE LOG
 
+## Astro Scoped CSS Scope Boundary Issue
+
+### 2026-08-04: RampHero Typography Rules Never Applied to Slotted Content
+
+**Issue:** Astro scoped CSS does not apply to slotted content that crosses scope boundaries.
+
+**Root Cause:** The RampHero component defines scoped styles for `.hero-heading[data-astro-cid-c3taymar]`. When the h1 is passed as a slot to RampHero, it retains the **page's** astro-cid (e.g., `data-astro-cid-lcdefpme` on index.astro), not the component's astro-cid. The scoped selector requires an exact cid match, so the rule never applies.
+
+**Impact:**
+- Homepage hero headline rendered at 40px (global `h1 { font-size: 40px }`) throughout all work on this thread
+- The "72px baseline" premise was fiction for the homepage
+- /hero-lab appeared to validate the component but was actually relying on its own page-level override, masking the broken mechanism
+- RampHero's typography rules (lines 251-260 and 368-376) were dead code on every page using the component
+
+**Resolution:**
+- Moved `.hero-heading` typography rules to global.css as unscoped class rules (specificity 0,1,0)
+- Deleted dead scoped rules from RampHero.astro
+- Measurement post-fix: Homepage now renders 48px @ mobile, 72px @ desktop as intended
+- Hero-lab unchanged (its own page-level override still wins with higher specificity)
+
+**Implication for Future Work:**
+Component slots containing styled content must either:
+1. Define styles globally (as done here)
+2. Move styled content inside the component boundary (not as a slot)
+3. Refactor RampHero to accept heading as a prop with internal rendering
+
+**Commits:**
+- 5062140: Move hero heading typography to global.css (unscoped)
+- 0aac34a: Remove dead hero-heading typography rules from RampHero.astro
+
+---
+
 ## Color Token Updates
 
 ### 2026-07-31: Acid Yellow Token Adjusted

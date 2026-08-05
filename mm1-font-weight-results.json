@@ -1,0 +1,489 @@
+{
+  "/": {
+    "instrumentSans": {
+      "400": {
+        "example": "Basalio.MENUBLOCKSHACKSPRICINGA WORDPRESS PLUGIN F",
+        "tag": "BODY",
+        "class": "(no class)"
+      },
+      "500": {
+        "example": "OUR BLOCKS",
+        "tag": "P",
+        "class": "courses-eyebrow"
+      },
+      "600": {
+        "example": "$0",
+        "tag": "P",
+        "class": "price"
+      },
+      "700": {
+        "example": "Framer-quality interactions,native to WordPress.",
+        "tag": "H1",
+        "class": "hero-heading hero-headline"
+      }
+    },
+    "azeretMono": {
+      "400": {
+        "example": "MENU",
+        "tag": "BUTTON",
+        "class": "menu-btn"
+      },
+      "500": {
+        "example": "A WORDPRESS PLUGIN FOR CREATIVES",
+        "tag": "P",
+        "class": "hero-eyebrow"
+      },
+      "600": {
+        "example": "SEE THE FULL BREAKDOWN →",
+        "tag": "P",
+        "class": "btn-label"
+      },
+      "700": {
+        "example": "9",
+        "tag": "SPAN",
+        "class": "stat-value"
+      }
+    },
+    "manrope": {
+      "600": {
+        "example": "Basalio.",
+        "tag": "A",
+        "class": "brand-logo"
+      }
+    }
+  },
+  "/blocks": {
+    "instrumentSans": {
+      "400": {
+        "example": "Basalio.MENUBLOCKSHACKSPRICINGOUR BLOCKSNine block",
+        "tag": "BODY",
+        "class": "(no class)"
+      },
+      "500": {
+        "example": "OUR BLOCKS",
+        "tag": "P",
+        "class": "eyebrow"
+      },
+      "600": {
+        "example": "NORTHWIND",
+        "tag": "H3",
+        "class": "tile-title"
+      },
+      "700": {
+        "example": "Every one of them is keyboard-operable, reduced-mo",
+        "tag": "H2",
+        "class": "hero-right-heading"
+      },
+      "900": {
+        "example": "LAYOUT",
+        "tag": "H3",
+        "class": "comparison-heading-after"
+      }
+    },
+    "azeretMono": {
+      "400": {
+        "example": "MENU",
+        "tag": "BUTTON",
+        "class": "menu-btn"
+      },
+      "500": {
+        "example": "Layout Block",
+        "tag": "SPAN",
+        "class": "block-tag"
+      },
+      "600": {
+        "example": "REPLAY",
+        "tag": "P",
+        "class": "btn-label"
+      }
+    },
+    "manrope": {
+      "600": {
+        "example": "Basalio.",
+        "tag": "A",
+        "class": "brand-logo"
+      }
+    }
+  },
+  "/contact": {
+    "instrumentSans": {
+      "400": {
+        "example": "Basalio.MENUBLOCKSHACKSPRICINGGET IN TOUCHQuestion",
+        "tag": "BODY",
+        "class": "(no class)"
+      },
+      "500": {
+        "example": "GET IN TOUCH",
+        "tag": "P",
+        "class": "eyebrow"
+      },
+      "600": {
+        "example": "PRODUCT",
+        "tag": "H4",
+        "class": "footer-column-label"
+      }
+    },
+    "azeretMono": {
+      "400": {
+        "example": "MENU",
+        "tag": "BUTTON",
+        "class": "menu-btn"
+      },
+      "500": {
+        "example": "SEND MESSAGE",
+        "tag": "P",
+        "class": "btn-label"
+      }
+    },
+    "manrope": {
+      "600": {
+        "example": "Basalio.",
+        "tag": "A",
+        "class": "brand-logo"
+      }
+    }
+  },
+  "/early-access": {
+    "instrumentSans": {
+      "400": {
+        "example": "Basalio.MENUBLOCKSHACKSPRICINGEARLY ACCESSGet on t",
+        "tag": "BODY",
+        "class": "(no class)"
+      },
+      "500": {
+        "example": "EARLY ACCESS",
+        "tag": "P",
+        "class": "eyebrow"
+      },
+      "600": {
+        "example": "PRODUCT",
+        "tag": "H4",
+        "class": "footer-column-label"
+      }
+    },
+    "azeretMono": {
+      "400": {
+        "example": "MENU",
+        "tag": "BUTTON",
+        "class": "menu-btn"
+      },
+      "600": {
+        "example": "JOIN THE LIST →",
+        "tag": "P",
+        "class": "btn-label"
+      }
+    },
+    "manrope": {
+      "600": {
+        "example": "Basalio.",
+        "tag": "A",
+        "class": "brand-logo"
+      }
+    }
+  },
+  "/hacks": {
+    "instrumentSans": {
+      "400": {
+        "example": "Basalio.MENUBLOCKSHACKSPRICINGHACKSFree is the rec",
+        "tag": "BODY",
+        "class": "(no class)"
+      },
+      "500": {
+        "example": "HACKS",
+        "tag": "P",
+        "class": "eyebrow"
+      },
+      "600": {
+        "example": "PRODUCT",
+        "tag": "H4",
+        "class": "footer-column-label"
+      },
+      "700": {
+        "example": "Two steps for all of these",
+        "tag": "H2",
+        "class": "(no class)"
+      }
+    },
+    "azeretMono": {
+      "400": {
+        "example": "MENU",
+        "tag": "BUTTON",
+        "class": "menu-btn"
+      },
+      "600": {
+        "example": "JOIN THE FOUNDER LIST →",
+        "tag": "P",
+        "class": "btn-label"
+      }
+    },
+    "manrope": {
+      "600": {
+        "example": "Basalio.",
+        "tag": "A",
+        "class": "brand-logo"
+      }
+    }
+  },
+  "/hero-lab": {
+    "instrumentSans": {
+      "400": {
+        "example": "Basalio.MENUBLOCKSHACKSPRICINGLAB — page-scoped CS",
+        "tag": "BODY",
+        "class": "(no class)"
+      },
+      "500": {
+        "example": "Basalio",
+        "tag": "A",
+        "class": "footer-logo"
+      },
+      "600": {
+        "example": "PRODUCT",
+        "tag": "H4",
+        "class": "footer-column-label"
+      }
+    },
+    "azeretMono": {
+      "400": {
+        "example": "MENU",
+        "tag": "BUTTON",
+        "class": "menu-btn"
+      },
+      "500": {
+        "example": "LAB — page-scoped CSS. Does not reproduce producti",
+        "tag": "P",
+        "class": "lab-banner-text"
+      }
+    },
+    "manrope": {
+      "600": {
+        "example": "Basalio.",
+        "tag": "A",
+        "class": "brand-logo"
+      }
+    }
+  },
+  "/pricing": {
+    "instrumentSans": {
+      "400": {
+        "example": "Basalio.MENUBLOCKSHACKSPRICINGPRICINGThe blocks ar",
+        "tag": "BODY",
+        "class": "(no class)"
+      },
+      "500": {
+        "example": "PRICING",
+        "tag": "P",
+        "class": "eyebrow"
+      },
+      "600": {
+        "example": "$0",
+        "tag": "P",
+        "class": "price"
+      }
+    },
+    "azeretMono": {
+      "400": {
+        "example": "MENU",
+        "tag": "BUTTON",
+        "class": "menu-btn"
+      }
+    },
+    "manrope": {
+      "600": {
+        "example": "Basalio.",
+        "tag": "A",
+        "class": "brand-logo"
+      }
+    }
+  },
+  "/privacy": {
+    "instrumentSans": {
+      "400": {
+        "example": "Basalio.MENUBLOCKSHACKSPRICINGLegalPrivacy PolicyE",
+        "tag": "BODY",
+        "class": "(no class)"
+      },
+      "500": {
+        "example": "Legal",
+        "tag": "P",
+        "class": "eyebrow"
+      },
+      "600": {
+        "example": "Information we collect",
+        "tag": "H2",
+        "class": "section-heading"
+      }
+    },
+    "azeretMono": {
+      "400": {
+        "example": "MENU",
+        "tag": "BUTTON",
+        "class": "menu-btn"
+      }
+    },
+    "manrope": {
+      "600": {
+        "example": "Basalio.",
+        "tag": "A",
+        "class": "brand-logo"
+      }
+    }
+  },
+  "/roadmap": {
+    "instrumentSans": {
+      "400": {
+        "example": "Basalio.MENUBLOCKSHACKSPRICINGComing SoonRoadmapHe",
+        "tag": "BODY",
+        "class": "(no class)"
+      },
+      "500": {
+        "example": "Coming Soon",
+        "tag": "P",
+        "class": "eyebrow"
+      },
+      "600": {
+        "example": "Nine Core Blocks",
+        "tag": "H2",
+        "class": "roadmap-item-title"
+      }
+    },
+    "azeretMono": {
+      "400": {
+        "example": "MENU",
+        "tag": "BUTTON",
+        "class": "menu-btn"
+      }
+    },
+    "manrope": {
+      "600": {
+        "example": "Basalio.",
+        "tag": "A",
+        "class": "brand-logo"
+      }
+    }
+  },
+  "/support": {
+    "instrumentSans": {
+      "400": {
+        "example": "Basalio.MENUBLOCKSHACKSPRICINGHelp CenterSupport &",
+        "tag": "BODY",
+        "class": "(no class)"
+      },
+      "500": {
+        "example": "Help Center",
+        "tag": "P",
+        "class": "eyebrow"
+      },
+      "600": {
+        "example": "PRODUCT",
+        "tag": "H4",
+        "class": "footer-column-label"
+      }
+    },
+    "azeretMono": {
+      "400": {
+        "example": "MENU",
+        "tag": "BUTTON",
+        "class": "menu-btn"
+      }
+    },
+    "manrope": {
+      "600": {
+        "example": "Basalio.",
+        "tag": "A",
+        "class": "brand-logo"
+      }
+    }
+  },
+  "/terms": {
+    "instrumentSans": {
+      "400": {
+        "example": "Basalio.MENUBLOCKSHACKSPRICINGLegalTerms of Servic",
+        "tag": "BODY",
+        "class": "(no class)"
+      },
+      "500": {
+        "example": "Legal",
+        "tag": "P",
+        "class": "eyebrow"
+      },
+      "600": {
+        "example": "1. License Grant",
+        "tag": "H2",
+        "class": "section-heading"
+      }
+    },
+    "azeretMono": {
+      "400": {
+        "example": "MENU",
+        "tag": "BUTTON",
+        "class": "menu-btn"
+      }
+    },
+    "manrope": {
+      "600": {
+        "example": "Basalio.",
+        "tag": "A",
+        "class": "brand-logo"
+      }
+    }
+  },
+  "/welcome": {
+    "instrumentSans": {
+      "400": {
+        "example": "Basalio.MENUBLOCKSHACKSPRICINGYOU'RE ON THE LISTYo",
+        "tag": "BODY",
+        "class": "(no class)"
+      },
+      "500": {
+        "example": "YOU'RE ON THE LIST",
+        "tag": "P",
+        "class": "eyebrow"
+      },
+      "600": {
+        "example": "PRODUCT",
+        "tag": "H4",
+        "class": "footer-column-label"
+      }
+    },
+    "azeretMono": {
+      "400": {
+        "example": "MENU",
+        "tag": "BUTTON",
+        "class": "menu-btn"
+      },
+      "500": {
+        "example": "READ THE HACKS WHILE YOU WAIT →",
+        "tag": "P",
+        "class": "btn-label"
+      }
+    },
+    "manrope": {
+      "600": {
+        "example": "Basalio.",
+        "tag": "A",
+        "class": "brand-logo"
+      }
+    }
+  },
+  "/404": {
+    "instrumentSans": {
+      "400": {
+        "example": "404This page does not exist. Let's get you back on",
+        "tag": "BODY",
+        "class": "(no class)"
+      },
+      "600": {
+        "example": "Back home",
+        "tag": "A",
+        "class": "(no class)"
+      },
+      "700": {
+        "example": "404",
+        "tag": "H1",
+        "class": "(no class)"
+      }
+    },
+    "azeretMono": {},
+    "manrope": {}
+  }
+}

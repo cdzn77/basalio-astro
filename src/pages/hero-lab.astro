@@ -14,6 +14,11 @@ const description = 'Two concepts: monumental reveal and the switch';
     <RampHeader surface="ink" />
   </Fragment>
 
+  <!-- LAB BANNER: Warning that page-scoped CSS does not reproduce production cascade -->
+  <div class="lab-banner">
+    <p class="lab-banner-text">LAB — page-scoped CSS. Does not reproduce production cascade. Variants must be re-verified on / after promotion.</p>
+  </div>
+
   <!-- H — MONUMENTAL REVEAL: Headline performs word-by-word -->
   <section class="hero-type hero-h" id="concept-h">
     <div class="hero-bg" style={{ backgroundColor: 'var(--surface-ink)' }}></div>
@@ -89,6 +94,28 @@ const description = 'Two concepts: monumental reveal and the switch';
 </BaseLayout>
 
 <style>
+  /* LAB BANNER */
+  .lab-banner {
+    width: 100%;
+    background-color: var(--acid);
+    padding: 16px 20px;
+    text-align: center;
+    position: relative;
+    z-index: 100;
+  }
+
+  .lab-banner-text {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--surface-ink);
+    margin: 0;
+    padding: 0;
+    line-height: 1.4;
+  }
+
   /* SHARED STYLES */
   .hero-type {
     position: relative;

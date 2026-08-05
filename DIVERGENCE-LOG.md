@@ -233,6 +233,20 @@ await page.screenshot({ path, fullPage: false });
 
 **Lesson:** Baseline lineage matters. Purpose-captured ≠ cropped. Full-page ≠ fixed-viewport. Determinism must be established before noise floor is set.
 
+### The Mechanism: F3 vs G2 — Why False Cleans Are Catastrophic
+
+Playwright's default screenshot includes `animations: 'disabled'`, which **freezes** media at its current playback position — it does not pin a fixed frame or provide determinism. Determinism depends on capture timing relative to the media timeline.
+
+**F3 (CLI, 2 captures):** Both landed 6ms apart in the video timeline → visually identical frames → 0.0000% diff. **False clean approved.**
+
+**G2 (Node API, 5 separate contexts):** Captures landed 83ms apart → different video frames → 43% diff. Revealed the non-determinism.
+
+**Both are correct behavior of a broken method.** F3's 0% was the most dangerous result of the session: a false clean that looked right. Every other void diff was obviously wrong. This one passed a gate it should not have.
+
+**Project-wide consequence:** Every pixel-diff run against ANY page containing playing media (video, GIF, or CSS animation) has been unreliable for the life of this project. The hero is only where it surfaced.
+
+**Fix:** Force `reducedMotion: 'reduce'` and hard-assert suppression (video display:none, poster rendering) before capture. Throw on failure; never warn and continue. See "Pixel-Diff Mechanism: Video Animation Timing Race" section above for implementation details.
+
 ---
 
 ## Commit Message Correction Outstanding (2026-08-04)

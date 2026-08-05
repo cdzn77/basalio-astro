@@ -25,3 +25,11 @@ pnpm-debug.log*
 
 # Local Netlify folder
 .netlify
+# Scratch/diagnostic artifacts
+.scratch/
+scratch/
+diagnostics/
+# Scratch/diagnostic artifacts
+.scratch/
+scratch/
+diagnostics/

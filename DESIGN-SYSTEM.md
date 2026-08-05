@@ -3,7 +3,7 @@
 ## Color Palette
 
 ### Primary Colors
-- **Accent Yellow**: `#DFFF00` - Hero sections, buttons, highlights, interactive elements
+- **Accent Yellow**: `#EDFF10` - Hero sections, buttons, highlights, interactive elements
 - **Black**: `#0A0A0A` - Primary text, buttons, UI elements
 - **True Black**: `#000000` - Text on yellow backgrounds
 
@@ -147,12 +147,12 @@
 
 **Dark Button** (.btn-dark)
 - **Background**: #000
-- **Color**: #DFFF00
+- **Color**: #EDFF10
 - **Shadow**: 0 4px 12px rgba(0, 0, 0, 0.15)
 - **Hover shadow**: 0 8px 24px rgba(0, 0, 0, 0.25)
 
 **Light Button** (.btn-light)
-- **Background**: #DFFF00
+- **Background**: #EDFF10
 - **Color**: #000
 - **Border-color**: #000
 - **Shadow**: 0 4px 12px rgba(0, 0, 0, 0.08)
@@ -220,7 +220,7 @@
 
 - **Width**: 100%
 - **Min-height**: 100vh
-- **Background**: #DFFF00
+- **Background**: #EDFF10
 - **Display**: flex, center-aligned
 - **Padding**: 120px 40px 60px
 - **Text-align**: center
@@ -262,8 +262,8 @@
 #### Scroll Sequence (Range Slider)
 - **Progress bar**: 40px height
 - **Background**: rgba(255, 255, 255, 0.08)
-- **Fill gradient**: linear-gradient(90deg, #DFFF00, #B8CC00)
-- **Slider thumb**: 18px circle, #DFFF00
+- **Fill gradient**: linear-gradient(90deg, #EDFF10, #B8CC00)
+- **Slider thumb**: 18px circle, #EDFF10
 - **Hover state**: 22px circle, enhanced shadow
 
 #### Image Counter Display
@@ -280,7 +280,7 @@
 - **Border-radius**: 12px
 - **Overflow**: hidden
 - **Layers**: Multiple radial gradients with DFFF00 accents
-- **Visual element**: 200px×200px rotated diamond with #DFFF00 border
+- **Visual element**: 200px×200px rotated diamond with #EDFF10 border
 
 #### Text Reveal Words
 - **Animation**: slideWord 0.4s cubic-bezier(0.16, 1, 0.3, 1)
@@ -305,7 +305,7 @@
 - **Min-height**: 120px
 - **Display**: flex, center-aligned
 - **Hover**: Background rgba(255, 255, 255, 0.15), elevated shadow
-- **Icon color**: #DFFF00
+- **Icon color**: #EDFF10
 
 #### Scroll Lock Frames
 - **Background**: linear-gradient(90deg, #D0D0D0 0%, #C0C0C0 100%)
@@ -404,14 +404,14 @@
 ### Focus States
 - **Outline**: 2px solid (context-dependent color)
 - **Outline-offset**: 2px (usually), -2px (interactive cards)
-- **Color**: #000 (light backgrounds), #DFFF00 (dark backgrounds)
+- **Color**: #000 (light backgrounds), #EDFF10 (dark backgrounds)
 
 ### Touch Targets
 - **Minimum size**: 44px × 44px (all interactive elements)
 - **Spacing**: Adequate padding between touchable areas
 
 ### Color Contrast
-- **Text on yellow (#DFFF00)**: #000 (contrast ratio: 19.56:1 ✓)
+- **Text on yellow (#EDFF10)**: #000 (contrast ratio: 19.56:1 ✓)
 - **Text on black (#0A0A0A)**: #fff (contrast ratio: 21:1 ✓)
 - **Text on gray (#E8E8E8)**: #000 (contrast ratio: 14:1 ✓)
 
@@ -436,7 +436,7 @@
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--color-primary` | #DFFF00 | Accent, highlights |
+| `--color-primary` | #EDFF10 | Accent, highlights |
 | `--color-text` | #000 | Primary text |
 | `--color-text-secondary` | #666 | Secondary text |
 | `--color-bg-light` | #E8E8E8 | Light backgrounds |
@@ -456,7 +456,7 @@
 ## Usage Guidelines
 
 ### When to Use Colors
-- **Yellow (#DFFF00)**: Call-to-action buttons, hero section backgrounds, interactive highlights, focus states on dark backgrounds
+- **Yellow (#EDFF10)**: Call-to-action buttons, hero section backgrounds, interactive highlights, focus states on dark backgrounds
 - **Black (#0A0A0A/000)**: Primary text, navigation, buttons, interactive elements
 - **Light Gray (#E8E8E8)**: Module backgrounds, secondary UI surfaces
 - **Dark Gray (#2D2D2D)**: Dark module backgrounds, contrast sections

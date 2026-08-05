@@ -4,7 +4,7 @@
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
-import RampHero from '../components/RampHero.astro';
+import Hero from '../components/Hero.astro';
 import PositioningStats from '../components/PositioningStats.astro';
 import BlocksCarousel from '../components/BlocksCarousel.astro';
 import WhoItsFor from '../components/WhoItsFor.astro';
@@ -64,7 +64,7 @@ const faqs = getFaqs(postCapPrice, proShipTarget);
   </Fragment>
 
   <!-- Hero Section -->
-  <RampHero
+  <Hero
     eyebrow="A WORDPRESS PLUGIN FOR CREATIVES"
     teaserText="Give your work a foundation to stand on. Nine curated interaction blocks, from grid reveals to case-study transitions to scroll-tied sequences, built only for portfolio and case-study sites. Nothing you'd need Framer for. Nothing you don't."
     teaserButton="EXPLORE BLOCKS"
@@ -74,7 +74,7 @@ const faqs = getFaqs(postCapPrice, proShipTarget);
     surface={heroSurface}
   >
     <h1 class="hero-heading hero-headline" slot="heading">Framer-quality <span class="accent-word">interactions,</span><br/>native to WordPress.</h1>
-  </RampHero>
+  </Hero>
 
   <!-- What We Do Section -->
   <PositioningStats

@@ -1,5 +1,37 @@
 # DIVERGENCE LOG
 
+## Hero-Lab Cascade Path Testing (2026-08-04)
+
+### Root Cause of Concept M Promotion Failure
+
+**/hero-lab uses page-scoped CSS and therefore tests a different cascade path than production.**
+
+The lab page defines hero heading styles at page level:
+```css
+h1.hero-heading.hero-headline {
+  font-size: clamp(36px, 4.5vw, 72px);
+}
+```
+
+Production (/) uses global unscoped styles:
+```css
+.hero-heading {
+  font-size: clamp(48px, 8vw, 96px);
+}
+```
+
+**Cascade difference:**
+- Lab: h1.hero-heading.hero-headline (specificity 0,2,1) at page level = wins
+- Production: .hero-heading (specificity 0,1,0) globally = wins
+
+Lab approval does not validate production behavior. This is why Concept M reached production without proper testing — the lab verified the wrong code path.
+
+**Mitigation:**
+- Added visible banner to /hero-lab warning of cascade path difference
+- Process: variants approved in lab must be re-verified on / production route before shipping
+
+---
+
 ## Astro Scoped CSS Scope Boundary Issue
 
 ### 2026-08-04: RampHero Typography Rules Never Applied to Slotted Content
@@ -29,6 +61,64 @@ Component slots containing styled content must either:
 **Commits:**
 - 5062140: Move hero heading typography to global.css (unscoped)
 - 0aac34a: Remove dead hero-heading typography rules from RampHero.astro
+
+---
+
+## B1 Implementation Findings (2026-08-04)
+
+### Hero H1 Size: Documented vs Implemented
+
+**Documentation (DESIGN-SYSTEM.md:239):** `clamp(48px, 8vw, 96px)`
+**Implementation before B1.1:** `font-size: 72px` (fixed, no clamp)
+**Source:** Inherited from Ramp template clone (initial component import)
+
+**Impact:** Concept M attempted to "enlarge" the hero but shipped a 72px max — matching the existing template default, not the documented spec. This is why Concept M produced no enlargement: 72px is where the homepage was already rendering.
+
+**Resolution (B1.1):** Updated to documented spec. Now renders 48px (mobile) → 96px (desktop) via responsive clamp.
+
+---
+
+## Astro Scoped CSS Pattern Finding (2026-08-04)
+
+### Styles for Slotted Content Must Be Global
+
+**Problem:** RampHero component defines scoped CSS for `.hero-heading[data-astro-cid-c3taymar]`. When the h1 is passed as a slot to RampHero, it retains the **page's** astro-cid, not the component's. Scoped selectors require exact cid match, so the rule never applies.
+
+**Impact:** Homepage hero headline rendered at 40px (global h1 fallback) throughout all prior work. Component styles were dead code.
+
+**Pattern:** Astro scoped CSS does not apply to slotted content that crosses scope boundaries. Solution: define styles globally (unscoped), not in component scope.
+
+**Rule:** Styles for slotted content live in global.css. Component scoping cannot protect them.
+
+---
+
+## Concept M Status (2026-08-04)
+
+**Decision:** Tested, not adopted.
+
+**What was tried:** clamp(36px, 4.5vw, 72px) responsive headline + acid CTA button
+**Why rejected:** Clamp max was 72px (same as baseline) — no actual enlargement
+**Superseded by:** Adoption of documented clamp(48px, 8vw, 96px) scale
+
+**Lab variant:** Left intact in hero-lab.astro for future reference. Page-scoped rule does not interfere with production (which uses global spec).
+
+---
+
+## Pixel-Diff Invalidations (2026-08-04)
+
+**Four void diffs this session:**
+
+1. **45.67%** (D3.4) — Resized 1280×5165 capture to 1440×4812 baseline. Rescaling measures the resize, not the change. Void.
+
+2. **Dimension mismatch** (D3.5) — Full-page diff (1440×4812 vs 1440×5196). Layout height increased 384px due to enlarged headline. Translation dominates pixel diff; measurement is invalid for layout-changing edits.
+
+3. **99.98%** (D3.6) — Cropped 1440×4812 full-page baseline to 1440×900 hero. Two invalidating causes: baseline predates video hero (2026-07-31 vs 2026-08-04), and crop-of-full-page is not a fixed-viewport baseline. Void.
+
+4. **37-60% variance** (G2) — Noise floor test with Node API revealed hero region non-deterministic. Video or other animated element renders differently across captures. Baseline cannot be established without reducing motion.
+
+**Cause analysis:** Pixel-diff was attempted without understanding baseline provenance, capture method, or viewport configuration. Five consecutive captures beat one lucky capture.
+
+**Lesson:** Baseline lineage matters. Purpose-captured ≠ cropped. Full-page ≠ fixed-viewport. Determinism must be established before noise floor is set.
 
 ---
 
@@ -102,6 +192,27 @@ A new pixel-diff script (scripts/pixel-diff.mjs) was authored that:
 - Real change (48/72px headline) documented via direct measurements and screenshots
 
 **Lesson:** Different measurement instruments produce incomparable results. Stick to one established harness for all diffs.
+
+### Full-Page Diff Invalid for Layout-Shifting Changes
+
+**Finding:** Full-page screenshot comparison is the wrong instrument for any change that alters vertical flow (content height).
+
+**Why:** When layout height changes, every pixel below the shift is translated vertically. A pixel-diff comparison measures this translation as "different" even though the actual change is only at the shift point. The diff becomes dominated by translation noise, not by the intended change.
+
+**Example — This Change:**
+- Baseline full-page: 1440×4812 px
+- Current full-page: 1440×5196 px
+- Height delta: +384 px (due to enlarged 40px → 72px headline)
+
+A full-page diff would report high percentage difference (mostly translation). This is not actionable.
+
+**Correct Approach:**
+- Use fixed-viewport region capture (1440×900, fullPage: false) for the changed region only
+- Hero region diff for this change: 1440×900 px
+- Fixed height prevents translation noise
+- 0.0140% noise floor is valid only for height-stable captures
+
+**Rule for Future:** Layout-height-changing edits (headline size, added sections, removed content) are verified by fixed-viewport region diff, not full-page. Document the height delta as the measured effect.
 
 ---
 

@@ -88,23 +88,29 @@ const {
 <style>
   /* SECTION SHELL */
   .faq {
-    display: flex;
-    flex-flow: column;
-    gap: 40px;
-    padding: 40px 40px 200px 40px;
-    background: var(--color-bg-darker, #0A0A0A);
-    width: 100%;
-    box-sizing: border-box;
+    align-content: flex-start;
+    align-items: flex-start;
+    background-color: rgb(0, 0, 0);
     border-bottom-left-radius: 40px;
     border-bottom-right-radius: 40px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 2px 0px;
-    place-content: flex-start;
-    align-items: flex-start;
-    height: min-content;
-    overflow: visible;
+    box-sizing: border-box;
+    column-gap: 40px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    opacity: 1;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-bottom: 200px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 40px;
     position: relative;
-    z-index: 2;
-    margin-bottom: -40px;
+    row-gap: 40px;
+    width: 100%;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* HEADER ROW: 35%/65% split */
@@ -178,16 +184,45 @@ const {
 
   /* FAQ LIST: flex column, gap 12px, aligned under header-right (65%) */
   .faq-list {
+    align-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+    column-gap: 12px;
     display: flex;
+    flex-basis: 0px;
     flex-direction: column;
-    flex: 1 1 0%;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     max-width: 65%;
-    gap: 12px;
+    opacity: 1;
+    overflow-x: visible;
+    overflow-y: visible;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px;
+    position: relative;
+    row-gap: 12px;
+    transform: none;
+    width: 100%;
+    will-change: transform;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* FAQ ITEM: wrapper */
   .faq-item {
+    box-sizing: border-box;
+    display: block;
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: auto;
+    opacity: 1;
+    position: relative;
     width: 100%;
+    -webkit-font-smoothing: antialiased;
   }
 
   /* FAQ CARD: black background, rounded corners, padding */
@@ -195,12 +230,16 @@ const {
     background: rgb(0, 0, 0);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 6px;
-    padding: 20px;
-    display: block;
-    position: relative;
     box-sizing: border-box;
-    opacity: 1;
+    display: block;
+    flex-basis: auto;
+    flex-grow: 0;
+    flex-shrink: 0;
     height: auto;
+    opacity: 1;
+    padding: 20px;
+    position: relative;
+    width: 100%;
     -webkit-font-smoothing: antialiased;
   }
 

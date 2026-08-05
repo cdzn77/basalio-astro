@@ -115,7 +115,7 @@ export const courses: Record<string, Course> = {
       bio: 'With 8+ years of experience, Avery has helped 200+ brands scale their social media presence from 0 to 100k+ followers. Specializing in audience psychology and conversion optimization.'
     },
     instructorImage: '/assets/images/wwm2waimiwnvahhxgmjc07jgew.jpg',
-    closingImage: '/assets/images/ey0lplz9tdxyviykxypoozpnsng.png',
+    closingImage: 'https://framerusercontent.com/images/mTgtBDNJAof929aTJPY1nOQQUiA.jpeg?width=1024&height=1024',
     tag: 'Beginner Friendly'
   },
   'content-101': {
@@ -190,7 +190,7 @@ export const courses: Record<string, Course> = {
       bio: 'Marcus has helped 150+ teams develop content strategies that generate 10x more engagement. Known for making content strategy accessible to everyone.'
     },
     instructorImage: '/assets/course-1.png',
-    closingImage: '/assets/course-2.png',
+    closingImage: 'https://framerusercontent.com/images/mTgtBDNJAof929aTJPY1nOQQUiA.jpeg?width=1024&height=1024',
     tag: 'Beginner Friendly'
   },
   'branding-101': {
@@ -265,7 +265,7 @@ export const courses: Record<string, Course> = {
       bio: 'Sarah has built recognizable brands for 100+ companies ranging from startups to Fortune 500s. Specializes in positioning premium brands in competitive markets.'
     },
     instructorImage: '/assets/course-2.png',
-    closingImage: '/assets/course-3.png',
+    closingImage: 'https://framerusercontent.com/images/mTgtBDNJAof929aTJPY1nOQQUiA.jpeg?width=1024&height=1024',
     tag: 'Self Paced'
   },
   'best-practices': {
@@ -340,7 +340,7 @@ export const courses: Record<string, Course> = {
       bio: 'David has built email strategies that generated $50M+ in revenue. Known for creating email systems that feel personal, not pushy.'
     },
     instructorImage: '/assets/course-3.png',
-    closingImage: '/assets/course-4.png',
+    closingImage: 'https://framerusercontent.com/images/mTgtBDNJAof929aTJPY1nOQQUiA.jpeg?width=1024&height=1024',
     tag: 'Self Paced'
   }
 };

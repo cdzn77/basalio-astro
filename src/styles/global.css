@@ -142,13 +142,7 @@ h1 {
 }
 
 .hero-heading {
-  font-size: 72px;
-}
-
-@media (max-width: 768px) {
-  .hero-heading {
-    font-size: 48px;
-  }
+  font-size: clamp(48px, 8vw, 96px);
 }
 
 h2 {

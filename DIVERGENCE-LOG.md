@@ -460,3 +460,40 @@ Each entry documents a color, spacing, or design token change that creates a sit
 - Visual impact description
 - Verification steps taken
 - Baseline note (if resetting baseline)
+
+---
+
+## Internal Naming Debt (2026-08-05)
+
+### Known Ramp Template Nomenclature Remaining in Codebase
+
+**Status:** Documented, deferred to post-launch. Not user-facing; all are internal class names, variables, comments, or configuration options.
+
+**Items:**
+1. `.courses-*` classes (37 total occurrences)
+   - Files: BlocksCarousel.astro, blocks.astro
+   - Classes: `.courses`, `.courses-inner`, `.courses-left`, `.courses-header`, `.courses-eyebrow`, `.courses-heading`, `.courses-right`, `.courses-grid`, `.courses-grid-section`, `.hidden-course`, etc.
+   - Origin: Ramp template "courses" module; renamed to "blocks" for Basalio but class names unchanged
+   - User Visibility: None (internal CSS only; class names not exposed to screen readers or users)
+
+2. `.testimonials-v2-heading` class
+   - File: WhoItsFor.astro (component correctly named; class carries old name)
+   - Origin: RampTestimonialsV2.astro → WhoItsFor.astro rename (component renamed, class name left behind)
+   - User Visibility: None
+
+3. `headerType?: 'ramp' | 'simple'` prop
+   - File: BaseLayout.astro
+   - Origin: Ramp template variant system (only 'ramp' is currently used; 'simple' is unused)
+   - User Visibility: None (internal prop)
+
+4. Provenance comments referencing "Ramp"
+   - Files: global.css, components.css, index.astro, Hero.astro, WhoItsFor.astro
+   - Type: Code comments explaining origin from Ramp template ("Ramp template default", "Ramp hero system", etc.)
+   - User Visibility: None
+
+**Why Deferred:**
+- No user-facing impact (all are internal CSS selectors, class names, comments, or configuration options)
+- Post-launch rename would be mechanical churn with no feature value
+- Deferred until next design system refactor or post-launch code cleanup phase
+
+**Future Decision:** When/if renaming occurs, preference is one batch rename commit per file (e.g., "Rename course* classes to block*") rather than incremental changes.

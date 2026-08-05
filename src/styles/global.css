@@ -141,6 +141,16 @@ h1 {
   font-size: var(--font-size-40);
 }
 
+.hero-heading {
+  font-size: 72px;
+}
+
+@media (max-width: 768px) {
+  .hero-heading {
+    font-size: 48px;
+  }
+}
+
 h2 {
   font-size: var(--font-size-28);
 }

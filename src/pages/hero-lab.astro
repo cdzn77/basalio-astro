@@ -80,7 +80,7 @@ const description = 'Two concepts: monumental reveal and the switch';
     background={{ type: 'video', src: '/assets/basalio-hero.mp4', poster: '/assets/basalio-hero-poster.webp', scrim: 0 }}
     surface="ink"
   >
-    <h1 class="hero-heading hero-m-heading" slot="heading">Framer-quality <span class="accent-word">interactions,</span><br/>native to WordPress.</h1>
+    <h1 class="hero-heading hero-headline-xl" slot="heading">Framer-quality <span class="accent-word">interactions,</span><br/>native to WordPress.</h1>
   </RampHero>
 
   <Fragment slot="footer">
@@ -303,8 +303,8 @@ const description = 'Two concepts: monumental reveal and the switch';
   }
 
   /* CONCEPT M: Enlarged heading with clamp */
-  .hero-m-heading {
-    font-size: clamp(36px, 4.5vw, 72px) !important;
+  h1.hero-heading.hero-headline-xl {
+    font-size: clamp(36px, 4.5vw, 72px);
   }
 
   /* RESPONSIVE */

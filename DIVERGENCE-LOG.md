@@ -29,6 +29,22 @@ Whether section tracking returns is a separate decision. Concept M's status is d
 
 ---
 
+## 404.astro Styling Debt (2026-08-05)
+
+### Inline Styles vs Design System
+
+**Status:** 404.astro uses entirely inline styles (h1, p, a elements with style="...") rather than design tokens and scoped CSS.
+
+**Why It Matters:** Every other page in the site uses design tokens (--acid, --text-on-paper, etc.) and consistent class-based styling. 404.astro is the only exception.
+
+**Impact:** Minimal — the page renders correctly, is valid HTML (post-fix), and maintains accessibility. But it is inconsistent with site authoring patterns.
+
+**When to Address:** Post-launch. Low priority compared to production bug fixes and core feature work. Next redesign cycle or when 404 template is reused for other error pages (e.g., 500.astro).
+
+**How to Fix:** Migrate inline styles to a .error-page class or similar, use design tokens for colors and sizing.
+
+---
+
 ## Hero-Lab Cascade Path Testing (2026-08-04)
 
 ### Root Cause of Concept M Promotion Failure

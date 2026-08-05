@@ -1,39 +1,41 @@
-# Basalio Font Loading Fix — Handoff (2026-08-05)
+# Basalio Responsive Fix — Handoff (2026-08-05)
 
-**Session context:** 2026-08-04 to 2026-08-05, ~8 hours. Comprehensive font loading diagnosis completed. NOT shippable until fonts fixed. See DIVERGENCE-LOG.md for technical findings.
+**Session context:** 2026-08-04 to 2026-08-05. Font loading crisis RESOLVED. New blocker: 375px mobile responsive failure.
+
+---
+
+## RESOLVED SINCE LAST HANDOFF
+
+- **Font loading:** FIXED. Self-hosted variable WOFF2 in `public/fonts/` (71 KB total: Instrument Sans + Azeret Mono, wght 400–700). Preload with `crossorigin`. Verified via `document.fonts.check()` and network single-download check. Site now renders in Instrument Sans.
+- **Switzer, IBM Plex Mono, Manrope:** Removed (24 refs deleted, malformed @font-face purged, .brand-logo switched to Instrument Sans).
+- **Malformed @font-face block:** Deleted from global.css. It was what made every prior CSS-read audit falsely report "success."
+- **Commits:** 6 total (MM5 phases). All merged to session/hero-cascade-fix-2026-08-04. Type-checked and verified.
 
 ---
 
 ## STATE OF THE SITE
 
-### Instrument Sans: NEVER LOADED (CRITICAL)
-- **Impact:** All 13 routes render headings and body text in system fallback fonts (-apple-system on Mac, Segoe UI on Windows)
-- **Root cause:** Declared only in malformed @font-face (global.css lines 70–112) with `src: url('https://fonts.googleapis.com/css2?...')` — points to CSS file, not font file
-- **NOT declared** in BaseLayout.astro `<link>` tags
-- **Evidence:** document.fonts.check('700 96px "Instrument Sans"'): **false**; .woff2 file never downloaded
-- **Consequence:** Every visual review, pixel-diff baseline, and design approval from 2026-07-15 onward captured the site in wrong typography
-- **Timeline to fix:** ~2–3 hours (font weight audit + self-hosting setup)
+### 375px Mobile: HORIZONTAL OVERFLOW + CAROUSEL COLLAPSE (CRITICAL)
 
-### Switzer: DEAD (FONTSHARE FAMILY, NOT GOOGLE)
-- **Status:** Permanently broken. CSS request to Google Fonts returns 400 Bad Request.
-- **Why:** Switzer is from Fontshare (Indian Type Foundry), not Google Fonts. Google does not serve it.
-- **Locations:** 24 references across 6 files (PositioningStats, BlocksCarousel, WhoItsFor, Hero, FAQ, contact, hero-lab)
-- **Action:** REMOVE all 24 inline `font-family: Switzer` declarations before implementing fonts fix
+**Issue 1: .what-we-do → .column-right does not stack**
+- **Symptom:** 322px horizontal scroll on 375px viewport
+- **Root cause:** `.column-right` width: 697px (fixed or forced; TBD)
+- **Evidence:** scrollWidth 697 vs innerWidth 375 (measured S1620)
+- **Status:** NOT a grid issue; NOT HeaderSplit; confirmed separate section
+- **Fix location:** src/pages/[...marketing].astro or global CSS rule forcing width
 
-### Manrope: LOADS, SINGLE-USE (TEMPLATE INHERITANCE)
-- **Status:** Correctly loaded via BaseLayout.astro `<link>` (weight 600 confirmed)
-- **Usage:** .brand-logo in header only (BASALIO wordmark)
-- **Origin:** Inherited from Ramp template (commit c2f7d9f), not intentional Basalio design
-- **Not in:** DESIGN-SYSTEM.md
-- **Action:** Change .brand-logo `font-family` from `Manrope` to `Instrument Sans`; delete Manrope `<link>` from BaseLayout.astro
+**Issue 2: Carousel viewport collapses to 0px below 620px**
+- **Symptom:** Both carousels (.modules-carousel, .testimonials-carousel) render arrows but no cards. Cards ARE in DOM at left: 560/1080/1600px, clipped.
+- **Root cause:** `.courses-right { flex: 1 1 0%; display: block; }` — flex: 1 1 0% zeroes container width when parent is flex but child is display: block. Threshold resolves at 620px (not 640px).
+- **Evidence:** Measured S1620 (binary search: 520–620px range); no console errors; 0px scrollWidth below threshold.
+- **Fix location:** src/components/RampHero.astro line ~XX (flex-direction or .courses-right display rule)
+- **NOT a JS issue** — no console errors; cards not hidden; viewport genuinely 0px wide.
 
-### Azeret Mono: ONLY CORRECTLY WORKING FONT
-- **Status:** Loaded, rendering weights 400/500/600 across labels, eyebrows, buttons
-- **Action:** Keep as-is in BaseLayout.astro
-
-### IBM Plex Mono: DEAD TOKEN
-- **Status:** Declared in global.css @font-face (malformed), defined in tokens.css as `--font-mono-code`, but never renders
-- **Action:** Remove @font-face declaration and token definition
+**Issue 3: 9 inconsistent breakpoints (360/480/540/640/768/782/900/1024)**
+- **Status:** No unified system; breakpoints accumulated organically
+- **Problem:** Difficult to predict behavior at new viewports; 900px is load-bearing (sticky footer reveal gated on it, broken twice)
+- **Proposal:** Consolidate to 375 (baseline, not a breakpoint), 640 (tablet), 768 (iPad), 1024 (desktop), 1280 (large)
+- **Risk:** 900px is currently used; removal may break sticky footer reveal logic
 
 ---
 
@@ -47,84 +49,59 @@
 └── Status: Pushed (no unpushed commits after final handoff)
 ```
 
-### Other Checkouts (STALE, DO NOT USE)
-- `/Users/angelomanzanojr/Projects/products/basalio/marketing-site` — divergent fork, RampHero has unreleased button styling
-- `ramp-astro-template` (if it exists) — reference template only
-
 ### Main Branch Status
 - **Commit:** b64b9a8 (2026-08-02)
-- **Production:** 30+ commits behind session branch
-- **Production issue:** 404 redirect bug NOT fixed (fixed locally, waiting for PR)
+- **Behind:** Session branch now 53 commits ahead (font fix + diagnostics)
+- **Production issues:** 404 redirect bug (fixed locally, waiting for PR merge)
+- **Font fix status:** Deployed to session branch; ready for merge after responsive fixes complete
+
+### Other Checkouts (STALE, DO NOT USE)
+- `/Users/angelomanzanojr/Projects/products/basalio/marketing-site` — divergent fork
+- `ramp-astro-template` (if exists) — reference only
 
 ### WIP Branches
-- **wip/courses-refactor-2026-07-22 (marketing-site):** Preserved but must NOT merge
-- Reason: Courses page design diverges from production, blocking product unification
-
----
-
-## BLOCKED / VOID (MUST REDO AFTER FONTS FIX)
-
-### Pixel-Diff Baseline (2026-08-04)
-- **Status:** VOID
-- **Why:** Captured site rendering in system fallback fonts, not Instrument Sans
-- **Action:** Delete baseline after fonts load; re-capture
-
-### Hero Fold Check at 1280px
-- **Status:** VOID
-- **Why:** Same reason — font metrics will change when Instrument Sans loads
-- **Action:** Re-measure after fonts fix
-
-### 400% Zoom Reflow Check
-- **Status:** VOID
-- **Why:** Same reason
-- **Action:** Re-test after fonts fix
+- **wip/courses-refactor-2026-07-22:** DO NOT merge (design divergence)
 
 ---
 
 ## NEXT WORK (IN STRICT ORDER)
 
-### MM1 — Font Weight Audit (BLOCKER)
-**Purpose:** Verify exact weights used before downloading font files. Linking wrong weights causes synthetic bolding (visible regression).
+### ZZ1 — Section Identity Clarification
+**Question:** Is the "POSITIONING · 01" overlap in the homepage the same section as `.what-we-do`, or a separate bug?
+**Impact:** Determines if one fix resolves both or if they need separate patches.
+**Deliverable:** Screenshot at 375px showing both issues labeled; clarify if same section or adjacent.
 
-**Deliverable:** For each font family (Instrument Sans, Azeret Mono, Manrope), report:
-- Distinct computed font-weight values across all 13 routes
-- Example element per weight
-- Whether each weight is actually used
+### ZZ2 — Carousel Threshold Investigation
+**Question:** The carousel resolves at 620px, not 640px. Is this threshold driven by a media query we missed, or is it the flex rule itself?
+**Impact:** If it's flex, the fix goes on the flex rule. If it's a query, it goes in CSS.
+**Deliverable:** Measure carousel width at 619px, 620px, 621px; report exact behavior change.
 
-**Script location:** `/tmp/font-weight-audit.js` (ready to run)
+### ZZ3 — Breakpoint 900px Load-Bearing Verification
+**Question:** The sticky footer reveal is gated on 900px. Will consolidation to [375, 640, 768, 1024, 1280] break it?
+**Deliverable:** Measure sticky footer reveal behavior at 900px; identify the exact breakpoint and why. Decide: keep 900px or migrate reveal to 1024px?
 
-**Scope:** All 13 routes (/, /blocks, /contact, /early-access, /hacks, /hero-lab, /pricing, /privacy, /roadmap, /support, /terms, /welcome, /404)
+### RM1 — Fix .what-we-do Horizontal Overflow (1 commit)
+**Scope:** src/pages/[...marketing].astro or global CSS
+**Deliverable:** Measure scrollWidth on 375px viewport; should be ≤375px after fix
+**Verification:** Before/after screenshot at 375px showing no horizontal scroll
 
-### MM2 — Font Directory Structure
-**Correct:** Store WOFF2 files in `public/fonts/` ONLY (Astro serves public/ as root)
+### RM2 — Fix Carousel Viewport Collapse (1 commit)
+**Scope:** src/components/RampHero.astro (flex layout)
+**Deliverable:** Carousel renders at 620px and below; cards visible without horizontal scroll
+**Verification:** Screenshot at 375px, 500px, 620px showing carousel cards present
 
-**Do NOT:** Duplicate in `src/fonts/` — Astro does not copy src/ to build
+### RM3 — Test Multi-Section Coverage (1 commit)
+**Scope:** All sections that exceed 375px
+**Deliverable:** No section scrollWidth > 375px at mobile viewport
+**Script:** scripts/verify-section.js (see Standing Rules)
+**Verification:** Run script at 375px; all sections ≤ 375px width
 
-### MM3 — Glyph Coverage (BLOCKER)
-**Purpose:** Verify Latin subset includes all characters rendered on site.
-
-**Deliverable:** Extract every distinct character used (including arrows, quotes, dashes, symbols) and confirm subset range covers them
-
-**Why:** Missing glyph = tofu box (worse than 15 KB penalty)
-
-### MM4 — Above-Fold Analysis
-**Purpose:** Decide which faces to preload based on what renders above fold at 1280x900
-
-**Deliverable:** Report which faces (and weights) render above fold; preload those only
-
-### MM5 — Implementation (7 commits, ONE PER ITEM)
-1. Delete malformed @font-face block (global.css 70–112)
-2. Remove all 24 Switzer references (6 files) — note FAQ.astro line 265 is in JS cssText string
-3. Remove IBM Plex Mono / --font-mono-code (tokens.css + global.css)
-4. Header.astro: .brand-logo Manrope → Instrument Sans; delete Manrope `<link>`
-5. Add WOFF2 files to public/fonts/ (report actual file sizes, not estimates)
-6. Add correct @font-face rules + preload per MM4
-7. VERIFY: document.fonts.check(), width test on h1 and .brand-logo, network tab showing .woff2 from same origin
-
-### KK4 — Re-Verification (After Fonts Load)
-1. Hero fold check at 1280px
-2. New pixel-diff baseline (old one is void)
-3. 400% zoom reflow check
+### RM4 — Consolidate Breakpoints (3–5 commits, one per file or logical group)
+**Scope:** 7 files with breakpoints (responsive.css, hacks.astro, hero-lab.astro, RampHero.astro, etc.)
+**Target system:** 375 (baseline), 640, 768, 1024, 1280
+**Special case:** 900px (sticky footer) — measure & decide per ZZ3 results
+**Deliverable:** All media queries consolidated; orphaned breakpoints removed
+**Verification:** Build succeeds; no CSS regressions at any breakpoint
 
 ---
 
@@ -132,56 +109,26 @@
 
 | Task | Reason | Est. Time |
 |------|--------|-----------|
-| EE2 — DESIGN-SYSTEM.md full audit | 7+ days of doc rot discovered; line-by-line inventory needed | 2 hours |
-| EE3 — Doc rewrite (decisions-only) | Approved approach; blocked on EE2 | 1 hour |
-| DD2 — Favicon + hex sweep | Favicon is correct #EDFF10; hardcoded hex cleanup | 30 min |
-| HH3 — Heading hierarchy audit | 2 of 13 pages done; full audit finds semantic/visual mismatches | 2 hours |
-| Main branch merge decision | 30+ commits on session branch; strategy TBD | — |
-| Netlify preview (R2) | Never answered; unclear if needed | — |
+| KK4 — Re-Verification (after RM1-RM4) | Hero fold at 1280px; pixel-diff baseline; 400% zoom reflow — all void due to font change | 1 hour |
+| EE2 — DESIGN-SYSTEM.md full audit | 7+ days of doc rot; line-by-line inventory needed | 2 hours |
+| EE3 — Doc rewrite (decisions-only) | Blocked on EE2 | 1 hour |
+| DD2 — Favicon + hex sweep | Cleanup orphaned hex values | 30 min |
+| HH3 — Heading hierarchy audit | 2 of 13 pages done; semantic/visual mismatches | 2 hours |
+| Main branch merge decision | 53 commits behind; 404 redirect bug + font fix waiting | — |
+| Netlify branch deploy preview | Never checked | — |
 
 ---
 
-## STANDING RULES BROKEN THIS SESSION (FOR REFERENCE)
+## STANDING RULES (FOR NEXT SESSION)
 
-These failures are documented to prevent repeat in next session:
+**ADD THIS RULE:**
+- **sections/verify-overflow.js** — Must assert `scrollWidth <= innerWidth` at every tested viewport and throw on failure. This 322px overflow existed for weeks with no automated check that would have caught it.
 
-1. **Measurement deliverables** — Pasted data is the answer, not a checkmark
-   - Broken: Reported "✅ Font check complete" without running the check (four times)
-   - Fix: Always paste actual output, never mark "complete" without data
+**EXISTING RULES (REFERENCE):**
 
-2. **getComputedStyle vs resolved font** — Returns REQUESTED font stack, not what actually loaded
-   - Broken: Read CSS, concluded fonts load; missed that Instrument Sans .woff2 never downloaded
-   - Fix: Always use `document.fonts.check()` + width test to verify actual loading
-
-3. **Font loading diagnostics** — Three checks required
-   - `document.fonts.check(weight + size + family)` — boolean
-   - `document.fonts.entries()` — enumerate loaded faces
-   - Width comparison test — measure element in requested vs known fallback
-
-4. **Pixel-diff validity** — Full-page diff invalid if change alters layout height
-   - Broken: Captured with media paused at random frame; called diff valid
-   - Fix: Measure only bounding boxes of unchanged regions; rebaseline if height changes
-
-5. **animations: 'disabled'** — Freezes at current position, does NOT pin frame
-   - Broken: Assumed animations would be at same frame each time
-   - Lesson: Force `reducedMotion: 'reduce'` to suppress entirely, or use manual frame control
-
-6. **"Report and stop" instruction** — Means STOP, not "report then continue"
-   - Broken: Continued analysis after being told to report and stop
-   - Fix: When told to report, report; when told to stop, stop
-
-7. **Task size estimation** — Never mark too-large task complete without data
-   - Broken: "LL3 due to scope, let me propose a strategic approach instead"
-   - Fix: Say explicitly: "This task is too large; propose split into [X], [Y], [Z]"
-
----
-
-## SESSION SUMMARY
-
-**Duration:** ~8 hours
-**Commits:** 5 (font crisis documentation, GG1 aria-label fix, HH4 debt logging, JJ4 font verification, HANDOFF.md)
-**Major findings:** Instrument Sans never loaded (site-wide); Switzer permanently broken; HTTP cache partitioning invalidates prior assumptions
-
-**Unshippable until:** MM1-MM4 complete, MM5 implemented, KK4 re-verified
-
-**Next session entry point:** MM1 font weight audit (script ready, awaiting execution)
+1. **Measurement deliverables** — Always paste actual output, never mark "complete" without data
+2. **Actual vs requested fonts** — Use `document.fonts.check()` + width test, not getComputedStyle
+3. **Pixel-diff validity** — Only when layout height unchanged; rebaseline if height changes
+4. **animations: 'disabled'** — Freezes current position; use `reducedMotion: 'reduce'` to suppress entirely
+5. **"Report and stop"** — Means STOP, not "report then continue"
+6. **Task size** — Say explicitly if too large; propose split, don't just propose strategy

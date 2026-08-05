@@ -69,10 +69,11 @@ const faqs = getFaqs(postCapPrice, proShipTarget);
     teaserText="Give your work a foundation to stand on. Nine curated interaction blocks, from grid reveals to case-study transitions to scroll-tied sequences, built only for portfolio and case-study sites. Nothing you'd need Framer for. Nothing you don't."
     teaserButton="EXPLORE BLOCKS"
     teaserLink="/blocks"
+    buttonVariant="acid"
     background={heroBackground}
     surface={heroSurface}
   >
-    <h1 class="hero-heading" slot="heading">Framer-quality <span class="accent-word">interactions,</span><br/>native to WordPress.</h1>
+    <h1 class="hero-heading hero-m-heading" slot="heading">Framer-quality <span class="accent-word">interactions,</span><br/>native to WordPress.</h1>
   </RampHero>
 
   <!-- What We Do Section -->
@@ -204,6 +205,11 @@ the case study, the reel."
 <style>
   .accent-word {
     color: var(--acid);
+  }
+
+  /* Enlarged headline with responsive clamp */
+  .hero-m-heading {
+    font-size: clamp(36px, 4.5vw, 72px) !important;
   }
 
   /* TESTIMONIALS WRAPPER: Background only (structure from BaseLayout) */

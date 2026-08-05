@@ -463,6 +463,55 @@ Each entry documents a color, spacing, or design token change that creates a sit
 
 ---
 
+## Font Loading Crisis (2026-08-05)
+
+### The Finding: Instrument Sans Never Loaded
+
+**Critical Issue:** Instrument Sans, the locked brand typeface for all headings, was never loaded on the production site. All h1, h2, h3 elements render in **system fallback fonts** (-apple-system/San Francisco on Mac, system-ui/Segoe UI on Windows).
+
+**Diagnostic Summary:**
+- Instrument Sans declared only in global.css with malformed @font-face: `src: url('https://fonts.googleapis.com/css2?...')` (pointing to CSS file, not font file)
+- NOT declared in BaseLayout.astro <link> tags
+- Network inspection: CSS file requested (200 OK) but `.woff2` font file never downloaded
+- document.fonts.check('700 96px "Instrument Sans"'): **false** (not loaded)
+- Computed styles: h1 requests "Instrument Sans", falls through to `-apple-system, system-ui, Segoe UI, sans-serif`
+
+**Pages Affected:** All 13 routes (site-wide)
+
+**Additional Font Issues Found:**
+- Manrope: Partially loaded (only weight 600 active; 400/500 not loaded but declared)
+- Switzer: CSS request returned 503 server error; declared in 20+ inline styles but not loading
+- IBM Plex Mono: Malformed @font-face; not actually rendering anywhere
+- Azeret Mono: ✅ ONLY FONT WORKING (correctly loaded via BaseLayout <link>)
+
+**What IS Invalid:**
+- ❌ Typography appearance (letterforms, character widths, line-breaks, heading widths)
+- ❌ Font-dependent metrics (width of h1, text line count, hero section composition)
+- ❌ All visual reviews and pixel-diff baselines from 2026-07-15 onward (site-wide)
+
+**What IS Still Valid:**
+- ✅ Layout structure (flex/grid)
+- ✅ Spacing (padding, margin)
+- ✅ Colors and contrast ratios
+- ✅ Footer reveal mechanism
+- ✅ Fold positions at a given font-SIZE (96px for h1, 40px for h2, etc. — sizes were correct, fonts were not)
+- ✅ Focus rings and interactive states
+- ✅ Accessibility structure (heading levels, ARIA labels)
+
+**Lesson — Font Verification Checklist:**
+Standard getComputedStyle().fontFamily returns the REQUESTED font stack, not the actual resolved font. This masks font loading failures. Three checks are required:
+1. `document.fonts.check(weight + size + family)` — returns true/false if font loaded
+2. `document.fonts.entries()` — enumerate all loaded faces, verify expected families present
+3. Width comparison test — measure element width in requested font vs known fallback at same size; if widths match, font did not load
+4. Network tab inspection — verify .woff2 files actually downloaded (not just CSS)
+
+CC4 reported "BaseLayout loads fonts correctly" by reading CSS only, missing that Instrument Sans was absent and the @font-face rules were malformed.
+
+**Pixel-Diff Baseline Impact:**
+All baseline comparisons taken 2026-07-15–2026-08-05 captured the site rendering in system fonts, not Instrument Sans. Baselines must be re-captured once font loading is corrected. Current baselines are false positives — they may show "0% diff" only because both old and new are rendering fallback fonts.
+
+---
+
 ## Internal Naming Debt (2026-08-05)
 
 ### Known Ramp Template Nomenclature Remaining in Codebase

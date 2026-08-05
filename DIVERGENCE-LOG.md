@@ -187,20 +187,33 @@ await page.screenshot({ path, fullPage: false });
 
 ### New Deterministic Baseline
 
-**File:** `baseline-hero-section-2026-08-04.png` (289 KB)
+**File:** `baseline-hero-reduced-motion-2026-08-04.png` (with hard suppression assertions)
 **Capture config:** 1440×900 fixed viewport, fullPage: false, deviceScaleFactor 1
 **Context:** `browser.newContext({ reducedMotion: 'reduce' })`
-**Determinism:** 0% variance across 5 consecutive captures (bit-identical)
-**Date:** 2026-08-04 23:18 UTC
+**Determinism:** 0% variance across 5 separate page instances (bit-identical)
+- Capture 2 vs 1: **0.0000%**
+- Capture 3 vs 1: **0.0000%**
+- Capture 4 vs 1: **0.0000%**
+- Capture 5 vs 1: **0.0000%**
+- Max: **0.0000%**
 
-**Method:** Purpose-captured fixed-viewport, NOT cropped from full-page. Exercises shipped code path: reduced-motion suppresses video, renders deterministic poster.
+**Date:** 2026-08-04 23:27 UTC
+
+**Method:** Purpose-captured fixed-viewport with hard assertions verifying reducedMotion suppression before capture. Each instance used fresh navigation and separate browser context. Exercises shipped code path: reduced-motion suppresses video, renders deterministic poster.
+
+**Scope:** **HERO REGION ONLY** (1440×900 px)
+- Validates poster rendering (deterministic)
+- Validates layout above fold
+- Video motion is out of scope for pixel-diff; must be verified visually
+
+**Coverage gap:** Full-page regression testing is NOT currently established. `baseline-index.png` (2026-07-31, full-page) predates video hero feature and is not comparable. Full-page baseline must be re-captured separately with same reduced-motion + hard-assertion method if full-page coverage is needed.
 
 **Prior baseline invalidation:**
-- `baseline-index.png` (2026-07-31): Full-page snapshot predating video feature (commit 3d5f720, 2026-08-04). Invalid for hero region diffs.
+- `baseline-index.png` (2026-07-31): Full-page snapshot predating video feature (commit 3d5f720, 2026-08-04). Invalid for hero region or full-page diffs.
 
-**Noise floor:** 0.0000% (practical floor: zero variance under reduced-motion)
+**Noise floor:** 0.0000% (practical floor: zero variance under reduced-motion with hard assertions)
 
-**Implication:** Hero region is diffable under reduced-motion. **Video motion is out of scope for pixel-diff; must be verified visually.**
+**Implication:** Hero region (1440×900 fixed-viewport) is diffable. Full page is not yet covered.
 
 ---
 

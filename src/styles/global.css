@@ -194,7 +194,7 @@ li {
 
 /* Code blocks and monospace */
 code, pre, kbd, samp {
-  font-family: var(--font-mono-code);
+  font-family: var(--font-mono);
   font-size: var(--font-size-14);
 }
 

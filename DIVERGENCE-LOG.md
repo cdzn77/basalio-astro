@@ -1,5 +1,13 @@
 # DIVERGENCE LOG
 
+## Note: Tracker File Resurrection (2026-08-04)
+
+H3 was written to `basalio-ramp-section-tracker.md`, a file deliberately deleted in commit ba7b529 (2026-07-23). The file was resurrected in commit 4d1eb2a and reverted in 2164b53. 
+
+Whether section tracking returns is a separate decision. Concept M's status is documented below instead.
+
+---
+
 ## Hero-Lab Cascade Path Testing (2026-08-04)
 
 ### Root Cause of Concept M Promotion Failure
@@ -94,13 +102,9 @@ Component slots containing styled content must either:
 
 ## Concept M Status (2026-08-04)
 
-**Decision:** Tested, not adopted.
+Tested, not adopted. Superseded by adoption of the documented clamp(48px, 8vw, 96px) hero scale. M's clamp max was 72px — the Ramp template default rather than the documented spec — so it produced no enlargement. hero-lab variant left intact for future retry.
 
-**What was tried:** clamp(36px, 4.5vw, 72px) responsive headline + acid CTA button
-**Why rejected:** Clamp max was 72px (same as baseline) — no actual enlargement
-**Superseded by:** Adoption of documented clamp(48px, 8vw, 96px) scale
-
-**Lab variant:** Left intact in hero-lab.astro for future reference. Page-scoped rule does not interfere with production (which uses global spec).
+**Acid CTA:** Adopted independently on visual merit (#EDFF10 on #1C1917, ~16:1 contrast). Evaluated apart from Concept M.
 
 ---
 

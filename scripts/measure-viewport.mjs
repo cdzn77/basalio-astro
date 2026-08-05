@@ -20,22 +20,63 @@ async function measureFontSize(browser, route, viewport) {
       );
     }
 
-    // Measure font-size on hero headline
-    const result = await page.evaluate(() => {
+    // I1b ASSERTION: Read font-size twice to verify CSS has settled
+    const read1 = await page.evaluate(() => {
       const headline = document.querySelector('.hero-heading');
       if (!headline) {
         return { error: 'No .hero-heading found' };
       }
 
       const fontSize = window.getComputedStyle(headline).fontSize;
+      if (!fontSize || fontSize === '') {
+        return { error: 'fontSize is empty' };
+      }
+
       return { fontSize };
     });
 
-    if (result.error) {
-      return { route, viewport, error: result.error };
+    if (read1.error) {
+      return { route, viewport, error: read1.error };
     }
 
-    return { route, viewport, fontSize: result.fontSize };
+    // Wait 50ms for any async style resolution
+    await page.waitForTimeout(50);
+
+    // Second read: verify consistency
+    const read2 = await page.evaluate(() => {
+      const headline = document.querySelector('.hero-heading');
+      if (!headline) {
+        return { error: 'Element disappeared' };
+      }
+
+      const fontSize = window.getComputedStyle(headline).fontSize;
+      return { fontSize };
+    });
+
+    if (read2.error) {
+      return { route, viewport, error: read2.error };
+    }
+
+    // Assert both reads agree
+    if (read1.fontSize !== read2.fontSize) {
+      return {
+        route,
+        viewport,
+        error: `CSS not settled: read1=${read1.fontSize}, read2=${read2.fontSize}`
+      };
+    }
+
+    // Assert not the global fallback (40px) — signature of unapplied CSS
+    const fontSize = read1.fontSize;
+    if (fontSize === '40px' && route === '/') {
+      return {
+        route,
+        viewport,
+        error: `Value is global h1 fallback (40px), .hero-heading class may not have applied to ${route}`
+      };
+    }
+
+    return { route, viewport, fontSize };
   } catch (e) {
     return { route, viewport, error: e.message };
   } finally {

@@ -178,4 +178,11 @@ const bodyArray = Array.isArray(body) ? body : [body];
       line-height: 20px;
     }
   }
+
+  /* WCAG 1.4.10 REFLOW: Below 375px, further reduce padding */
+  @media (max-width: 374px) {
+    .header-split-inner {
+      padding: 0 12px;
+    }
+  }
 </style>

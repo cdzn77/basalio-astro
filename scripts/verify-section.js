@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
 
-const VIEWPORTS = [375, 390, 414, 768, 1024, 1440];
+const VIEWPORTS = [320, 375, 390, 414, 768, 1024, 1440];
 const ROUTES = [
   '/',
   '/blocks',

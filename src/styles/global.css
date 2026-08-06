@@ -115,7 +115,7 @@ h1 {
 }
 
 .hero-heading {
-  font-size: clamp(48px, 8vw, 96px);
+  font-size: clamp(40px, 8vw, 96px);
 }
 
 h2 {

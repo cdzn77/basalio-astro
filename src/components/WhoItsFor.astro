@@ -483,6 +483,18 @@ const {
       display: none;
     }
   }
+
+  /* WCAG 1.4.10 REFLOW: Below 375px, reduce container and remove peek */
+  @media (max-width: 374px) {
+    .testimonials-v2-right {
+      width: 280px;
+    }
+
+    .carousel-viewport-v2 {
+      width: 280px;
+      max-width: 280px;
+    }
+  }
 </style>
 
 <script is:inline>

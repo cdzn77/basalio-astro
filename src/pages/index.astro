@@ -705,4 +705,15 @@ the case study, the reel."
       gap: 30px;
     }
   }
+
+  /* WCAG 1.4.10 REFLOW: Below 375px, reduce pricing inner padding */
+  @media (max-width: 374px) {
+    .pricing-inner {
+      padding: 60px 12px;
+    }
+
+    .pricing-divider-list {
+      padding: 40px 12px;
+    }
+  }
 </style>

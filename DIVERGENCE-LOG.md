@@ -62,4 +62,46 @@ All exceed 20px requirement.
   }
   ```
 
+**Result:** WhoItsFor mobile card height 503px (62% of 812px viewport), measured at 375px.
+
+**Ramp benchmark:** Attempted twice with automated approaches; both failed due to Ramp's unconventional DOM structure. No comparison figure obtained.
+
 **Rationale:** Features are tactical (specific Basalio blocks supporting a role), descriptions are strategic (why the role matters). Descriptions are load-bearing copy and cannot be shortened. Desktop cards stay at full 4 features; mobile reduces to 3 to fit within viewport better while maintaining readability.
+
+---
+
+## WCAG 1.4.10 Reflow at 320px CSS px — Deliberate Viewport Degradations (Aug 6, 2026)
+
+**Context:** WCAG 1.4.10 compliance testing at 320px CSS px (equivalent to 400% zoom on 1280px viewport) revealed two overflow issues:
+
+1. **WhoItsFor and BlocksCarousel carousel peek**: At 375px+, carousel viewports are 335px wide with 280px cards and 41px peek-ahead. At 320px, text wrapping increases card height to 540px (WhoItsFor). Peek is unnecessary affordance at this width.
+
+2. **Hero heading overflow**: At 320px, the hero heading renders at 48px (from `clamp(48px, 8vw, 96px)`), making the accent-word "interactions," 289px wide, extending 9px beyond the 320px viewport.
+
+**Decision:** Implement deliberate degradations at 320px that maintain full functionality while respecting reflow constraints:
+
+**Changes Implemented:**
+
+1. **Carousel container shrinking (≤374px)**
+   - File: `src/components/BlocksCarousel.astro` and `src/components/WhoItsFor.astro`
+   - New media query: `@media (max-width: 374px)`
+   - Container width: 335px → 280px
+   - Carousel viewport width: 335px → 280px
+   - Effect: No peek below 375px; cards still fully visible, paging controls functional
+   - Carousel height and card dimensions unchanged (280px width, 503px height for WhoItsFor, 290px max for BlocksCarousel)
+
+2. **Hero heading font-size reduction (≤320px via clamp)**
+   - File: `src/styles/global.css`
+   - Updated clamp: `clamp(48px, 8vw, 96px)` → `clamp(40px, 8vw, 96px)`
+   - Effect: At 320px, heading renders at 40px instead of 48px; accent-word "interactions," now 241px wide (0px overflow)
+   - Scaling is smooth across all viewports; 40px is still a substantial hero heading
+
+**Rationale:** 320px CSS px is an extreme reflow scenario (400% zoom). Carousel peek and maximum hero size are secondary affordances that don't affect core functionality. Degradations preserve:
+- Full carousel paging (arrows and zones still functional)
+- Readable hero heading at scaled-down font
+- No content reordering, truncation, or loss of meaning
+- Smooth scaling via clamp() down to 320px minimum
+
+**Impact:** Verify-section.js harness now reports 91/91 pass across 13 routes × 7 viewports (including 320px).
+
+**Permanent Change:** 320px CSS px viewport is now a permanent fixture in the overflow verification harness (scripts/verify-section.js) to prevent regression on WCAG 1.4.10 compliance.

@@ -103,12 +103,13 @@ const {
     margin: 0;
   }
 
-  /* Block 2: Stats (flex column, gap 20px, width 554px) */
+  /* Block 2: Stats (flex column, gap 20px, responsive width) */
   .stats-block {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    width: 554px;
+    width: 100%;
+    max-width: 554px;
   }
 
   /* Divider: 1px, light gray to match original template */
@@ -150,5 +151,25 @@ const {
     line-height: 22.4px;
     letter-spacing: normal;
     color: rgb(87, 87, 87);
+  }
+
+  /* RESPONSIVE: Stack layout below 640px */
+  @media (max-width: 640px) {
+    .what-we-do {
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .column-left {
+      flex: 0 0 auto;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .column-right {
+      flex: 0 0 auto;
+      max-width: 100%;
+      width: 100%;
+    }
   }
 </style>

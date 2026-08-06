@@ -20,19 +20,20 @@
 
 ### Production Performance (AK–AL–AQ)
 
-**Page Weight (measured on /homepage):**
-- Before WebP: 1026KB / 16 requests
-- After WebP: ~640KB (386KB reduction = 37.6% improvement)
-- Orphaned assets: 0% impact (never downloaded by visitors)
+**Page weight on / (measured, cache disabled):**
+  - Before WebP: 1026KB / 16 requests
+  - After WebP: ~640KB (386KB reduction = 37.6% improvement)
+  - **Unaffected by orphaned assets** — orphans were never downloaded by visitors
 
-**Build Artifacts:**
-- Before cleanup: 8.2MB dist/
-- After AQ3 cleanup: 2.3MB dist/ (75% reduction)
+**Build artifact size (dist/):**
+  - Before cleanup: 8.2MB (includes all 13 routes + all public/assets/)
+  - After AQ3: 2.3MB (5.9MB orphaned assets removed)
+  - **Cost:** repo size, build time, deploy time — NOT visitor downloads
 
-**Optimizations completed:**
+**Completed optimizations:**
 - ✅ **Pixel baseline:** 5/5 deterministic captures (hash: 38c616ab, 0 byte variance)
 - ✅ **Image optimization (AO):** Persona images PNG→WebP (434KB→38.2KB, 91% savings); verified at 375px & 1440px
-- ✅ **Build hygiene (AQ3):** Removed 5.9MB unreferenced videos and icons
+- ✅ **Build hygiene (AQ3):** Removed 5.9MB unreferenced videos (grid-reveal 1.8M, case-study 2.1M) and PNG icons (smartwatch 1.7M, wireframe 394K, illustration 32K)
 
 ### Image Optimization (AO) — 2026-08-06
 - ✅ **Persona WebP conversion:** uxui (98KB→8.4K), videographer (107KB→10K), director (97KB→10K), agency (122KB→9.8K)

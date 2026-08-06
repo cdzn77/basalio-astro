@@ -723,20 +723,6 @@ const blocks = [
     }
   }
 
-  /* GRID REVEAL DEMO MOBILE: 2-column layout below 640px */
-  @media (max-width: 640px) {
-    .grid-reveal-demo {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      max-width: 100%;
-      width: 100%;
-    }
-
-    .grid-tile {
-      aspect-ratio: 0.75;
-    }
-  }
-
   /* BLOCK DETAIL SECTIONS */
   .block-detail-section {
     scroll-margin-top: 80px;
@@ -774,6 +760,26 @@ const blocks = [
     gap: 0;
     width: 100%;
     max-width: 450px;
+  }
+
+  /* GRID REVEAL DEMO MOBILE: 2-column layout below 640px */
+  @media (max-width: 640px) {
+    .demo-container {
+      padding: 20px;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .grid-reveal-demo {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .grid-tile {
+      aspect-ratio: 0.75;
+    }
   }
 
   .grid-tile {

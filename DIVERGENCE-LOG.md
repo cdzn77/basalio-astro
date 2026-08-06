@@ -38,3 +38,28 @@ The `.btn-wrapper` (`display: inline-flex`) contains two fixed-size flex childre
 - @414px: 80px headroom ✅
 
 All exceed 20px requirement.
+
+---
+
+## WhoItsFor Feature Count — Deliberate Desktop/Mobile Difference (Aug 6, 2026)
+
+**Decision:** Reduce testimonial feature list from 4 to 3 items on mobile (≤640px), keep 4 on desktop.
+
+**Why:** Card height analysis at 375px viewport revealed tallest card at 547px (67% of 812px viewport). Features consume 168px of the card's height. Removing one feature per card saves ~44px, bringing max height to 503px (62% of viewport).
+
+**Content Impact:**
+- Cards 1 & 3 (Portfolio Designers, Art Directors) have 4 features → reduce to 3 (hide 4th feature)
+- Cards 2 & 4 (Videographers, Studios) have 2–3 features already → no change
+- All cards converge to uniform 503px at mobile
+
+**Implementation:**
+- File: `src/components/WhoItsFor.astro`
+- CSS rule at mobile breakpoint (max-width: 640px):
+  ```css
+  .carousel-track-v2 > .testimonial-card-v2:nth-child(1) .testimonial-feature-v2:nth-child(4),
+  .carousel-track-v2 > .testimonial-card-v2:nth-child(3) .testimonial-feature-v2:nth-child(4) {
+    display: none;
+  }
+  ```
+
+**Rationale:** Features are tactical (specific Basalio blocks supporting a role), descriptions are strategic (why the role matters). Descriptions are load-bearing copy and cannot be shortened. Desktop cards stay at full 4 features; mobile reduces to 3 to fit within viewport better while maintaining readability.

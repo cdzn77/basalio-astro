@@ -476,6 +476,12 @@ const {
     .testimonial-description-v2 {
       font-size: 14px;
     }
+
+    /* Hide 4th feature on cards 1 and 3 (Portfolio & Directors) to reduce height */
+    .carousel-track-v2 > .testimonial-card-v2:nth-child(1) .testimonial-feature-v2:nth-child(4),
+    .carousel-track-v2 > .testimonial-card-v2:nth-child(3) .testimonial-feature-v2:nth-child(4) {
+      display: none;
+    }
   }
 </style>
 

@@ -20,9 +20,8 @@ const description = "Nine curated interaction blocks for portfolio and case-stud
 const heroBackground = { type: 'video', src: '/assets/basalio-hero.mp4', poster: '/assets/basalio-hero-poster.webp', scrim: 0 };
 const heroSurface = 'ink';
 
-// Header surface syncs directly with hero surface
-// Surface prop encodes the correct light/dark surface independent of media type
-const headerSurface = heroSurface;
+// Header uses default paper; observer overrides to ink when hero is visible
+// This ensures no-JS fallback works (paper is safe default for most pages)
 
 // Correct nine block names from src/data/pricing.ts
 const blockNames = [
@@ -58,9 +57,9 @@ const faqs = getFaqs(postCapPrice, proShipTarget);
 ---
 
 <BaseLayout title={title} description={description}>
-  <!-- HEADER: Navigation bar (universal across all pages) -->
+  <!-- HEADER: Navigation bar (defaults to paper; observer sets to ink when hero visible) -->
   <Fragment slot="header">
-    <Header surface={headerSurface} />
+    <Header />
   </Fragment>
 
   <!-- Hero Section -->

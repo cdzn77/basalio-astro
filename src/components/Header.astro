@@ -3,7 +3,6 @@ import { headerNav } from '../data/navigation';
 
 interface Props {
   surface?: 'paper' | 'ink';
-  // acid variant removed: identical to paper in all styles, dead code
 }
 
 const { surface = 'paper' } = Astro.props;
@@ -130,6 +129,7 @@ const { surface = 'paper' } = Astro.props;
   .brand-logo {
     background-color: rgba(0, 0, 0, 0);
     box-sizing: border-box;
+    color: rgb(0, 0, 0);
     cursor: pointer;
     display: inline;
     font-family: var(--font-sans);

@@ -18,11 +18,21 @@
 - ✅ **Hero-lab fixed:** Added data-surface="ink" to hero-h and hero-j sections; wordmark now legible at scroll 0
 - ✅ **All routes audited:** /blocks (9 sections), /404 (1 section) corrected
 
-### Production Performance (AK–AL)
-- ✅ **Pixel baseline:** 5/5 deterministic captures (hash: 38c616ab, 288.6KB, 0 byte variance)
-- ✅ **Page weight (measured on /):** Before WebP: 1026KB / 16 requests. After WebP: ~640KB (386KB reduction, 37.6% of page weight)
-- ✅ **Build artifact size:** dist/ = 8.2MB (includes all routes + assets)
-- ✅ **Image optimization (AO):** Persona images converted PNG→WebP (434KB→38.2KB, 91% savings); visually verified at 375px & 1440px
+### Production Performance (AK–AL–AQ)
+
+**Page Weight (measured on /homepage):**
+- Before WebP: 1026KB / 16 requests
+- After WebP: ~640KB (386KB reduction = 37.6% improvement)
+- Orphaned assets: 0% impact (never downloaded by visitors)
+
+**Build Artifacts:**
+- Before cleanup: 8.2MB dist/
+- After AQ3 cleanup: 2.3MB dist/ (75% reduction)
+
+**Optimizations completed:**
+- ✅ **Pixel baseline:** 5/5 deterministic captures (hash: 38c616ab, 0 byte variance)
+- ✅ **Image optimization (AO):** Persona images PNG→WebP (434KB→38.2KB, 91% savings); verified at 375px & 1440px
+- ✅ **Build hygiene (AQ3):** Removed 5.9MB unreferenced videos and icons
 
 ### Image Optimization (AO) — 2026-08-06
 - ✅ **Persona WebP conversion:** uxui (98KB→8.4K), videographer (107KB→10K), director (97KB→10K), agency (122KB→9.8K)
@@ -109,31 +119,25 @@
 
 ---
 
-## CRITICAL FINDINGS (AP2 & AP3) — BLOCKING
+## BUILD HYGIENE (AQ3) — OPEN, Non-Blocking
 
-### ⚠️ AP2 — 3.9MB of Orphaned Video Files
+### ✅ AQ3 — 5.9MB Orphaned Assets Removed
 
-**Discovered during AP2 audit:**
-- basalio-grid-reveal.mp4 (1.8MB) — **NOT referenced in any .astro/.ts files**
-- basalio-case-study-transition-ink.mp4 (2.1M) — **NOT referenced in any .astro/.ts files**
-- basalio-hero.mp4 (524KB) — USED on / and /hero-lab
+**Audit confirmed unreferenced assets:**
 
-**These two videos are shipping in the production build but never loaded by any page.**
-Total waste: 3.9MB (48% of page weight). Investigation and cleanup required before production.
+Videos (verified against src/, no dynamic references):
+- ✅ DELETED: basalio-grid-reveal.mp4 (1.8MB)
+- ✅ DELETED: basalio-case-study-transition-ink.mp4 (2.1MB)
+- ✓ KEPT: basalio-hero.mp4 (524KB) — used on / and /hero-lab
 
-### ⚠️ AP3 — 2.2MB of Orphaned PNG Icon Files
+PNG icons (verified against src/, no dynamic references):
+- ✅ DELETED: High-res-smartwatch-01.png (515K)
+- ✅ DELETED: High-res-smartwatch-02.png (613K)
+- ✅ DELETED: High-res-smartwatch-03.png (612K)
+- ✅ DELETED: Supply-page-wireframekit.png (394K)
+- ✅ DELETED: layerd-lines-illustration3.png (32K)
 
-**Discovered during AP3 audit:**
-Five large PNG illustrations in public/assets/icons/ are NOT referenced anywhere:
-- High-res-smartwatch-01.png (515K, 758×1188px)
-- High-res-smartwatch-02.png (613K, 758×1188px)
-- High-res-smartwatch-03.png (612K, 758×1188px)
-- Supply-page-wireframekit.png (394K, 2350×1106px)
-- layerd-lines-illustration3.png (32K, 880×1160px)
-
-**All five were likely left from earlier design iterations.** Total waste: 2.2MB (27% of page weight).
-
-**Combined orphaned assets (AP2+AP3): 6.1MB (75% of total page weight).**
+**Result:** dist/ reduced from 8.2MB to 2.3MB (75% smaller build). All 13 routes render post-cleanup. No impact on page weight (640KB) — orphaned assets were never downloaded by visitors. Reduction affects repo size, build time, and Netlify deploy time.
 
 ---
 

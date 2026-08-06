@@ -360,6 +360,10 @@ const {
 
   /* RESPONSIVE: Stack layout below 640px */
   @media (max-width: 640px) {
+    .courses {
+      padding: 60px 20px;
+    }
+
     .courses-inner {
       flex-direction: column;
       gap: 40px;
@@ -374,8 +378,37 @@ const {
 
     .courses-right {
       flex: 0 0 auto;
-      max-width: 100%;
-      width: 100%;
+      width: 335px;
+      min-height: auto;
+    }
+
+    /* Mobile carousel: peek-scroll pattern, 280px cards, 14px gap */
+    .carousel-viewport {
+      width: 335px;
+      height: auto;
+      overflow: clip;
+    }
+
+    .carousel-track {
+      gap: 14px;
+    }
+
+    .block-card {
+      flex: 0 0 280px;
+      height: auto;
+      padding: 20px;
+    }
+
+    .block-image-wrapper {
+      aspect-ratio: 3 / 2;
+    }
+
+    .block-card-title {
+      font-size: 16px;
+    }
+
+    .block-card-description {
+      font-size: 14px;
     }
   }
 
@@ -394,23 +427,32 @@ const {
   const rightZone = document.querySelector('.carousel-zone-right');
 
   if (track && viewport && cards.length > 0) {
-    const GAP = 20;
-    const CARD_WIDTH = 500; // FIXED: Match CSS flex: 0 0 500px (line 285)
-    const CARD_PLUS_GAP = CARD_WIDTH + GAP; // 520px total per card
-
     let currentPage = 0;
     let totalPages = 1;
 
-    // Calculate paging based on FIXED card width
+    // Detect mobile vs desktop and set card dimensions
+    const getCardDimensions = () => {
+      const isMobile = window.innerWidth <= 640;
+      if (isMobile) {
+        return { cardWidth: 280, gap: 14 };
+      } else {
+        return { cardWidth: 500, gap: 20 };
+      }
+    };
+
+    // Calculate paging based on viewport width
     const calculatePaging = () => {
-      const cardsPerView = 2; // Always show 2 cards per view
-      totalPages = Math.max(1, Math.ceil(cards.length / cardsPerView));
+      const { cardWidth, gap } = getCardDimensions();
+      const cardsPerView = Math.floor(viewport.offsetWidth / (cardWidth + gap));
+      totalPages = Math.max(1, Math.ceil(cards.length / Math.max(1, cardsPerView)));
       return cardsPerView;
     };
 
     // Update track position based on current page
     const updateTrackPosition = () => {
-      const offset = currentPage * CARD_PLUS_GAP; // Use fixed 520px per page
+      const { cardWidth, gap } = getCardDimensions();
+      const cardPlusGap = cardWidth + gap;
+      const offset = currentPage * cardPlusGap;
       track.style.transform = `translateX(-${offset}px)`;
       updateButtonStates();
     };

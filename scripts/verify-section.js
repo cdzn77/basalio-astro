@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
 
-const VIEWPORTS = [320, 375, 390, 414, 768, 1024, 1440];
+const VIEWPORTS = [320, 360, 375, 390, 414, 768, 1024, 1440];
 const ROUTES = [
   '/',
   '/blocks',
@@ -81,7 +81,7 @@ async function main() {
     '\n' + '═'.repeat(70)
   );
   console.log(
-    'RM4: SECTION OVERFLOW VERIFICATION (ALL 13 ROUTES × 6 VIEWPORTS = 78 CHECKS)'
+    'RM4: SECTION OVERFLOW VERIFICATION (ALL 13 ROUTES × 8 VIEWPORTS = 104 CHECKS)'
   );
   console.log(
     '═'.repeat(70) + '\n'

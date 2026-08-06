@@ -179,10 +179,15 @@ const bodyArray = Array.isArray(body) ? body : [body];
     }
   }
 
-  /* WCAG 1.4.10 REFLOW: Below 375px, further reduce padding */
+  /* WCAG 1.4.10 REFLOW: Below 375px, constrain header-split-left to container */
   @media (max-width: 374px) {
     .header-split-inner {
-      padding: 0 12px;
+      padding: 0 20px;
+    }
+
+    .header-split-left {
+      flex-basis: 100%;
+      max-width: 100%;
     }
   }
 </style>

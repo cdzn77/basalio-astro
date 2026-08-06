@@ -419,6 +419,27 @@ const {
     padding: 0;
     white-space: pre-line;
   }
+
+  /* RESPONSIVE: Stack layout below 640px */
+  @media (max-width: 640px) {
+    .testimonials-v2-inner {
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .testimonials-v2-left {
+      flex: 0 0 auto;
+      max-width: 100%;
+      width: 100%;
+      height: auto;
+    }
+
+    .testimonials-v2-right {
+      flex: 0 0 auto;
+      max-width: 100%;
+      width: 100%;
+    }
+  }
 </style>
 
 <script is:inline>

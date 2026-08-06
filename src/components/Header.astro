@@ -2,10 +2,10 @@
 import { headerNav } from '../data/navigation';
 
 interface Props {
-  surface?: 'acid' | 'paper' | 'ink';
+  surface?: 'paper' | 'ink';
 }
 
-const { surface = 'acid' } = Astro.props;
+const { surface = 'paper' } = Astro.props;
 ---
 
 <div class="header-container" data-surface={surface}>
@@ -53,6 +53,58 @@ const { surface = 'acid' } = Astro.props;
       }
     });
   }
+
+  // Surface tracking: update header based on which section is under the header
+  const headerContainer = document.querySelector('.header-container');
+
+  if (headerContainer) {
+    // Calculate header height dynamically
+    const getHeaderHeight = () => {
+      const header = document.querySelector('.base-header');
+      return header?.offsetHeight || 80;
+    };
+
+    const updateHeaderSurface = (entries) => {
+      // Find which section is occupying the header's band
+      // Sections that are visible in the header's area win
+      const visibleSections = entries
+        .filter(entry => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+      if (visibleSections.length > 0) {
+        const section = visibleSections[0].target;
+        const surface = section.getAttribute('data-surface') || 'paper';
+        headerContainer.setAttribute('data-surface', surface);
+      } else {
+        // Fallback to paper if no sections are visible
+        headerContainer.setAttribute('data-surface', 'paper');
+      }
+    };
+
+    // Create observer with rootMargin tuned to header height
+    let observer;
+    const createObserver = () => {
+      const headerHeight = getHeaderHeight();
+      observer = new IntersectionObserver(updateHeaderSurface, {
+        root: null,
+        rootMargin: `-${headerHeight}px 0px -${window.innerHeight - headerHeight}px 0px`,
+        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1.0]
+      });
+
+      // Observe all sections with data-surface attribute
+      document.querySelectorAll('section[data-surface]').forEach(section => {
+        observer.observe(section);
+      });
+    };
+
+    createObserver();
+
+    // Handle window resize to recalculate header height
+    window.addEventListener('resize', () => {
+      if (observer) observer.disconnect();
+      createObserver();
+    });
+  }
 </script>
 
 <style>
@@ -65,8 +117,7 @@ const { surface = 'acid' } = Astro.props;
     box-sizing: border-box;
   }
 
-  /* Logo - acid and paper are light backgrounds (dark text), ink is dark (light text) */
-  .header-container[data-surface='acid'] .brand-logo,
+  /* Logo - paper is light background (dark text), ink is dark (light text) */
   .header-container[data-surface='paper'] .brand-logo {
     color: rgb(0, 0, 0);
   }
@@ -100,8 +151,7 @@ const { surface = 'acid' } = Astro.props;
     outline: 3px solid currentColor;
   }
 
-  /* Menu button - acid and paper are light (dark pill), ink is dark (light pill) */
-  .header-container[data-surface='acid'] .menu-btn,
+  /* Menu button - paper is light (dark pill), ink is dark (light pill) */
   .header-container[data-surface='paper'] .menu-btn {
     background: var(--surface-ink);
     color: var(--text-on-ink);

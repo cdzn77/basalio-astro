@@ -20,7 +20,8 @@
 
 ### Production Performance (AK–AL)
 - ✅ **Pixel baseline:** 5/5 deterministic captures (hash: 38c616ab, 288.6KB, 0 byte variance)
-- ✅ **Production weight (measured):** 8.2MB dist build (4.4MB videos, 3.3MB PNG icons, 71KB fonts, 45KB WebP images)
+- ✅ **Page weight (measured on /):** Before WebP: 1026KB / 16 requests. After WebP: ~640KB (386KB reduction, 37.6% of page weight)
+- ✅ **Build artifact size:** dist/ = 8.2MB (includes all routes + assets)
 - ✅ **Image optimization (AO):** Persona images converted PNG→WebP (434KB→38.2KB, 91% savings); visually verified at 375px & 1440px
 
 ### Image Optimization (AO) — 2026-08-06
@@ -105,6 +106,34 @@
 
 ### WIP Branches
 - **wip/courses-refactor-2026-07-22:** DO NOT merge (design divergence)
+
+---
+
+## CRITICAL FINDINGS (AP2 & AP3) — BLOCKING
+
+### ⚠️ AP2 — 3.9MB of Orphaned Video Files
+
+**Discovered during AP2 audit:**
+- basalio-grid-reveal.mp4 (1.8MB) — **NOT referenced in any .astro/.ts files**
+- basalio-case-study-transition-ink.mp4 (2.1M) — **NOT referenced in any .astro/.ts files**
+- basalio-hero.mp4 (524KB) — USED on / and /hero-lab
+
+**These two videos are shipping in the production build but never loaded by any page.**
+Total waste: 3.9MB (48% of page weight). Investigation and cleanup required before production.
+
+### ⚠️ AP3 — 2.2MB of Orphaned PNG Icon Files
+
+**Discovered during AP3 audit:**
+Five large PNG illustrations in public/assets/icons/ are NOT referenced anywhere:
+- High-res-smartwatch-01.png (515K, 758×1188px)
+- High-res-smartwatch-02.png (613K, 758×1188px)
+- High-res-smartwatch-03.png (612K, 758×1188px)
+- Supply-page-wireframekit.png (394K, 2350×1106px)
+- layerd-lines-illustration3.png (32K, 880×1160px)
+
+**All five were likely left from earlier design iterations.** Total waste: 2.2MB (27% of page weight).
+
+**Combined orphaned assets (AP2+AP3): 6.1MB (75% of total page weight).**
 
 ---
 

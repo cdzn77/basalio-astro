@@ -10,7 +10,9 @@
     "dev:clean": "rm -rf node_modules/.vite && npm run dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "verify:overflow": "node scripts/verify-section.js",
+    "pre-deploy": "npm run verify:overflow && npm run build"
   },
   "dependencies": {
     "astro": "^7.0.7",

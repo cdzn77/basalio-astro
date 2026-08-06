@@ -9,7 +9,7 @@ export interface WhoItsFor {
 
 export const whoIsThisFor: WhoItsFor[] = [
   {
-    image: "/assets/uxui_whoitsfor.png",
+    image: "/assets/uxui_whoitsfor.webp",
     eyebrow: "ROLE",
     title: "Portfolio & Brand Designers",
     description: "Your portfolio is the pitch. It has to feel considered before anyone reads a word of it.",
@@ -22,7 +22,7 @@ export const whoIsThisFor: WhoItsFor[] = [
     icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8"></rect><rect x="13" y="3" width="8" height="8"></rect><rect x="3" y="13" width="8" height="8"></rect><rect x="13" y="13" width="8" height="8"></rect></svg>'
   },
   {
-    image: "/assets/videographer_whoitsfor.png",
+    image: "/assets/videographer_whoitsfor.webp",
     eyebrow: "ROLE",
     title: "Videographers & Motion Designers",
     description: "Your work moves. Most WordPress themes don't, and an embedded player is a poor substitute for a site that behaves like your reel.",
@@ -33,7 +33,7 @@ export const whoIsThisFor: WhoItsFor[] = [
     icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>'
   },
   {
-    image: "/assets/director_whoitsfor.png",
+    image: "/assets/director_whoitsfor.webp",
     eyebrow: "ROLE",
     title: "Art & Creative Directors",
     description: "The work has to read as directed, not assembled. Pacing is part of the argument.",
@@ -46,7 +46,7 @@ export const whoIsThisFor: WhoItsFor[] = [
     icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>'
   },
   {
-    image: "/assets/agency_whoitsfor.png",
+    image: "/assets/agency_whoitsfor.webp",
     eyebrow: "ROLE",
     title: "Studios & Agencies",
     description: "You build client sites and then hand them over. Whatever you install has to still work when you're not there.",

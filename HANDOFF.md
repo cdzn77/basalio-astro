@@ -20,24 +20,35 @@
 
 ### Production Performance (AK–AL)
 - ✅ **Pixel baseline:** 5/5 deterministic captures (hash: 38c616ab, 288.6KB, 0 byte variance)
-- ✅ **Production weight:** 1026KB / 16 requests (524KB video, 431KB images, 71KB fonts)
-- ✅ **Image inventory:** 5 images (1 WebP poster, 4 PNG personas); no oversizing detected
+- ✅ **Production weight (measured):** 8.2MB dist build (4.4MB videos, 3.3MB PNG icons, 71KB fonts, 45KB WebP images)
+- ✅ **Image optimization (AO):** Persona images converted PNG→WebP (434KB→38.2KB, 91% savings); visually verified at 375px & 1440px
+
+### Image Optimization (AO) — 2026-08-06
+- ✅ **Persona WebP conversion:** uxui (98KB→8.4K), videographer (107KB→10K), director (97KB→10K), agency (122KB→9.8K)
+- ✅ **Visual fidelity:** Verified side-by-side at native (420×320) and mobile (280×210); no quality loss detected
+- ✅ **Markup updated:** src/data/whoitsfor.ts references changed from .png to .webp
+- ✅ **PNG cleanup:** Original persona PNGs deleted; orphaned WebP files deployed
+- ✅ **Verified rendering:** Homepage and /blocks pages load images correctly at 375px and 1440px
+- ⚠️ **Estimated savings:** 386KB persona image reduction (4.8% of 8.2MB total); videos (4.4MB) remain primary optimization target
 
 ### Previous Session (2026-08-05)
 - ✅ **Font loading:** FIXED. Self-hosted variable WOFF2 in `public/fonts/` (71 KB: Instrument Sans + Azeret Mono)
 - ✅ **Switzer, IBM Plex Mono, Manrope:** Removed (malformed @font-face purged)
-- ✅ **Commits:** 6 total (MM5 phases) merged to main
+- ✅ **Branch:** session/hero-cascade-fix-2026-08-04 (6 commits MM5 phases, NOT merged to main)
 
 ---
 
 ## STATE OF THE SITE (2026-08-06)
 
-### Status: PRODUCTION READY
+### Status: BRANCH READY — Not Merged
 
-**All critical paths verified:**
+**Current:** session/hero-cascade-fix-2026-08-04 (57771d7, pushed to GitHub)
+**Production:** main@b64b9a8 (2026-08-02) — still has fallback fonts, broken 404, mobile overflow, invisible header, aria-label issue
+
+**Branch passes all critical paths:**
 - Responsive design: ✅ WCAG 1.4.10 compliance (104/104)
 - Header theming: ✅ Observer + no-JS fallback
-- Font loading: ✅ Self-hosted WOFF2 (71KB)
+- Font loading: ✅ Self-hosted WOFF2 (71KB, ready to ship)
 - Performance: ✅ 1026KB production weight
 - Pixel baseline: ✅ 5/5 deterministic
 

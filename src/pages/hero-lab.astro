@@ -11,7 +11,7 @@ const description = 'Two concepts: monumental reveal and the switch';
 
 <BaseLayout {title} {description} noindex>
   <Fragment slot="header">
-    <Header surface="ink" />
+    <Header />
   </Fragment>
 
   <!-- LAB BANNER: Warning that page-scoped CSS does not reproduce production cascade -->
@@ -20,7 +20,7 @@ const description = 'Two concepts: monumental reveal and the switch';
   </div>
 
   <!-- H — MONUMENTAL REVEAL: Headline performs word-by-word -->
-  <section class="hero-type hero-h" id="concept-h">
+  <section class="hero-type hero-h" id="concept-h" data-surface="ink">
     <div class="hero-bg" style={{ backgroundColor: 'var(--surface-ink)' }}></div>
 
     <div class="hero-content">
@@ -43,7 +43,7 @@ const description = 'Two concepts: monumental reveal and the switch';
   </section>
 
   <!-- J — CURSOR SPOTLIGHT: Headline revealed by cursor movement -->
-  <section class="hero-type hero-j" id="concept-j">
+  <section class="hero-type hero-j" id="concept-j" data-surface="ink">
     <div class="hero-bg" style={{ backgroundColor: 'var(--surface-ink)' }}></div>
 
     <div class="hero-content">

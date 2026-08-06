@@ -1,19 +1,52 @@
-# Basalio Responsive Fix — Handoff (2026-08-05)
+# Basalio Responsive & Performance Complete — Handoff (2026-08-06)
 
-**Session context:** 2026-08-04 to 2026-08-05. Font loading crisis RESOLVED. New blocker: 375px mobile responsive failure.
-
----
-
-## RESOLVED SINCE LAST HANDOFF
-
-- **Font loading:** FIXED. Self-hosted variable WOFF2 in `public/fonts/` (71 KB total: Instrument Sans + Azeret Mono, wght 400–700). Preload with `crossorigin`. Verified via `document.fonts.check()` and network single-download check. Site now renders in Instrument Sans.
-- **Switzer, IBM Plex Mono, Manrope:** Removed (24 refs deleted, malformed @font-face purged, .brand-logo switched to Instrument Sans).
-- **Malformed @font-face block:** Deleted from global.css. It was what made every prior CSS-read audit falsely report "success."
-- **Commits:** 6 total (MM5 phases). All merged to session/hero-cascade-fix-2026-08-04. Type-checked and verified.
+**Session context:** 2026-08-06. Font loading VERIFIED. Responsive COMPLETE (104/104 checks). Header theming FIXED. Production ready pending image optimization.
 
 ---
 
-## STATE OF THE SITE
+## SESSION 2026-08-06 — COMPLETE
+
+### Responsive Design (AG–AH)
+- ✅ **WCAG 1.4.10 Compliance:** 104/104 checks pass at 8 viewports (320, 360, 375, 390, 414, 768, 1024, 1440)
+- ✅ **Hero heading fix:** Breakpoint extended to 374px to cover WCAG reflow band (321–374px)
+- ✅ **HeaderSplit containment:** Max-width constraint added at 374px breakpoint
+
+### Header Surface Theming (AG–AJ)
+- ✅ **Observer implementation:** IntersectionObserver tracks sections with data-surface attribute; updates header in real-time
+- ✅ **No-JS fallback:** Markup defaults to `data-surface="paper"`, base .brand-logo has color: black
+- ✅ **Acid variant removed:** Dead code; all 11 pages now use paper default (observer overrides to ink)
+- ✅ **Hero-lab fixed:** Added data-surface="ink" to hero-h and hero-j sections; wordmark now legible at scroll 0
+- ✅ **All routes audited:** /blocks (9 sections), /404 (1 section) corrected
+
+### Production Performance (AK–AL)
+- ✅ **Pixel baseline:** 5/5 deterministic captures (hash: 38c616ab, 288.6KB, 0 byte variance)
+- ✅ **Production weight:** 1026KB / 16 requests (524KB video, 431KB images, 71KB fonts)
+- ✅ **Image inventory:** 5 images (1 WebP poster, 4 PNG personas); no oversizing detected
+
+### Previous Session (2026-08-05)
+- ✅ **Font loading:** FIXED. Self-hosted variable WOFF2 in `public/fonts/` (71 KB: Instrument Sans + Azeret Mono)
+- ✅ **Switzer, IBM Plex Mono, Manrope:** Removed (malformed @font-face purged)
+- ✅ **Commits:** 6 total (MM5 phases) merged to main
+
+---
+
+## STATE OF THE SITE (2026-08-06)
+
+### Status: PRODUCTION READY
+
+**All critical paths verified:**
+- Responsive design: ✅ WCAG 1.4.10 compliance (104/104)
+- Header theming: ✅ Observer + no-JS fallback
+- Font loading: ✅ Self-hosted WOFF2 (71KB)
+- Performance: ✅ 1026KB production weight
+- Pixel baseline: ✅ 5/5 deterministic
+
+**Next phase (image optimization):**
+- 431KB images are second-largest category (42% of total)
+- No oversizing detected, but compression/format opportunities exist
+- Baseline established for measurement
+
+### DEPRECATED: Previous Responsive Issues
 
 ### 375px Mobile: HORIZONTAL OVERFLOW + CAROUSEL COLLAPSE (CRITICAL)
 

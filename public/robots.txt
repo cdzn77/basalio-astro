@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /hero-lab
+Disallow: /welcome
+
+Sitemap: https://basalio.com/sitemap.xml

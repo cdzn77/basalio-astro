@@ -130,3 +130,57 @@ Contrast claims must ALWAYS come from actual computed styles in the browser, nev
 3. Example: "H1: rgb(246, 244, 239) on rgb(28, 25, 23) = 15.91:1 WCAG AAA"
 
 **Why:** Token lookup (e.g. `--text-on-ink #F6F4EF` on `--surface-ink #1C1917`) gives the theoretical value. Screenshots cannot show hex values. Only getComputedStyle reflects the actual color the browser renders after CSS cascade, inheritance, and specificity resolution. Third report with unverified contrast values broke trust; this rule prevents it.
+
+## MECHANISM FACTS — established the expensive way, do not re-derive
+
+- Astro scoped CSS does NOT apply to slotted content. A slotted element
+  carries the PAGE's astro-cid, not the component's. Styles for slotted
+  content must live in global.css.
+- getComputedStyle returns the REQUESTED font stack, not the resolved
+  font. It reports success even when the font never loaded. Use
+  document.fonts.check() plus a rendered-width comparison.
+- Playwright's animations:'disabled' FREEZES media at its current
+  playback position — it does not pin a frame. Two captures taken
+  milliseconds apart can match and then differ wildly. Force
+  reducedMotion:'reduce' and ASSERT the video is suppressed and the
+  poster is rendering before any capture.
+- Full-page pixel-diff is invalid for any change that alters layout
+  height. Use a fixed-viewport region diff instead.
+- Cropping a full-page capture to viewport height does NOT produce a
+  valid fixed-viewport baseline.
+- data-surface describes what a section's background IS. It is not a
+  switch to make the observer fire. Mislabelling it makes the header
+  invisible.
+- backdrop-filter clips to the element's own bounds. It never spills
+  outward. Blur with no background-color shows raw blurred content —
+  frosted glass needs a tint too.
+- Orphaned build assets are 0% of page weight by definition. Build size
+  and page weight are different metrics and must never be blended.
+- A 401 from basalio.com means check the NETLIFY PROJECT PRIVACY setting
+  first. Not Cloudflare, not a bot filter.
+- Netlify deploys main only. Pushing to a branch does not deploy.
+
+## PROCESS RULES
+
+- Restart the dev server before any verification pass or device
+  recording. A 21-hour-old server produced observations that did not
+  reflect the code.
+- Measurement deliverables are the pasted data. A checkmark or "verified"
+  is not evidence. If a task is too large for one pass, say so and
+  propose a split — never mark it complete.
+- Screenshots for review go to ~/Desktop/basalio-screenshots/, never
+  /tmp. Do not delete them before they have been reviewed.
+- Every screenshot claiming to show an applied style must be paired with
+  the computed value proving it applied.
+- One commit per item. Do not batch.
+- Report every change made, including adjacent ones. Unreported changes
+  have shipped twice.
+- Never infer an external system's capabilities from your own
+  configuration. Reading a font's available weights from your own <link>
+  tag is circular.
+- Never substitute calculation for measurement. If a tool fails, report
+  the failure and stop.
+- When told to report and stop, stop.
+- npm run verify:overflow must stay at 104/104. 320px and 360px are
+  required — WCAG 1.4.10 needs 320, and 360 is the most common Android
+  width.

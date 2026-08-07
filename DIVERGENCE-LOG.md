@@ -105,3 +105,27 @@ All exceed 20px requirement.
 **Impact:** Verify-section.js harness now reports 91/91 pass across 13 routes × 7 viewports (including 320px).
 
 **Permanent Change:** 320px CSS px viewport is now a permanent fixture in the overflow verification harness (scripts/verify-section.js) to prevent regression on WCAG 1.4.10 compliance.
+
+---
+
+## data-surface Attribute Misuse — Principle Violation (Aug 6, 2026)
+
+**Incident:** Commit 57771d7 added `data-surface="ink"` to 9 /blocks section elements based on *desired observer behavior* rather than *actual background colours*.
+
+**Symptom:** Header wordmark rendered cream-on-light-gray (#FAFAFA) and became invisible when scrolling through /blocks sections.
+
+**Root Cause:** All 9 block-detail-section elements are labelled `data-surface="ink"` but their `.demo-container` child has `background: var(--surface-alt)` = `#FAFAFA` (light gray, not dark ink).
+
+**Why It Happened:** The developer intended to use data-surface as a switch to trigger observer state changes, not as a truthful label for what the section's background actually is.
+
+**The Principle:** `data-surface` describes what a section's background IS. It is not a control signal for making the observer fire. The observer reads the label to determine what colour the header should be; incorrect labels cause incorrect header rendering.
+
+**Fix:** Changed all 9 block-detail-section elements from `data-surface="ink"` to `data-surface="paper"` (commit ad8fa16). Verified:
+- Header wordmark stays dark throughout /blocks scroll
+- All 13 routes: header colour matches background behind it
+- 104/104 WCAG reflow checks pass
+- Homepage regression check: ink mode on video hero, paper mode on rest ✓
+
+**Audit Script Fix:** Previous audit (scripts/audit-data-surface.js) reported transparent elements as mismatches. Corrected to walk up DOM and check *effective* background (first non-transparent ancestor) before comparing against label (commit f59c950).
+
+**Prevention:** data-surface correctness now part of standard verification checklist: confirm label matches *actual* background colour, not intended observer state.

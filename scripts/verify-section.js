@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
 
+const PORT = process.env.PORT || 4321;
 const VIEWPORTS = [320, 360, 375, 390, 414, 768, 1024, 1440];
 const ROUTES = [
   '/',
@@ -25,7 +26,7 @@ async function verifySectionOverflow(browser, route, viewport) {
     await page.setViewportSize({ width: viewport, height: 900 });
 
     // Navigate to route
-    await page.goto(`http://localhost:4322${route}`, {
+    await page.goto(`http://localhost:${PORT}${route}`, {
       waitUntil: 'networkidle'
     });
 

@@ -58,8 +58,8 @@ const freeTier: PricingTier = {
     'Four Hacks as copy-paste snippets',
   ],
   footnote: 'Free is not a trial. Nothing here expires or gets pulled into Pro later. Usage analytics are opt-in. Decline at activation and the plugin never contacts us.',
-  ctaPrimary: { label: 'Get the 4 free Hacks →', href: '/hacks' },
-  ctaSecondary: { label: 'Notify me at launch →', href: '/early-access' },
+  ctaPrimary: { label: 'Get the 4 free Hacks', href: '/hacks' },
+  ctaSecondary: { label: 'Notify me at launch', href: '/early-access' },
 };
 
 const founderTier: PricingTier = {
@@ -79,7 +79,7 @@ const founderTier: PricingTier = {
     'Direct line to the person building it',
     'Unlimited sites',
   ],
-  cta: { label: 'Join the founder list →', href: '/early-access' },
+  cta: { label: 'Join the founder list', href: '/early-access' },
   microLine: '30-day refund, no questions asked.',
   featured: true,
 };
@@ -101,7 +101,7 @@ const standardTier: PricingTier = {
     'Direct line to the person building it',
     'Unlimited sites',
   ],
-  cta: { label: 'Get Pro →', href: '/early-access' },
+  cta: { label: 'Get Pro', href: '/early-access' },
   microLine: '30-day refund, no questions asked. Renews annually for updates and support.',
   featured: true,
 };

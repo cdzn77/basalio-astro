@@ -1,8 +1,45 @@
-# Basalio Responsive & Performance Complete — Handoff (2026-08-06)
+# Basalio Responsive & Performance Complete — Handoff (2026-08-07)
 
-**Session context:** 2026-08-06. Font loading VERIFIED. Responsive COMPLETE (104/104 checks). Header theming FIXED. **MERGED AND DEPLOYED** to production (basalio.com) — commit 83159a3, 2026-08-06 22:54 UTC.
+**Session context:** 2026-08-07. Header glow & divider list fixes COMPLETE and MERGED to main. **DEPLOYING** to production (basalio.com) — commit e193834. Previous production: commit 83159a3, 2026-08-06 22:54 UTC.
 
 **Checkout consolidation:** Three stale checkouts of this repo existed on disk (`~/Projects/products/basalio/marketing-site`, `~/Projects/themes/ramp-astro-template`). Both contained zero unpushed commits; all work was on origin. Both archived to `~/_archive` with remotes removed to prevent accidental pushes from a stale checkout (the actual failure mode we hit this session). **Canonical checkout: `~/basalio-astro` only.** Never work from a second checkout of this repo.
+
+---
+
+## SESSION 2026-08-07 — Header Glow & Divider List (Merged to main)
+
+### CO1 — Header Tint with Surface-Aware Gating
+- ✅ **Frosted glass effect:** rgba(255, 255, 255, 0.85) + backdrop-filter: blur(8px)
+- ✅ **Paper-only gating:** Applied only when data-surface="paper"; transparent over ink (video hero)
+- ✅ **Implementation:** Sync data-surface from .header-container to .base-header via IntersectionObserver callback
+- ✅ **Verification:** 
+  - CP1.1 (scrollY=0, ink hero): computed backgroundColor = `rgba(0, 0, 0, 0)` ✓
+  - CP1.2 (scrollY=1200px, paper): computed backgroundColor = `rgba(255, 255, 255, 0.85)` ✓
+  - Wordmark contrast: 21:1 (WCAG AA+)
+- **Fixes:** CJ1 acid pricing card glow (smudge artifact when scrolled)
+
+### CO2 — Divider List Mobile Stacking
+- ✅ **Below 640px:** flex-direction: column, gap: 24px (was row, gap: 40px)
+- ✅ **Full-width items:** .divider-item inherits container width with padding
+- ✅ **Tested at:** 375px, 390px, 414px viewports
+- ✅ **Verification:** All three viewports show stacked layout in viewport
+- **Fixes:** CJ2 cramped three-column layout at mobile (gap exceeded half column width at 77px)
+
+### CO3 — LAB Banner Overlap Fix (/hero-lab only)
+- ✅ **Banner repositioned:** top: 0 → top: 80px (below fixed header)
+- ✅ **z-index adjusted:** 9999 → 50 (header z-index 100 > banner 50)
+- ✅ **Body padding:** 48px → 128px (80px header + 48px banner)
+- ✅ **Verification:** Header fully visible at top, banner below, no overlap
+- **Fixes:** CM4 LAB banner covering wordmark (z-stacking collision)
+
+### Final Verification
+- ✅ **Overflow checks:** npm run verify:overflow → 104/104 pass
+- ✅ **No regressions:** scrollWidth ≤ innerWidth at all 13 routes × 8 viewports
+
+### Commits Merged to main
+- b74b4e9 CO1: Implement header tint with surface-aware gating
+- c006e84 CO2: Stack divider list vertically below 640px
+- e193834 CO3: Fix LAB banner overlap with header on /hero-lab
 
 ---
 

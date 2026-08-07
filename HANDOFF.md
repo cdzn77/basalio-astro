@@ -1,6 +1,6 @@
 # Basalio Responsive & Performance Complete — Handoff (2026-08-06)
 
-**Session context:** 2026-08-06. Font loading VERIFIED. Responsive COMPLETE (104/104 checks). Header theming FIXED. Production ready pending image optimization.
+**Session context:** 2026-08-06. Font loading VERIFIED. Responsive COMPLETE (104/104 checks). Header theming FIXED. **MERGED AND DEPLOYED** to production (basalio.com) — commit 83159a3, 2026-08-06 22:54 UTC.
 
 ---
 

@@ -75,9 +75,14 @@ const { surface = 'paper' } = Astro.props;
         const section = visibleSections[0].target;
         const surface = section.getAttribute('data-surface') || 'paper';
         headerContainer.setAttribute('data-surface', surface);
+        // Sync to .base-header so CSS selectors can apply surface-aware styles
+        const baseHeader = document.querySelector('.base-header');
+        if (baseHeader) baseHeader.setAttribute('data-surface', surface);
       } else {
         // Fallback to paper if no sections are visible
         headerContainer.setAttribute('data-surface', 'paper');
+        const baseHeader = document.querySelector('.base-header');
+        if (baseHeader) baseHeader.setAttribute('data-surface', 'paper');
       }
     };
 

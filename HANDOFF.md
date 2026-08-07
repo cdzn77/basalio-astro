@@ -43,10 +43,18 @@
 - c06237e Update HANDOFF.md with session progress
 
 ### Production Deployment
-- **Status:** Merged to main, Netlify auto-deploy in progress
-- **Production site:** https://basalio.com (public; Cloudflare challenges bare curl with 401 — this is a bot filter, not auth. Use browser user-agent or check in browser. A 401 from curl does not indicate outage.)
-- **Commit:** e193834 queued for deployment
-- **Verification:** Check Netlify dashboard for deployment status
+- **Status:** ✅ LIVE at main@22ae3b7
+- **Site made public:** 2026-08-07 04:42 UTC
+- **Production site:** https://basalio.com (public; fully accessible)
+- **Root cause of 401 (pre-public):** Netlify project privacy setting — not Cloudflare, not a bot filter
+- **Standing note:** A 401 from basalio.com means check the Netlify project privacy setting first (Settings → Private)
+- **Verification:** All checks passing:
+  - HTTP 200 status
+  - robots.txt with /hero-lab, /welcome excluded
+  - sitemap.xml with 10 public routes
+  - Font files loaded (instrument-sans-var.woff2)
+  - Header tint deployed (rgba 255,255,255,0.85 → compiled as #ffffffd9)
+  - Real 404 page (not login redirect)
 
 ---
 

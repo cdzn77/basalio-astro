@@ -40,6 +40,13 @@
 - b74b4e9 CO1: Implement header tint with surface-aware gating
 - c006e84 CO2: Stack divider list vertically below 640px
 - e193834 CO3: Fix LAB banner overlap with header on /hero-lab
+- c06237e Update HANDOFF.md with session progress
+
+### Production Deployment
+- **Status:** Merged to main, Netlify auto-deploy in progress
+- **Production site:** https://basalio.com (public; Cloudflare challenges bare curl with 401 — this is a bot filter, not auth. Use browser user-agent or check in browser. A 401 from curl does not indicate outage.)
+- **Commit:** e193834 queued for deployment
+- **Verification:** Check Netlify dashboard for deployment status
 
 ---
 

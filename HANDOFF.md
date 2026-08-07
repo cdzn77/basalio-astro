@@ -199,7 +199,8 @@ PNG icons (verified against src/, no dynamic references):
 
 ## STANDING RULES (FOR NEXT SESSION)
 
-**ADD THIS RULE:**
+**ADD THESE RULES:**
+- **Restart dev server before verification** — A dev server running 21+ hours across a dozen commits produced observations (BB1, BB2) that did not reflect the code. Before any verification pass or device recording, stop the dev server and restart it on current HEAD. Stale state is a recurring failure class this session (third occurrence).
 - **sections/verify-overflow.js** — Must assert `scrollWidth <= innerWidth` at every tested viewport and throw on failure. This 322px overflow existed for weeks with no automated check that would have caught it.
 
 **EXISTING RULES (REFERENCE):**

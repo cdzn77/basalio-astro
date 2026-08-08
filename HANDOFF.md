@@ -39,17 +39,22 @@ once.
 - Page weight 640KB / 16 requests measured on a preview build
 
 ## STILL OPEN — Mobile system pass phase 2
-- EB2: Body copy 16px → 18px
+- EB2: Body copy 16px → 18px (NEXT TASK)
   Add --font-size-body: 18px token to tokens.css
   Update global.css p { font-size: var(--font-size-body); }
   Replace 18 hardcoded 16px instances with var(--font-size-body) in
-  component styles. Preserve --font-size-16 (affects h6, unrelated).
-- EO2: Left column shrink refinement (1440–1508px band)
-  @media (min-width: 1440px) and (max-width: 1508px):
-    .courses-left { flex: 0 0 431px; }
-  This trades heading/button space for 3-card display at 1440.
-  Screenshot comparison taken at 431px vs 500px to assess legibility.
-  Pending: review if the narrower column is acceptable design-wise.
+  component styles: Hero, WhoItsFor, BlocksCarousel, Footer,
+  PositioningStats, FAQ, Accordion, PricingCards, StatusLedger, HeaderSplit
+  Preserve --font-size-16 (affects h6, unrelated).
+  Do NOT change line-height in same commit.
+  
+- EO2: Left column shrink refinement (tested, deferred, low priority)
+  Tested: @media (min-width: 1024px) and (max-width: 1508px): 431px left
+  Result: Tier 2 activates at 1440px instead of 1509px
+  Improves only 1440–1508px band (3 cards instead of 2)
+  1280–1350px remain at 2 cards — minimal gain
+  Screenshots: EO2-500px-left-1440px.png and EO2-431px-left-1440px.png
+  Pending: visual review by Angelo. Deferred — narrow gain, not blocking.
 
 ## PATTERN LOG — Fixed-pixel-widths in flex rows
 Four separate layout failures caused by hardcoded .courses-left 500px

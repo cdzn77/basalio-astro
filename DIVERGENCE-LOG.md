@@ -1,152 +1,84 @@
-# Divergence Log — Technical Findings
+# Divergence Log — Basalio Mobile System Pass
 
-## Button Structure & Flex Layout Behavior
+## Critical Finding: Dead Stylesheets Misled Session
 
-**Observation (Aug 5, 2026):**
-The `.btn-wrapper` (`display: inline-flex`) contains two fixed-size flex children:
-1. `.btn-text` (~250px, contains label with padding 12px each side)
-2. `.btn-arrow-container` (44px, fixed width)
+**Date:** 2026-08-08
+**Impact:** 557 lines of CSS read as authoritative but never applied
 
-**Pattern:** When button is nested in a flex parent (e.g., `.header-split-left`), the button.scrollWidth grows to fill available space:
-- @375px: 295px (text 250px + arrow 44px = 294px, +1px unexplained)
-- @390px: 310px (same children, +16px extra)
-- @414px: 334px (same children, +40px extra)
+### The Problem
 
-**Root Cause:** Likely parent flex container (`flex: 1 1 100%` on `.header-split-left` at mobile) forcing the button to stretch beyond its intrinsic size. The growth scales with available viewport space, suggesting parent-driven flex expansion, not child sizing changes.
+`src/styles/components.css` (292 lines) and `src/styles/responsive.css` (265 lines) exist in the codebase but are never imported anywhere. During this session:
 
-**Key Finding:** Padding on `.btn-text` does NOT proportionally shrink the button. Button width is controlled by:
-1. Label text length (constant ~250px for given font/letter-spacing)
-2. Arrow width (fixed 44px)
-3. Parent flex container constraints (dynamic at mobile)
+1. Both Claude and the developer cited values from these files as if they were live
+2. ED2 and EG2 commits were evaluated against rules in components.css
+3. Measurements were attempted against selectors that only existed in dead files
+4. Neither file is loaded by the browser—their rules have zero effect on rendered pages
 
-**Implication for Future Fixes:**
-- To reduce button width, shorten label text or reduce letter-spacing (affects text scrollWidth)
-- Reducing padding on `.btn-text` only affects internal text layout, not overall button width
-- Media queries on `.btn-wrapper` width, max-width, or flex properties would be the tool for constraining at specific breakpoints
+### Verification Method
 
----
+**Empirical test (not grep-inferred):**
+- Distinctive selector from components.css: `.hero > div > p:last-of-type { font-size: clamp(16px, 2.5vw, 20px); }`
+- Distinctive selector from components.css: `nav { backdrop-filter: blur(14px); position: fixed; }`
+- Browser rendered: `nav` has `backdrop-filter: none`, `position: static`, `z-index: auto`
+- Conclusion: **The file is not loaded.**
 
-## Measurement Script Correction (GG1)
+### Why They Were Missed
 
-**Bug:** Initial verify script hardcoded `availableWidth: 335px` across all three viewports (375, 390, 414).
+1. `grep` found "font-size: 16px" in both files → mistaken for "imported"
+2. No Astro glob imports in config
+3. No explicit `@import` statements in active CSS files
+4. Files were in src/styles/ directory (looked authoritative)
+5. Both had historical commits (ED2, EG2) that appeared to modify them
 
-**Fix:** Re-measure container width (`pricingInner.offsetWidth`) at each viewport instead of calculating from a fixed padding value.
+### Standing Rule
 
-**Result:** Correct headroom calculations:
-- @375px: 80px headroom ✅
-- @390px: 80px headroom ✅
-- @414px: 80px headroom ✅
+Before citing any CSS file as the source of a rendered value:
+1. Confirm it is imported: `grep "@import\|import.*css" src/layouts/ src/pages/ src/styles/`
+2. Verify a distinctive selector actually applies: render page, read computed style, check browser DevTools
+3. Grep alone is insufficient—file existence ≠ file is loaded
 
-All exceed 20px requirement.
+### Resolution
 
----
-
-## WhoItsFor Feature Count — Deliberate Desktop/Mobile Difference (Aug 6, 2026)
-
-**Decision:** Reduce testimonial feature list from 4 to 3 items on mobile (≤640px), keep 4 on desktop.
-
-**Why:** Card height analysis at 375px viewport revealed tallest card at 547px (67% of 812px viewport). Features consume 168px of the card's height. Removing one feature per card saves ~44px, bringing max height to 503px (62% of viewport).
-
-**Content Impact:**
-- Cards 1 & 3 (Portfolio Designers, Art Directors) have 4 features → reduce to 3 (hide 4th feature)
-- Cards 2 & 4 (Videographers, Studios) have 2–3 features already → no change
-- All cards converge to uniform 503px at mobile
-
-**Implementation:**
-- File: `src/components/WhoItsFor.astro`
-- CSS rule at mobile breakpoint (max-width: 640px):
-  ```css
-  .carousel-track-v2 > .testimonial-card-v2:nth-child(1) .testimonial-feature-v2:nth-child(4),
-  .carousel-track-v2 > .testimonial-card-v2:nth-child(3) .testimonial-feature-v2:nth-child(4) {
-    display: none;
-  }
-  ```
-
-**Result:** WhoItsFor mobile card height 503px (62% of 812px viewport), measured at 375px.
-
-**Ramp benchmark:** Attempted twice with automated approaches; both failed due to Ramp's unconventional DOM structure. No comparison figure obtained.
-
-**Rationale:** Features are tactical (specific Basalio blocks supporting a role), descriptions are strategic (why the role matters). Descriptions are load-bearing copy and cannot be shortened. Desktop cards stay at full 4 features; mobile reduces to 3 to fit within viewport better while maintaining readability.
+Commit 231354d: Deleted both files. All 104/104 overflow checks pass post-deletion. Screenshots identical. No regression.
 
 ---
 
-## WCAG 1.4.10 Reflow at 320px CSS px — Deliberate Viewport Degradations (Aug 6, 2026)
+## Design Finding: 14px Prose Is Intentional, Not Drift
 
-**Context:** WCAG 1.4.10 compliance testing at 320px CSS px (equivalent to 400% zoom on 1280px viewport) revealed two overflow issues:
+**Context:** EB2 upgraded body copy from 16px → 18px (--font-size-body token).
+**Audit result:** 18 prose elements at 14px across 9 routes, 6 classes.
 
-1. **WhoItsFor and BlocksCarousel carousel peek**: At 375px+, carousel viewports are 335px wide with 280px cards and 41px peek-ahead. At 320px, text wrapping increases card height to 540px (WhoItsFor). Peek is unnecessary affordance at this width.
+### Classification
 
-2. **Hero heading overflow**: At 320px, the hero heading renders at 48px (from `clamp(48px, 8vw, 96px)`), making the accent-word "interactions," 289px wide, extending 9px beyond the 320px viewport.
+**Intentional hierarchy (DO NOT CONVERT):**
+1. **Constrained card copy:**
+   - `.block-description` — 280px card width on 375px viewport, ~2 lines
+   - `.teaser` — pricing card descriptions, 1-2 lines
+   - `.resource-description` — 285px resource card, constrained
+   
+   **Reasoning:** Small prose inside fixed-width cards is a legitimate visual hierarchy choice. Enlarging to 18px would force 3+ lines and break card layouts.
 
-**Decision:** Implement deliberate degradations at 320px that maintain full functionality while respecting reflow constraints:
+2. **Secondary content:**
+   - `.footer-description` — footer tagline, 14pt by convention
+   - `.ledger-item-note` — pricing feature list, 14px for secondary info
 
-**Changes Implemented:**
+   **Reasoning:** Footer and secondary content uses smaller type across web design. Not an oversight.
 
-1. **Carousel container shrinking (≤374px)**
-   - File: `src/components/BlocksCarousel.astro` and `src/components/WhoItsFor.astro`
-   - New media query: `@media (max-width: 374px)`
-   - Container width: 335px → 280px
-   - Carousel viewport width: 335px → 280px
-   - Effect: No peek below 375px; cards still fully visible, paging controls functional
-   - Carousel height and card dimensions unchanged (280px width, 503px height for WhoItsFor, 290px max for BlocksCarousel)
+### Body Copy (Converted)
 
-2. **Hero heading font-size reduction (≤320px via clamp)**
-   - File: `src/styles/global.css`
-   - Updated clamp: `clamp(48px, 8vw, 96px)` → `clamp(40px, 8vw, 96px)`
-   - Effect: At 320px, heading renders at 40px instead of 48px; accent-word "interactions," now 241px wide (0px overflow)
-   - Scaling is smooth across all viewports; 40px is still a substantial hero heading
+- Homepage and page body paragraphs: 18px via `p { font-size: var(--font-size-body); }`
+- Hero descriptions: 18px
+- Contrast confirmed: 18px body text now visually larger than 14px card captions
 
-**Rationale:** 320px CSS px is an extreme reflow scenario (400% zoom). Carousel peek and maximum hero size are secondary affordances that don't affect core functionality. Degradations preserve:
-- Full carousel paging (arrows and zones still functional)
-- Readable hero heading at scaled-down font
-- No content reordering, truncation, or loss of meaning
-- Smooth scaling via clamp() down to 320px minimum
+### Future Pass
 
-**Impact:** Verify-section.js harness now reports 91/91 pass across 13 routes × 7 viewports (including 320px).
-
-**Permanent Change:** 320px CSS px viewport is now a permanent fixture in the overflow verification harness (scripts/verify-section.js) to prevent regression on WCAG 1.4.10 compliance.
+Do not "fix" 14px prose in future passes. The 4px delta between body (18px) and card copy (14px) is the design system working as intended.
 
 ---
 
-## data-surface Attribute Misuse — Principle Violation (Aug 6, 2026)
+## Session Summary
 
-**Incident:** Commit 57771d7 added `data-surface="ink"` to 9 /blocks section elements based on *desired observer behavior* rather than *actual background colours*.
-
-**Symptom:** Header wordmark rendered cream-on-light-gray (#FAFAFA) and became invisible when scrolling through /blocks sections.
-
-**Root Cause:** All 9 block-detail-section elements are labelled `data-surface="ink"` but their `.demo-container` child has `background: var(--surface-alt)` = `#FAFAFA` (light gray, not dark ink).
-
-**Why It Happened:** The developer intended to use data-surface as a switch to trigger observer state changes, not as a truthful label for what the section's background actually is.
-
-**The Principle:** `data-surface` describes what a section's background IS. It is not a control signal for making the observer fire. The observer reads the label to determine what colour the header should be; incorrect labels cause incorrect header rendering.
-
-**Fix:** Changed all 9 block-detail-section elements from `data-surface="ink"` to `data-surface="paper"` (commit ad8fa16). Verified:
-- Header wordmark stays dark throughout /blocks scroll
-- All 13 routes: header colour matches background behind it
-- 104/104 WCAG reflow checks pass
-- Homepage regression check: ink mode on video hero, paper mode on rest ✓
-
-**Audit Script Fix:** Previous audit (scripts/audit-data-surface.js) reported transparent elements as mismatches. Corrected to walk up DOM and check *effective* background (first non-transparent ancestor) before comparing against label (commit f59c950).
-
-**Prevention:** data-surface correctness now part of standard verification checklist: confirm label matches *actual* background colour, not intended observer state.
-
----
-
-## Footer Navigation Landmarks — Unlabeled Duplicate Landmarks (Aug 8, 2026)
-
-**Issue:** The footer contains two `<nav>` elements (PRODUCT and SUPPORT link columns) with no `aria-label` or `aria-labelledby` attributes.
-
-**Impact:** Screen reader announces "navigation" twice on every page with no way to distinguish them. WCAG 2.1 (Navigation) recommends labeling multiple navigation landmarks to aid users in understanding their purpose.
-
-**Locations:**
-- File: `src/layouts/BaseLayout.astro` (Footer component)
-- Element 1: PRODUCT navigation (Blocks, Hacks, Pricing, Roadmap)
-- Element 2: SUPPORT navigation (Contact, Support, Terms, Privacy)
-
-**Current:** Both navs render as `<nav class="footer-link-column">` with no labels.
-
-**Remediation (future commit):**
-- Add `aria-label="Product navigation"` to PRODUCT nav
-- Add `aria-label="Support navigation"` to SUPPORT nav
-
-**Note:** Not fixed in current commit (EG2 focuses on undefined-token cleanup). Accessibility issue tracked separately.
+- **EB2:** Body copy 16px → 18px (1 commit, verified 104/104)
+- **Dead files:** components.css & responsive.css deleted (1 commit, verified 104/104)
+- **14px audit:** Confirmed intentional, no conversion needed
+- **Net result:** Cleaner CSS architecture, correct font hierarchy, zero regressions

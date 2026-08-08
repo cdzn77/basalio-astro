@@ -38,23 +38,39 @@ once.
   (10 public routes)
 - Page weight 640KB / 16 requests measured on a preview build
 
-## STILL OPEN — Mobile system pass phase 2
-- EB2: Body copy 16px → 18px (NEXT TASK)
-  Add --font-size-body: 18px token to tokens.css
-  Update global.css p { font-size: var(--font-size-body); }
-  Replace 18 hardcoded 16px instances with var(--font-size-body) in
-  component styles: Hero, WhoItsFor, BlocksCarousel, Footer,
-  PositioningStats, FAQ, Accordion, PricingCards, StatusLedger, HeaderSplit
-  Preserve --font-size-16 (affects h6, unrelated).
-  Do NOT change line-height in same commit.
-  
-- EO2: Left column shrink refinement (tested, deferred, low priority)
-  Tested: @media (min-width: 1024px) and (max-width: 1508px): 431px left
-  Result: Tier 2 activates at 1440px instead of 1509px
-  Improves only 1440–1508px band (3 cards instead of 2)
-  1280–1350px remain at 2 cards — minimal gain
-  Screenshots: EO2-500px-left-1440px.png and EO2-431px-left-1440px.png
-  Pending: visual review by Angelo. Deferred — narrow gain, not blocking.
+## MOBILE SYSTEM PASS — COMPLETE
+Phase 1 (commit c4d9e14) + Phase 2 (commits 1274869, 231354d):
+
+**EB2: Body copy 16px → 18px** (commit 1274869)
+  - Added --font-size-body: 18px token to tokens.css
+  - Updated p { font-size: var(--font-size-body); } in global.css
+  - Replaced 13 hardcoded 16px with var(--font-size-body) in:
+    BlocksCarousel (2×), WhoItsFor, PositioningStats, HeaderSplit,
+    PricingCards, StatusLedger, Footer, Hero, FAQ (2×), Accordion (2×)
+  - Preserved --font-size-16 (h6 sizing, unrelated)
+  - Verified: 104/104 overflow checks, +55px on homepage, +4px on pricing
+
+**Dead stylesheets cleanup** (commit 231354d)
+  - Deleted components.css (292 lines, never imported)
+  - Deleted responsive.css (265 lines, never imported)
+  - Verified empirically: nav { backdrop-filter: blur } rendered as none
+  - Confirmed: ED2's label tokens live in tokens.css, correctly consumed
+  - No regression: 104/104 overflow checks pass, screenshots identical
+
+**14px prose audit** — INTENTIONAL HIERARCHY (NO CONVERSION)
+  - Card-constrained copy (.block-description, .teaser, .resource-description)
+    stay at 14px. Enlarging would break card layouts (280–335px width).
+  - Secondary content (.footer-description, .ledger-item-note) stay at 14px
+    by design convention (footer smaller type, feature lists).
+  - Body prose is 18px via --font-size-body token.
+  - See DIVERGENCE-LOG.md for full audit and standing rules.
+
+**EO2: Left column shrink refinement** (DEFERRED, low priority)
+  - Tested: @media (min-width: 1024px) and (max-width: 1508px): 431px left
+  - Result: Tier 2 activates at 1440px instead of 1509px
+  - Improves only 1440–1508px band (3 cards instead of 2)
+  - 1280–1350px remain at 2 cards — minimal gain
+  - Pending: visual review by Angelo
 
 ## PATTERN LOG — Fixed-pixel-widths in flex rows
 Four separate layout failures caused by hardcoded .courses-left 500px

@@ -459,7 +459,8 @@ const {
     // Calculate paging based on viewport width
     const calculatePaging = () => {
       const { cardWidth, gap } = getCardDimensions();
-      const cardsPerView = Math.max(1, Math.floor(viewport.offsetWidth / (cardWidth + gap)));
+      // Add gap to viewport to account for last card having no trailing gap
+      const cardsPerView = Math.max(1, Math.floor((viewport.offsetWidth + gap) / (cardWidth + gap)));
       totalPages = Math.max(1, Math.ceil(cards.length / Math.max(1, cardsPerView)));
 
       // Set CSS custom property for responsive card width

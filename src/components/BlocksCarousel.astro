@@ -258,7 +258,7 @@ const {
 
   /* Course cards: fixed size 500x571px */
   .block-card {
-    flex: 0 0 500px;
+    flex: 0 0 var(--card-w, 500px);
     height: 571px;
     background: var(--surface-paper);
     border-radius: 6px;
@@ -448,7 +448,11 @@ const {
       if (isMobile) {
         return { cardWidth: 280, gap: 14 };
       } else {
-        return { cardWidth: 500, gap: 20 };
+        // Calculate card width from viewport width at desktop
+        const cardsPerRow = 2;
+        const gap = 20;
+        const calculatedCardWidth = (viewport.offsetWidth - gap * (cardsPerRow - 1)) / cardsPerRow;
+        return { cardWidth: Math.floor(calculatedCardWidth), gap: gap };
       }
     };
 
@@ -457,6 +461,10 @@ const {
       const { cardWidth, gap } = getCardDimensions();
       const cardsPerView = Math.max(1, Math.floor(viewport.offsetWidth / (cardWidth + gap)));
       totalPages = Math.max(1, Math.ceil(cards.length / Math.max(1, cardsPerView)));
+
+      // Set CSS custom property for responsive card width
+      viewport.style.setProperty('--card-w', cardWidth + 'px');
+
       return cardsPerView;
     };
 

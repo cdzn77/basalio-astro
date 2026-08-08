@@ -61,6 +61,9 @@
   --font-size-40: 40px;
   --font-size-48: 48px;
 
+  /* Body copy size */
+  --font-size-body: 18px;
+
   /* Clamp values for responsive sizing */
   --font-size-clamp-22-30-32: clamp(22px, 3vw, 32px);
   --font-size-clamp-24-28-32: clamp(24px, 2.8vw, 32px);

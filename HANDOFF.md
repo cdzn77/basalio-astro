@@ -1,9 +1,10 @@
 # BASALIO — HANDOFF
-Last updated 2026-08-08
+Last updated 2026-08-08 (Mobile carousel system pass complete)
 
 ## STATE
 Site is LIVE AND PUBLIC at basalio.com. Netlify, production branch main.
-Working tree clean, everything pushed.
+feat/mobile-system branch (19 commits) ready for review before merge.
+All carousel work verified with Playwright; 104/104 overflow checks pass.
 
 Canonical checkout: /Users/angelomanzanojr/basalio-astro
 Two stale copies archived to ~/_archive with git remotes REMOVED:
@@ -72,6 +73,56 @@ Phase 1 (commit c4d9e14) + Phase 2 (commits 1274869, 231354d):
   - 1280–1350px remain at 2 cards — minimal gain
   - Pending: visual review by Angelo
 
+## CAROUSEL MOBILE SYSTEM PASS — COMPLETE (2026-08-08)
+
+Comprehensive carousel responsiveness fix across all breakpoints:
+
+**Phase 3: Mobile Carousel Restructuring** (commits 627b15b–db840f8)
+  - **FF1** (627b15b): Height collapse fixed with min-height band-aids
+    - Root cause: .carousel-viewport { height: auto } with position: absolute track
+    - Quick fix applied: min-height: 308px (BC), 503px (WI)
+    - **KNOWN DEBT**: Band-aid values hardcode card heights; real fix is
+      removing position: absolute from track (deferred)
+  
+  - **FI1** (8284561): Structural fix—position: relative at mobile
+    - Changed track from absolute to relative below 640px
+    - Allows viewport to get natural height from children
+    - Transform animation unaffected
+  
+  - **FH2** (02f7dc9): JS-calculated responsive card widths
+    - Replaced fixed 500px with dynamic --card-w CSS variable
+    - Formula: (viewport.offsetWidth - gap) / 2 cards per row
+    - Mobile below 640px: fixed 280px (unchanged)
+  
+  - **FJ1** (96f458a): Off-by-one gap bug in cardsPerView calculation
+    - Last card in row has no trailing gap
+    - Fixed: floor((viewport + gap) / (card + gap)) instead of floor(viewport / (card + gap))
+    - Result: 2 complete cards per view at desktop (no partial cards)
+  
+  - **FK1** (5da2446): Apply cardsPerView to offset calculation
+    - updateTrackPosition() now uses cardsPerView for correct page advances
+    - Offset = currentPage × cardsPerView × (cardWidth + gap)
+    - Pagination model: ceil(cards.length / cardsPerView)
+  
+  - **FL1** (db840f8): Verify pagination arithmetic
+    - Confirmed 2-card page advances at 1280/1440/1920px
+    - Last card visible when next button disables
+    - No unreachable cards
+
+Result:
+  - Desktop (1280/1440/1920px): 2 cards per view, responsive sizing
+  - Mobile (375px): 1 card per view, 280px fixed, peek pattern
+  - All: No partial cards at page boundaries
+  - Verified: 104/104 overflow checks pass
+  - Verified: Transform steps match calculated offsets
+  - Verified: Navigation reaches all cards without overflow
+
+Verification scripts added:
+  - fi2-carousel-verify.mjs: Visibility + navigation checks
+  - fh2-fluid-cards-verify.mjs: Card width scaling
+  - fj1-gap-fix-verify.mjs: CardsPerView calculation
+  - fl1-pagination-arithmetic.mjs: Page stepping & math
+
 ## PATTERN LOG — Fixed-pixel-widths in flex rows
 Four separate layout failures caused by hardcoded .courses-left 500px
 constraint in flex rows, exacerbated when:
@@ -90,14 +141,21 @@ SOLUTIONS TRIED (ranked by outcome):
   D. Shrink left column per band: viable refinement, awaiting review
 
 ## DEFERRED
-- DESIGN-SYSTEM.md rewrite. Approach approved: decisions-only doc, values
-  live in tokens.css, implementation reference generated. The
-  line-by-line inventory (EE2) was never completed — do that first.
-- Heading hierarchy audit. 2 of 13 pages done. h2 elements render 18px on
-  /blocks — heading levels appear chosen for size rather than structure.
-  Semantic problem, affects screen-reader navigation.
-- ~6.1MB orphaned build assets confirmed unreferenced (2 videos, 5 PNGs).
-  Build hygiene, NOT page weight — orphans are never downloaded.
-- Internal naming debt, none user-facing: .courses-* classes in
-  BlocksCarousel/blocks.astro, .testimonials-v2-heading in WhoItsFor,
-  headerType:'ramp'|'simple' in BaseLayout, Ramp provenance comments.
+
+**Known Debt from Mobile System Pass:**
+- **FF1 min-height band-aids** — Carousel height fix uses hardcoded 308px/503px
+  values that match current card heights. Real fix: remove position: absolute
+  from .carousel-track; use position: relative for natural height contribution.
+  Deferred: requires testing transform-based animation with new positioning.
+
+**Still Open:**
+- **EO2** — Left column shrink to 431px (tested, working, awaiting Angelo review)
+- **Heading hierarchy audit** — 2 of 13 pages done. Semantic structure issue,
+  affects screen-reader navigation. h2 elements currently chosen for size.
+- **DESIGN-SYSTEM.md rewrite** — Approach approved (decisions-only doc, values in
+  tokens.css, generated reference). Prerequisite: complete line-by-line inventory.
+- **~6.1MB orphaned build assets** — 2 videos + 5 PNGs confirmed unreferenced.
+  Build hygiene only (not page weight — orphans never downloaded).
+- **Internal naming debt** — .courses-* classes in BlocksCarousel/blocks.astro,
+  .testimonials-v2-heading in WhoItsFor, headerType:'ramp'|'simple' in BaseLayout,
+  Ramp provenance comments. Not user-facing.

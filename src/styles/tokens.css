@@ -69,6 +69,7 @@
      TYPOGRAPHY – Font Families
      ============================================================ */
 
+  --font-sans: 'Instrument Sans', -apple-system, system-ui, 'Segoe UI', sans-serif;
   --font-mono: 'Azeret Mono', monospace;
 
   /* ============================================================

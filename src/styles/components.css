@@ -122,12 +122,6 @@ nav > div > div > a:hover {
   margin-bottom: var(--space-4xl);
 }
 
-.hero h1 em {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 500;
-}
-
 .hero > div > p:last-of-type {
   font-size: clamp(16px, 2.5vw, 20px);
   color: var(--color-text);
@@ -168,22 +162,6 @@ nav > div > div > a:hover {
 .btn:focus {
   outline: 2px solid var(--color-text);
   outline-offset: 2px;
-}
-
-.btn-dark {
-  background: var(--color-text);
-  color: var(--color-primary);
-  box-shadow: var(--shadow-md);
-}
-
-.btn-dark:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-.btn-dark:active {
-  transform: translateY(0);
-  box-shadow: var(--shadow-sm);
 }
 
 .btn-light {
@@ -278,16 +256,6 @@ nav > div > div > a:hover {
 }
 
 .module-full-bleed.bg-light .module-content p {
-  color: var(--color-text-secondary);
-}
-
-/* Eyebrows (Section Labels) */
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: var(--space-lg);
   color: var(--color-text-secondary);
 }
 

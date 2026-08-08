@@ -129,3 +129,24 @@ All exceed 20px requirement.
 **Audit Script Fix:** Previous audit (scripts/audit-data-surface.js) reported transparent elements as mismatches. Corrected to walk up DOM and check *effective* background (first non-transparent ancestor) before comparing against label (commit f59c950).
 
 **Prevention:** data-surface correctness now part of standard verification checklist: confirm label matches *actual* background colour, not intended observer state.
+
+---
+
+## Footer Navigation Landmarks — Unlabeled Duplicate Landmarks (Aug 8, 2026)
+
+**Issue:** The footer contains two `<nav>` elements (PRODUCT and SUPPORT link columns) with no `aria-label` or `aria-labelledby` attributes.
+
+**Impact:** Screen reader announces "navigation" twice on every page with no way to distinguish them. WCAG 2.1 (Navigation) recommends labeling multiple navigation landmarks to aid users in understanding their purpose.
+
+**Locations:**
+- File: `src/layouts/BaseLayout.astro` (Footer component)
+- Element 1: PRODUCT navigation (Blocks, Hacks, Pricing, Roadmap)
+- Element 2: SUPPORT navigation (Contact, Support, Terms, Privacy)
+
+**Current:** Both navs render as `<nav class="footer-link-column">` with no labels.
+
+**Remediation (future commit):**
+- Add `aria-label="Product navigation"` to PRODUCT nav
+- Add `aria-label="Support navigation"` to SUPPORT nav
+
+**Note:** Not fixed in current commit (EG2 focuses on undefined-token cleanup). Accessibility issue tracked separately.

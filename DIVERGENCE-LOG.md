@@ -76,9 +76,39 @@ Do not "fix" 14px prose in future passes. The 4px delta between body (18px) and 
 
 ---
 
+## Known Debt: Carousel Viewport min-height Band-Aids
+
+**Date:** 2026-08-08 (FF1 commit 627b15b)
+**Root Cause:** `.carousel-viewport { height: auto }` with `position: absolute` track children collapse to 0px because absolute children don't contribute to parent height.
+
+**Current Band-Aid (FF1 fix):**
+```css
+.carousel-viewport {
+  height: auto;
+  min-height: 308px;  /* BlocksCarousel */
+}
+
+.carousel-viewport-v2 {
+  height: auto;
+  min-height: 503px;  /* WhoItsFor */
+}
+```
+
+**Problem:** These hardcoded values match the current card heights. If card content changes (longer titles, different image aspect ratios), the carousel collapses again.
+
+**Real Solution:** Remove `position: absolute` from `.carousel-track` and use `position: relative` at mobile. This allows the track to contribute natural height to the viewport, eliminating the need for hardcoded min-height values. The `transform: translateX()` animation works identically with `position: relative`.
+
+**Why not applied yet:** Refactoring track positioning requires testing transform-based pagination across all breakpoints. Deferred to future pass.
+
+**Incident:** Earlier BD1.2 mistakenly reported "cardsRendered: true" based on card count alone, missing the 0px viewport height. Added to verification debt: carousel visibility checks must assert `viewport.offsetHeight > 0` and `card.getBoundingClientRect().height > 0`, not just card count.
+
+---
+
 ## Session Summary
 
 - **EB2:** Body copy 16px → 18px (1 commit, verified 104/104)
 - **Dead files:** components.css & responsive.css deleted (1 commit, verified 104/104)
 - **14px audit:** Confirmed intentional, no conversion needed
-- **Net result:** Cleaner CSS architecture, correct font hierarchy, zero regressions
+- **FF1:** Carousel height collapse fixed with min-height band-aids (commit 627b15b, verified 104/104)
+- **FH2:** JS-calculated card width replaces fixed 500px (commit 02f7dc9, verified 104/104)
+- **Net result:** Cleaner CSS architecture, correct font hierarchy, responsive carousels, zero regressions

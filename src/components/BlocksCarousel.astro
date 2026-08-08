@@ -5,7 +5,7 @@
 import TwoPillButton from './TwoPillButton.astro';
 
 const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
-  as: 'raw', eager: true
+  as: 'url', eager: true
 });
 
 interface Block {
@@ -80,7 +80,9 @@ const {
               <a href={block.link || "#"} class="block-card">
                 <div class="block-image-wrapper">
                   <div class="block-icon-tile">
-                    <span class="block-icon" set:html={block.slug ? icons[`/public/assets/icons/blocks/${block.slug}.svg`] : ''} aria-hidden="true" />
+                    {block.slug && icons[`/public/assets/icons/blocks/${block.slug}.svg`] && (
+                      <img src={icons[`/public/assets/icons/blocks/${block.slug}.svg`]} alt="" class="block-icon-img" aria-hidden="true" />
+                    )}
                   </div>
                 </div>
                 <h3 class="block-card-title">{block.title}</h3>
@@ -354,6 +356,13 @@ const {
 
   .block-icon svg {
     width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .block-icon-img {
+    color: var(--text-on-acid);
+    width: clamp(77px, 21.6%, 125px);
     height: auto;
     display: block;
   }

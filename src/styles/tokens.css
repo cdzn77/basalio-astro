@@ -81,6 +81,15 @@
   --line-height-relaxed: 1.6;
   --line-height-loose: 1.7;
 
+  /* ============================================================
+     LABEL TOKENS – Unified across components
+     ============================================================ */
+
+  --label-size: 14px;
+  --label-weight: 500;
+  --label-line-height: 19.6px;
+  --label-letter-spacing: 2.8px;
+
   /* Pixel-based line heights (from design) */
   --line-height-16: 16px;
   --line-height-18: 18px;

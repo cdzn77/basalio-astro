@@ -1,0 +1,386 @@
+{
+  "viewport": {
+    "width": 375,
+    "height": 812,
+    "deviceScaleFactor": 2
+  },
+  "timestamp": "2026-08-08T02:43:35.710Z",
+  "ramp": {
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "heroHeading": {
+      "tag": "h1",
+      "classes": "framer-text",
+      "text": "Ramp Studio.",
+      "fontSize": "30px",
+      "fontWeight": "600",
+      "lineHeight": "30px",
+      "letterSpacing": "-1.5px",
+      "offsetParent": "foreignObject"
+    },
+    "sectionHeadings": [
+      {
+        "tag": "h2",
+        "classes": "framer-text framer-styles-preset-1yqs7cs",
+        "text": "What we do",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "19.6px",
+        "letterSpacing": "2.8px",
+        "offsetParent": "DIV",
+        "isVisible": true
+      },
+      {
+        "tag": "h2",
+        "classes": "framer-text framer-styles-preset-1yqs7cs",
+        "text": "Our Courses",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "19.6px",
+        "letterSpacing": "2.8px",
+        "offsetParent": "DIV",
+        "isVisible": true
+      },
+      {
+        "tag": "h3",
+        "classes": "framer-text framer-styles-preset-n4cj3l",
+        "text": "Courses for Digital Creatives",
+        "fontSize": "28px",
+        "fontWeight": "400",
+        "lineHeight": "33.6px",
+        "letterSpacing": "-0.56px",
+        "offsetParent": "DIV",
+        "isVisible": true
+      },
+      {
+        "tag": "h2",
+        "classes": "framer-text framer-styles-preset-1yqs7cs",
+        "text": "Our Resources",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "19.6px",
+        "letterSpacing": "2.8px",
+        "offsetParent": "DIV",
+        "isVisible": true
+      },
+      {
+        "tag": "h3",
+        "classes": "framer-text framer-styles-preset-370dil",
+        "text": "Client Onboarding",
+        "fontSize": "22px",
+        "fontWeight": "400",
+        "lineHeight": "26.4px",
+        "letterSpacing": "-0.22px",
+        "offsetParent": "DIV",
+        "isVisible": true
+      }
+    ],
+    "eyebrows": [
+      {
+        "tag": "p",
+        "classes": "framer-text framer-styles-preset-1yqs7cs",
+        "text": "Menu",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "letterSpacing": "2.8px",
+        "lineHeight": "19.6px"
+      },
+      {
+        "tag": "p",
+        "classes": "framer-text framer-styles-preset-1yqs7cs",
+        "text": "Coaching Offers 101",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "letterSpacing": "2.8px",
+        "lineHeight": "19.6px"
+      },
+      {
+        "tag": "p",
+        "classes": "framer-text framer-styles-preset-1yqs7cs",
+        "text": "View course",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "letterSpacing": "2.8px",
+        "lineHeight": "19.6px"
+      }
+    ],
+    "bodyParagraphs": [
+      {
+        "tag": "p",
+        "classes": "framer-text framer-styles-preset-1yqs7cs",
+        "text": "Menu",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "19.6px",
+        "letterSpacing": "2.8px"
+      },
+      {
+        "tag": "p",
+        "classes": "framer-text framer-styles-preset-1yqs7cs",
+        "text": "Coaching Offers 101",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "19.6px",
+        "letterSpacing": "2.8px"
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "button",
+        "classes": "framer-nCHvm framer-LsYxk framer-1yejoa4 framer-v-1yejoa4",
+        "text": "Menu",
+        "width": 182,
+        "height": 41,
+        "paddingTop": "0px",
+        "paddingRight": "16px",
+        "paddingBottom": "0px",
+        "paddingLeft": "16px",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "letterSpacing": "normal"
+      }
+    ],
+    "paddingExamples": [
+      {
+        "headingText": "What we do",
+        "paddingTop": "40px",
+        "paddingBottom": "20px",
+        "paddingLeft": "20px",
+        "paddingRight": "20px"
+      },
+      {
+        "headingText": "Our Courses",
+        "paddingTop": "60px",
+        "paddingBottom": "60px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px"
+      },
+      {
+        "headingText": "Our Resources",
+        "paddingTop": "0px",
+        "paddingBottom": "60px",
+        "paddingLeft": "20px",
+        "paddingRight": "20px"
+      },
+      {
+        "headingText": "Monthly Retainer",
+        "paddingTop": "60px",
+        "paddingBottom": "60px",
+        "paddingLeft": "20px",
+        "paddingRight": "20px"
+      },
+      {
+        "headingText": "(no heading)",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px"
+      }
+    ]
+  },
+  "basalio": {
+    "viewport": {
+      "width": 375,
+      "height": 812
+    },
+    "heroHeading": {
+      "tag": "h1",
+      "classes": "hero-heading hero-headline",
+      "text": "Framer-quality interactions,native to WordPress.",
+      "fontSize": "48px",
+      "fontWeight": "700",
+      "lineHeight": "52.8px",
+      "letterSpacing": "normal",
+      "offsetParent": "DIV"
+    },
+    "sectionHeadings": [
+      {
+        "tag": "h2",
+        "classes": "courses-heading",
+        "text": "Nine blocks. Nothing you don't need.",
+        "fontSize": "40px",
+        "fontWeight": "400",
+        "lineHeight": "48px",
+        "letterSpacing": "-0.8px",
+        "offsetParent": "MAIN",
+        "isVisible": true
+      },
+      {
+        "tag": "h3",
+        "classes": "block-card-title",
+        "text": "Grid Reveal",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "lineHeight": "22.4px",
+        "letterSpacing": "normal",
+        "offsetParent": "DIV",
+        "isVisible": true
+      },
+      {
+        "tag": "h3",
+        "classes": "block-card-title",
+        "text": "Case Study Transition",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "lineHeight": "22.4px",
+        "letterSpacing": "normal",
+        "offsetParent": "DIV",
+        "isVisible": true
+      },
+      {
+        "tag": "h3",
+        "classes": "block-card-title",
+        "text": "Text Reveal",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "lineHeight": "22.4px",
+        "letterSpacing": "normal",
+        "offsetParent": "DIV",
+        "isVisible": true
+      },
+      {
+        "tag": "h3",
+        "classes": "block-card-title",
+        "text": "Magnetic Button",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "lineHeight": "22.4px",
+        "letterSpacing": "normal",
+        "offsetParent": "DIV",
+        "isVisible": true
+      }
+    ],
+    "eyebrows": [
+      {
+        "tag": "p",
+        "classes": "hero-eyebrow",
+        "text": "A WORDPRESS PLUGIN FOR CREATIVES",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "letterSpacing": "1.2px",
+        "lineHeight": "16.8px"
+      },
+      {
+        "tag": "p",
+        "classes": "btn-label",
+        "text": "EXPLORE BLOCKS",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "letterSpacing": "2.8px",
+        "lineHeight": "19.6px"
+      },
+      {
+        "tag": "p",
+        "classes": "eyebrow",
+        "text": "Positioning • 01",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "letterSpacing": "2.8px",
+        "lineHeight": "19.6px"
+      }
+    ],
+    "bodyParagraphs": [
+      {
+        "tag": "p",
+        "classes": "block-description",
+        "text": "Give your work a foundation to stand on. Nine curated intera",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "22.4px",
+        "letterSpacing": "normal"
+      },
+      {
+        "tag": "p",
+        "classes": "btn-label",
+        "text": "EXPLORE BLOCKS",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "lineHeight": "19.6px",
+        "letterSpacing": "2.8px"
+      }
+    ],
+    "buttons": [
+      {
+        "tag": "button",
+        "classes": "menu-btn",
+        "text": "MENU",
+        "width": 160,
+        "height": 36,
+        "paddingTop": "0px",
+        "paddingRight": "12px",
+        "paddingBottom": "0px",
+        "paddingLeft": "12px",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "letterSpacing": "2.4px"
+      },
+      {
+        "tag": "button",
+        "classes": "carousel-button carousel-button-prev",
+        "text": "",
+        "width": 70,
+        "height": 70,
+        "paddingTop": "0px",
+        "paddingRight": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "fontSize": "13.3333px",
+        "fontWeight": "400",
+        "letterSpacing": "normal"
+      },
+      {
+        "tag": "button",
+        "classes": "carousel-button carousel-button-next",
+        "text": "",
+        "width": 70,
+        "height": 70,
+        "paddingTop": "0px",
+        "paddingRight": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "fontSize": "13.3333px",
+        "fontWeight": "400",
+        "letterSpacing": "normal"
+      }
+    ],
+    "paddingExamples": [
+      {
+        "headingText": "Framer-quality interactions,native to WordPress.",
+        "paddingTop": "80px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px"
+      },
+      {
+        "headingText": "(no heading)",
+        "paddingTop": "40px",
+        "paddingBottom": "40px",
+        "paddingLeft": "40px",
+        "paddingRight": "40px"
+      },
+      {
+        "headingText": "Nine blocks. Nothing you don't need.",
+        "paddingTop": "60px",
+        "paddingBottom": "60px",
+        "paddingLeft": "20px",
+        "paddingRight": "20px"
+      },
+      {
+        "headingText": "There's no catch.",
+        "paddingTop": "0px",
+        "paddingBottom": "0px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px"
+      },
+      {
+        "headingText": "There's no catch.",
+        "paddingTop": "120px",
+        "paddingBottom": "20px",
+        "paddingLeft": "0px",
+        "paddingRight": "0px"
+      }
+    ]
+  }
+}

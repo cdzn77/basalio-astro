@@ -442,14 +442,15 @@ const {
 
     .testimonials-v2-right {
       flex: 0 0 auto;
-      width: 335px;
+      width: 100%;
+      max-width: 100vw;
       min-height: auto;
     }
 
-    /* Mobile carousel: peek-scroll pattern, 280px cards, 14px gap */
+    /* Mobile carousel: responsive peek-scroll pattern */
     .carousel-viewport-v2 {
-      width: 335px;
-      max-width: 335px;
+      width: 100%;
+      max-width: 100%;
       height: auto;
       overflow: clip;
     }
@@ -459,9 +460,9 @@ const {
       gap: 14px;
     }
 
-    /* Mobile: 280px cards, 24px padding, 140px image */
+    /* Mobile: responsive cards, 24px padding, 140px image */
     .testimonial-card-v2 {
-      flex: 0 0 280px;
+      flex: 0 0 var(--card-w, 280px);
       height: auto;
       padding: 24px;
     }
@@ -523,7 +524,15 @@ const {
       const getCardDimensions = () => {
         const isMobile = window.innerWidth <= 640;
         if (isMobile) {
-          return { cardWidth: 280, gap: 14 };
+          // Mobile: responsive peek pattern (same as BlocksCarousel)
+          // Section has 20px padding each side = 40px total
+          // Container width = viewport - 40px
+          // Card width = container - 55px peek
+          const sectionPadding = 40; // 20px left + 20px right
+          const peek = 55;
+          const containerWidth = window.innerWidth - sectionPadding;
+          const cardWidth = Math.max(280, containerWidth - peek); // Never shrink below 280px
+          return { cardWidth: Math.floor(cardWidth), gap: 14 };
         } else {
           // Calculate card width from viewport width at desktop
           const cardsPerRow = 2;

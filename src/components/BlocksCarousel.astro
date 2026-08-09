@@ -5,7 +5,7 @@
 import TwoPillButton from './TwoPillButton.astro';
 
 const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
-  as: 'raw', eager: true
+  query: '?raw', import: 'default', eager: true
 });
 
 interface Block {

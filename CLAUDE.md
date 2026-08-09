@@ -32,6 +32,35 @@ If you have not actually looked at a rendered screenshot, say so explicitly: "I 
 
 On 2026-07-17, three consecutive "everything is working" reports for the RampResources section were incorrect or unverifiable, while the actual bug (stale Vite dev cache) was only found by pasting raw curl/grep output and inspecting DevTools directly. Confident-sounding summaries were the primary source of wasted iteration in that session, not the underlying bugs themselves.
 
+## Build verification (non-negotiable for imports, globs, build transforms)
+
+**Anything touching imports, globs, or build output must be verified against a production build, never the dev server.**
+
+Vite resolves globs and imports differently between dev mode (`npm run dev`) and build mode (`npm run build`). The dev server can hide build-time failures.
+
+**Standing rule:** For any code change involving:
+- `import.meta.glob()`
+- Dynamic imports (`import()`)
+- Asset imports that resolve at build time
+- Anything in Astro's build pipeline
+
+Verify with:
+```
+npm run build && npm run preview
+```
+
+Then test against the preview URL, not `localhost:3000` or `npm run dev`.
+
+**Why this matters:** On 2026-08-09, an icon import bug (`import.meta.glob()` returning module objects instead of raw strings) shipped to production three times because all local verification ran against the dev server. The dev server's Vite instance resolved the glob differently than the production build, so every local test passed while production failed.
+
+**Test procedure:**
+1. Make code change
+2. `npm run build` (full rebuild, not dev)
+3. `npm run preview` (serve the built output)
+4. Verify the feature works in preview (not dev server)
+5. Write a verification check that FAILS on broken state and PASSES when fixed
+6. Run the check before committing
+
 ## Cache issues
 
 If styles aren't reflecting a saved change:

@@ -1,5 +1,5 @@
 # BASALIO — HANDOFF
-Last updated 2026-08-08 (Mobile carousel system pass complete)
+Last updated 2026-08-09 (Icon import bug fixed, full-site audit run)
 
 ## STATE
 Site is LIVE AND PUBLIC at basalio.com. Netlify, production branch main.
@@ -140,6 +140,56 @@ SOLUTIONS TRIED (ranked by outcome):
   C. Multi-tier viewports: works, wastes tolerable ~50–120px per tier
   D. Shrink left column per band: viable refinement, awaiting review
 
+## ICON IMPORT BUG FIX (2026-08-09)
+
+**The Bug:** All 9 block icons rendered as "[object Module]" text on live site.
+Shipped to production 4 times before root cause was identified.
+
+**Root Cause:** `import.meta.glob()` returns a MODULE NAMESPACE OBJECT, not file
+contents. Neither `as: 'raw'` nor `as: 'url'` unwraps this — both are deprecated
+in Vite. The missing piece: `import: 'default'` explicitly unwraps to get the
+actual value (raw SVG string).
+
+**The Fix:**
+```javascript
+// BEFORE (broken, shipped 4 times):
+const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
+  as: 'raw', eager: true
+});
+
+// AFTER (fixed):
+const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
+  query: '?raw', import: 'default', eager: true
+});
+```
+
+Applied to:
+- BlocksCarousel.astro (homepage carousel) — commit 0b4790b
+- blocks.astro (/blocks page grid + detail sections) — commit d259a54
+
+**Verification Learnings:**
+- Verification checked element existence (`querySelector`, `offsetHeight`) instead
+  of functional correctness (image loaded, SVG rendered with children)
+- Dev server (`npm run dev`) masks build-time failures — Vite resolves globs
+  differently than production build
+- Browser cache and Cloudflare were misread as outages — always curl the live
+  HTML first before diagnosing a "broken deploy"
+
+## STANDING RULES (from 2026-08-09)
+
+**Imports & Globs:**
+- Never verify against `npm run dev`. Always test with `npm run build && npm run preview`
+- Verify the rendered output functionally (image dimensions > 0, SVG has children,
+  text content is correct), not just element existence
+
+**Verification:**
+- Before accepting a new check as valid, prove it FAILS against known broken state
+- A check that has never failed is not a check
+
+**Deployment:**
+- curl the live HTML before diagnosing a "broken deploy"
+- Browser cache and CDN/firewall rules have both been misread as outages
+
 ## DEFERRED
 
 **Known Debt from Mobile System Pass:**
@@ -149,9 +199,22 @@ SOLUTIONS TRIED (ranked by outcome):
   Deferred: requires testing transform-based animation with new positioning.
 
 **Still Open:**
-- **EO2** — Left column shrink to 431px (tested, working, awaiting Angelo review)
+
+**From GF Full-Site Audit (2026-08-09):**
+- **Body copy font-size regression** — UNVERIFIED. GF1 audit showed 12px on 12
+  routes (should be 18px). BUT: the measuring selector may be picking up a label
+  (happened twice earlier today). Confirm selector, class, and actual text content
+  before treating as real bug.
+- **15 hardcoded font-size: 16px in page styles** — EB2 only covered components.
+  Page-level styles in blocks, terms, privacy, support, pricing, contact, index
+  still have old hardcoded values. Likely cause of the 12px reading above.
+- **BlocksCarousel.astro:127 — flex: 0 0 500px on .courses-left** — Known,
+  deferred, has caused five bugs. Requires multi-tier responsive solution.
 - **Heading hierarchy audit** — 2 of 13 pages done. Semantic structure issue,
   affects screen-reader navigation. h2 elements currently chosen for size.
+
+**Deferred (earlier sessions):**
+- **EO2** — Left column shrink to 431px (tested, working, awaiting Angelo review)
 - **DESIGN-SYSTEM.md rewrite** — Approach approved (decisions-only doc, values in
   tokens.css, generated reference). Prerequisite: complete line-by-line inventory.
 - **~6.1MB orphaned build assets** — 2 videos + 5 PNGs confirmed unreferenced.

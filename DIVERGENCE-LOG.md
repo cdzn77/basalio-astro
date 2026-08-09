@@ -149,45 +149,68 @@ Before shipping a fix to a dual-axis component:
 
 ---
 
-## Incident: Text Content Bug Missed by Geometric Verification (2026-08-09)
+## Incident: SVG Icon Bug & False Fix (GB1 / GC1, 2026-08-09)
 
 **Date:** 2026-08-09
-**Bug ID:** GB1
+**Bug ID:** GB1 (original bug), GC1 (false fix detected and corrected)
 
-### What Happened
+### What Happened (GB1)
 
-All 9 block cards rendered "[object Module]" as visible text on the live homepage. Root cause: `import.meta.glob()` with `as: 'raw'` option returned module objects instead of raw SVG strings. When rendered via `set:html={import}`, the object stringified to "[object Module]" in the DOM.
+All 9 block cards rendered "[object Module]" as visible text on the live homepage. Root cause: `import.meta.glob()` with `as: 'raw'` option (in original code) returned module objects instead of raw SVG strings. When rendered via `set:html={import}`, the object stringified to "[object Module]" in the DOM.
 
-### Why Verification Missed It
+### Failed Fix (GB1 Attempt 1)
 
-The fix was verified using:
-- Build status ✓
-- Overflow checks (104/104) ✓
-- Screenshot review (visual appearance) ✓
+Attempted to fix by changing `as: 'raw'` → `as: 'url'` and rendering as `<img src={...}>`. This was a false fix:
+- `as: 'url'` on `/public/` paths still returned module objects in Astro 7
+- Production showed `https://basalio.com/[object%20Module]` in img src
+- Images failed to load (`img.complete: true`, `img.naturalWidth: 0px`)
+- Verification was incomplete: checked for img **existence**, not image **rendering**
 
-None of these caught the bug because:
-- Build passed (code syntax correct, imports valid)
-- Overflow checks only measure scroll width, not text content
-- Screenshots showed yellow cards with black icons (visual appearance correct), but DOM contained "[object Module]" text below the visual frame or overlaid by CSS
+### Root Cause Analysis
 
-The bug was **invisible in screenshots** — it appeared as DOM text but was hidden by `color: transparent` or positioned off-screen in the visual composition.
+The verification used was:
+```javascript
+// FALSE VERIFICATION
+const img = card.querySelector('.block-icon-img');
+const hasImg = !!img && img.src && img.offsetHeight > 0;
+// This passes even when img.src="[object Module]" and image fails to load
+```
 
-### Verification Debt
+This mirrors the earlier carousel bug: checking element existence without verifying the element is functional.
 
-Current verification skips text content entirely. Before shipping:
-- Screenshots catch visual regressions
-- Overflow checks catch layout overflows
-- Type-checking catches syntax errors
-- **But text rendering bugs are only caught by reading rendered text content**
+### Correct Fix (GC1)
+
+Reverted to `as: 'raw'` with `set:html` to render raw SVG markup inline:
+- `import.meta.glob(..., { as: 'raw', eager: true })` returns raw SVG strings
+- `set:html={icons['path.svg']}` renders directly into DOM
+- No img element, no URL encoding, no network request
+- SVG renders as valid DOM element with viewBox, attributes, children
+
+### Proper Verification (GC3)
+
+```javascript
+// PROPER VERIFICATION
+const svg = card.querySelector('.block-icon svg');
+const pass = !!svg && svg.hasAttribute('viewBox') && svg.children.length > 0;
+// Checks for actual rendered SVG, not just element existence
+// Fails if svg is missing, malformed, or empty
+```
+
+This detects:
+- If SVG element exists (not module object stringification)
+- If SVG is valid (has viewBox attribute)
+- If SVG has content (has child elements for shapes)
 
 ### Standing Rule
 
-When shipping text-containing components, include at least one of:
-1. DOM text content audit (grep/DOM query for expected strings, screenshot OCR of visible text)
-2. Playwright `page.innerText` assertion (verify expected strings appear in rendered content)
-3. Visual inspection of full-page screenshots at representative viewports (zoom in to read text)
+**When verifying rendered content, check for functional correctness, not just element existence:**
 
-For inline SVG or icon rendering, verify that the rendered output is NOT a stringified JavaScript object (`[object Module]`, `[object Object]`, etc.).
+- **Images:** Assert `img.complete && img.naturalWidth > 0`, not just `img.src`
+- **SVG:** Assert `svg && svg.viewBox && svg.children.length > 0`, not just `querySelector`
+- **Text:** Assert actual rendered text matches expected, not just DOM node exists
+- **Icons/graphics:** Verify pixel dimensions > 0, not just element presence
+
+**Why:** An element can exist in the DOM while being broken (failed img load, unparsed SVG, empty text node, module object stringification). Functional checks catch these; existence checks do not.
 
 ---
 

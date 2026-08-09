@@ -10,7 +10,7 @@ import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 import Button from '../components/Button.astro';
 
 const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
-  as: 'raw', eager: true
+  query: '?raw', import: 'default', eager: true
 });
 
 const title = "Blocks - Basalio";

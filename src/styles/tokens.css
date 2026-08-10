@@ -45,28 +45,12 @@
      TYPOGRAPHY – Font Sizes (normalized, no whitespace)
      ============================================================ */
 
-  --font-size-10: 10.5px;
-  --font-size-11: 11px;
   --font-size-12: 12px;
-  --font-size-13: 13px;
   --font-size-14: 14px;
-  --font-size-15: 15px;
-  --font-size-16: 16px;
   --font-size-18: 18px;
-  --font-size-20: 20px;
-  --font-size-22: 22px;
-  --font-size-24: 24px;
-  --font-size-28: 28px;
-  --font-size-32: 32px;
-  --font-size-40: 40px;
-  --font-size-48: 48px;
 
   /* Body copy size */
   --font-size-body: 18px;
-
-  /* Clamp values for responsive sizing */
-  --font-size-clamp-22-30-32: clamp(22px, 3vw, 32px);
-  --font-size-clamp-24-28-32: clamp(24px, 2.8vw, 32px);
 
   /* ============================================================
      TYPOGRAPHY – Font Families
@@ -80,9 +64,7 @@
      ============================================================ */
 
   --line-height-tight: 1.1;
-  --line-height-normal: 1.5;
   --line-height-relaxed: 1.6;
-  --line-height-loose: 1.7;
 
   /* ============================================================
      LABEL TOKENS – Unified across components
@@ -93,102 +75,32 @@
   --label-line-height: 19.6px;
   --label-letter-spacing: 2.8px;
 
-  /* Pixel-based line heights (from design) */
-  --line-height-16: 16px;
-  --line-height-18: 18px;
-  --line-height-20: 20px;
-  --line-height-22: 22px;
-  --line-height-24: 24px;
-  --line-height-28: 28px;
-  --line-height-32: 32px;
-  --line-height-36: 36px;
-  --line-height-48: 48px;
-  --line-height-19-6: 19.6px;
-  --line-height-22-4: 22.4px;
-
   /* ============================================================
      SPACING
      ============================================================ */
 
-  --space-0: 0;
-  --space-4: 4px;
   --space-8: 8px;
-  --space-10: 10px;
-  --space-12: 12px;
-  --space-14: 14px;
   --space-16: 16px;
-  --space-20: 20px;
-  --space-24: 24px;
-  --space-28: 28px;
-  --space-30: 30px;
-  --space-32: 32px;
-  --space-40: 40px;
-  --space-48: 48px;
-  --space-56: 56px;
-  --space-60: 60px;
-  --space-80: 80px;
 
   /* ============================================================
      BORDER RADIUS
      ============================================================ */
 
-  --radius-0: 0;
-  --radius-2: 2px;
-  --radius-3: 3px;
   --radius-4: 4px;
-  --radius-6: 6px;
-  --radius-8: 8px;
-  --radius-12: 12px;
-  --radius-15: 15px;
-  --radius-16: 16px;
-  --radius-18: 18px;
-  --radius-22: 22px;
-  --radius-full: 999px;
-  --radius-half: 50%;
-
-  /* Special radius for specific patterns */
-  --radius-footer: 0 0 40px 40px;
 
   /* ============================================================
      TRANSITIONS & ANIMATIONS
      ============================================================ */
 
-  /* Transition durations */
-  --duration-fast: 150ms;
-  --duration-normal: 200ms;
+  /* Transition durations (used in legacy presets) */
   --duration-slow: 300ms;
-  --duration-slower: 400ms;
 
-  /* Easing functions */
-  --ease-linear: linear;
+  /* Easing functions (used in legacy presets) */
   --ease-in-out: ease;
-  --ease-in-out-cubic: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease-in-out-custom: cubic-bezier(0, 0, 1, 1);
-
-  /* Transition presets */
-  --transition-color-fast: color var(--duration-fast) var(--ease-in-out);
-  --transition-all-normal: all var(--duration-normal) var(--ease-in-out);
-  --transition-all-slow: all var(--duration-slow) var(--ease-in-out);
-  --transition-transform-spring: transform var(--duration-slower) var(--ease-spring);
-  --transition-opacity-slow: opacity var(--duration-slow) var(--ease-in-out);
 
   /* ============================================================
-     LAYOUT / GRID
+     SPACING – GAPS (used in 404.astro)
      ============================================================ */
 
-  /* Common breakpoints (inferred from media queries in codebase) */
-  --breakpoint-mobile: 390px;
-  --breakpoint-tablet: 768px;
-  --breakpoint-desktop: 1024px;
-
-  /* Grid gaps found in codebase */
-  --gap-8: 8px;
-  --gap-12: 12px;
-  --gap-16: 16px;
-  --gap-20: 20px;
-  --gap-24: 24px;
-  --gap-28: 28px;
-  --gap-30: 30px;
   --gap-40: 40px;
 }

@@ -56,7 +56,9 @@ Standardizing on `-0.02em` creates a unified tracking ratio across all heading s
 
 **Action:** Add `--heading-letter-spacing: -0.02em` to tokens.css. Migrate each component in separate commits.
 
-**Status:** IMPLEMENTED (2026-08-10, commit ba3aaf3). All 12 instances replaced. Computed ratios: -0.8px at 40px, -0.4px at 20px (delta <0.5px, sub-perceptual).
+**Status:** IMPLEMENTED (2026-08-10, commit ba3aaf3). All 12 instances replaced.
+
+**Verification:** Verified at 28px (768px and 375px viewports): letter-spacing -0.56px, confirming -0.02em ratio. 40px sites verified at -0.8px. Both measured from build+preview, not source.
 
 ---
 

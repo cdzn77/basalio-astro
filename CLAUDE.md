@@ -201,6 +201,14 @@ When reporting computed values (font-size, letter-spacing, padding, etc.):
 
 **Why:** Media queries make the same CSS selector render differently across viewports. BS3c measured at 375px, DS-M at 1440px — the "contradictions" were actually different breakpoints rendering different computed values. The 18px body standard was measured at desktop and used to justify a mobile change that had to be reverted. A computed value without its viewport is incomplete and can mislead cross-viewport decisions.
 
+## Non-discriminating tests
+
+**A test that passes identically whether or not the change worked is not a test.**
+
+Example: Decision 3 added `--heading-letter-spacing: -0.02em` to replace hardcoded `-0.8px`. At 40px font-size, -0.02em equals -0.8px exactly: `40 × 0.02 = 0.8`. Measuring at 40px cannot distinguish old from new — both report -0.8px. Only sub-40px sites could confirm the decision. At 28px: -0.02em gives -0.56px (new), while hardcoded -0.8px would have given -0.8px (old). This case discriminates.
+
+**When verifying a change:** Pick the case where old and new diverge. A test that passes the same way either way adds no evidence.
+
 ## MECHANISM FACTS — established the expensive way, do not re-derive
 
 - Astro scoped CSS does NOT apply to slotted content. A slotted element

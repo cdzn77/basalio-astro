@@ -302,6 +302,72 @@ Comprehensive token audit completed. Findings for rewrite:
   body copy at the 1.6 ratio. Site standard for 18px body is 24px line-height (1.33).
   This is the second unused token found this session.
 
+---
+
+## RAMP STUDIO TEMPLATE EXTRACTION (RM1–RM9, 2026-08-10)
+
+Systematic audit of Basalio design against source Ramp Studio Framer template at 375px mobile viewport. Checked nine inherited claims (BC3–BC7 carousel, EO2 layout, RM1–RM4 design system).
+
+**REAL FINDINGS (Actionable):**
+
+1. **Hero heading letter-spacing inconsistency (INTERNAL, NOT Ramp comparison)**
+   - Basalio section headings: 40px / -0.8px = **-0.02em** (normalized ratio)
+   - Basalio hero heading: 48px / normal (0px) = **0em**
+   - Ramp standardizes all headings at -0.02em (hero 44px/-0.88px, H3 28px/-0.56px)
+   - **Finding:** Basalio's hero breaks its own section-heading letter-spacing pattern. No design rationale documented. Awaiting Angelo decision on whether this is intentional emphasis or an oversight.
+   - **Implication:** Changing hero to -0.8px (to match -0.02em) would alter shipped hero typography. Requires explicit sign-off.
+
+2. **Ramp body paragraph standard is 14px, not 22px**
+   - Measured all 56 `<p>` elements on Ramp page: 14px (36 instances, 64%), 16px (11 instances), 20px (6), 22px (1), 18px (1), 12px (1)
+   - 22px @ 739px is a one-off section introduction ("We believe marketing doesn't have to be..."), not body standard
+   - Ramp's de facto body is 14px (labels, card text, pricing, testimonials)
+   - **Conflict:** Table 3 (RM1) claimed "Ramp body 22px is transferable." Premise disproven. Basalio body is settled at 18px (--font-size-body, BC5). No adoption needed; values are independent design decisions.
+
+3. **Eyebrow→heading gap spacing (design observation, not conflict)**
+   - Basalio .courses-eyebrow margin-block-end: 12px
+   - Ramp "Our Courses" H2 → "Courses for Digital Creatives" H3: 20px gap (1304→1324px)
+   - Basalio hero .hero-eyebrow margin-block-end: 20px (more breathing room than .courses-eyebrow)
+   - **Finding:** Basalio's hero eyebrow gets MORE breathing room (20px) than section eyebrow (12px). Ramp matches Basalio's hero rhythm (20px). This reflects intentional design layering (hero emphasis > section hierarchy), not an error.
+
+**INHERITED FROM TEMPLATE (Not Findings):**
+
+1. **Eyebrow styling (14px / 500 / 2.8px letter-spacing)** — Identical across Basalio and Ramp. Template inheritance; no design decision here. Already shipped and correct.
+
+2. **Section heading letter-spacing -0.02em ratio** — Both sites compress headings at -0.02em (Ramp H3 28px/-0.56px, Basalio section heading 40px/-0.8px). This is template standard, not a Basalio design choice. Consistent with source.
+
+3. **Class naming debt** — .courses-* (BlocksCarousel), .testimonials-v2-* (WhoItsFor), headerType:'ramp'|'simple' (BaseLayout). All carry Ramp Studio provenance. Internal, not user-facing. Consolidation is future refactor work, not a current defect.
+
+**RETRACTED DURING EXTRACTION (False Claims Corrected):**
+
+These claims were made in earlier sessions but contradicted by measurement:
+
+1. "Eyebrow styling is a universal design pattern" — **Retracted (RM8a).** Basalio inherits from Ramp template; convergence due to shared ancestry, not universality.
+
+2. "Multiple H1 tags violate WCAG 2.1 Level A" — **Retracted (RM7e).** Ramp's split H1 is a 1.3.1 Info and Relationships structure issue, not a Level A failure. Noted as structural divergence but not an accessibility violation.
+
+3. "Ramp body is 22px" — **Retracted (RM8c).** Ramp body standard is 14px (36 of 56 paragraphs). Single 22px outlier at 739px. Table 3 premise disproven.
+
+4. "Ramp has no CTA on the page" — **Retracted (RM5a).** Ramp has 13 CTAs: "View course" (@586px, 12px link), "View all" (@1411px, 2110px), "Contact us" (@2750px), "Subscribe" (@3147px, 3544px), and footer links. No prominent button-style CTA like Basalio's "EXPLORE BLOCKS", but links are present and functional.
+
+5. "Ramp DOM is inaccessible in Framer iframes" — **Retracted (RM2).** Full page DOM was successfully measured at 375px viewport. Claim was false; page-level DOM is accessible.
+
+6. "Negative margin overlap occurs in eyebrow→heading" — **Retracted (RM4b).** No negative margins found. Gaps are produced by margin-block-end on eyebrow elements (12px courses, 20px hero). Measurement error: no overlap.
+
+7. "Button height is 36px" — **Retracted (RM7d).** .btn-wrapper.btn-acid computed height is 44px, not 36px. RM1/RM3 data contradicted by direct measurement.
+
+**METHODOLOGY NOTE (RM3–RM4 correction):**
+
+Six elements were incorrectly measured before enforcing element identification by text content first:
+- RM1: Body copy selector found .hero-eyebrow (14px) instead of body paragraph (18px)
+- RM1: Button selector found MENU button (12px) instead of EXPLORE BLOCKS (14px)
+- RM1: "Ramp DOM inaccessible" claim, contradicted by successful measurements in subsequent queries
+- RM3: Section body paragraph query returned empty, selector logic flaw
+- RM4: Attempted measurement before full-page scroll, missed off-fold content
+
+**Fix applied:** Identify elements by textContent match BEFORE measuring, paste the selector with confirmation, then measure. This eliminated selector-mismatch errors in RM6–RM9 audits.
+
+---
+
 **Deferred (earlier sessions):**
 - **EO2** — Left column shrink to 431px (tested, working, awaiting Angelo review)
 - **DESIGN-SYSTEM.md rewrite** — Approach approved (decisions-only doc, values in

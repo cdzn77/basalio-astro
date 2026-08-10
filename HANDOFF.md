@@ -236,10 +236,19 @@ not stranded. Non-issue. Icon debt minimal, lower priority than dead CSS.
   twice). Confirm selector before treating as bug.
 - **335px mobile hardcode** — FIXED. No 335px values found in codebase.
 
+**Token audit findings for DESIGN-SYSTEM.md rewrite (GR18-GR19):**
+- **--line-height-relaxed (1.6)** — Defined in tokens.css (line 84) but never used in
+  any component or page. Aspirational token or orphan? Audit during rewrite: check
+  all tokens in tokens.css against actual usage in src/. Found: no route renders
+  body copy at the 1.6 ratio. Site standard for 18px body is 24px line-height (1.33).
+  This is the second unused token found this session.
+
 **Deferred (earlier sessions):**
 - **EO2** — Left column shrink to 431px (tested, working, awaiting Angelo review)
 - **DESIGN-SYSTEM.md rewrite** — Approach approved (decisions-only doc, values in
   tokens.css, generated reference). Prerequisite: complete line-by-line inventory.
+  Add audit step: identify tokens defined but unused (--line-height-relaxed confirmed
+  orphan; survey for others during rewrite).
 - **Internal naming debt** — .courses-* classes in BlocksCarousel/blocks.astro,
   .testimonials-v2-heading in WhoItsFor, headerType:'ramp'|'simple' in BaseLayout,
   Ramp provenance comments. Not user-facing.

@@ -304,6 +304,18 @@ Comprehensive token audit completed. Findings for rewrite:
 
 ---
 
+## TYPOGRAPHY & BREAKPOINT AUDIT (BS1–BS5, 2026-08-10)
+
+### Findings Summary
+
+**Split body scale (BS4a):** HeaderSplit component overrides body copy to 14px on mobile (640px media query), while global --font-size-body is 18px desktop. Creates 4px fragmentation within single viewport at 375px. No documented rule.
+
+**Heading letter-spacing chaos (BS3c + BS5 proposal):** 45 hardcoded -0.8px declarations across 11 sites, applied to headings of 5 different sizes (20–40px), producing ratios from -0.020em to -0.040em. No ratio rule exists. **Proposed:** replace with single `-0.02em` token. Max visible delta +0.4px at 20px (sub-perceptual). Defer to DESIGN-SYSTEM.md rewrite, not standalone.
+
+**Breakpoint fragmentation (BS4b):** 25 distinct breakpoint values in use; only 3 defined in tokens.css. `--breakpoint-mobile: 390px` is orphaned (0 uses). HeaderSplit uses undocumented `640px` breakpoint (13 uses). No coordination between mobile media queries and defined breakpoints. Requires consolidation during DESIGN-SYSTEM.md rewrite.
+
+---
+
 ## RAMP STUDIO TEMPLATE EXTRACTION (RM1–RM9, 2026-08-10)
 
 Systematic audit of Basalio design against source Ramp Studio Framer template at 375px mobile viewport. Checked nine inherited claims (BC3–BC7 carousel, EO2 layout, RM1–RM4 design system).

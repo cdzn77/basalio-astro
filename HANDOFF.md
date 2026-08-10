@@ -304,15 +304,48 @@ Comprehensive token audit completed. Findings for rewrite:
 
 ---
 
-## TYPOGRAPHY & BREAKPOINT AUDIT (BS1–BS5, 2026-08-10)
+## TYPOGRAPHY & BREAKPOINT AUDIT (BS1–BS11, 2026-08-10)
 
 ### Findings Summary
 
-**Split body scale (BS4a):** HeaderSplit component overrides body copy to 14px on mobile (640px media query), while global --font-size-body is 18px desktop. Creates 4px fragmentation within single viewport at 375px. No documented rule.
+**Split body scale (BS4a):** HeaderSplit component overrides body copy to 14px on mobile (640px media query), while global --font-size-body is 18px desktop. Creates 4px fragmentation within single viewport at 375px. Component-level override, no site-wide responsive system.
 
 **Heading letter-spacing chaos (BS3c + BS5 proposal):** 45 hardcoded -0.8px declarations across 11 sites, applied to headings of 5 different sizes (20–40px), producing ratios from -0.020em to -0.040em. No ratio rule exists. **Proposed:** replace with single `-0.02em` token. Max visible delta +0.4px at 20px (sub-perceptual). Defer to DESIGN-SYSTEM.md rewrite, not standalone.
 
-**Breakpoint fragmentation (BS4b):** 25 distinct breakpoint values in use; only 3 defined in tokens.css. `--breakpoint-mobile: 390px` is orphaned (0 uses). HeaderSplit uses undocumented `640px` breakpoint (13 uses). No coordination between mobile media queries and defined breakpoints. Requires consolidation during DESIGN-SYSTEM.md rewrite.
+**Media query breakpoints (BS10 corrected):** The "25 breakpoints" finding was a **measurement error** — static max-width declarations were counted as responsive breakpoints. 
+
+**Actual responsive system: 7 media queries, 55 total uses:**
+- `1024px` (10 uses) — `--breakpoint-desktop` ✓
+- `768px` (8 uses) — `--breakpoint-tablet` ✓
+- `640px` (7 uses) — primary mobile (not `390px`, which is orphaned 0 uses)
+- `374px` (4 uses) — WCAG 1.4.10 reflow guard (intentional, ≤375px edge case)
+- `900px` (2 uses) — blocks.astro layout-specific breakpoint (justified, not drift)
+- `782px` (1 use) — hacks.astro demo grid (low-use demo breakpoint)
+- `540px` (1 use) — hero-lab test page (internal page only)
+
+**Conclusion:** This is a **coherent, minimal responsive system**. No consolidation needed. The four orphans are each defensible:
+  - 374px: WCAG reflow compliance (documented intent)
+  - 900px: blocks.astro layout (component-specific, justified)
+  - 782px: hacks demo (low-risk, isolated)
+  - 540px: hero-lab test (internal, non-critical)
+
+**Component max-width constraints (18 values, NOT breakpoints):** Separate inventory for sizing decisions (1786/1791/1792px content widths, 554/800/1020/1200/1400px component widths, etc.). See deferred items below.
+
+---
+
+### Deferred (Do NOT act this session)
+
+**1. Hero max-width divergence (1791px vs 1786px consolidation)**
+   - Hero uses 1791px (3 instances)
+   - Other pages use 1786px (8 instances)
+   - Consolidation delta: 5px at 1920px viewport on live containers
+   - Action: Measure impact before tokenizing. Defer to deliberate design pass, not cleanup.
+
+**2. Component max-width inventory (18 distinct values)**
+   - Live components: 1786, 1791, 1792, 800, 554, 1020, 1200, 1400px
+   - Demo/internal: 500, 480, 450, 365, 300px
+   - Purpose: Sizing constraints, not responsive breakpoints
+   - Action: Review during DESIGN-SYSTEM.md rewrite if useful for tokenization. No immediate changes.
 
 ---
 

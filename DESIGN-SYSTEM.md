@@ -1,476 +1,166 @@
-# Basalio Design System
+# Basalio Design System — Decisions Document
 
-## Color Palette
-
-### Primary Colors
-- **Accent Yellow**: `#EDFF10` - Hero sections, buttons, highlights, interactive elements
-- **Black**: `#0A0A0A` - Primary text, buttons, UI elements
-- **True Black**: `#000000` - Text on yellow backgrounds
-
-### Neutral Grays
-- **Light Gray**: `#E8E8E8` - Light module backgrounds
-- **Beige**: `#DFDCD5` - Light warm background (Grid Reveal)
-- **Off-White**: `#F6F4EF` - Very light backgrounds
-- **Medium Gray**: `#B3B3B3` - Secondary backgrounds
-- **Mid-Gray**: `#D0D0D0` - Tertiary backgrounds
-- **Dark Gray**: `#2D2D2D` - Dark module backgrounds
-- **Darker Gray**: `#1A1A1A` - Very dark backgrounds
-- **Very Dark**: `#1C1917` - Performance section background
-- **Custom Black**: `#0B0B0A` - Case Study Transition dark background
-
-### Text Colors
-- **Primary**: `#000000` - Main text on light backgrounds
-- **Secondary**: `#666666` - Secondary text
-- **Tertiary**: `#AAA` - Tertiary text on dark backgrounds
-- **Light Text**: `#FFFFFF` - Text on dark backgrounds
-- **Muted**: `#D4CABE` - Muted text on dark backgrounds
+This document records design decisions and their rationale. All token VALUES live in `src/styles/tokens.css`. This document explains the "why" behind the decisions.
 
 ---
 
-## Typography
+## Decision 1: Token Consolidation — Remove 24 orphan tokens
 
-### Font Families
-1. **Space Grotesk** (Display/Headlines)
-   - Font weights: 500, 600, 700
-   - Usage: H1, H2, H3, Navigation, Buttons, UI labels
+**Decision:** Audit found 69 orphan tokens in tokens.css (24 truly unused, 45 with 1–2 references). Remove the 24 with zero usage.
 
-2. **Inter** (Body/UI)
-   - Font weights: 400, 500, 600, 700
-   - Usage: Body text, descriptions, module content
+**Rationale:** During the August 2026 audit, token usage was inventoried. A set of orphan color tokens exist with no markup references. Keeping them creates maintenance debt and makes future audits harder. The 45 tokens with 1–2 references stay; low usage doesn't mean low value — some may be reserved for upcoming work.
 
-3. **IBM Plex Mono** (Monospace/Code)
-   - Font weights: 400, 500
-   - Usage: Eyebrows, labels, small UI text
-   - Text transform: UPPERCASE
-   - Letter spacing: 0.08em
+**Color tokens**: Retain all orphan color tokens despite low usage. Colors carry semantic meaning and may be deliberate reserves for accent/theme flexibility. Removal of colors is deferred.
 
-4. **Fraunces** (Serif Italic)
-   - Font weight: 500
-   - Font style: Italic
-   - Usage: Accent italic text in headlines (e.g., "a foundation")
+**Action:** Grep src/ for `class="token-name"` attributes. Only remove if zero matches. (Scoped Astro CSS complicates grep; use build verification.)
 
-### Type Scale
-
-#### Headings
-- **H1** (Hero): 48px–96px (clamp), Space Grotesk 700, Letter spacing -0.02em
-- **H2** (Section): 32px–72px (clamp), Space Grotesk 700, Letter spacing -0.02em, Margin-bottom: 40px
-- **H3** (Module): 32px, Inter 400, Line height 42px, Margin-bottom: 16px
-- **H4** (Modal): 18px, Font weight 600
-
-#### Body
-- **Large Body**: 18px, Inter 400, Line height 24px
-- **Body**: 16px, Inter 400, Line height 1.5
-- **Small**: 14px, Font weight 400
-- **Micro**: 12px, Font weight 400
-
-#### Labels & UI
-- **Eyebrow**: 12px, IBM Plex Mono 400, Uppercase, Letter spacing 0.08em, Color: Secondary
-- **Button**: 14px, Space Grotesk 600, Uppercase, Letter spacing 0.08em
+**Status:** DECISION PENDING IMPLEMENTATION. Await cleanup commit.
 
 ---
 
-## Spacing System
+## Decision 2: Font-Weight System — Add tokens for 300, 400, 500, 600, 700
 
-### Base Units (8px Grid)
-- `xs`: 8px
-- `sm`: 12px
-- `md`: 16px
-- `lg`: 20px
-- `xl`: 24px
-- `2xl`: 32px
-- `3xl`: 40px
-- `4xl`: 60px
-- `5xl`: 80px
-- `6xl`: 100px
-- `7xl`: 120px
+**Decision:** Add five font-weight tokens to tokens.css:
+- `--font-weight-light: 300`
+- `--font-weight-normal: 400`
+- `--font-weight-medium: 500`
+- `--font-weight-semibold: 600`
+- `--font-weight-bold: 700`
 
-### Common Spacing Values
-- **Section padding**: 100px (vertical), 40px (horizontal)
-- **Module tile padding**: 60px (top/sides), 0 (bottom)
-- **Module content margin-bottom**: 60px
-- **Gap between grid items**: 0 (no gap in module grid)
-- **Responsive (tablet)**: 60px → 40px
-- **Responsive (mobile)**: 40px → 20px
+**Rationale:** Audit found all font-weight values hardcoded across components: 300 (1 use), 400 (84 uses), 500 (8 uses), 600 (30 uses), 700 (11 uses). No tokens exist. Tokenization:
+- Centralizes weight decisions in one place
+- Allows tuning of emphasis hierarchy
+- Supports brand voice consistency across components
 
----
+**Critical distinction:** The `@font-face` weight-range declaration (`font-weight: 400 700;` in font imports) is font metadata and remains untouched in global.css. These tokens are for element-level styling only (`font-weight: var(--font-weight-bold)`), not for @font-face ranges.
 
-## Components
+**Current hardcoded usage**: 400 (84), 500 (8), 600 (30), 700 (11), 300 (1).
 
-### Navigation
-- **Position**: Fixed, top 14px
-- **Background**: rgba(255, 255, 255, 0.95)
-- **Backdrop**: blur(14px)
-- **Border**: 1px solid rgba(0, 0, 0, 0.08)
-- **Border-radius**: 999px (full pill)
-- **Padding**: 8px 8px 8px 22px
-- **Shadow**: 0 24px 48px -24px rgba(0, 0, 0, 0.15)
-- **Z-index**: 50
+**Action:** Add to tokens.css, then migrate components in separate commits per file.
 
-#### Nav Links
-- **Font**: Space Grotesk 700, 18px
-- **Color**: #000
-- **Hover state**: Color transition 0.15s ease
-
-#### Mobile Menu Button
-- **Display**: Hidden on desktop, block on tablet (768px and below)
-- **Size**: 44px × 44px
-- **Background**: None
-- **Color**: #000
-
-#### Mobile Menu
-- **Position**: Fixed full screen
-- **Background**: #fff
-- **Padding-top**: 80px
-- **Links**: Full width, padding 16px 20px, border-bottom 1px solid rgba(0, 0, 0, 0.08)
-- **Hover**: Background rgba(0, 0, 0, 0.05), color #000
+**Status:** DECISION PENDING IMPLEMENTATION.
 
 ---
 
-### Buttons
+## Decision 3: Heading Letter-Spacing — Adopt -0.02em single ratio
 
-#### Button Base
-- **Font**: Space Grotesk 600, 14px
-- **Padding**: 15px 32px
-- **Min-height**: 44px
-- **Border**: 2px solid #000
-- **Border-radius**: 0 (sharp corners)
-- **Cursor**: Pointer
-- **Transition**: all 0.25s cubic-bezier(0.16, 1, 0.3, 1)
-- **Display**: Inline-flex, center-aligned
+**Decision:** Replace all hardcoded `-0.8px` heading letter-spacing with a single `--heading-letter-spacing: -0.02em` token.
 
-#### Button States
-- **:hover**: transform translateY(-2px), box-shadow elevation
-- **:active**: transform scale(0.98), reduced shadow
-- **:focus**: outline 2px solid #000, outline-offset 2px
+**Rationale:** Audit found 11 sites with hardcoded `-0.8px` applied to headings of 5 different sizes (20, 24, 28, 32, 40px). This produces inconsistent ratios: -0.020em at 40px, -0.040em at 20px. No documented rule exists.
 
-#### Button Variants
+Standardizing on `-0.02em` creates a unified tracking ratio across all heading sizes. At 40px it's already `-0.02em` (no change); at 20px it loosens from -0.040em to -0.020em (visual delta +0.2px per character, sub-perceptual). Largest delta at 20px: +0.4px absolute (within measurement noise).
 
-**Dark Button** (.btn-dark)
-- **Background**: #000
-- **Color**: #EDFF10
-- **Shadow**: 0 4px 12px rgba(0, 0, 0, 0.15)
-- **Hover shadow**: 0 8px 24px rgba(0, 0, 0, 0.25)
+**Sites affected**: WhoItsFor.astro, FAQ.astro, BlocksCarousel.astro, StatusLedger.astro, HeaderSplit.astro, index.astro (×2), pricing.astro (×2), roadmap.astro, support.astro.
 
-**Light Button** (.btn-light)
-- **Background**: #EDFF10
-- **Color**: #000
-- **Border-color**: #000
-- **Shadow**: 0 4px 12px rgba(0, 0, 0, 0.08)
-- **Hover shadow**: 0 8px 24px rgba(0, 0, 0, 0.12)
+**Action:** Add `--heading-letter-spacing: -0.02em` to tokens.css. Migrate each component in separate commits.
 
-#### Nav Button Primary
-- **Background**: #000
-- **Color**: #fff
-- **Font**: Space Grotesk 600, 13px
-- **Padding**: 12px 24px
-- **Border-radius**: 999px (full pill)
-- **Shadow**: 0 2px 8px rgba(0, 0, 0, 0.15)
+**Status:** DECISION PENDING IMPLEMENTATION. Verify at 20px headings post-deployment for perceptual impact.
 
 ---
 
-### Module Tile System
+## Decision 4: Spacing Scale Consolidation — Consolidate --gap-* and --space-* 
 
-#### Module Row Container
-- **Display**: Grid
-- **Grid columns**: 1fr 1fr (2-column, full-bleed single columns on responsive)
-- **Gap**: 0 (no gap)
-- **Max-width**: 1320px
-- **Height**: 600px (container height)
-- **Padding**: 0 60px
-- **Overflow**: hidden
-- **Align-items**: stretch
+**Decision:** Audit found two parallel spacing scales:
+- `--gap-*` (4 working references, all in 404.astro)
+- `--space-*` (5 working references, global.css + pages)
 
-#### Module Tile
-- **Display**: flex, flex-direction column
-- **Height**: 100%
-- **Padding**: 60px 60px 0 60px
-- **Background variants**:
-  - `.bg-light`: #E8E8E8
-  - `.bg-dark`: #2D2D2D
-  - `.bg-mid-dark`: #2D2D2D
-  - `.bg-accent`: #B3B3B3
-  - Custom backgrounds via inline styles
+Consolidate to single `--space-*` scale. Migrate 404.astro's gap tokens to --space equivalents.
 
-#### Module Content
-- **Margin-bottom**: 60px
-- **Padding**: 0
-- **Flex**: Column
+**Rationale:** Two nearly identical scales with similar usage counts indicate unintentional duplication. Both serve the same semantic purpose (responsive spacing). Consolidation:
+- Reduces cognitive load for future developers
+- Prevents scale drift (if one evolves, the other won't)
+- Centralizes spacing decisions in one place
 
-#### Module Image
-- **Width**: 100%
-- **Flex**: 1
-- **Overflow**: hidden
-- **Margin**: 0
-- **Min-height**: 0
-- **Video object-fit**: 
-  - Default: cover
-  - .case-study-video: contain (override with !important)
+**Action:** Migrate 404.astro 4 uses from --gap-* to --space-* equivalents. Delete orphaned --gap-* token definitions.
 
-#### Module Full-Bleed (Single Module Rows)
-- **Background**: #2D2D2D
-- **Color**: #fff
-- **Padding**: 120px 60px
-- **Margin**: 0
-- **Display**: flex, flex-direction column
-- **Justify-content**: flex-start
+**Status:** DECISION PENDING IMPLEMENTATION.
 
 ---
 
-### Hero Section
+## Decision 5: Dead CSS Files — Delete layout.css, utilities.css, animations.css
 
-- **Width**: 100%
-- **Min-height**: 100vh
-- **Background**: #EDFF10
-- **Display**: flex, center-aligned
-- **Padding**: 120px 40px 60px
-- **Text-align**: center
+**Decision:** Three CSS files are never imported and contain 27+ undefined token references. Delete them.
 
-#### Hero Content
-- **Max-width**: 1200px
+**Files to delete:**
+- `src/styles/layout.css` (292 lines, never imported)
+- `src/styles/utilities.css` (265 lines, never imported)
+- `src/styles/animations.css` (undefined, referenced only in orphan tokens)
 
-#### Hero Eyebrow
-- **Font**: IBM Plex Mono 12px, uppercase
-- **Letter-spacing**: 0.08em
-- **Color**: #000
-- **Margin-bottom**: 40px
+**Rationale:** Build audit verified these files have zero grep matches in import statements. They contain:
+- Dead CSS rules that never render
+- Undefined token references (--space-sm, --line-height-relaxed, etc.)
+- Legacy patterns from earlier design iterations
 
-#### Hero H1
-- **Font**: Space Grotesk 700
-- **Font-size**: clamp(48px, 8vw, 96px)
-- **Line-height**: 1.1
-- **Margin-bottom**: 40px
-- **Color**: #000
-- **Letter-spacing**: -0.02em
+Deletion removes code burden without functional impact.
 
-#### Hero Subtitle
-- **Font-size**: clamp(16px, 2.5vw, 20px)
-- **Color**: #000
-- **Max-width**: 65ch
-- **Margin-bottom**: 40px
-- **Line-height**: 1.6
+**Verification:** Run `npm run build` after deletion. Confirm no "undefined variable" errors in build output.
 
-#### Hero CTA
-- **Display**: flex, gap 16px
-- **Justify-content**: center
-- **Align-items**: center
-- **Flex-wrap**: wrap
+**Action:** Delete files. Verify build succeeds. Commit.
+
+**Status:** DECISION PENDING IMPLEMENTATION.
 
 ---
 
-### Interactive Module Components
+## Decision 6: HeaderSplit Body Override — Document, don't change
 
-#### Scroll Sequence (Range Slider)
-- **Progress bar**: 40px height
-- **Background**: rgba(255, 255, 255, 0.08)
-- **Fill gradient**: linear-gradient(90deg, #EDFF10, #B8CC00)
-- **Slider thumb**: 18px circle, #EDFF10
-- **Hover state**: 22px circle, enhanced shadow
+**Decision:** HeaderSplit component deliberately overrides body paragraph font-size from 18px (global default) to 14px at `max-width: 640px`.
 
-#### Image Counter Display
-- **Font-size**: 64px
-- **Font-weight**: 700
-- **Color**: #0A0A0A
-- **Background**: #F0F0F0
-- **Padding**: 16px 24px
-- **Border-radius**: 12px
-- **Display**: Inline-block
+**Rule:** `@media (max-width: 640px) { .body p { font-size: 14px; line-height: 20px; } }`
 
-#### Parallax Container
-- **Background**: linear-gradient(135deg, #1A1A1A 0%, #0F0F0F 100%)
-- **Border-radius**: 12px
-- **Overflow**: hidden
-- **Layers**: Multiple radial gradients with DFFF00 accents
-- **Visual element**: 200px×200px rotated diamond with #EDFF10 border
+**Rationale:** This is a component-level responsive decision, not drift. It creates a 4px body scale fragmentation at mobile viewports (14px in HeaderSplit, default 18px elsewhere). No rationale is documented in the code; this is a DECISION NEEDING REVIEW.
 
-#### Text Reveal Words
-- **Animation**: slideWord 0.4s cubic-bezier(0.16, 1, 0.3, 1)
-- **Display**: inline-block
-- **Margin-right**: 6px
-- **Stagger**: 0.06s between words
+**Question for Angelo:** Is this fragmentation intentional? Options:
+1. Keep as-is (component makes its own call)
+2. Remove override, use site body standard everywhere (18px at all viewports)
+3. Apply site-wide to all mobile pages (generalize the rule)
 
-#### Hover Zoom Box
-- **Size**: 240px × 240px
-- **Background**: linear-gradient(135deg, #E0E0E0 0%, #D0D0D0 100%)
-- **Border-radius**: 12px
-- **Transition**: all 0.3s cubic-bezier(0.16, 1, 0.3, 1)
-- **Hover scale**: 1.08
-- **Hover shadow**: 0 16px 48px rgba(0, 0, 0, 0.12)
+**Action:** DEFERRED. Awaiting design intent clarification before any change.
 
-#### Click Expand Cards
-- **Background**: rgba(255, 255, 255, 0.1)
-- **Border**: 1px solid rgba(255, 255, 255, 0.15)
-- **Padding**: 32px 24px
-- **Color**: #fff
-- **Border-radius**: 0
-- **Min-height**: 120px
-- **Display**: flex, center-aligned
-- **Hover**: Background rgba(255, 255, 255, 0.15), elevated shadow
-- **Icon color**: #EDFF10
-
-#### Scroll Lock Frames
-- **Background**: linear-gradient(90deg, #D0D0D0 0%, #C0C0C0 100%)
-- **Display**: flex, gap 30px
-- **Padding**: 60px 40px
-- **Frame background**: rgba(255, 255, 255, 0.3)
-- **Animation**: slideWord 0.6s ease-out with stagger (0.15s between)
+**Status:** DOCUMENTED, AWAITING DECISION.
 
 ---
 
-## Animations & Motion
+## Deferred — DO NOT ACT THIS SESSION
 
-### Timing Functions
-- **Standard**: cubic-bezier(0.16, 1, 0.3, 1) - Snappy, energetic
-- **Easing**: ease-out - Smooth deceleration
-- **Linear**: Default for scroll-based
+### 1. Max-Width Divergence (1786px vs 1791px vs 1792px)
 
-### Transition Times
-- **Fast**: 0.15s - Hover states, color changes
-- **Normal**: 0.2s–0.3s - Button interactions
-- **Medium**: 0.4s–0.6s - Module reveals, text animations
-- **Slow**: 1s+ - Large sequence animations
+Hero uses `1791px` (3 instances). Pages use `1786px` (8 instances). blocks.astro:469 uses `1792px` (1 instance).
 
-### Key Animations
-- **riseIn**: 0–1s, opacity fade + translateY(0)
-- **benchPulse**: Pulsing box-shadow, 0.4s cycle
-- **fillBar**: Progress bar fill, 2s
-- **countUp**: Counter animations, 1s ease-out
-- **slideUp**: Element slide up, 0–1s opacity + transform
-- **slideWord**: Word-by-word reveal, 0.4s stagger
+Consolidating 1791→1786 and 1792→1786 would tighten content width by 5–6px at ultra-wide viewports (1920px+).
 
-### Scroll Animations
-- **Module reveals**: Fade in + translateY(60px) on scroll trigger
-- **Section headings**: Fade in + translateY(40px) on scroll trigger
-- **Scroll trigger start**: "top 85%"
-- **Scroll trigger end**: "top 50%"
+**Status:** DEFERRED. Measure impact on Hero at 1920px before consolidating. Affects live containers; requires visual verification.
+
+### 2. Component Max-Width Inventory (18 values)
+
+Audit identified 18 static `max-width` declarations on component wrappers (sizing constraints, not responsive breakpoints):
+- Live components: 554px, 800px, 1020px, 1200px, 1400px
+- Demo/internal: 300px, 365px, 450px, 480px, 500px
+
+**Status:** DEFERRED. Review during DESIGN-SYSTEM.md phase if component-level sizing would benefit from tokenization. Not urgent; these are intentional sizing choices, not system drift.
 
 ---
 
-## Layout Grid
+## Implementation Order
 
-### Container Widths
-- **Max-width**: 1200px (content)
-- **Max-width**: 1320px (modules)
-- **Full-width**: 100%
-
-### Responsive Breakpoints
-
-#### Desktop (1024px+)
-- **Padding**: 40px sides
-- **Module padding**: 60px
-- **Section padding**: 100px
-
-#### Tablet (768px–1024px)
-- **Padding**: 40px sides
-- **Module padding**: 40px
-- **Section padding**: 60px
-- **Grid**: Single column (1fr)
-- **Module height**: auto, min-height 400px
-
-#### Mobile (480px–768px)
-- **Padding**: 20px sides
-- **Module padding**: 40px
-- **Section padding**: 60px
-- **Grid**: Single column, 1fr
-
-#### Small Mobile (360px–480px)
-- **Padding**: 16px sides
-- **Module padding**: 30px
-- **Section padding**: 40px
+1. Decision 5: Delete dead CSS files (animations.css, layout.css, utilities.css) — FIRST
+   - After deletion, re-run orphan count (tokens used only in dead code become orphaned)
+   - Update Decision 1 with corrected orphan list before proceeding
+2. Decision 1: Remove orphan tokens (after true orphan count verified)
+3. Decision 2: Font-weight tokens (enables component updates)
+4. Decision 3: Heading letter-spacing token (11 component updates)
+5. Decision 4: Spacing scale consolidation (5 references)
+6. Decision 6: Awaiting screenshot review and decision
 
 ---
 
-## Shadows
+## Audit References
 
-- **xs**: 0 2px 8px rgba(0, 0, 0, 0.15)
-- **sm**: 0 4px 12px rgba(0, 0, 0, 0.15)
-- **md**: 0 8px 24px rgba(0, 0, 0, 0.12)
-- **lg**: 0 8px 24px rgba(0, 0, 0, 0.25)
-- **xl**: 0 24px 48px -24px rgba(0, 0, 0, 0.15)
-- **inset**: inset 0 0 0 1px rgba(0, 0, 0, 0.1)
+All findings sourced from August 2026 comprehensive audit:
+- **Token inventory:** DS1 audit, verified via grep src/ for class= attributes
+- **Font-weight gap:** DS2 reconciliation, usage counts from EB2 migration
+- **Heading tracking:** BS3c analysis, -0.02em ratio calculation
+- **Spacing scales:** DS4 reconciliation, reference count verification
+- **Dead CSS:** Dead code discovery via import scanning
+- **HeaderSplit override:** BS4a body scale fragmentation finding
 
----
-
-## Border Radius
-
-- **sharp**: 0 (primary, buttons, modules)
-- **sm**: 2px (small elements)
-- **md**: 12px (demo boxes, interactive elements)
-- **full**: 999px (navigation, pill buttons)
-
----
-
-## Focus & Accessibility
-
-### Focus States
-- **Outline**: 2px solid (context-dependent color)
-- **Outline-offset**: 2px (usually), -2px (interactive cards)
-- **Color**: #000 (light backgrounds), #EDFF10 (dark backgrounds)
-
-### Touch Targets
-- **Minimum size**: 44px × 44px (all interactive elements)
-- **Spacing**: Adequate padding between touchable areas
-
-### Color Contrast
-- **Text on yellow (#EDFF10)**: #000 (contrast ratio: 19.56:1 ✓)
-- **Text on black (#0A0A0A)**: #fff (contrast ratio: 21:1 ✓)
-- **Text on gray (#E8E8E8)**: #000 (contrast ratio: 14:1 ✓)
-
----
-
-## Motion Preferences
-
-### Prefers Reduced Motion
-```css
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-  }
-}
-```
-
----
-
-## Design Tokens Summary
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| `--color-primary` | #EDFF10 | Accent, highlights |
-| `--color-text` | #000 | Primary text |
-| `--color-text-secondary` | #666 | Secondary text |
-| `--color-bg-light` | #E8E8E8 | Light backgrounds |
-| `--color-bg-dark` | #2D2D2D | Dark backgrounds |
-| `--font-display` | Space Grotesk | Headlines |
-| `--font-body` | Inter | Body text |
-| `--font-mono` | IBM Plex Mono | Labels, code |
-| `--space-md` | 16px | Default spacing |
-| `--space-lg` | 24px | Section spacing |
-| `--transition-fast` | 0.15s | Quick interactions |
-| `--transition-normal` | 0.3s | Standard transitions |
-| `--radius-sharp` | 0 | Primary radius |
-| `--radius-full` | 999px | Pill shapes |
-
----
-
-## Usage Guidelines
-
-### When to Use Colors
-- **Yellow (#EDFF10)**: Call-to-action buttons, hero section backgrounds, interactive highlights, focus states on dark backgrounds
-- **Black (#0A0A0A/000)**: Primary text, navigation, buttons, interactive elements
-- **Light Gray (#E8E8E8)**: Module backgrounds, secondary UI surfaces
-- **Dark Gray (#2D2D2D)**: Dark module backgrounds, contrast sections
-- **Beige (#DFDCD5)**: Warm light backgrounds (Grid Reveal, editorial)
-
-### When to Use Typography
-- **Space Grotesk (Bold)**: Headlines (H1–H3), navigation, large buttons
-- **Inter (Regular–Bold)**: Body copy, module descriptions, UI text
-- **IBM Plex Mono**: Labels, eyebrows, small UI text, metadata
-- **Fraunces (Italic)**: Accent text within headlines for emphasis
-
-### Component Pairing
-- **Light backgrounds**: Dark text, dark borders, dark shadows
-- **Dark backgrounds**: Light text, light borders, subtle shadows
-- **Interactive states**: Yellow accent, shadow lift, color transitions
-- **Focus states**: Sharp outline, high contrast
-
+See HANDOFF.md for full audit trail.

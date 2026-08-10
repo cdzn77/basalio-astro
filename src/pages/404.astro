@@ -29,20 +29,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     /* Hero type scale (shared with Hero.astro): clamp(48px, 8vw, 96px) */
     font-size: clamp(48px, 8vw, 96px);
     font-weight: 700; /* TODO: add --font-weight-bold token */
-    margin: 0 0 var(--gap-20) 0;
+    margin: 0 0 var(--space-20) 0;
     color: var(--text-on-paper);
   }
 
   .not-found-text {
     font-size: var(--font-size-body);
     color: var(--text-on-paper-muted);
-    margin: 0 0 var(--gap-40) 0;
+    margin: 0 0 var(--space-40) 0;
     max-width: 500px; /* TODO: add token for body-max-width */
   }
 
   .not-found-cta {
     display: inline-block;
-    padding: 12px var(--gap-24); /* TODO: add token for 12px vertical padding */
+    padding: 12px var(--space-24); /* TODO: add token for 12px vertical padding */
     background-color: var(--acid);
     color: var(--text-on-acid);
     text-decoration: none;

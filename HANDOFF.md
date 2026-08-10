@@ -184,6 +184,48 @@ until re-measured. Claims written during active debugging describe transient sta
 and often outlive their conditions. If an item references specific commit messages
 or previous sessions' findings, assume it needs re-verification.
 
+**DESIGN-SYSTEM.md Rewrite Input (DS1–DS11, 2026-08-10):**
+
+Comprehensive token audit completed. Findings for rewrite:
+
+1. **Orphan tokens (69 total):** 45 tokens used, 69 unused. Colors carry most volume
+   (well-distributed). Prunable. Full audit: DS1 token usage report.
+
+2. **Font-weight gap (genuine):** No tokens for weights 300, 600, 700. Distribution:
+   - 400 (body standard): 84 uses
+   - 600 (semibold): 30 uses
+   - 700 (bold): 11 uses
+   - 300 (light): 1 use
+   Recommend tokens: --font-weight-normal (400), --font-weight-semibold (600),
+   --font-weight-bold (700).
+
+3. **Parallel scales (decision pending):** --gap-* (4 refs, all in 404.astro) vs
+   --space-* (5 refs, global.css). Both cover spacing concept. Same semantic purpose,
+   ~equal usage, different names. Naming decision pending. Recommendation: consolidate
+   to --space-* scale, migrate 404.astro. Cost: 3–4 search-replace operations.
+
+4. **Dead code (deletable):** layout.css, utilities.css, animations.css are NOT
+   imported anywhere. 27 undefined token references live only in these files.
+   Safe to delete. No production CSS depends on them.
+
+5. **Content max-width divergence (design question, not defect):**
+   - / (Hero): 1791px max-width (binds at ≥1791px viewport)
+   - /blocks, /hacks, /contact: 1786px (HeaderSplit, binds)
+   - /pricing: 1786px (HeaderSplit, constrained by parent .pricing-inner)
+   Produces 42px left-gutter difference at 1920px viewport between Hero and
+   non-Hero pages. Unrelated values, never coordinated. Design intent unclear.
+   Note for Angelo: is this intentional spacing or drift?
+
+6. **False positives (retracted, do not act):**
+   - Undefined --space-sm/md/lg/xl/4xl/6xl aliases — live only in unimported
+     layout.css, animations.css. Dead code, not a live bug.
+   - Button.astro var(--fontWeight) — working correctly via Astro define:vars
+     prop conversion. No bug.
+   - font-weight: 400 700 in @font-face — valid CSS for variable font weight
+     range (Instrument Sans, Azeret Mono). Do not remove.
+   - HeaderSplit max-width: 1786px — parent-constrained on /pricing, active on
+     other pages. Harmless redundancy, keep as-is.
+
 **Known Debt from Mobile System Pass:**
 - **FF1 min-height band-aids** — Carousel height fix uses hardcoded 308px/503px
   values that match current card heights. Real fix: remove position: absolute

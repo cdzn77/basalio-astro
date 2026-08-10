@@ -12,6 +12,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "verify:overflow": "node scripts/verify-section.js",
+    "verify:headings": "node scripts/verify-headings.mjs",
     "pre-deploy": "npm run verify:overflow && npm run build"
   },
   "dependencies": {

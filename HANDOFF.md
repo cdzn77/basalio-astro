@@ -146,14 +146,12 @@ SOLUTIONS TRIED (ranked by outcome):
 `import.meta.glob()` returned module namespace objects; fixed with `query: '?raw', import: 'default'`.
 Verified live production clean on / and /blocks (2026-08-10).
 
-**Orphaned build assets — claim contradicted** — Audited 2026-08-10. Scanned
-public/ (source assets, not dist/). Found 127 media files: 12 REFERENCED
-(0.6MB, actively used), 26 UNCERTAIN (0.1MB, @3x/@0.5x retina variants possibly
-loaded dynamically), 89 UNREFERENCED (0.3MB, truly orphaned SVG/PNG icons).
-HANDOFF claim of "6.1MB, 2 videos + 5 PNGs" contradicted by evidence. dist/
-(built output) is 1.9MB total — build artifacts regenerated each build, not
-stranded. Truly unreferenced assets only 0.3MB. Resolve: not a blocking issue.
-Orphaned icon debt exists but is minimal, lower priority than dead CSS rules.
+**Orphaned build assets — claim contradicted, not a blocker** — Audited
+2026-08-10. Scanned public/ (source assets). Found 127 media files: 12
+REFERENCED (0.6MB), 26 UNCERTAIN (0.1MB @3x/@0.5x retina variants), 89
+UNREFERENCED (0.3MB truly orphaned). Original claim of "6.1MB, 2 videos + 5
+PNGs" was wrong by 20x. dist/ (built output) is 1.9MB regenerated each build,
+not stranded. Non-issue. Icon debt minimal, lower priority than dead CSS.
 
 ## STANDING RULES (from 2026-08-09)
 

@@ -51,7 +51,7 @@ const { hideNewsletter = false } = Astro.props;
 
         <!-- Support Column -->
         <nav class="footer-link-column">
-          <h4 class="footer-column-label">SUPPORT</h4>
+          <h2 class="footer-column-label">SUPPORT</h2>
           {footerNav.support.map((link) => (
             <a href={link.href} class="footer-link">{link.label}</a>
           ))}
@@ -61,7 +61,7 @@ const { hideNewsletter = false } = Astro.props;
       <!-- RIGHT: Newsletter Section -->
       {!hideNewsletter && (
         <div class="footer-right-section">
-          <h4 class="footer-column-label">{footerCopy.newsletterHeading}</h4>
+          <h2 class="footer-column-label">{footerCopy.newsletterHeading}</h2>
           <p class="footer-newsletter-text">{footerCopy.newsletterBody}</p>
           <div class="footer-newsletter-form">
             <input type="email" placeholder="Email" class="footer-email-input" />

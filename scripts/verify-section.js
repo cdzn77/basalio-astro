@@ -1,5 +1,5 @@
 import { chromium } from 'playwright';
-import { ALL_ROUTES } from './routes.js';
+import { ALL_ROUTES, NOT_FOUND_PROBE } from './routes.js';
 
 const PORT = process.env.PORT || 4321;
 const VIEWPORTS = [320, 360, 375, 390, 414, 768, 1024, 1440];
@@ -13,9 +13,19 @@ async function verifySectionOverflow(browser, route, viewport) {
     await page.setViewportSize({ width: viewport, height: 900 });
 
     // Navigate to route
-    await page.goto(`http://localhost:${PORT}${route}`, {
+    const response = await page.goto(`http://localhost:${PORT}${route}`, {
       waitUntil: 'networkidle'
     });
+
+    // For 404 probe, verify HTTP 404 status
+    if (route === NOT_FOUND_PROBE) {
+      const status = response.status();
+      if (status !== 404) {
+        throw new Error(
+          `404 handler probe returned HTTP ${status}, expected 404. Probe path may be wrong.`
+        );
+      }
+    }
 
     // BB1.2 ASSERT: window.innerWidth matches requested viewport
     const actualViewport = await page.evaluate(() => window.innerWidth);
@@ -82,14 +92,16 @@ async function main() {
 
       if (result.error) {
         totalFailures++;
+        const label = route === NOT_FOUND_PROBE ? '404 handler' : route;
         console.log(
-          `❌ ${route.padEnd(15)} @ ${viewport.toString().padStart(4)}px: ERROR: ${result.error}`
+          `❌ ${label.padEnd(15)} @ ${viewport.toString().padStart(4)}px: ERROR: ${result.error}`
         );
       } else {
+        const label = route === NOT_FOUND_PROBE ? '404 handler' : route;
         const status =
           result.failCount === 0 ? '✅' : `❌ (${result.failCount} overflow)`;
         console.log(
-          `${status} ${route.padEnd(15)} @ ${result.actualViewport.toString().padStart(4)}px: ${result.passCount}/${result.totalSections} sections pass`
+          `${status} ${label.padEnd(15)} @ ${result.actualViewport.toString().padStart(4)}px: ${result.passCount}/${result.totalSections} sections pass`
         );
 
         if (result.failCount > 0) {

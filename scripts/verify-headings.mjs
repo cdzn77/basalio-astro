@@ -8,7 +8,7 @@
  */
 
 import { chromium } from 'playwright';
-import { PRODUCTION_ROUTES } from './routes.js';
+import { PRODUCTION_ROUTES, NOT_FOUND_PROBE } from './routes.js';
 
 const ROUTES = PRODUCTION_ROUTES;
 
@@ -21,9 +21,20 @@ const LEVEL_ORDER = { h1: 1, h2: 2, h3: 3, h4: 4, h5: 5, h6: 6 };
   for (const route of ROUTES) {
     const page = await browser.newPage();
     const url = `http://localhost:4321${route}`;
+    const displayLabel = route === NOT_FOUND_PROBE ? '404 handler' : route;
 
     try {
-      await page.goto(url, { waitUntil: 'networkidle' });
+      const response = await page.goto(url, { waitUntil: 'networkidle' });
+
+      // For 404 probe, verify HTTP 404 status
+      if (route === NOT_FOUND_PROBE) {
+        const status = response.status();
+        if (status !== 404) {
+          throw new Error(
+            `404 handler probe returned HTTP ${status}, expected 404. Probe path may be wrong.`
+          );
+        }
+      }
 
       const headings = await page.evaluate(() => {
         return Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6')).map(h => ({
@@ -36,7 +47,7 @@ const LEVEL_ORDER = { h1: 1, h2: 2, h3: 3, h4: 4, h5: 5, h6: 6 };
 
       // Assertion a: exactly one h1
       if (h1Count !== 1) {
-        console.error(`❌ ${route}: Expected 1 h1, found ${h1Count}`);
+        console.error(`❌ ${displayLabel}: Expected 1 h1, found ${h1Count}`);
         allPassed = false;
         await page.close();
         continue;
@@ -44,7 +55,7 @@ const LEVEL_ORDER = { h1: 1, h2: 2, h3: 3, h4: 4, h5: 5, h6: 6 };
 
       // Assertion b: h1 is first in document order
       if (headings[0]?.tag !== 'h1') {
-        console.error(`❌ ${route}: h1 is not first heading (first is ${headings[0]?.tag})`);
+        console.error(`❌ ${displayLabel}: h1 is not first heading (first is ${headings[0]?.tag})`);
         allPassed = false;
         await page.close();
         continue;
@@ -57,7 +68,7 @@ const LEVEL_ORDER = { h1: 1, h2: 2, h3: 3, h4: 4, h5: 5, h6: 6 };
         const currentLevel = LEVEL_ORDER[h.tag];
         if (prevLevel > 0 && currentLevel > prevLevel + 1) {
           console.error(
-            `❌ ${route}: Level skip detected (${headings[headings.indexOf(h) - 1]?.tag} → ${h.tag})`
+            `❌ ${displayLabel}: Level skip detected (${headings[headings.indexOf(h) - 1]?.tag} → ${h.tag})`
           );
           levelSkip = true;
           break;
@@ -72,9 +83,9 @@ const LEVEL_ORDER = { h1: 1, h2: 2, h3: 3, h4: 4, h5: 5, h6: 6 };
       }
 
       // All assertions passed
-      console.log(`✅ ${route}: 1 h1, first in order, no level skips`);
+      console.log(`✅ ${displayLabel}: 1 h1, first in order, no level skips`);
     } catch (error) {
-      console.error(`❌ ${route}: Navigation or assertion error: ${error.message}`);
+      console.error(`❌ ${displayLabel}: Navigation or assertion error: ${error.message}`);
       allPassed = false;
     }
 

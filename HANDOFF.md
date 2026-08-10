@@ -221,11 +221,12 @@ Applied to:
 
 **Heading Hierarchy & Verification (2026-08-09, HC17-HC25):**
 
-**Route list scope clarification:**
+**Route list scope clarification (HC28-HC30):**
 - **PUBLIC_ROUTES (10):** Indexable pages listed in sitemap.xml, not disallowed by robots.txt
 - **PRODUCTION_ROUTES (11):** User-reachable pages in production (includes /welcome, disallowed but live)
+- **HEADING_ROUTES (12):** Pages tested for heading hierarchy (PRODUCTION_ROUTES + synthetic 404-handler probe)
 - **ALL_ROUTES (13):** All routes including internal tests (/hero-lab, /404) and disallowed pages
-- **Finding (HC25):** Output header "11 Production routes verified" was followed by 10-item list. This was a labeling error (confusing "public" and "production"), not a data error. Resolved by renaming constants in scripts/routes.js to clarify scope.
+- **Synthetic probe:** `/__404-handler-probe` is a nonexistent path that triggers Netlify's 404 error handler. Not a user-reachable page; used for verification only. Separated into HEADING_ROUTES to avoid conflating synthetic test probes with actual production routes.
 
 **Verification scripts:**
 - **HC21 — Transcription error** — Pasted "/contact @ 375px: 2/3 sections pass" in HC14 output. Script logic unchanged (verify-section.js pass/fail condition identical across commits). Error was manual transcription when copying output, not a script bug. All subsequent pasted numbers verified via re-run. Records the risk: any output from this task may have been retyped rather than pasted verbatim, including 104/104.

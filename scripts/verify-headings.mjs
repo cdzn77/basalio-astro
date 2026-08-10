@@ -8,9 +8,9 @@
  */
 
 import { chromium } from 'playwright';
-import { PRODUCTION_ROUTES, NOT_FOUND_PROBE } from './routes.js';
+import { HEADING_ROUTES, NOT_FOUND_PROBE } from './routes.js';
 
-const ROUTES = PRODUCTION_ROUTES;
+const ROUTES = HEADING_ROUTES;
 
 const LEVEL_ORDER = { h1: 1, h2: 2, h3: 3, h4: 4, h5: 5, h6: 6 };
 

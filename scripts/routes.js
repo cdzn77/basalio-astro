@@ -14,8 +14,8 @@ export const PUBLIC_ROUTES = [
   '/terms'
 ];
 
-// PRODUCTION_ROUTES (12): User-reachable pages in production (includes disallowed routes and 404 handler)
-// Must have exactly 1 h1 for heading hierarchy verification
+// PRODUCTION_ROUTES (11): User-reachable pages in production (includes disallowed routes)
+// All pages accessible to users, whether indexed or not
 export const PRODUCTION_ROUTES = [
   '/',
   '/blocks',
@@ -27,8 +27,14 @@ export const PRODUCTION_ROUTES = [
   '/roadmap',
   '/support',
   '/terms',
-  '/welcome',        // disallowed by robots.txt but live and user-reachable
-  '/__404-handler-probe'  // probes 404 error page (nonexistent path)
+  '/welcome'        // disallowed by robots.txt but live and user-reachable
+];
+
+// HEADING_ROUTES (12): Pages requiring exactly 1 h1 for heading hierarchy verification
+// Includes PRODUCTION_ROUTES + synthetic probe that tests the 404 error handler
+export const HEADING_ROUTES = [
+  ...PRODUCTION_ROUTES,
+  '/__404-handler-probe'  // synthetic probe: nonexistent path → 404 error handler
 ];
 
 // ALL_ROUTES (13): All routes tested by overflow verification (includes internal test routes)

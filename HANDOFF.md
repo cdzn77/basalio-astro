@@ -219,6 +219,10 @@ Applied to:
 
 **Still Open:**
 
+**Heading Hierarchy (2026-08-09, HC17-HC20):**
+- **/404 page has zero h1** — Missing required page heading. verify:overflow covers /404 but verify:headings does not (11-route script, /404 is internal route). Add /404 to heading verification or fix the page heading.
+- **.testimonial-name-v2 naming debt** — Class renders audience roles/disciplines (e.g., "Portfolio & Brand Designers"), not person names. Markup is correct (h3 precedes quote content in order). Naming mismatch only—no change needed.
+
 **From GF Full-Site Audit (2026-08-09):**
 - **Body copy font-size regression** — UNVERIFIED. GF1 audit showed 12px on 12
   routes (should be 18px). BUT: the measuring selector may be picking up a label

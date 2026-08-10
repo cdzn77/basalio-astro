@@ -140,40 +140,11 @@ SOLUTIONS TRIED (ranked by outcome):
   C. Multi-tier viewports: works, wastes tolerable ~50–120px per tier
   D. Shrink left column per band: viable refinement, awaiting review
 
-## ICON IMPORT BUG FIX (2026-08-09)
+## RESOLVED
 
-**The Bug:** All 9 block icons rendered as "[object Module]" text on live site.
-Shipped to production 4 times before root cause was identified.
-
-**Root Cause:** `import.meta.glob()` returns a MODULE NAMESPACE OBJECT, not file
-contents. Neither `as: 'raw'` nor `as: 'url'` unwraps this — both are deprecated
-in Vite. The missing piece: `import: 'default'` explicitly unwraps to get the
-actual value (raw SVG string).
-
-**The Fix:**
-```javascript
-// BEFORE (broken, shipped 4 times):
-const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
-  as: 'raw', eager: true
-});
-
-// AFTER (fixed):
-const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
-  query: '?raw', import: 'default', eager: true
-});
-```
-
-Applied to:
-- BlocksCarousel.astro (homepage carousel) — commit 0b4790b
-- blocks.astro (/blocks page grid + detail sections) — commit d259a54
-
-**Verification Learnings:**
-- Verification checked element existence (`querySelector`, `offsetHeight`) instead
-  of functional correctness (image loaded, SVG rendered with children)
-- Dev server (`npm run dev`) masks build-time failures — Vite resolves globs
-  differently than production build
-- Browser cache and Cloudflare were misread as outages — always curl the live
-  HTML first before diagnosing a "broken deploy"
+**[object Module] in block icons** — Fixed 2026-08-09 (commits 0b4790b, d259a54).
+`import.meta.glob()` returned module namespace objects; fixed with `query: '?raw', import: 'default'`.
+Verified live production clean on / and /blocks (2026-08-10).
 
 ## STANDING RULES (from 2026-08-09)
 

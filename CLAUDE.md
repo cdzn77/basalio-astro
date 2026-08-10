@@ -213,3 +213,9 @@ Contrast claims must ALWAYS come from actual computed styles in the browser, nev
 - npm run verify:overflow must stay at 104/104. 320px and 360px are
   required — WCAG 1.4.10 needs 320, and 360 is the most common Android
   width.
+- **Deferred items decay.** Before an item from "still open" / "deferred" earns
+  priority, re-verify it against production first. Six sessions prioritized
+  the [object Module] bug that had already shipped fixed on 2026-08-09 because
+  the HANDOFF item was never re-verified. A stale open issue in HANDOFF.md is
+  documentation debt, not a bug list. Cheapest check: curl production, grep for
+  the symptom, grep the codebase for the fix.

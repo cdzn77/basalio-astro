@@ -146,11 +146,14 @@ SOLUTIONS TRIED (ranked by outcome):
 `import.meta.glob()` returned module namespace objects; fixed with `query: '?raw', import: 'default'`.
 Verified live production clean on / and /blocks (2026-08-10).
 
-**Orphaned build assets (~0.5MB)** — Audited 2026-08-10. Found 61 unreferenced
-image/SVG files totaling ~0.5MB (images: 267KB, SVG: 173KB). HANDOFF claim of
-"6.1MB, 2 videos + 5 PNGs" was unverified; basalio-hero.mp4 is actively
-referenced. Build hygiene only — not page weight (unreferenced assets never
-downloaded). Defer cleanup; not blocking.
+**Orphaned build assets — claim contradicted** — Audited 2026-08-10. Scanned
+public/ (source assets, not dist/). Found 127 media files: 12 REFERENCED
+(0.6MB, actively used), 26 UNCERTAIN (0.1MB, @3x/@0.5x retina variants possibly
+loaded dynamically), 89 UNREFERENCED (0.3MB, truly orphaned SVG/PNG icons).
+HANDOFF claim of "6.1MB, 2 videos + 5 PNGs" contradicted by evidence. dist/
+(built output) is 1.9MB total — build artifacts regenerated each build, not
+stranded. Truly unreferenced assets only 0.3MB. Resolve: not a blocking issue.
+Orphaned icon debt exists but is minimal, lower priority than dead CSS rules.
 
 ## STANDING RULES (from 2026-08-09)
 
@@ -216,21 +219,23 @@ downloaded). Defer cleanup; not blocking.
 **Content markup:**
 - **.testimonial-name-v2 naming debt** — Class renders audience roles/disciplines (e.g., "Portfolio & Brand Designers"), not person names. Markup is correct (h3 precedes quote content in order). Naming mismatch only—no change needed.
 
-**From GF Full-Site Audit (2026-08-09) — Re-verified 2026-08-10:**
-- **Body copy font-size regression** — UNVERIFIED. GF1 audit showed 12px on 12
-  routes (should be 18px). BUT: the measuring selector may be picking up a label
-  (happened twice earlier today). Confirm selector, class, and actual text content
-  before treating as real bug.
-- **13 hardcoded font-size: 16px in page styles** — STILL OPEN. EB2 only covered
-  components. Verified in src: terms(1), support(3), index(2), blocks(1),
+**Deferred Item Audit (GR6-GR9, re-verified 2026-08-10):**
+- **Dead CSS rules** — STILL OPEN. 15 rule definitions in src/pages:
+  .hero-description (4: blocks:435,676,697 + contact:112),
+  .social-link (2: contact:299,310), .social-links-inline (1: contact:293),
+  .social-links (1: contact:363), .ledger-description (2: index:335 + pricing:208),
+  .risk-content (5: index:463,469 + pricing:340,346,629). No HTML elements use
+  these rules (verified built HTML). Rules remain in source CSS. Removal deferred.
+- **13 hardcoded font-size: 16px in page styles** — STILL OPEN. EB2 only
+  covered components. Verified in src: terms(1), support(3), index(2), blocks(1),
   contact(3), privacy(1), pricing(2). Not yet migrated to --font-size-body token.
-- **Dead CSS rules (.hero-description, .social-link, .ledger-description,
-  .risk-content)** — STILL OPEN. 14 rule definitions exist in src/pages
-  (blocks, index, contact, pricing). No elements use them in built HTML, but rules
-  remain in source. Removal deferred.
 - **BlocksCarousel.astro:126 — flex: 0 0 500px on .courses-left** — STILL OPEN.
   Constraint remains. Known to cause five bugs. Requires multi-tier responsive
   solution.
+- **Body copy font-size regression** — UNVERIFIED. GF1 audit showed 12px on 12
+  routes (should be 18px). BUT: measuring selector may pick up labels (happened
+  twice). Confirm selector before treating as bug.
+- **335px mobile hardcode** — FIXED. No 335px values found in codebase.
 
 **Deferred (earlier sessions):**
 - **EO2** — Left column shrink to 431px (tested, working, awaiting Angelo review)

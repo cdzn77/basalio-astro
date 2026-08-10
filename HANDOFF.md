@@ -66,12 +66,13 @@ Phase 1 (commit c4d9e14) + Phase 2 (commits 1274869, 231354d):
   - Body prose is 18px via --font-size-body token.
   - See DIVERGENCE-LOG.md for full audit and standing rules.
 
-**EO2: Left column shrink refinement** (DEFERRED, low priority)
+**EO2: Left column shrink refinement** (REJECTED 2026-08-10)
   - Tested: @media (min-width: 1024px) and (max-width: 1508px): 431px left
-  - Result: Tier 2 activates at 1440px instead of 1509px
-  - Improves only 1440–1508px band (3 cards instead of 2)
-  - 1280–1350px remain at 2 cards — minimal gain
-  - Pending: visual review by Angelo
+  - Claimed result: 3 cards instead of 2 at 1440px
+  - Measured result: 431px yields 2 cards (same as 500px). 3 cards require 1270px
+    viewport; unreachable by column shrink. Claim disproven by measurement (BC6).
+  - If 431px is wanted for compositional reasons, that is a new decision
+    requiring separate justification. Not approved on stated purpose.
 
 ## CAROUSEL MOBILE SYSTEM PASS — COMPLETE (2026-08-08)
 
@@ -124,21 +125,21 @@ Verification scripts added:
   - fl1-pagination-arithmetic.mjs: Page stepping & math
 
 ## PATTERN LOG — Fixed-pixel-widths in flex rows
-Four separate layout failures caused by hardcoded .courses-left 500px
-constraint in flex rows, exacerbated when:
-  1. Mobile breakpoint caused carousel collapse (RM1)
-  2. Desktop 1280–1440px: heading went from 3 to 5 lines
-  3. Carousel clipping at 1280 due to available space squeeze
-  4. 1440px wastes 225px, prevents 3-card display without shrinking left column
 
 RULE: Fixed pixel widths inside flex containers need explicit plans for
 every responsive breakpoint. If width < viewport, siblings get squeezed.
 
-SOLUTIONS TRIED (ranked by outcome):
-  A. Flex-shrink without pressure: failed (carousel has no intrinsic width)
-  B. Cap carousel viewport everywhere: worked but wastes space at 1600+
-  C. Multi-tier viewports: works, wastes tolerable ~50–120px per tier
-  D. Shrink left column per band: viable refinement, awaiting review
+Claims and Testing History:
+Four layout failures were documented for .courses-left 500px flex-basis.
+All four were measured and disproven 2026-08-10 (BC3, BC6):
+  1. Mobile breakpoint collapse — DISPROVEN: carousel renders at 320/375px
+  2. Heading 3→5 lines at 1280–1440px — DISPROVEN: renders as 2 lines all widths
+  3. Carousel clipping at 1280px — DISPROVEN: last card resolves via arrows
+  4. 1440px waste prevents 3-card display — MEASUREMENTS CONTRADICT: 431px yields 2 cards
+     (3 cards require 1270px viewport; unreachable by column shrink at 1440px)
+
+No observed layout failures remain. Fixed-width constraint is covered by 104/104
+overflow checks across 8 breakpoints. Item removed from open queue.
 
 ## RESOLVED
 
@@ -169,6 +170,19 @@ not stranded. Non-issue. Icon debt minimal, lower priority than dead CSS.
 - Browser cache and CDN/firewall rules have both been misread as outages
 
 ## DEFERRED
+
+**Claim Verification Notice (2026-08-10):**
+Nine inherited claims were systematically checked on 2026-08-10:
+- BC3: BlocksCarousel edge-bleed — VERIFIED WORKING (not a bug, intentional peek)
+- BC4: "Five bugs" claim — UNSUBSTANTIATED (replaced with four measured items, all disproven)
+- BC5: Body copy 12px — DISPROVEN (GF1 selector error, actual 18px across all routes)
+- BC6: PATTERN LOG items 1–4 — DISPROVEN (all four measured and failed)
+- EO2: 431px yields 3 cards — DISPROVEN (still only 2 cards, measured)
+
+Any item in this file written before 2026-08-10 should be treated as UNVERIFIED
+until re-measured. Claims written during active debugging describe transient states
+and often outlive their conditions. If an item references specific commit messages
+or previous sessions' findings, assume it needs re-verification.
 
 **Known Debt from Mobile System Pass:**
 - **FF1 min-height band-aids** — Carousel height fix uses hardcoded 308px/503px
@@ -228,15 +242,10 @@ not stranded. Non-issue. Icon debt minimal, lower priority than dead CSS.
 - **13 hardcoded font-size: 16px in page styles** — STILL OPEN. EB2 only
   covered components. Verified in src: terms(1), support(3), index(2), blocks(1),
   contact(3), privacy(1), pricing(2). Not yet migrated to --font-size-body token.
-- **BlocksCarousel.astro:126 — flex: 0 0 500px on .courses-left** — STILL OPEN.
-  Constraint causes four layout failures (documented in PATTERN LOG, lines 128-132):
-  1. Mobile breakpoint carousel collapse (RM1)
-  2. Desktop 1280–1440px heading line-count regression (3→5 lines)
-  3. Carousel clipping at 1280 due to available space squeeze
-  4. 1440px wastes 225px, prevents 3-card display without shrinking left column
-  Note: Claim of "five bugs" (commit 9ec3b0c) lacked enumeration; these four are
-  the documented items. EO2 implements solution D (shrink left column per band)
-  against item 4. Requires multi-tier responsive solution.
+- **BlocksCarousel.astro:126 — flex: 0 0 500px on .courses-left** — CLOSED. Known
+  fragility (fixed width in flex row) but no observed defect. All four documented
+  failure claims disproven by measurement 2026-08-10 (BC3, BC6). Covered by 104/104
+  overflow checks across 8 breakpoints. No action required.
 - **Body copy font-size regression** — CLOSED. GF1 audit claimed 12px on 12 routes,
   but the measuring selector was incorrect (picked up labels/secondary text, not
   body paragraphs). Verified 2026-08-10: body copy is 18px across all routes

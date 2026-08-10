@@ -9,6 +9,7 @@ interface Props {
   eyebrow: string;
   heading: string;
   body: string | string[];
+  level?: 'h1' | 'h2';
   cta?: {
     label: string;
     href: string;
@@ -17,7 +18,8 @@ interface Props {
   surface?: 'paper' | 'ink' | 'alt';
 }
 
-const { eyebrow, heading, body, cta, surface = 'paper' } = Astro.props;
+const { eyebrow, heading, body, level = 'h2', cta, surface = 'paper' } = Astro.props;
+const Tag = level;
 
 const surfaceClass = {
   paper: 'var(--surface-paper)',
@@ -33,7 +35,7 @@ const bodyArray = Array.isArray(body) ? body : [body];
     <!-- LEFT: Eyebrow, heading, body -->
     <div class="header-split-left">
       <p class="eyebrow">{eyebrow}</p>
-      <h1 class="heading">{heading}</h1>
+      <Tag class="heading">{heading}</Tag>
       <div class="body">
         {bodyArray.map((paragraph) => (
           <p>{paragraph}</p>

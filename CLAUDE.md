@@ -255,3 +255,10 @@ Contrast claims must ALWAYS come from actual computed styles in the browser, nev
   it), not the fix (rule definitions removed). Before closing a "dead CSS rules"
   item, grep src/ for the actual rule definitions. Same applies to all deferred
   items — always check source-level evidence, not built output.
+- **Record measurement conditions with the value.** A measured value carries its
+  conditions. "18px body standard" was measured at desktop, recorded without the
+  viewport qualifier, and later used to justify a mobile change that had to be
+  reverted (4118465 → 850ae64). Always record: viewport, component state, surface
+  type, or other scope alongside any measurement that will be cited in decisions
+  later. Example: "Body copy 18px at 1440px desktop, 14px at 375px /hacks mobile"
+  not just "18px body standard."

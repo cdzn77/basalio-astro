@@ -97,26 +97,36 @@ Deletion removes code burden without functional impact.
 
 **Action:** Delete files. Verify build succeeds. Commit.
 
+**Safety verification (DS-G audit):** No live component depends on a token defined in these dead files. All 13 component-scoped tokens used in live code (Hero, Accordion, StatusLedger, blocks, hero-lab) are defined locally in `<style>` blocks or injected dynamically via inline style attributes. Safe to delete without regression.
+
 **Status:** DECISION PENDING IMPLEMENTATION.
 
 ---
 
-## Decision 6: HeaderSplit Body Override — Document, don't change
+## Decision 6: Mobile Body Scale Inconsistency — Unresolved
 
-**Decision:** HeaderSplit component deliberately overrides body paragraph font-size from 18px (global default) to 14px at `max-width: 640px`.
+**Finding:** The "18px site standard" does not hold at 375px mobile viewport.
 
-**Rule:** `@media (max-width: 640px) { .body p { font-size: 14px; line-height: 20px; } }`
+**Audit results:**
+- **/hacks at 375px:** 18 paragraphs use 14px body copy; HeaderSplit 14px override aligns with page
+- **/pricing at 375px:** Mixed 14px and 18px body copy; no single standard applies
+- Desktop assumption invalid at mobile: breakpoint-triggered body scale decisions required per-page
 
-**Rationale:** This is a component-level responsive decision, not drift. It creates a 4px body scale fragmentation at mobile viewports (14px in HeaderSplit, default 18px elsewhere). No rationale is documented in the code; this is a DECISION NEEDING REVIEW.
+**Current state:** HeaderSplit uses 14px at mobile, matching /hacks body but misaligning with /pricing's 18px sections.
 
-**Question for Angelo:** Is this fragmentation intentional? Options:
-1. Keep as-is (component makes its own call)
-2. Remove override, use site body standard everywhere (18px at all viewports)
-3. Apply site-wide to all mobile pages (generalize the rule)
+**Root cause:** Mobile body scale is inconsistent per-page, not per-component. HeaderSplit cannot match both pages simultaneously.
 
-**Action:** DEFERRED. Awaiting design intent clarification before any change.
+**Blocker:** Requires a cross-page mobile body scale strategy, not a component-level override. 
 
-**Status:** DOCUMENTED, AWAITING DECISION.
+**Decision required:** Establish whether:
+1. Each page gets its own mobile body scale (current state, inconsistent)
+2. All pages adopt a unified 14px mobile standard
+3. All pages adopt a unified 18px mobile standard
+4. Body scale is page-template-based, not site-wide
+
+**Action:** AWAITING DESIGN DECISION. Do not resolve at component level.
+
+**Status:** UNRESOLVED — BLOCKS FURTHER TYPOGRAPHIC CONSISTENCY WORK.
 
 ---
 

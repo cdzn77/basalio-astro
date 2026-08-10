@@ -113,6 +113,36 @@ When changing the hero background and surface:
 - Before reporting done, run `git diff --stat` and confirm only
   the expected files changed.
 
+## CSS deletion verification (added 2026-08-10 after pricing.astro regression)
+
+**Before deleting a CSS rule, verify it is truly unused:**
+
+1. Grep `src/` for the class in **HTML markup** (`class=` attributes):
+   ```bash
+   grep -rn 'class="your-class' src/
+   ```
+   If any matches exist, the rule is LIVE. Do not delete it.
+
+2. Do NOT grep built HTML in `dist/`. Astro appends scope attributes 
+   (`data-astro-cid-*`) which naive patterns miss:
+   ```bash
+   # WRONG - will miss Astro-scoped elements
+   grep 'class="your-class' dist/pricing/index.html
+   
+   # CORRECT - search source files before markup renders
+   grep 'class="your-class' src/pages/*.astro
+   ```
+
+3. Verify against the actual page file, not the compiled output. Built HTML is 
+   minified and scope-transformed; source is the source of truth.
+
+**Why this matters:** On 2026-08-10, commit 919da6f deleted `.ledger-description` 
+and `.risk-content` CSS rules from pricing.astro, claiming they were dead. They 
+were actually used by live HTML elements (lines 76, 101, 110 in the source). The 
+verification used `grep 'class="risk-content' dist/pricing/index.html` which 
+passed because of scope-attribute transformation. The elements rendered unstyled 
+on the live site until GR15 restored the rules with EB3 font-size migration.
+
 ## Deployment verification steps
 
 Before pushing to main (and before reporting any layout/styling task complete):

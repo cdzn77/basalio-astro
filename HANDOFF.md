@@ -198,6 +198,15 @@ Applied to:
   from .carousel-track; use position: relative for natural height contribution.
   Deferred: requires testing transform-based animation with new positioning.
 
+**Heading Hierarchy Fix (2026-08-09):**
+- **Split corrected:** 10 h1 + 11 h2 = 21 total, not 11 h1 + 10 h2 as initially
+  reported. Error in GO2 recount: table listed index.astro as "N/A - Hero handles
+  h1" without reading the file. That row was inference presented as measurement.
+  index.astro actually received level="h2" (commit 51735f9) for pricing section
+  heading, reducing / from 2 h1 → 1 h1.
+- All 11 production routes verified live at basalio.com: exactly 1 h1 each.
+- /hero-lab deferred (4 h1, internal noindex, lowest priority).
+
 **Still Open:**
 
 **From GF Full-Site Audit (2026-08-09):**

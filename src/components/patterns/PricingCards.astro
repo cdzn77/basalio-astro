@@ -3,9 +3,11 @@ import { pricingTiers } from '../../data/pricing';
 
 interface Props {
   variant: 'compact' | 'full';
+  level?: 'h2' | 'h3' | 'h4';
 }
 
-const { variant } = Astro.props;
+const { variant, level = 'h3' } = Astro.props;
+const Tag = level;
 ---
 
 <div class="pricing-wrapper">
@@ -15,7 +17,7 @@ const { variant } = Astro.props;
       {/* Tier Label */}
       <div class="card-header">
         <p class="tier-label">{tier.label}</p>
-        <h3 class="card-name">{tier.name}</h3>
+        <Tag class="card-name">{tier.name}</Tag>
 
         {/* Price Block */}
         <div class="price-block">

@@ -219,3 +219,9 @@ Contrast claims must ALWAYS come from actual computed styles in the browser, nev
   the HANDOFF item was never re-verified. A stale open issue in HANDOFF.md is
   documentation debt, not a bug list. Cheapest check: curl production, grep for
   the symptom, grep the codebase for the fix.
+- **Verify fixes at the source, not the symptom.** Grepping built HTML for
+  `.dead-rule-name {` shows 0 elements using the rule, but does NOT show the
+  rule was removed from source. That is measuring the symptom (no elements use
+  it), not the fix (rule definitions removed). Before closing a "dead CSS rules"
+  item, grep src/ for the actual rule definitions. Same applies to all deferred
+  items — always check source-level evidence, not built output.

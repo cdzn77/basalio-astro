@@ -146,6 +146,12 @@ SOLUTIONS TRIED (ranked by outcome):
 `import.meta.glob()` returned module namespace objects; fixed with `query: '?raw', import: 'default'`.
 Verified live production clean on / and /blocks (2026-08-10).
 
+**Orphaned build assets (~0.5MB)** — Audited 2026-08-10. Found 61 unreferenced
+image/SVG files totaling ~0.5MB (images: 267KB, SVG: 173KB). HANDOFF claim of
+"6.1MB, 2 videos + 5 PNGs" was unverified; basalio-hero.mp4 is actively
+referenced. Build hygiene only — not page weight (unreferenced assets never
+downloaded). Defer cleanup; not blocking.
+
 ## STANDING RULES (from 2026-08-09)
 
 **Imports & Globs:**
@@ -210,25 +216,26 @@ Verified live production clean on / and /blocks (2026-08-10).
 **Content markup:**
 - **.testimonial-name-v2 naming debt** — Class renders audience roles/disciplines (e.g., "Portfolio & Brand Designers"), not person names. Markup is correct (h3 precedes quote content in order). Naming mismatch only—no change needed.
 
-**From GF Full-Site Audit (2026-08-09):**
+**From GF Full-Site Audit (2026-08-09) — Re-verified 2026-08-10:**
 - **Body copy font-size regression** — UNVERIFIED. GF1 audit showed 12px on 12
   routes (should be 18px). BUT: the measuring selector may be picking up a label
   (happened twice earlier today). Confirm selector, class, and actual text content
   before treating as real bug.
-- **15 hardcoded font-size: 16px in page styles** — EB2 only covered components.
-  Page-level styles in blocks, terms, privacy, support, pricing, contact, index
-  still have old hardcoded values. Likely cause of the 12px reading above.
-- **BlocksCarousel.astro:127 — flex: 0 0 500px on .courses-left** — Known,
-  deferred, has caused five bugs. Requires multi-tier responsive solution.
-- **Heading hierarchy audit** — 2 of 13 pages done. Semantic structure issue,
-  affects screen-reader navigation. h2 elements currently chosen for size.
+- **13 hardcoded font-size: 16px in page styles** — STILL OPEN. EB2 only covered
+  components. Verified in src: terms(1), support(3), index(2), blocks(1),
+  contact(3), privacy(1), pricing(2). Not yet migrated to --font-size-body token.
+- **Dead CSS rules (.hero-description, .social-link, .ledger-description,
+  .risk-content)** — STILL OPEN. 14 rule definitions exist in src/pages
+  (blocks, index, contact, pricing). No elements use them in built HTML, but rules
+  remain in source. Removal deferred.
+- **BlocksCarousel.astro:126 — flex: 0 0 500px on .courses-left** — STILL OPEN.
+  Constraint remains. Known to cause five bugs. Requires multi-tier responsive
+  solution.
 
 **Deferred (earlier sessions):**
 - **EO2** — Left column shrink to 431px (tested, working, awaiting Angelo review)
 - **DESIGN-SYSTEM.md rewrite** — Approach approved (decisions-only doc, values in
   tokens.css, generated reference). Prerequisite: complete line-by-line inventory.
-- **~6.1MB orphaned build assets** — 2 videos + 5 PNGs confirmed unreferenced.
-  Build hygiene only (not page weight — orphans never downloaded).
 - **Internal naming debt** — .courses-* classes in BlocksCarousel/blocks.astro,
   .testimonials-v2-heading in WhoItsFor, headerType:'ramp'|'simple' in BaseLayout,
   Ramp provenance comments. Not user-facing.

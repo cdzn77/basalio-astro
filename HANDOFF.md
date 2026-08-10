@@ -335,11 +335,11 @@ Systematic audit of Basalio design against source Ramp Studio Framer template at
    - Ramp's de facto body is 14px (labels, card text, pricing, testimonials)
    - **Conflict:** Table 3 (RM1) claimed "Ramp body 22px is transferable." Premise disproven. Basalio body is settled at 18px (--font-size-body, BC5). No adoption needed; values are independent design decisions.
 
-3. **Eyebrow→heading gap spacing (design observation, not conflict)**
+3. **Eyebrow→heading gap spacing (measured values, not conflict)**
    - Basalio .courses-eyebrow margin-block-end: 12px
    - Ramp "Our Courses" H2 → "Courses for Digital Creatives" H3: 20px gap (1304→1324px)
-   - Basalio hero .hero-eyebrow margin-block-end: 20px (more breathing room than .courses-eyebrow)
-   - **Finding:** Basalio's hero eyebrow gets MORE breathing room (20px) than section eyebrow (12px). Ramp matches Basalio's hero rhythm (20px). This reflects intentional design layering (hero emphasis > section hierarchy), not an error.
+   - Basalio hero .hero-eyebrow margin-block-end: 20px (different from .courses-eyebrow)
+   - **Finding:** Basalio hero eyebrow has 20px margin vs section eyebrow's 12px. Ramp hero-adjacent eyebrow also uses 20px. No documented rule for this divergence.
 
 **INHERITED FROM TEMPLATE (Not Findings):**
 
@@ -359,7 +359,7 @@ These claims were made in earlier sessions but contradicted by measurement:
 
 3. "Ramp body is 22px" — **Retracted (RM8c).** Ramp body standard is 14px (36 of 56 paragraphs). Single 22px outlier at 739px. Table 3 premise disproven.
 
-4. "Ramp has no CTA on the page" — **Retracted (RM5a).** Ramp has 13 CTAs: "View course" (@586px, 12px link), "View all" (@1411px, 2110px), "Contact us" (@2750px), "Subscribe" (@3147px, 3544px), and footer links. No prominent button-style CTA like Basalio's "EXPLORE BLOCKS", but links are present and functional.
+4. "Ramp has no CTA on the page" — **Retracted (RM5a).** Ramp has promotional links including "View course" (@586px, 12px), "View all" (@1411px, 2110px), "Contact us" (@2750px), "Subscribe" (@3147px, 3544px). Also 8 footer navigation links. No prominent button-style CTA like Basalio's "EXPLORE BLOCKS".
 
 5. "Ramp DOM is inaccessible in Framer iframes" — **Retracted (RM2).** Full page DOM was successfully measured at 375px viewport. Claim was false; page-level DOM is accessible.
 

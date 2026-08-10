@@ -14,7 +14,7 @@ This document records design decisions and their rationale. All token VALUES liv
 
 **Action:** Grep src/ for `class="token-name"` attributes. Only remove if zero matches. (Scoped Astro CSS complicates grep; use build verification.)
 
-**Status:** IMPLEMENTED (2026-08-10, commit e2c2118). Removed 62 non-color orphans; retained color reserves. Post-deletion audit shows 51 tokens, 33 used, 18 orphaned (5 font-weights + overlay reserves + animation reserves).
+**Status:** IMPLEMENTED (2026-08-10, commit e2c2118). Removed 77 non-color orphans (not 62 as commit message states); retained color reserves. Post-deletion audit shows 51 tokens, 33 used, 18 orphaned (5 font-weights + overlay reserves + animation reserves).
 
 ---
 

@@ -198,14 +198,24 @@ Applied to:
   from .carousel-track; use position: relative for natural height contribution.
   Deferred: requires testing transform-based animation with new positioning.
 
-**Heading Hierarchy Fix (2026-08-09):**
-- **Split corrected:** 10 h1 + 11 h2 = 21 total, not 11 h1 + 10 h2 as initially
-  reported. Error in GO2 recount: table listed index.astro as "N/A - Hero handles
-  h1" without reading the file. That row was inference presented as measurement.
-  index.astro actually received level="h2" (commit 51735f9) for pricing section
-  heading, reducing / from 2 h1 → 1 h1.
-- All 11 production routes verified live at basalio.com: exactly 1 h1 each.
-- /hero-lab deferred (4 h1, internal noindex, lowest priority).
+**Heading Hierarchy Fix (2026-08-09, commits 51735f9–8180c9f):**
+- **HeaderSplit level prop:** Dynamic heading rendering (h1/h2). 10 h1 (page
+  titles) + 11 h2 (section headings) = 21 total across 11 production routes.
+  Error in GO2: table inferred index.astro without reading; it received
+  level="h2" for pricing section, fixing / from 2 h1 → 1 h1.
+- **Footer h4 → h2 (commits 5f6690f, 2ebaeb9):** All three footer column labels
+  (PRODUCT, SUPPORT, newsletter heading) changed from h4 to h2 to eliminate
+  heading-level skips on all routes. CSS .footer-column-label keyed on class
+  (not tag), so styling unchanged (12px, 600 weight, 0 margins).
+- **Verification script (commit 8180c9f):** npm run verify:headings asserts
+  exactly 1 h1, h1 first in order, no level skips for all 11 routes.
+  Prevents regression (ship with zero h1 or skip violations).
+- **All 11 production routes verified live:** exactly 1 h1 each.
+- **Pre-existing deferred:** /pricing has h1 → h3 skip (PricingCards headings
+  appear without h2 separator). h3 rejected for same reason: routes starting
+  with h1 alone until footer would create identical skip. Converting to <p> in
+  <nav aria-label> deferred as lower-clutter alternative.
+- **/hero-lab:** 4 h1 (internal, noindex, lowest priority).
 
 **Still Open:**
 

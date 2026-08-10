@@ -5,39 +5,39 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://basalio.com/blocks</loc>
+    <loc>https://basalio.com/blocks/</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://basalio.com/hacks</loc>
+    <loc>https://basalio.com/hacks/</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://basalio.com/pricing</loc>
+    <loc>https://basalio.com/pricing/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://basalio.com/early-access</loc>
+    <loc>https://basalio.com/early-access/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://basalio.com/contact</loc>
+    <loc>https://basalio.com/contact/</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://basalio.com/support</loc>
+    <loc>https://basalio.com/support/</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://basalio.com/roadmap</loc>
+    <loc>https://basalio.com/roadmap/</loc>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://basalio.com/terms</loc>
+    <loc>https://basalio.com/terms/</loc>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://basalio.com/privacy</loc>
+    <loc>https://basalio.com/privacy/</loc>
     <priority>0.5</priority>
   </url>
 </urlset>

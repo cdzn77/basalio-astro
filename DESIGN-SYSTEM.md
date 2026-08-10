@@ -14,7 +14,7 @@ This document records design decisions and their rationale. All token VALUES liv
 
 **Action:** Grep src/ for `class="token-name"` attributes. Only remove if zero matches. (Scoped Astro CSS complicates grep; use build verification.)
 
-**Status:** DECISION PENDING IMPLEMENTATION. Await cleanup commit.
+**Status:** IMPLEMENTED (2026-08-10, commit e2c2118). Removed 62 non-color orphans; retained color reserves. Post-deletion audit shows 51 tokens, 33 used, 18 orphaned (5 font-weights + overlay reserves + animation reserves).
 
 ---
 
@@ -38,7 +38,9 @@ This document records design decisions and their rationale. All token VALUES liv
 
 **Action:** Add to tokens.css, then migrate components in separate commits per file.
 
-**Status:** DECISION PENDING IMPLEMENTATION.
+**Status:** IMPLEMENTED (2026-08-10, commit aff7aba).
+
+**Post-implementation note:** Tokens defined; 126 hardcoded font-weight declarations remain in components. Migration is separate work, not yet scheduled.
 
 ---
 
@@ -50,11 +52,11 @@ This document records design decisions and their rationale. All token VALUES liv
 
 Standardizing on `-0.02em` creates a unified tracking ratio across all heading sizes. At 40px it's already `-0.02em` (no change); at 20px it loosens from -0.040em to -0.020em (visual delta +0.2px per character, sub-perceptual). Largest delta at 20px: +0.4px absolute (within measurement noise).
 
-**Sites affected**: WhoItsFor.astro, FAQ.astro, BlocksCarousel.astro, StatusLedger.astro, HeaderSplit.astro, index.astro (×2), pricing.astro (×2), roadmap.astro, support.astro.
+**Sites affected**: WhoItsFor.astro, FAQ.astro, BlocksCarousel.astro, StatusLedger.astro, HeaderSplit.astro, Accordion.astro, index.astro (×2), pricing.astro (×2), roadmap.astro, support.astro (12 total, Accordion was not in original BS3c enumeration).
 
 **Action:** Add `--heading-letter-spacing: -0.02em` to tokens.css. Migrate each component in separate commits.
 
-**Status:** DECISION PENDING IMPLEMENTATION. Verify at 20px headings post-deployment for perceptual impact.
+**Status:** IMPLEMENTED (2026-08-10, commit ba3aaf3). All 12 instances replaced. Computed ratios: -0.8px at 40px, -0.4px at 20px (delta <0.5px, sub-perceptual).
 
 ---
 
@@ -73,7 +75,7 @@ Consolidate to single `--space-*` scale. Migrate 404.astro's gap tokens to --spa
 
 **Action:** Migrate 404.astro 4 uses from --gap-* to --space-* equivalents. Delete orphaned --gap-* token definitions.
 
-**Status:** DECISION PENDING IMPLEMENTATION.
+**Status:** IMPLEMENTED (2026-08-10, commit 4374e93). Migrated 404.astro: gap-20→space-20, gap-40→space-40, gap-24→space-24. Added space-20/24/40; removed gap-40. All --gap-* tokens now consolidated to --space-* scale. No value delta (20px=20px, etc.).
 
 ---
 
@@ -99,7 +101,7 @@ Deletion removes code burden without functional impact.
 
 **Safety verification (DS-G audit):** No live component depends on a token defined in these dead files. All 13 component-scoped tokens used in live code (Hero, Accordion, StatusLedger, blocks, hero-lab) are defined locally in `<style>` blocks or injected dynamically via inline style attributes. Safe to delete without regression.
 
-**Status:** DECISION PENDING IMPLEMENTATION.
+**Status:** IMPLEMENTED (2026-08-10, commit 8451868). Deleted layout.css, utilities.css, animations.css. Build succeeds. 104/104 overflow, 12/12 heading checks pass.
 
 ---
 

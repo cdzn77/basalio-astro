@@ -8,20 +8,9 @@
  */
 
 import { chromium } from 'playwright';
+import { PRODUCTION_ROUTES } from './routes.js';
 
-const ROUTES = [
-  '/',
-  '/blocks',
-  '/contact',
-  '/early-access',
-  '/hacks',
-  '/pricing',
-  '/privacy',
-  '/roadmap',
-  '/support',
-  '/terms',
-  '/welcome',
-];
+const ROUTES = PRODUCTION_ROUTES;
 
 const LEVEL_ORDER = { h1: 1, h2: 2, h3: 3, h4: 4, h5: 5, h6: 6 };
 

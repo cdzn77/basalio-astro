@@ -1,22 +1,9 @@
 import { chromium } from 'playwright';
+import { ALL_ROUTES } from './routes.js';
 
 const PORT = process.env.PORT || 4321;
 const VIEWPORTS = [320, 360, 375, 390, 414, 768, 1024, 1440];
-const ROUTES = [
-  '/',
-  '/blocks',
-  '/contact',
-  '/early-access',
-  '/hacks',
-  '/hero-lab',
-  '/pricing',
-  '/privacy',
-  '/roadmap',
-  '/support',
-  '/terms',
-  '/welcome',
-  '/404'
-];
+const ROUTES = ALL_ROUTES;
 
 async function verifySectionOverflow(browser, route, viewport) {
   const page = await browser.newPage();

@@ -219,8 +219,23 @@ Applied to:
 
 **Still Open:**
 
-**Heading Hierarchy (2026-08-09, HC17-HC20):**
-- **/404 page has zero h1** — Missing required page heading. verify:overflow covers /404 but verify:headings does not (11-route script, /404 is internal route). Add /404 to heading verification or fix the page heading.
+**Heading Hierarchy & Verification (2026-08-09, HC17-HC25):**
+
+**Route list scope clarification:**
+- **PUBLIC_ROUTES (10):** Indexable pages listed in sitemap.xml, not disallowed by robots.txt
+- **PRODUCTION_ROUTES (11):** User-reachable pages in production (includes /welcome, disallowed but live)
+- **ALL_ROUTES (13):** All routes including internal tests (/hero-lab, /404) and disallowed pages
+- **Finding (HC25):** Output header "11 Production routes verified" was followed by 10-item list. This was a labeling error (confusing "public" and "production"), not a data error. Resolved by renaming constants in scripts/routes.js to clarify scope.
+
+**Verification scripts:**
+- **HC21 — Transcription error** — Pasted "/contact @ 375px: 2/3 sections pass" in HC14 output. Script logic unchanged (verify-section.js pass/fail condition identical across commits). Error was manual transcription when copying output, not a script bug. All subsequent pasted numbers verified via re-run. Records the risk: any output from this task may have been retyped rather than pasted verbatim, including 104/104.
+- **HC22 — Overflow detection proven** — Forced width: 200vw on first section of / route. verify:overflow detected failure: `❌ (3 overflow) / @ 1440px: 4/7 sections pass`, summary showed 13 total, 12 passed, 1 failed (not 104/104). Script reliably detects and reports failures.
+
+**404 and /welcome findings:**
+- **/404 has h1 in source and build** — 404.astro contains h1; /404.html (direct file) renders 1 h1. Live route /404/ unreachable via Netlify (0 h1 from curl). This is a hosting/routing issue (Netlify serves 404.html as error handler), not a code issue. The page heading exists and is correct.
+- **/welcome has 1 h1** — Confirmed for heading hierarchy compliance. Disallowed by robots.txt but live and user-reachable, correctly included in PRODUCTION_ROUTES (11).
+
+**Content markup:**
 - **.testimonial-name-v2 naming debt** — Class renders audience roles/disciplines (e.g., "Portfolio & Brand Designers"), not person names. Markup is correct (h3 precedes quote content in order). Naming mismatch only—no change needed.
 
 **From GF Full-Site Audit (2026-08-09):**

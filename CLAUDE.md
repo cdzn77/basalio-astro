@@ -190,6 +190,17 @@ Contrast claims must ALWAYS come from actual computed styles in the browser, nev
 
 **Why:** Token lookup (e.g. `--text-on-ink #F6F4EF` on `--surface-ink #1C1917`) gives the theoretical value. Screenshots cannot show hex values. Only getComputedStyle reflects the actual color the browser renders after CSS cascade, inheritance, and specificity resolution. Third report with unverified contrast values broke trust; this rule prevents it.
 
+## Viewport required with every computed measurement
+
+**Every reported computed style must include the viewport size.**
+
+When reporting computed values (font-size, letter-spacing, padding, etc.):
+- State the viewport in the measurement label: "28px / -0.56px (768px)" not just "28px / -0.56px"
+- Example: "H1 letter-spacing at 375px: -0.4px. H1 letter-spacing at 1440px: -0.8px"
+- If measuring the same selector at different breakpoints, report each with its viewport
+
+**Why:** Media queries make the same CSS selector render differently across viewports. BS3c measured at 375px, DS-M at 1440px — the "contradictions" were actually different breakpoints rendering different computed values. The 18px body standard was measured at desktop and used to justify a mobile change that had to be reverted. A computed value without its viewport is incomplete and can mislead cross-viewport decisions.
+
 ## MECHANISM FACTS — established the expensive way, do not re-derive
 
 - Astro scoped CSS does NOT apply to slotted content. A slotted element

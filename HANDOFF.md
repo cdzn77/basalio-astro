@@ -229,11 +229,19 @@ not stranded. Non-issue. Icon debt minimal, lower priority than dead CSS.
   covered components. Verified in src: terms(1), support(3), index(2), blocks(1),
   contact(3), privacy(1), pricing(2). Not yet migrated to --font-size-body token.
 - **BlocksCarousel.astro:126 — flex: 0 0 500px on .courses-left** — STILL OPEN.
-  Constraint remains. Known to cause five bugs. Requires multi-tier responsive
-  solution.
-- **Body copy font-size regression** — UNVERIFIED. GF1 audit showed 12px on 12
-  routes (should be 18px). BUT: measuring selector may pick up labels (happened
-  twice). Confirm selector before treating as bug.
+  Constraint causes four layout failures (documented in PATTERN LOG, lines 128-132):
+  1. Mobile breakpoint carousel collapse (RM1)
+  2. Desktop 1280–1440px heading line-count regression (3→5 lines)
+  3. Carousel clipping at 1280 due to available space squeeze
+  4. 1440px wastes 225px, prevents 3-card display without shrinking left column
+  Note: Claim of "five bugs" (commit 9ec3b0c) lacked enumeration; these four are
+  the documented items. EO2 implements solution D (shrink left column per band)
+  against item 4. Requires multi-tier responsive solution.
+- **Body copy font-size regression** — CLOSED. GF1 audit claimed 12px on 12 routes,
+  but the measuring selector was incorrect (picked up labels/secondary text, not
+  body paragraphs). Verified 2026-08-10: body copy is 18px across all routes
+  (/support, /contact, /terms, /privacy, /roadmap, /hacks, /roadmap measured at
+  18px/24px). GF1 selector error led to false positive.
 - **335px mobile hardcode** — FIXED. No 335px values found in codebase.
 
 **Token audit findings for DESIGN-SYSTEM.md rewrite (GR18-GR19):**

@@ -85,7 +85,7 @@ const founderTier: PricingTier = {
   teaser: `100 founder licenses at ${FOUNDER_PRICE}, then ${POST_CAP_PRICE}.`,
   leadLine: 'Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently — and refundable until the control center ships.',
   features: [
-    'Full Hacks vault. 12+ recipes and growing',
+    'Full Hacks vault. Five recipes in development, included as they ship.',
     'Pro control center: live-tune all nine blocks from the editor sidebar',
     'One-click versions of the three hack-trailer effects',
     'Every future block and Hack included, no upgrade fee',
@@ -107,7 +107,7 @@ const standardTier: PricingTier = {
   teaser: null,
   leadLine: 'Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently.',
   features: [
-    'Full Hacks vault. 12+ recipes and growing',
+    'Full Hacks vault. Five recipes in development, included as they ship.',
     'Pro control center: live-tune all nine blocks from the editor sidebar',
     'One-click versions of the three hack-trailer effects',
     'Every future block and Hack included, no upgrade fee',

@@ -82,7 +82,7 @@ const faqDataJson = JSON.stringify(faqs);
   .faq-title {
     font-family: var(--font-sans);
     font-size: 40px;
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     line-height: 48px;
     letter-spacing: var(--heading-letter-spacing);
     color: var(--surface-paper);
@@ -140,7 +140,7 @@ const faqDataJson = JSON.stringify(faqs);
 
   .faq-question-text {
     font-size: 18px;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     line-height: 25.2px;
     letter-spacing: -0.36px;
     color: var(--surface-paper);
@@ -179,7 +179,7 @@ const faqDataJson = JSON.stringify(faqs);
   .faq-answer {
     font-family: var(--font-sans);
     font-size: var(--font-size-body);
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     line-height: 22.4px;
     color: var(--surface-paper) !important;
     margin: 20px 0 0 0;
@@ -262,7 +262,7 @@ const faqDataJson = JSON.stringify(faqs);
           const answerDiv = document.createElement('p');
           answerDiv.className = 'faq-answer';
           answerDiv.textContent = faqs[index].answer;
-          answerDiv.style.cssText = 'color: rgb(122, 122, 122) !important; font-size: var(--font-size-body); font-weight: 400; line-height: 22.4px; margin: 20px 0 0 0; padding: 0; margin-top: 20px; padding-top: 20px; font-family: var(--font-sans);';
+          answerDiv.style.cssText = 'color: rgb(122, 122, 122) !important; font-size: var(--font-size-body); font-weight: var(--font-weight-normal); line-height: 22.4px; margin: 20px 0 0 0; padding: 0; margin-top: 20px; padding-top: 20px; font-family: var(--font-sans);';
           card.appendChild(answerDiv);
         }
 

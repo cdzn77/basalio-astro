@@ -137,7 +137,7 @@ const { hideNewsletter = false } = Astro.props;
 
   .footer-logo {
     font-size: var(--font-size-body);
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     letter-spacing: 0.8px;
     text-transform: uppercase;
     color: var(--text-on-acid);
@@ -159,7 +159,7 @@ const { hideNewsletter = false } = Astro.props;
 
   .footer-description {
     font-size: 14px;
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     line-height: 19.6px;
     color: var(--text-on-acid-muted);
     margin: 0;
@@ -210,7 +210,7 @@ const { hideNewsletter = false } = Astro.props;
 
   .footer-column-label {
     font-size: 12px;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     letter-spacing: 1.2px;
     text-transform: uppercase;
     color: var(--text-on-acid-muted);
@@ -221,7 +221,7 @@ const { hideNewsletter = false } = Astro.props;
   /* Navigation Links */
   .footer-link {
     font-size: 14px;
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     line-height: 19.6px;
     color: var(--text-on-acid);
     display: block;
@@ -244,7 +244,7 @@ const { hideNewsletter = false } = Astro.props;
 
   .footer-newsletter-text {
     font-size: 13px;
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     line-height: 18.2px;
     color: var(--text-on-acid-muted);
     margin: 0;
@@ -281,7 +281,7 @@ const { hideNewsletter = false } = Astro.props;
     border: none;
     border-radius: 6px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     cursor: pointer;
     transition: opacity 200ms ease;
     text-transform: uppercase;
@@ -304,7 +304,7 @@ const { hideNewsletter = false } = Astro.props;
 
   .footer-copyright-left {
     font-size: 12px;
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     color: var(--text-on-acid-muted);
     margin: 0;
     padding: 0;
@@ -312,7 +312,7 @@ const { hideNewsletter = false } = Astro.props;
 
   .footer-copyright-right {
     font-size: 12px;
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     color: var(--text-on-acid-muted);
     margin: 0;
     padding: 0;
@@ -342,7 +342,7 @@ const { hideNewsletter = false } = Astro.props;
 
   .footer-brand-word {
     font-size: clamp(100px, 18vw, 380px);
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     letter-spacing: -0.04em;
     color: var(--text-on-acid);
     margin: 0;

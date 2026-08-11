@@ -28,7 +28,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .not-found-heading {
     /* Hero type scale (shared with Hero.astro): clamp(48px, 8vw, 96px) */
     font-size: clamp(48px, 8vw, 96px);
-    font-weight: 700; /* TODO: add --font-weight-bold token */
+    font-weight: var(--font-weight-bold); /* TODO: add --font-weight-bold token */
     margin: 0 0 var(--space-20) 0;
     color: var(--text-on-paper);
   }
@@ -47,7 +47,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     color: var(--text-on-acid);
     text-decoration: none;
     border-radius: var(--radius-4);
-    font-weight: 600; /* TODO: add --font-weight-semibold token */
+    font-weight: var(--font-weight-semibold); /* TODO: add --font-weight-semibold token */
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 0.1em;

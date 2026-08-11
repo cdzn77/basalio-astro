@@ -92,7 +92,7 @@ const roadmapItems = [
       <ul class="notes-list">
         <li><strong>All nine blocks are free forever.</strong> No paywall, no locked features, no watermarks. Free is not a trial or a countdown.</li>
         <li><strong>Pro tier is optional.</strong> The control center sidebar and the full Hacks vault are the paid features.</li>
-        <li><strong>Dates are best-guesses.</strong> We ship when ready, not on calendars. February 2027 is the target; refund policy enforces it.</li>
+        <li><strong>Dates are best-guesses.</strong> We ship when ready, not on calendars. February 2027 is the target. If it slips, founder licenses stay refundable until it ships.</li>
         <li><strong>Roadmap changes if users ask.</strong> Open an issue on GitHub or email hello@basalio.com with feature requests. Big asks can shift priorities.</li>
         <li><strong>Security updates come first.</strong> If a block has a vulnerability, we patch it before roadmap items.</li>
       </ul>
@@ -136,7 +136,7 @@ const roadmapItems = [
     padding: 5px 10px;
     border-radius: 4px;
     margin-bottom: 12px;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
   }
 
   .roadmap-shipped {
@@ -177,7 +177,7 @@ const roadmapItems = [
 
   .roadmap-item-title {
     font-size: 20px;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     margin: 0;
     color: var(--text-on-paper);
   }
@@ -205,7 +205,7 @@ const roadmapItems = [
 
   .notes-heading {
     font-size: 40px;
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     line-height: 48px;
     letter-spacing: var(--heading-letter-spacing);
     margin: 0 0 24px 0;

@@ -35,16 +35,16 @@ const {
 } = Astro.props;
 ---
 
-<section class="testimonials-v2 section-with-footer-overlap" id="testimonials-v2">
-  <div class="testimonials-v2-inner">
+<section class="audience section-with-footer-overlap" id="audience">
+  <div class="audience-inner">
     <!-- LEFT COLUMN: 500px, eyebrow + heading + pagination -->
-    <div class="testimonials-v2-left">
-      <div class="testimonials-v2-header">
-        <p class="testimonials-v2-eyebrow">{eyebrow}</p>
-        <h2 class="testimonials-v2-heading">{sectionHeading}</h2>
+    <div class="audience-left">
+      <div class="audience-header">
+        <p class="audience-eyebrow">{eyebrow}</p>
+        <h2 class="audience-heading">{sectionHeading}</h2>
       </div>
-      {bodyText && <p class="testimonials-v2-body">{bodyText}</p>}
-      {closingLine && <p class="testimonials-v2-closing">{closingLine}</p>}
+      {bodyText && <p class="audience-body">{bodyText}</p>}
+      {closingLine && <p class="audience-closing">{closingLine}</p>}
 
       <!-- PAGINATION CONTROLS: Below the heading on the left side -->
       <div class="pagination-controls-v2">
@@ -68,7 +68,7 @@ const {
     </div>
 
     <!-- RIGHT COLUMN: Carousel (1109px, or fill remaining) -->
-    <div class="testimonials-v2-right" tabindex="0" role="region" aria-label="WHO IT'S FOR carousel">
+    <div class="audience-right" tabindex="0" role="region" aria-label="WHO IT'S FOR carousel">
       <!-- Invisible left hover zone -->
       <div class="carousel-zone-v2 carousel-zone-left-v2" data-direction="prev"></div>
 
@@ -85,7 +85,7 @@ const {
                   {testimonial.icon && (
                     <div class="testimonial-icon-v2" set:html={testimonial.icon}></div>
                   )}
-                  <h3 class="testimonial-name-v2">{testimonial.title}</h3>
+                  <h3 class="audience-segment">{testimonial.title}</h3>
                 </div>
                 {testimonial.description && <p class="testimonial-description-v2">{testimonial.description}</p>}
                 {testimonial.features && testimonial.features.length > 0 && (
@@ -109,7 +109,7 @@ const {
 
 <style>
   /* SECTION SHELL: flex column, center alignment, padding 200px 40px, gap 40px */
-  .testimonials-v2 {
+  .audience {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -128,7 +128,7 @@ const {
   }
 
   /* INNER ROW: flex row, space-between, align-items flex-start, two columns */
-  .testimonials-v2-inner {
+  .audience-inner {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -138,7 +138,7 @@ const {
   }
 
   /* LEFT COLUMN: 500px wide, flex column, match carousel height (700px) */
-  .testimonials-v2-left {
+  .audience-left {
     flex: 0 0 500px;
     display: flex;
     flex-direction: column;
@@ -146,14 +146,14 @@ const {
   }
 
   /* Eyebrow + heading block (natural document flow spacing) */
-  .testimonials-v2-header {
+  .audience-header {
     display: flex;
     flex-direction: column;
   }
 
-  .testimonials-v2-eyebrow {
+  .audience-eyebrow {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     line-height: 19.6px;
     letter-spacing: 2.8px;
     text-transform: uppercase;
@@ -161,9 +161,9 @@ const {
     margin: 0 0 12px 0;
   }
 
-  .testimonials-v2-heading {
+  .audience-heading {
     font-size: 40px;
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     line-height: 48px;
     letter-spacing: var(--heading-letter-spacing);
     color: var(--text-on-paper);
@@ -171,18 +171,18 @@ const {
     white-space: pre-line;
   }
 
-  .testimonials-v2-body {
+  .audience-body {
     font-size: 15px;
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     line-height: 24px;
     color: var(--text-on-paper-muted);
     margin: 0;
     white-space: pre-line;
   }
 
-  .testimonials-v2-closing {
+  .audience-closing {
     font-size: 13px;
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     line-height: 20px;
     color: var(--text-on-paper-muted);
     margin: 28px 0 20px 0;
@@ -239,14 +239,14 @@ const {
   }
 
   /* RIGHT COLUMN: Carousel (1109px wide, or fill remaining space) */
-  .testimonials-v2-right {
+  .audience-right {
     flex: 1;
     position: relative;
     overflow: clip;
     min-height: 700px;
   }
 
-  .testimonials-v2-right:focus-visible {
+  .audience-right:focus-visible {
     outline: 2px solid var(--text-on-paper);
     outline-offset: 2px;
   }
@@ -329,7 +329,7 @@ const {
   .testimonial-quote-v2 {
     font-family: var(--font-sans);
     font-size: var(--font-size-body);
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     line-height: 22px;
     color: var(--text-on-paper);
     margin: 0;
@@ -340,7 +340,7 @@ const {
   .testimonial-label-v2 {
     font-family: 'Azeret Mono', monospace;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     letter-spacing: 2.4px;
     text-transform: uppercase;
     color: var(--text-on-paper-muted);
@@ -370,10 +370,10 @@ const {
     height: 100%;
   }
 
-  .testimonial-name-v2 {
+  .audience-segment {
     font-family: var(--font-sans);
     font-size: 14px;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     line-height: 19.6px;
     color: var(--text-on-paper);
     margin: 0;
@@ -383,7 +383,7 @@ const {
   .testimonial-results-v2 {
     font-family: var(--font-sans);
     font-size: 13px;
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     line-height: 18.2px;
     color: var(--text-on-paper-muted);
     margin: 0;
@@ -394,7 +394,7 @@ const {
   .testimonial-description-v2 {
     font-family: var(--font-sans);
     font-size: 15px;
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     line-height: 22px;
     color: var(--text-on-paper);
     margin: 0 0 16px 0;
@@ -412,7 +412,7 @@ const {
   .testimonial-feature-v2 {
     font-family: var(--font-sans);
     font-size: 13px;
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     line-height: 18px;
     color: var(--text-on-paper-muted);
     margin: 0;
@@ -422,25 +422,25 @@ const {
 
   /* RESPONSIVE: Stack layout below 640px */
   @media (max-width: 640px) {
-    .testimonials-v2 {
+    .audience {
       padding: 60px 20px;
       padding-top: 200px;
       padding-bottom: 200px;
     }
 
-    .testimonials-v2-inner {
+    .audience-inner {
       flex-direction: column;
       gap: 40px;
     }
 
-    .testimonials-v2-left {
+    .audience-left {
       flex: 0 0 auto;
       max-width: 100%;
       width: 100%;
       height: auto;
     }
 
-    .testimonials-v2-right {
+    .audience-right {
       flex: 0 0 auto;
       width: 100%;
       max-width: 100vw;
@@ -471,7 +471,7 @@ const {
       height: 140px;
     }
 
-    .testimonial-name-v2 {
+    .audience-segment {
       font-size: 14px;
     }
 
@@ -488,7 +488,7 @@ const {
 
   /* WCAG 1.4.10 REFLOW: Below 375px, reduce container and remove peek */
   @media (max-width: 374px) {
-    .testimonials-v2-right {
+    .audience-right {
       width: 280px;
     }
 
@@ -504,9 +504,9 @@ const {
   // Paging logic: calculate how many cards fit in viewport, advance by one page per action
   // This script targets V2 elements specifically
 
-  const testimonialsV2 = document.querySelector('.testimonials-v2');
+  const testimonialsV2 = document.querySelector('.audience');
   if (!testimonialsV2) {
-    console.error('[TestimonialsV2] .testimonials-v2 section not found');
+    console.error('[TestimonialsV2] .audience section not found');
   } else {
     const track = testimonialsV2.querySelector('.carousel-track-v2');
     const viewport = testimonialsV2.querySelector('.carousel-viewport-v2');
@@ -612,7 +612,7 @@ const {
       rightZone?.addEventListener('mouseenter', () => navigate('next'));
 
       // Keyboard navigation: Arrow keys
-      const carouselContainer = testimonialsV2.querySelector('.testimonials-v2-right');
+      const carouselContainer = testimonialsV2.querySelector('.audience-right');
       carouselContainer?.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') {
           e.preventDefault();
@@ -633,7 +633,7 @@ const {
   }
 
   // SCROLL OVERLAP ANIMATION - Section moves up to reveal footer
-  const testimonialSection = document.querySelector('.testimonials-v2');
+  const testimonialSection = document.querySelector('.audience');
   if (testimonialSection) {
     const updateScroll = () => {
       const rect = testimonialSection.getBoundingClientRect();

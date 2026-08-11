@@ -73,7 +73,7 @@ const bodyArray = Array.isArray(body) ? body : [body];
     justify-content: space-between;
     align-items: flex-start;
     width: 100%;
-    max-width: 1786px;
+    max-width: var(--container-wide);
     margin: 0 auto;
     gap: 60px;
     padding: 0 40px;
@@ -89,7 +89,7 @@ const bodyArray = Array.isArray(body) ? body : [body];
 
   .eyebrow {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium);
     letter-spacing: 2.8px;
     text-transform: uppercase;
     color: var(--text-on-paper);
@@ -100,7 +100,7 @@ const bodyArray = Array.isArray(body) ? body : [body];
 
   .heading {
     font-size: 40px;
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     line-height: 48px;
     letter-spacing: var(--heading-letter-spacing);
     color: var(--text-on-paper);
@@ -116,7 +116,7 @@ const bodyArray = Array.isArray(body) ? body : [body];
 
   .body p {
     font-size: var(--font-size-body);
-    font-weight: 400;
+    font-weight: var(--font-weight-normal);
     line-height: 24px;
     color: var(--text-on-paper-muted);
     margin: 0;

@@ -1,5 +1,34 @@
 # BASALIO — HANDOFF
-Last updated 2026-08-11 (Pricing model settled and centralized)
+Last updated 2026-08-11 (FIN-1 site closure: refund policy, font-weight tokens, Decision 6 resolved)
+
+## FIN-1 SITE CLOSURE — COMPLETE (2026-08-11)
+
+Pre-launch cleanup sequence completed with 3 commits merged to main:
+
+**FIN-1.1:** Clarified refund policy enforcement in /roadmap note 3  
+- Changed: "Launch date is a hard commitment" → "February 2027 is the target. If it slips, founder licenses stay refundable until it ships."
+- Ensures refund scope is bounded by Pro ship date, not indefinite
+
+**FIN-1.2:** Font-weight design token migration  
+- Replaced 152 hardcoded font-weight declarations across src/ with CSS variable tokens:
+  - 400 → var(--font-weight-normal) [81 uses]
+  - 500 → var(--font-weight-medium) [31 uses]
+  - 600 → var(--font-weight-semibold) [30 uses]
+  - 700 → var(--font-weight-bold) [10 uses]
+- Verified: 130 token references in built output, build succeeds
+
+**FIN-1.3:** Decision 6 resolved — Mobile body scale strategy documented  
+- Established: Mobile body scale is intentionally per-page, not site-wide
+- HeaderSplit defaults to 14px at 375px mobile; pages override at section level when needed
+- Measurement conditions recorded (375px viewport, measured 2026-08-10)
+
+**Verification before push:**
+- ✅ verify:overflow: 104/104 sections pass (0 overflows)
+- ✅ verify:headings: 12/12 routes pass (all h1 first, no level skips)
+- ✅ npm run build: Succeeds with no warnings
+- ✅ All 3 commits merged to main and pushed to origin
+
+**FIN-1.4 (naming debt) — DEFERRED:** Attempted CSS class renames (.courses→.blocks, .testimonials-v2→.audience) introduced media query regression (overflow at 375/390/414px viewports). Reverted to avoid shipping regression. Naming alignment is cosmetic, not functional—can be addressed in a future session.
 
 ## PRICING MODEL — SETTLED
 

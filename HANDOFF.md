@@ -5,7 +5,7 @@ Last updated 2026-08-11 (Pricing model settled and centralized)
 
 **Pricing structure:** $149 founder (first 100), $249 after. Both one-time, both perpetual, both unlimited sites. No subscription tier exists.
 
-Founder differentiator is **refund-until-control-center-ships** (earliest 100 buyers get indefinite refund window). Standard tier gets 30-day refund window only. This asymmetry rewards founder risk-taking without creating a tier system based on price or features.
+Founder differentiator: refundable at any time until the Pro control center ships (bounded by that milestone, not indefinite), in addition to the 30-day refund all licenses carry. Standard tier gets the 30-day refund only. This asymmetry rewards founder risk-taking without creating a tier system based on price or features.
 
 **Revenue model:** All updates and support are funded by one-time payments. This is a deliberate obligation with no recurring revenue stream — sustainable only at small scale. Site copy now commits to perpetual updates on one-time pricing. No hedging language.
 

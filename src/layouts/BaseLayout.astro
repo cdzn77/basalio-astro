@@ -13,14 +13,14 @@ import BackToTop from '../components/BackToTop.astro';
 interface Props {
   title?: string;
   description?: string;
-  headerType?: 'ramp' | 'simple';
+  headerType?: 'split' | 'simple';
   noindex?: boolean;
 }
 
 const {
   title = 'Basalio',
   description = 'Basalio - WordPress Portfolio Blocks',
-  headerType = 'ramp',
+  headerType = 'split',
   noindex = false
 } = Astro.props;
 ---

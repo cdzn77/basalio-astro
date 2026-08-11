@@ -102,6 +102,13 @@
   --space-40: 40px;
 
   /* ============================================================
+     LAYOUT – Container Widths
+     ============================================================ */
+
+  --container-narrow: 760px;    /* Used by most pages: roadmap, support, etc. */
+  --container-wide: 1786px;     /* Used by ledger/table-heavy pages: pricing, blocks */
+
+  /* ============================================================
      BORDER RADIUS
      ============================================================ */
 

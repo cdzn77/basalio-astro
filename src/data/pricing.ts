@@ -21,17 +21,26 @@ export const licenseScope = {
   statement: 'A license covers unlimited sites and keeps working for as long as you use it. Founder licenses are one payment with no renewal, and are refundable at any time until the Pro control center ships. All licenses carry a 30-day refund, no questions asked.',
 };
 
+export const FOUNDER_PRICE = '$149';
+export const POST_CAP_PRICE = '$249';
+
 /* CHECKOUT_STATE: Switch between founder and standard pricing.
 
    When the cap of 100 founder licenses is reached, change this to 'standard'.
-   This single change cascades to price, billing model, and card copy.
+   This single change cascades to price, billing model, and card copy across
+   all pages and components (via FOUNDER_PRICE and POST_CAP_PRICE exports).
 
-   EVERYTHING ELSE that must change the same day:
+   AUTOMATED BY THIS COMMIT:
+   - pricing.ts: Tiers derive price from constants
+   - index.astro, pricing.astro: Import constants instead of hardcoding
+   - early-access.astro: All three $149 references now import FOUNDER_PRICE
+   - pricing.astro risk section: Already conditional on CHECKOUT_STATE
+   - faq.ts: Already founder-neutral (driven by CHECKOUT_STATE messaging)
+
+   REMAINING MANUAL STEPS (when transitioning from founder to standard):
    1. Freemius: Verify "Lifetime" pricing field is set to "$249" one-time (not recurring) (/admin/plugins.php?page=freemius-pricing)
-   2. /pricing risk-reversal section (line 129–136): Remove or update reference to $149 founder-only claim
-   3. src/data/faq.ts: FAQ "What if my license lapses?" is already founder-neutral (driven by this file's CHECKOUT_STATE messaging)
-   4. /early-access.astro (line 22): Update "first 100 are $149" copy to reflect new pricing
-   5. Any announcement/email templates referencing founder tier exclusivity
+   2. Any announcement/email templates or social posts referencing founder pricing
+   3. (Optional) Signoff/confirmation in team comms that transition is live
 */
 export const CHECKOUT_STATE: 'founder' | 'standard' = 'founder';
 
@@ -66,10 +75,10 @@ const founderTier: PricingTier = {
   id: 'paid',
   label: 'FOUNDER · 100 LICENSES',
   name: 'The control center',
-  price: '$149',
+  price: FOUNDER_PRICE,
   billing: 'one time',
   oneLiner: 'The Pro control center and the full Hacks vault.',
-  teaser: '100 founder licenses at $149, then $249.',
+  teaser: `100 founder licenses at ${FOUNDER_PRICE}, then ${POST_CAP_PRICE}.`,
   leadLine: 'Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently — and refundable until the control center ships.',
   features: [
     'Full Hacks vault. 12+ recipes and growing',
@@ -88,7 +97,7 @@ const standardTier: PricingTier = {
   id: 'paid',
   label: 'PRO · CONTROL CENTER',
   name: 'The control center',
-  price: '$249',
+  price: POST_CAP_PRICE,
   billing: 'one time',
   oneLiner: 'The Pro control center and the full Hacks vault.',
   teaser: null,

@@ -12,6 +12,7 @@ import Footer from '../components/Footer.astro';
 import PricingCards from '../components/patterns/PricingCards.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 import { getFaqs } from '../data/faq';
+import { FOUNDER_PRICE, POST_CAP_PRICE } from '../data/pricing';
 
 const title = "Basalio - WordPress Portfolio Blocks";
 const description = "Nine curated interaction blocks for portfolio and case-study sites. Built for WordPress, not Framer.";
@@ -38,8 +39,8 @@ const blockNames = [
 
 // Pricing page data
 const supportEmail = "hello@basalio.com";
-const founderPrice = "$149";
-const postCapPrice = "$249";
+const founderPrice = FOUNDER_PRICE;
+const postCapPrice = POST_CAP_PRICE;
 const proShipTarget = "February 2027";
 const refundWindow = "30";
 

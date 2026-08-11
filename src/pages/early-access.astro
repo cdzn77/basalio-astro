@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 import Button from '../components/Button.astro';
+import { FOUNDER_PRICE } from '../data/pricing';
 
 const title = "Early Access - Basalio";
 const description = "Get on the Basalio founder list. Nine blocks in testing, Pro control center in planning.";
@@ -19,7 +20,7 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
     <HeaderSplit
       eyebrow="EARLY ACCESS"
       heading="Get on the list."
-      body="Basalio isn't on WordPress.org yet. The nine blocks are built and in testing; the Pro control center isn't started. When the free plugin lands, you'll be the first to know. If you want a founder license, say so below. The first 100 are $149, one payment, and the price goes up after that."
+      body={`Basalio isn't on WordPress.org yet. The nine blocks are built and in testing; the Pro control center isn't started. When the free plugin lands, you'll be the first to know. If you want a founder license, say so below. The first 100 are ${FOUNDER_PRICE}, one payment, and the price goes up after that.`}
       level="h1"
       surface="paper"
     >
@@ -72,11 +73,11 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
                   id="intent-founder"
                   type="radio"
                   name="intent"
-                  value="I want a founder license ($149, first 100)"
+                  value={`I want a founder license (${FOUNDER_PRICE}, first 100)`}
                   required
                   class="radio-input"
                 />
-                <label for="intent-founder" class="radio-label">I want a founder license ($149, first 100)</label>
+                <label for="intent-founder" class="radio-label">{`I want a founder license (${FOUNDER_PRICE}, first 100)`}</label>
               </div>
             </div>
           </fieldset>

@@ -13,6 +13,19 @@ Founder differentiator: refundable at any time until the Pro control center ship
 
 External steps only: (1) Freemius Lifetime field set to "$249" one-time (not recurring), (2) Announcement/email/social posts mentioning founder tier.
 
+## UNVERIFIED PLUGIN CLAIMS — CRITICAL BEFORE LAUNCH
+
+**Every product claim about the plugin is unverifiable from this repo.** The plugin source code is not checked out here. These claims rest on Angelo's direct knowledge and should be confirmed against the actual plugin code before launch:
+
+- Nine blocks exist and are built (implementation shown in marketing-site demo pages only, not plugin code)
+- One shared script loads only on pages that use blocks (requires inspection of plugin PHP conditionals)
+- Blocks are keyboard-operable and reduced-motion aware (demo JS shown; full accessibility testing requires WordPress environment)
+- No jQuery, no framework in plugin bundle (requires build artifact inspection)
+- Content survives plugin uninstall (requires inspection of plugin deactivation/uninstall hooks)
+- GPL-2.0-or-later license (requires reading plugin LICENSE file or readme.txt header)
+
+**Action:** Before shipping, verify these claims are true by reviewing the actual plugin source code. Marketing copy commits to these features; if they do not exist or are incomplete, update copy to match reality.
+
 **Verified 2026-08-11:**
 - Commit 61c0779: Corrected all renewal/subscription language (moved from dual-model: founder with no renewal vs $249/year standard, to single one-time model)
 - Commit 2a2140e: Centralized pricing constants, tested at both CHECKOUT_STATE values (zero $149 matches when state='standard'; $249 only in post-cap teaser + FAQ when state='founder')

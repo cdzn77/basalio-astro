@@ -126,7 +126,7 @@ CONTACT → /contact
    - Add `--text-on-paper-muted` (var(--text-on-paper) @ 60% opacity)
    - Rename `--paper-inverse` → `--text-on-ink` (#F6F4EF)
    - Rename `--basalio-stone` / hardcoded #D4CABE → `--text-on-ink-muted` (#D4CABE)
-   - Keep `--acid` #DFFF00 (fill only, text on dark surface only)
+   - Keep `--acid` #EDFF10 (updated Jul 31, commit 853a7fd: warmer yellow, less green tint)
    - Keep `--stone` #DFDCD5 (borders/dividers, not text)
 
 2. Verify zero references to old names

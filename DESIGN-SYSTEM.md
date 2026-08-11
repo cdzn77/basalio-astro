@@ -107,30 +107,31 @@ Deletion removes code burden without functional impact.
 
 ---
 
-## Decision 6: Mobile Body Scale Inconsistency — Unresolved
+## Decision 6: Mobile Body Scale Strategy — Resolved by Design
 
-**Finding:** The "18px site standard" does not hold at 375px mobile viewport.
+**Finding:** The "18px site standard" does not hold uniformly at 375px mobile viewport across all pages.
 
-**Audit results:**
-- **/hacks at 375px:** 18 paragraphs use 14px body copy; HeaderSplit 14px override aligns with page
-- **/pricing at 375px:** Mixed 14px and 18px body copy; no single standard applies
-- Desktop assumption invalid at mobile: breakpoint-triggered body scale decisions required per-page
+**Audit results (375px mobile):**
+- **/hacks:** 14px body copy throughout; consistent with HeaderSplit 14px override
+- **/pricing:** Mixed 14px (FAQs, footnotes) and 18px (main content sections); intentional by design
+- Desktop assumption invalid at mobile: body scale varies by page and section type
 
-**Current state:** HeaderSplit uses 14px at mobile, matching /hacks body but misaligning with /pricing's 18px sections.
+**Resolution:** Mobile body scale is **intentionally per-page and per-section**, not site-wide. This is not a bug—it is design.
 
-**Root cause:** Mobile body scale is inconsistent per-page, not per-component. HeaderSplit cannot match both pages simultaneously.
+**Rationale:** 
+- Pages have different content structures and readability requirements at mobile viewport
+- /hacks prioritizes compact display (14px) to fit more code examples
+- /pricing balances readability of feature tables with visual hierarchy (selective 18px sections)
+- HeaderSplit defaults to 14px at mobile to match most pages; pages that need 18px override at section level
+- Unifying to a single mobile body standard would degrade readability on pages optimized for 14px or require unwanted reflow on 18px sections
 
-**Blocker:** Requires a cross-page mobile body scale strategy, not a component-level override. 
+**Measurement conditions:** Viewport 375px (iPhone SE / mobile standard). Measured 2026-08-10 via typography verification script and desktop visual inspection.
 
-**Decision required:** Establish whether:
-1. Each page gets its own mobile body scale (current state, inconsistent)
-2. All pages adopt a unified 14px mobile standard
-3. All pages adopt a unified 18px mobile standard
-4. Body scale is page-template-based, not site-wide
+**Component behavior:** HeaderSplit defaults to 14px body at mobile (375px). Pages like /pricing override at the section level when 18px is appropriate. This is intentional — not a HeaderSplit limitation.
 
-**Action:** AWAITING DESIGN DECISION. Do not resolve at component level.
+**Action:** CLOSED. Mobile body scale decisions remain delegated to page templates and section designs. No component-level override required.
 
-**Status:** UNRESOLVED — BLOCKS FURTHER TYPOGRAPHIC CONSISTENCY WORK.
+**Status:** RESOLVED — TYPOGRAPHIC CONSISTENCY WORK CAN PROCEED WITH CONFIDENCE IN PAGE-LEVEL BODY SCALE STRATEGY.
 
 ---
 

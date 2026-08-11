@@ -27,7 +27,7 @@ export const licenseScope = {
    This single change cascades to price, billing model, and card copy.
 
    EVERYTHING ELSE that must change the same day:
-   1. Freemius: Update "Lifetime" pricing field to "$249/year" (/admin/plugins.php?page=freemius-pricing)
+   1. Freemius: Verify "Lifetime" pricing field is set to "$249" one-time (not recurring) (/admin/plugins.php?page=freemius-pricing)
    2. /pricing risk-reversal section (line 129–136): Remove or update reference to $149 founder-only claim
    3. src/data/faq.ts: FAQ "What if my license lapses?" is already founder-neutral (driven by this file's CHECKOUT_STATE messaging)
    4. /early-access.astro (line 22): Update "first 100 are $149" copy to reflect new pricing
@@ -69,8 +69,8 @@ const founderTier: PricingTier = {
   price: '$149',
   billing: 'one time',
   oneLiner: 'The Pro control center and the full Hacks vault.',
-  teaser: '100 founder licenses, then $249/year.',
-  leadLine: 'Everything in the free version, plus the Pro layer. A founder license is one payment, no renewal. Your work stays yours.',
+  teaser: '100 founder licenses at $149, then $249.',
+  leadLine: 'Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently — and refundable until the control center ships.',
   features: [
     'Full Hacks vault. 12+ recipes and growing',
     'Pro control center: live-tune all nine blocks from the editor sidebar',
@@ -89,10 +89,10 @@ const standardTier: PricingTier = {
   label: 'PRO · CONTROL CENTER',
   name: 'The control center',
   price: '$249',
-  billing: 'per year',
+  billing: 'one time',
   oneLiner: 'The Pro control center and the full Hacks vault.',
   teaser: null,
-  leadLine: 'Everything in the free version, plus the Pro layer. Updates and support renew annually. Stop paying and everything you have built stays exactly as it is.',
+  leadLine: 'Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently.',
   features: [
     'Full Hacks vault. 12+ recipes and growing',
     'Pro control center: live-tune all nine blocks from the editor sidebar',
@@ -102,7 +102,7 @@ const standardTier: PricingTier = {
     'Unlimited sites',
   ],
   cta: { label: 'Get Pro', href: '/early-access' },
-  microLine: '30-day refund, no questions asked. Renews annually for updates and support.',
+  microLine: '30-day refund, no questions asked.',
   featured: true,
 };
 

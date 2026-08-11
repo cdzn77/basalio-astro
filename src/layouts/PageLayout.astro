@@ -1,0 +1,81 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  eyebrow?: string;
+  heading: string;
+  body?: string;
+  level?: 'h1' | 'h2' | 'h3';
+  surface?: 'alt' | 'default';
+  width?: 'narrow' | 'wide';
+}
+
+const {
+  title,
+  description,
+  eyebrow = 'Coming Soon',
+  heading,
+  body = '',
+  level = 'h1',
+  surface = 'alt',
+  width = 'narrow'
+} = Astro.props;
+---
+
+<BaseLayout {title} {description}>
+  <Fragment slot="header">
+    <Header />
+  </Fragment>
+
+  <!-- Hero header with eyebrow, heading, body -->
+  <HeaderSplit
+    {eyebrow}
+    {heading}
+    body={body}
+    level={level}
+    surface={surface}
+  />
+
+  <!-- Main content slot -->
+  <div class={`page-content page-content-${width}`}>
+    <slot />
+  </div>
+
+  <Fragment slot="footer">
+    <Footer hideNewsletter={true} />
+  </Fragment>
+</BaseLayout>
+
+<style>
+  .page-content {
+    background: var(--surface-paper);
+    padding: 60px 40px;
+  }
+
+  .page-content-narrow {
+    max-width: var(--container-narrow);
+    margin: 0 auto;
+  }
+
+  .page-content-wide {
+    max-width: var(--container-wide);
+    margin: 0 auto;
+  }
+
+  @media (max-width: 1024px) {
+    .page-content {
+      padding: 40px 30px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-content {
+      padding: 30px 20px;
+    }
+  }
+</style>

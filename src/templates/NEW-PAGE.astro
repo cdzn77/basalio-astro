@@ -1,0 +1,87 @@
+---
+// NEW-PAGE.astro — Copy and rename this file to create a new page
+// Replace the example content, then delete this comment block
+// REQUIRED DECISIONS:
+// 1. Page title (shows in browser tab)
+// 2. Page description (shows in meta tags and search results)
+// 3. Hero eyebrow (optional, defaults to 'Coming Soon')
+// 4. Hero heading (required)
+// 5. Hero body text (optional)
+// 6. Container width: 'narrow' (760px) or 'wide' (1786px)
+
+import PageLayout from '../layouts/PageLayout.astro';
+
+const title = "Page Title - Basalio";
+const description = "Brief description of the page for search engines and social sharing.";
+const eyebrow = "SECTION LABEL";
+const heading = "Page Heading\nWith Multiple Lines";
+const body = "Optional body text below the heading. This appears in the left column of the header.";
+const width = 'narrow'; // Change to 'wide' for full-width layouts (ledger tables, etc)
+---
+
+<PageLayout
+  {title}
+  {description}
+  {eyebrow}
+  {heading}
+  {body}
+  level="h1"
+  surface="alt"
+  {width}
+>
+  <!-- Your content goes here -->
+  <section class="example-section">
+    <h2>Section Heading</h2>
+    <p>Content here. Use semantic HTML: sections, articles, lists, divs.</p>
+  </section>
+
+  <section class="example-section">
+    <h2>Another Section</h2>
+    <p>Each section should be a distinct `&lt;section&gt;` element for semantic structure.</p>
+  </section>
+</PageLayout>
+
+<style>
+  .example-section {
+    margin-bottom: 60px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .example-section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .example-section h2 {
+    font-size: 32px;
+    font-weight: var(--font-weight-semibold);
+    margin: 0 0 20px 0;
+    color: var(--text-on-paper);
+  }
+
+  .example-section p {
+    color: var(--text-on-paper-muted);
+    font-size: var(--font-size-body);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .example-section h2 {
+      font-size: 28px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .example-section {
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+    }
+
+    .example-section h2 {
+      font-size: 24px;
+    }
+  }
+</style>

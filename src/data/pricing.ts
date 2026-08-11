@@ -24,23 +24,27 @@ export const licenseScope = {
 export const FOUNDER_PRICE = '$149';
 export const POST_CAP_PRICE = '$249';
 
-/* CHECKOUT_STATE: Switch between founder and standard pricing.
+/* CHECKOUT_STATE: Single-line flag controls site-wide pricing.
 
-   When the cap of 100 founder licenses is reached, change this to 'standard'.
-   This single change cascades to price, billing model, and card copy across
-   all pages and components (via FOUNDER_PRICE and POST_CAP_PRICE exports).
+   When the cap of 100 founder licenses is reached, change 'founder' to 'standard'.
 
-   AUTOMATED BY THIS COMMIT:
-   - pricing.ts: Tiers derive price from constants
-   - index.astro, pricing.astro: Import constants instead of hardcoding
-   - early-access.astro: All three $149 references now import FOUNDER_PRICE
-   - pricing.astro risk section: Already conditional on CHECKOUT_STATE
-   - faq.ts: Already founder-neutral (driven by CHECKOUT_STATE messaging)
+   ALL SITE COPY CASCADES AUTOMATICALLY:
+   - Pricing cards (price, billing, teaser, leadLine, microLine)
+   - Early-access form text and radio value
+   - FAQ answers (already founder-neutral, driven by CHECKOUT_STATE)
+   - Pricing page risk-reversal section (conditional render)
 
-   REMAINING MANUAL STEPS (when transitioning from founder to standard):
-   1. Freemius: Verify "Lifetime" pricing field is set to "$249" one-time (not recurring) (/admin/plugins.php?page=freemius-pricing)
-   2. Any announcement/email templates or social posts referencing founder pricing
-   3. (Optional) Signoff/confirmation in team comms that transition is live
+   No hardcoded prices remain. All page copies and components import
+   FOUNDER_PRICE and POST_CAP_PRICE constants.
+
+   Verified 2026-08-11: built at both states and grepped dist output
+   (commits 61c0779, 2a2140e). Confirms zero $149 matches when state='standard',
+   $249 appears only in post-cap teaser and FAQ references when state='founder'.
+
+   EXTERNAL STEPS STILL REQUIRED (cannot automate):
+   1. Freemius: /admin/plugins.php?page=freemius-pricing → verify "Lifetime"
+      field is "$249" one-time (NOT recurring subscription)
+   2. Comms: Update any announcement/email/social posts mentioning founder pricing
 */
 export const CHECKOUT_STATE: 'founder' | 'standard' = 'founder';
 

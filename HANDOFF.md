@@ -1,5 +1,22 @@
 # BASALIO — HANDOFF
-Last updated 2026-08-09 (Icon import bug fixed, full-site audit run)
+Last updated 2026-08-11 (Pricing model settled and centralized)
+
+## PRICING MODEL — SETTLED
+
+**Pricing structure:** $149 founder (first 100), $249 after. Both one-time, both perpetual, both unlimited sites. No subscription tier exists.
+
+Founder differentiator is **refund-until-control-center-ships** (earliest 100 buyers get indefinite refund window). Standard tier gets 30-day refund window only. This asymmetry rewards founder risk-taking without creating a tier system based on price or features.
+
+**Revenue model:** All updates and support are funded by one-time payments. This is a deliberate obligation with no recurring revenue stream — sustainable only at small scale. Site copy now commits to perpetual updates on one-time pricing. No hedging language.
+
+**Implementation:** All pricing copy centralized via `src/data/pricing.ts` constants (`FOUNDER_PRICE`, `POST_CAP_PRICE`). Pages import constants instead of hardcoding. Flipping `CHECKOUT_STATE` from 'founder' to 'standard' cascades all price copy automatically across every page.
+
+External steps only: (1) Freemius Lifetime field set to "$249" one-time (not recurring), (2) Announcement/email/social posts mentioning founder tier.
+
+**Verified 2026-08-11:**
+- Commit 61c0779: Corrected all renewal/subscription language (moved from dual-model: founder with no renewal vs $249/year standard, to single one-time model)
+- Commit 2a2140e: Centralized pricing constants, tested at both CHECKOUT_STATE values (zero $149 matches when state='standard'; $249 only in post-cap teaser + FAQ when state='founder')
+- All verify:overflow (104/104) and verify:headings (12/12) checks pass after corrections
 
 ## STATE
 Site is LIVE AND PUBLIC at basalio.com. Netlify, production branch main.

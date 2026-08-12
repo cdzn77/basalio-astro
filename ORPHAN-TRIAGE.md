@@ -1,15 +1,14 @@
 # ORPHAN-TRIAGE
 
-Complete triaged inventory of all 72 unique orphaned CSS selectors found across the codebase.
+Complete triaged inventory of all 69 unique orphaned CSS selectors found across the codebase.
 
-**Baseline reconciliation:** Updated to deterministic stable count (72 unique, 94 occurrences) from commit 37ae421 (isAllowed fix). Previous 74 was stale (/tmp/orphans.json predates audit script changes).
+**Final reconciliation:** Deleted all 3 REAL_DIVERGENCE CSS rules (commit cd85a79 + final cleanup). Current count 69 unique, 90 occurrences after removals. Baseline was 72 unique, 94 occurrences (commit 37ae421).
 
 ## Counts
 
 - FALSE POSITIVE (runtime-added): 15 (10 approved + 5 new)
-- DEAD CODE (unused): 54 (61 - 7 reclassified as runtime or new discoveries)
-- REAL DIVERGENCE (CSS/markup mismatch): 3
-- **TOTAL: 72** (all 72 unique selectors accounted for)
+- DEAD CODE (unused): 54 (frozen per gate rules)
+- **TOTAL: 69** (buckets sum to exactly 69)
 
 ## Triage Details
 
@@ -19,7 +18,6 @@ Complete triaged inventory of all 72 unique orphaned CSS selectors found across 
 | accordion-header | src/components/patterns/Accordion.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
 | astro | src/pages/404.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
 | active | src/components/Header.astro:39 | FALSE_POSITIVE | JS adds via classList.toggle on menu dropdown |
-| audience-segment | src/components/WhoItsFor.astro:CSS | REAL_DIVERGENCE | CSS class exists but markup uses different class name; FIN-4 incomplete rename |
 | b-reveal | src/pages/hacks.astro:CSS,JS | FALSE_POSITIVE | Runtime-added class by JS; not part of static HTML |
 | block-image | src/components/BlocksCarousel.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
 | block-label | src/components/Hero.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
@@ -89,8 +87,6 @@ Complete triaged inventory of all 72 unique orphaned CSS selectors found across 
 | sequence-state-1 | src/pages/blocks.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
 | sequence-state-2 | src/pages/blocks.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
 | teaser-compact | src/components/patterns/PricingCards.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
-| testimonial-quote-v2 | src/components/WhoItsFor.astro:CSS | REAL_DIVERGENCE | CSS defined; FIN-4 renamed markup to audience-quote but CSS not removed |
-| testimonial-results-v2 | src/components/WhoItsFor.astro:CSS | REAL_DIVERGENCE | CSS defined; FIN-4 renamed markup to audience-results but CSS not removed |
 | title | src/components/patterns/Accordion.astro:CSS; src/components/patterns/StatusLedger.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
 | two-pill-button | src/components/BlocksCarousel.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
 
@@ -98,7 +94,6 @@ Complete triaged inventory of all 72 unique orphaned CSS selectors found across 
 
 - **FALSE POSITIVE (10):** scrolled, faq-answer, faq-icon-plus, faq-icon-close, b-reveal, copied, interactive, idle-return, revealed-state, faq-question
 - **DEAD CODE (61):** All selectors defined in CSS but no markup renders them anywhere
-- **REAL DIVERGENCE (3):** testimonial-quote-v2, audience-segment, testimonial-results-v2 (CSS/markup mismatch from FIN-4 incomplete rename)
 
 ## Notes
 

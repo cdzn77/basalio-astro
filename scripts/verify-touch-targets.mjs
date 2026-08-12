@@ -6,9 +6,10 @@ const ROUTES = ALL_ROUTES;
 const VIEWPORTS = [320, 375, 414]; // Test across mobile-critical breakpoints
 const MIN_TARGET_SIZE = 24; // WCAG 2.5.8 Level AA minimum
 
-// STAGE 2 — Approved inline candidates (structural + content checks passed, manually reviewed)
-// Format: { route, selector, text } with one-sentence justification per entry
-// Do not add entries to this list without explicit human review.
+// APPROVED_INLINE_EXEMPTIONS — entries added here exempts candidates from failCount
+// Format: { route, index, text } — route and index uniquely identify the element
+// Only entries in this list are exempt. Empty list = no exemptions.
+// Add entries ONLY after human review of Stage 1 candidate report.
 const APPROVED_INLINE_EXEMPTIONS = [
   // (None yet — awaiting Stage 1 candidate report and manual review)
 ];
@@ -34,25 +35,28 @@ async function verifyTouchTargets(browser, route, viewportWidth) {
     const results = await page.evaluate((minSize) => {
       const targets = [];
       const skipped = [];
-      const inlineCandidates = [];
       const elements = document.querySelectorAll('a, button');
 
       elements.forEach((el, idx) => {
         const rect = el.getBoundingClientRect();
-
-        // BLOCKER C: Detailed skip tracking
         let skipReason = null;
 
-        if (el.offsetParent === null) {
-          skipReason = 'offsetParent === null (not in document flow)';
-        } else if (window.getComputedStyle(el).visibility === 'hidden') {
-          skipReason = 'visibility: hidden';
-        } else if (window.getComputedStyle(el).display === 'none') {
+        // B3 FIX: Check display/visibility/area BEFORE offsetParent
+        // This avoids skipping fixed-position visible elements
+        const computed = window.getComputedStyle(el);
+
+        if (computed.display === 'none') {
           skipReason = 'display: none';
+        } else if (computed.visibility === 'hidden') {
+          skipReason = 'visibility: hidden';
         } else if (rect.width === 0 || rect.height === 0) {
-          skipReason = 'zero area (width=' + rect.width + ', height=' + rect.height + ')';
+          skipReason = `zero area (width=${rect.width}, height=${rect.height})`;
+        } else if (el.offsetParent === null && computed.position !== 'fixed' && computed.position !== 'sticky') {
+          // B3 FIX: Exclude fixed/sticky from offsetParent skip
+          skipReason = 'offsetParent === null (not in document flow)';
         } else if (el.disabled) {
-          skipReason = 'disabled attribute';
+          // B4 FIX: Clarify disabled is a coverage gap (element not measured in operable state)
+          skipReason = 'disabled at page load — NOT MEASURED IN OPERABLE STATE';
         }
 
         if (skipReason) {
@@ -69,52 +73,42 @@ async function verifyTouchTargets(browser, route, viewportWidth) {
         const height = rect.height;
         const pass = width >= minSize && height >= minSize;
 
-        // BLOCKER B STAGE 1: Structural candidate detection for inline links
-        // A target is an INLINE CANDIDATE only if ALL conditions hold:
+        // B2 FIX: Three-condition structural inline candidate detection (removed line-height condition)
+        // Stage 1 is permissive to avoid under-flagging; human review filters false positives
+        let inlineCandidate = false;
         if (!pass && el.tagName.toLowerCase() === 'a') {
-          const computed = window.getComputedStyle(el);
           const blockAncestor = el.closest('p, li, td, dd, blockquote');
 
           if (blockAncestor) {
-            // Check if the block ancestor contains non-whitespace text outside the target
+            // Condition 1: ancestor exists (checked by closest)
+            // Condition 2: ancestor contains external text
             const ancestorText = blockAncestor.textContent.trim();
             const targetText = el.textContent.trim();
             const hasExternalText = ancestorText.length > targetText.length;
 
-            // Check if target display is inline or inline-block
+            // Condition 3: target display is inline or inline-block
             const isInlineDisplay = computed.display === 'inline' || computed.display === 'inline-block';
 
-            // Check if height is within 2px of line-height
-            const lineHeight = parseFloat(computed.lineHeight);
-            const heightWithinRange = Math.abs(height - lineHeight) <= 2;
-
-            if (hasExternalText && isInlineDisplay && heightWithinRange) {
-              inlineCandidates.push({
-                index: idx,
-                type: el.tagName.toLowerCase(),
-                text: targetText,
-                width: width.toFixed(2),
-                height: height.toFixed(2),
-                ancestorTag: blockAncestor.tagName.toLowerCase(),
-                lineHeight: lineHeight.toFixed(2),
-                reason: 'Structural inline candidate (line-constrained)'
-              });
-              return;
+            if (hasExternalText && isInlineDisplay) {
+              inlineCandidate = true;
             }
           }
         }
 
+        // B1 FIX: Candidates still push to targets with inlineCandidate flag
+        // They count as failures unless matched in APPROVED_INLINE_EXEMPTIONS
         targets.push({
           type: el.tagName.toLowerCase(),
           index: idx,
           text: el.textContent.trim().slice(0, 30) || '(empty)',
-          width: width.toFixed(2),
-          height: height.toFixed(2),
-          pass
+          width: width, // B5 FIX: Full precision, no .toFixed() for display
+          height: height,
+          pass,
+          inlineCandidate
         });
       });
 
-      return { targets, skipped, inlineCandidates };
+      return { targets, skipped };
     }, MIN_TARGET_SIZE);
 
     return {
@@ -122,7 +116,6 @@ async function verifyTouchTargets(browser, route, viewportWidth) {
       viewport: viewportWidth,
       targets: results.targets,
       skipped: results.skipped,
-      inlineCandidates: results.inlineCandidates,
       passCount: results.targets.filter(t => t.pass).length,
       failCount: results.targets.filter(t => !t.pass).length
     };
@@ -143,6 +136,7 @@ async function main() {
   let totalFailures = 0;
   let totalSkipped = 0;
   let totalInlineCandidates = 0;
+  let totalInlineCandidatesExempted = 0;
 
   // Compute header dynamically from MIN_TARGET_SIZE constant
   const headerText = `WCAG 2.5.8 Target Size (Minimum), Level AA — >= ${MIN_TARGET_SIZE}x${MIN_TARGET_SIZE} CSS px`;
@@ -151,9 +145,8 @@ async function main() {
   console.log(headerText);
   console.log('═'.repeat(72) + '\n');
 
-  // Note: WCAG 2.5.8 section 4(a) includes Spacing and Equivalent exceptions.
-  // Stage 1: Structural inline candidates reported separately for manual review.
-  // Stage 2: Only approved entries in APPROVED_INLINE_EXEMPTIONS are exempted.
+  console.log('STAGE 1: Structural inline candidates reported separately for manual review.');
+  console.log('STAGE 2: Only entries in APPROVED_INLINE_EXEMPTIONS are exempted from failCount.\n');
 
   for (const route of ROUTES) {
     console.log(`Route: ${route}`);
@@ -169,24 +162,38 @@ async function main() {
         const status = result.failCount === 0 ? '✅' : `❌ (${result.failCount} small)`;
         console.log(`  ${viewport}px: ${status} ${result.passCount} pass, ${result.failCount} undersized, ${result.skipped.length} skipped`);
 
+        // Print failures
         if (result.failCount > 0) {
-          totalFailures += result.failCount;
           result.targets.filter(t => !t.pass).forEach(t => {
-            console.log(`       └─ ${t.type}[${t.index}]: ${t.width}×${t.height}px "${t.text}"`);
+            // B1 FIX: Check if candidate is in approved exemption list
+            let isExempted = false;
+            if (t.inlineCandidate) {
+              const exempted = APPROVED_INLINE_EXEMPTIONS.find(
+                e => e.route === route && e.index === t.index && e.text === t.text
+              );
+              isExempted = !!exempted;
+              if (isExempted) {
+                totalInlineCandidatesExempted++;
+              } else {
+                totalFailures++;
+                totalInlineCandidates++;
+              }
+            } else {
+              totalFailures++;
+            }
+
+            // B5 FIX: Print full precision (no .toFixed())
+            const marker = isExempted ? '⊙' : '└';
+            const exemptLabel = isExempted ? ' (EXEMPTED)' : '';
+            console.log(`       ${marker}─ ${t.type}[${t.index}]: ${t.width}×${t.height}px "${t.text}"${exemptLabel}`);
           });
         }
 
+        // Print skipped elements
         if (result.skipped.length > 0) {
           totalSkipped += result.skipped.length;
           result.skipped.forEach(s => {
             console.log(`       ⊘ ${s.type}[${s.index}]: skipped (${s.reason})`);
-          });
-        }
-
-        if (result.inlineCandidates.length > 0) {
-          totalInlineCandidates += result.inlineCandidates.length;
-          result.inlineCandidates.forEach(c => {
-            console.log(`       ⓘ ${c.type}[${c.index}]: ${c.width}×${c.height}px in <${c.ancestorTag}> (line-height: ${c.lineHeight}px) — ${c.reason}`);
           });
         }
       }
@@ -198,11 +205,11 @@ async function main() {
 
   console.log('═'.repeat(72));
   console.log(`SUMMARY: ${ROUTES.length} routes × ${VIEWPORTS.length} viewports = ${ROUTES.length * VIEWPORTS.length} checks`);
-  console.log(`Failures: ${totalFailures}, Skipped: ${totalSkipped}, Inline candidates (Stage 1): ${totalInlineCandidates}`);
+  console.log(`Failures (unapproved): ${totalFailures}, Inline candidates (unapproved): ${totalInlineCandidates}, Exempted: ${totalInlineCandidatesExempted}, Skipped: ${totalSkipped}`);
   console.log('═'.repeat(72) + '\n');
 
   if (totalInlineCandidates > 0) {
-    console.log('⚠️ Inline candidates found. Review above, then add approved entries to APPROVED_INLINE_EXEMPTIONS.\n');
+    console.log(`⚠️  ${totalInlineCandidates} inline candidate(s) await human review and entry to APPROVED_INLINE_EXEMPTIONS.\n`);
   }
 
   process.exit(totalFailures > 0 ? 1 : 0);

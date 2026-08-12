@@ -28,11 +28,13 @@ Last updated 2026-08-11 (FIN-1 through FIN-6 complete; FIN-8 touch targets resol
 - 153 total token uses, 0 hardcoded outside @font-face
 - All five weights (300, 400, 500, 600, 700) available as tokens
 
-**FIN-4: Naming Debt** (2026-08-11)
+**FIN-4: Naming Debt** (2026-08-11) — PARTIAL RENAME INCIDENT
 - CSS classes renamed (.courses→.blocks, .testimonials-v2→.audience)
 - Property names updated (headerType: 'ramp'→'split')
 - Ramp provenance comments removed
-- Overflow: 101/104 checks pass; 3 failures on / at 375px, 390px, 414px (pending fix)
+- **REGRESSION:** Partially renamed .testimonials-v2 → .audience: CSS fully renamed in src/components/WhoItsFor.astro, but markup updated on only 1 of 7 elements. Shipped visually broken /blocks page to production.
+- **ROOT CAUSE:** Overflow/headings/type-check gates cannot detect layout breakage when CSS selectors and HTML class names diverge. Regression remained undetected through all pre-deploy verification steps (steps 1–4 passed, step 5 orphan audit would have caught this but runs only during pre-deploy gate, not on historical commits). Silent failure: valid HTML rendered unstyled, stripping WhoItsFor of layout properties (display:flex, padding, z-index), causing pinned footer pattern to break through.
+- **FIXED:** cf8dd24 (commit 2026-08-11 23:20 UTC). Live verification: audience-* markup now complete across all 7 elements, footer overlap resolved, zero testimonials-v2 classes in production DOM.
 
 **FIN-5: Responsive Checks** (2026-08-11)
 - `scripts/verify-images.mjs`: Detects broken/missing images (naturalWidth = 0)

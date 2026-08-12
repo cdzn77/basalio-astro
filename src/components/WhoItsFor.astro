@@ -34,16 +34,16 @@ const {
 } = Astro.props;
 ---
 
-<section class="testimonials-v2 section-with-footer-overlap" id="testimonials-v2">
-  <div class="testimonials-v2-inner">
+<section class="audience section-with-footer-overlap" id="audience">
+  <div class="audience-inner">
     <!-- LEFT COLUMN: 500px, eyebrow + heading + pagination -->
-    <div class="testimonials-v2-left">
-      <div class="testimonials-v2-header">
-        <p class="testimonials-v2-eyebrow">{eyebrow}</p>
-        <h2 class="testimonials-v2-heading">{sectionHeading}</h2>
+    <div class="audience-left">
+      <div class="audience-header">
+        <p class="audience-eyebrow">{eyebrow}</p>
+        <h2 class="audience-heading">{sectionHeading}</h2>
       </div>
-      {bodyText && <p class="testimonials-v2-body">{bodyText}</p>}
-      {closingLine && <p class="testimonials-v2-closing">{closingLine}</p>}
+      {bodyText && <p class="audience-body">{bodyText}</p>}
+      {closingLine && <p class="audience-closing">{closingLine}</p>}
 
       <!-- PAGINATION CONTROLS: Below the heading on the left side -->
       <div class="pagination-controls-v2">
@@ -67,7 +67,7 @@ const {
     </div>
 
     <!-- RIGHT COLUMN: Carousel (1109px, or fill remaining) -->
-    <div class="testimonials-v2-right" tabindex="0" role="region" aria-label="WHO IT'S FOR carousel">
+    <div class="audience-right" tabindex="0" role="region" aria-label="WHO IT'S FOR carousel">
       <!-- Invisible left hover zone -->
       <div class="carousel-zone-v2 carousel-zone-left-v2" data-direction="prev"></div>
 

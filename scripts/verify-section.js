@@ -2,8 +2,18 @@ import { chromium } from 'playwright';
 import { ALL_ROUTES, NOT_FOUND_PROBE } from './routes.js';
 
 const PORT = process.env.PORT || 4321;
+const DEV_PORTS = [4321, 4322, 4323, 4324];
 const VIEWPORTS = [320, 360, 375, 390, 414, 768, 1024, 1440];
 const ROUTES = ALL_ROUTES;
+
+// GATE: Fail loudly if running against dev server
+if (DEV_PORTS.includes(PORT)) {
+  console.error('\n❌ ERROR: verify:overflow cannot run against dev server (port ' + PORT + ')');
+  console.error('   Dev servers have different caching and timing behavior than production builds.\n');
+  console.error('   REQUIRED: Run `npm run preview` in another terminal, then:');
+  console.error('   $ PORT=4173 npm run verify:overflow\n');
+  process.exit(1);
+}
 
 async function verifySectionOverflow(browser, route, viewport) {
   const page = await browser.newPage();

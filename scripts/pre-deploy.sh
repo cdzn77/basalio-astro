@@ -34,6 +34,10 @@ echo "4/4: Running heading structure verification..."
 npm run verify:headings
 
 echo ""
+echo "5/5: Running orphan selector audit..."
+node scripts/audit-orphan-selectors.mjs
+
+echo ""
 echo "═══════════════════════════════════════════════════════════════════"
-echo "✅ PRE-DEPLOY VERIFICATION COMPLETE"
+echo "✅ PRE-DEPLOY VERIFICATION COMPLETE (ALL 5 GATES PASSED)"
 echo "═══════════════════════════════════════════════════════════════════"

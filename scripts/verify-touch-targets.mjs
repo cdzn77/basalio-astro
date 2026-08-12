@@ -6,6 +6,13 @@ const ROUTES = ALL_ROUTES;
 const VIEWPORTS = [320, 375, 414]; // Test across mobile-critical breakpoints
 const MIN_TARGET_SIZE = 24; // WCAG 2.5.8 Level AA minimum
 
+// STAGE 2 — Approved inline candidates (structural + content checks passed, manually reviewed)
+// Format: { route, selector, text } with one-sentence justification per entry
+// Do not add entries to this list without explicit human review.
+const APPROVED_INLINE_EXEMPTIONS = [
+  // (None yet — awaiting Stage 1 candidate report and manual review)
+];
+
 async function verifyTouchTargets(browser, route, viewportWidth) {
   const page = await browser.newPage();
 
@@ -26,36 +33,76 @@ async function verifyTouchTargets(browser, route, viewportWidth) {
 
     const results = await page.evaluate((minSize) => {
       const targets = [];
+      const skipped = [];
+      const inlineCandidates = [];
       const elements = document.querySelectorAll('a, button');
-      let skipped = 0;
 
       elements.forEach((el, idx) => {
-        // Visibility filter: skip hidden/disabled elements and those with no layout
-        if (el.offsetParent === null) {
-          skipped++;
-          return;
-        }
-
-        const computed = window.getComputedStyle(el);
-        if (computed.visibility === 'hidden' || computed.display === 'none') {
-          skipped++;
-          return;
-        }
-
         const rect = el.getBoundingClientRect();
-        if (rect.width === 0 || rect.height === 0) {
-          skipped++;
-          return;
+
+        // BLOCKER C: Detailed skip tracking
+        let skipReason = null;
+
+        if (el.offsetParent === null) {
+          skipReason = 'offsetParent === null (not in document flow)';
+        } else if (window.getComputedStyle(el).visibility === 'hidden') {
+          skipReason = 'visibility: hidden';
+        } else if (window.getComputedStyle(el).display === 'none') {
+          skipReason = 'display: none';
+        } else if (rect.width === 0 || rect.height === 0) {
+          skipReason = 'zero area (width=' + rect.width + ', height=' + rect.height + ')';
+        } else if (el.disabled) {
+          skipReason = 'disabled attribute';
         }
 
-        if (el.disabled) {
-          skipped++;
+        if (skipReason) {
+          skipped.push({
+            index: idx,
+            type: el.tagName.toLowerCase(),
+            text: el.textContent.trim().slice(0, 40),
+            reason: skipReason
+          });
           return;
         }
 
         const width = rect.width;
         const height = rect.height;
         const pass = width >= minSize && height >= minSize;
+
+        // BLOCKER B STAGE 1: Structural candidate detection for inline links
+        // A target is an INLINE CANDIDATE only if ALL conditions hold:
+        if (!pass && el.tagName.toLowerCase() === 'a') {
+          const computed = window.getComputedStyle(el);
+          const blockAncestor = el.closest('p, li, td, dd, blockquote');
+
+          if (blockAncestor) {
+            // Check if the block ancestor contains non-whitespace text outside the target
+            const ancestorText = blockAncestor.textContent.trim();
+            const targetText = el.textContent.trim();
+            const hasExternalText = ancestorText.length > targetText.length;
+
+            // Check if target display is inline or inline-block
+            const isInlineDisplay = computed.display === 'inline' || computed.display === 'inline-block';
+
+            // Check if height is within 2px of line-height
+            const lineHeight = parseFloat(computed.lineHeight);
+            const heightWithinRange = Math.abs(height - lineHeight) <= 2;
+
+            if (hasExternalText && isInlineDisplay && heightWithinRange) {
+              inlineCandidates.push({
+                index: idx,
+                type: el.tagName.toLowerCase(),
+                text: targetText,
+                width: width.toFixed(2),
+                height: height.toFixed(2),
+                ancestorTag: blockAncestor.tagName.toLowerCase(),
+                lineHeight: lineHeight.toFixed(2),
+                reason: 'Structural inline candidate (line-constrained)'
+              });
+              return;
+            }
+          }
+        }
 
         targets.push({
           type: el.tagName.toLowerCase(),
@@ -67,7 +114,7 @@ async function verifyTouchTargets(browser, route, viewportWidth) {
         });
       });
 
-      return { targets, skipped };
+      return { targets, skipped, inlineCandidates };
     }, MIN_TARGET_SIZE);
 
     return {
@@ -75,6 +122,7 @@ async function verifyTouchTargets(browser, route, viewportWidth) {
       viewport: viewportWidth,
       targets: results.targets,
       skipped: results.skipped,
+      inlineCandidates: results.inlineCandidates,
       passCount: results.targets.filter(t => t.pass).length,
       failCount: results.targets.filter(t => !t.pass).length
     };
@@ -94,6 +142,7 @@ async function main() {
   const allResults = [];
   let totalFailures = 0;
   let totalSkipped = 0;
+  let totalInlineCandidates = 0;
 
   // Compute header dynamically from MIN_TARGET_SIZE constant
   const headerText = `WCAG 2.5.8 Target Size (Minimum), Level AA — >= ${MIN_TARGET_SIZE}x${MIN_TARGET_SIZE} CSS px`;
@@ -103,7 +152,8 @@ async function main() {
   console.log('═'.repeat(72) + '\n');
 
   // Note: WCAG 2.5.8 section 4(a) includes Spacing and Equivalent exceptions.
-  // Those are not implemented here; all targets either measure >= 24×24 or are failures.
+  // Stage 1: Structural inline candidates reported separately for manual review.
+  // Stage 2: Only approved entries in APPROVED_INLINE_EXEMPTIONS are exempted.
 
   for (const route of ROUTES) {
     console.log(`Route: ${route}`);
@@ -117,7 +167,7 @@ async function main() {
         console.log(`  ${viewport}px: ERROR: ${result.error}`);
       } else {
         const status = result.failCount === 0 ? '✅' : `❌ (${result.failCount} small)`;
-        console.log(`  ${viewport}px: ${status} ${result.passCount} pass, ${result.failCount} undersized${result.skipped > 0 ? `, ${result.skipped} skipped (hidden/disabled)` : ''}`);
+        console.log(`  ${viewport}px: ${status} ${result.passCount} pass, ${result.failCount} undersized, ${result.skipped.length} skipped`);
 
         if (result.failCount > 0) {
           totalFailures += result.failCount;
@@ -125,10 +175,20 @@ async function main() {
             console.log(`       └─ ${t.type}[${t.index}]: ${t.width}×${t.height}px "${t.text}"`);
           });
         }
-      }
 
-      if (result.skipped) {
-        totalSkipped += result.skipped;
+        if (result.skipped.length > 0) {
+          totalSkipped += result.skipped.length;
+          result.skipped.forEach(s => {
+            console.log(`       ⊘ ${s.type}[${s.index}]: skipped (${s.reason})`);
+          });
+        }
+
+        if (result.inlineCandidates.length > 0) {
+          totalInlineCandidates += result.inlineCandidates.length;
+          result.inlineCandidates.forEach(c => {
+            console.log(`       ⓘ ${c.type}[${c.index}]: ${c.width}×${c.height}px in <${c.ancestorTag}> (line-height: ${c.lineHeight}px) — ${c.reason}`);
+          });
+        }
       }
     }
     console.log();
@@ -138,8 +198,12 @@ async function main() {
 
   console.log('═'.repeat(72));
   console.log(`SUMMARY: ${ROUTES.length} routes × ${VIEWPORTS.length} viewports = ${ROUTES.length * VIEWPORTS.length} checks`);
-  console.log(`Failures: ${totalFailures}, Skipped: ${totalSkipped}`);
+  console.log(`Failures: ${totalFailures}, Skipped: ${totalSkipped}, Inline candidates (Stage 1): ${totalInlineCandidates}`);
   console.log('═'.repeat(72) + '\n');
+
+  if (totalInlineCandidates > 0) {
+    console.log('⚠️ Inline candidates found. Review above, then add approved entries to APPROVED_INLINE_EXEMPTIONS.\n');
+  }
 
   process.exit(totalFailures > 0 ? 1 : 0);
 }

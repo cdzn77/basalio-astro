@@ -50,7 +50,7 @@ Last updated 2026-08-11 (FIN-1 through FIN-6 complete: site work finished)
 - ⚠️ Overflow: `npm run verify:overflow` 101/104 checks pass (3 failures on / at 375px, 390px, 414px; pending fix)
 - ✅ Headings: `npm run verify:headings` 12/12 routes pass
 - ✅ Images: `node scripts/verify-images.mjs` 0 broken
-- ⚠️ Touch targets: `node scripts/verify-touch-targets.mjs` figure of "16 undersized" came from analyze-targets.mjs (repo root), measured against incorrect 44×44 (AAA) threshold mislabelled as 2.5.8 (AA, 24×24). Count is DISPUTED and pending re-measurement at correct threshold with unrounded floats.
+- ✅ Touch targets: `node scripts/verify-touch-targets.mjs` 13 routes × 3 viewports (320, 375, 414px) — WCAG 2.5.8 Level AA (24×24px). **Zero AA failures outside 5 approved inline exemptions** (sub-processor links + contact email in prose paragraphs, constrained by line-height). Measured with unrounded floats. **Known limitation:** wrapped inline elements silently pass due to getBoundingClientRect() union-box behavior; getClientRects() fix deferred.
 
 ---
 
@@ -112,7 +112,7 @@ Verification status:
 - Overflow: 101/104 routes × 8 viewports (3 failures on homepage at 375px, 390px, 414px; pending fix) ⚠️
 - Headings: 12/12 routes ✅
 - Images: 0 broken ✅
-- Touch targets: DISPUTED figure of "16 undersized" — measured against incorrect 44×44 threshold instead of correct 24×24 for WCAG 2.5.8 AA level. Pending re-measurement with correct threshold and unrounded floats. ⚠️
+- Touch targets: ✅ RESOLVED — Zero WCAG 2.5.8 AA failures (24×24px) across 13 routes × 3 viewports, with 5 approved inline exemptions (line-height constrained prose links). Measured with unrounded floats. Known limitation: wrapped links silently pass (getClientRects fix deferred).
 
 ---
 

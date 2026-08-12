@@ -28,8 +28,11 @@ const ALLOWLIST = [
 ];
 
 function isAllowed(selector) {
+  // Strip leading dot for comparison (selector passed as ".classname")
+  const className = selector.startsWith('.') ? selector.slice(1) : selector;
+
   // Check if selector is in APPROVED_RUNTIME_CLASSES
-  if (APPROVED_RUNTIME_CLASSES.some(r => r.selector === selector)) {
+  if (APPROVED_RUNTIME_CLASSES.some(r => r.selector === className)) {
     return true;
   }
 

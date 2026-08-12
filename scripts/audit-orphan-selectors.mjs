@@ -1,46 +1,74 @@
 import { chromium } from 'playwright';
 import { readdirSync, readFileSync } from 'fs';
 import { join, extname } from 'path';
+import { ALL_ROUTES } from './routes.js';
 
 const PORT = process.env.PORT || 4321;
-const ROUTES = [
-  '/', '/blocks', '/contact', '/early-access', '/hacks', '/hero-lab',
-  '/pricing', '/privacy', '/roadmap', '/support', '/terms', '/welcome'
+const ROUTES = ALL_ROUTES;
+const JSON_MODE = process.argv.includes('--json');
+
+// Runtime-added class selectors: defined in JS, not in static HTML
+// Format: { selector: 'class-name', source: 'file.astro:line(s)', reason: 'why JS adds this' }
+const APPROVED_RUNTIME_CLASSES = [
+  { selector: 'scrolled', source: 'src/layouts/BaseLayout.astro:150-160', reason: 'JS adds on scroll event for sticky header animation' },
+  { selector: 'faq-answer', source: 'src/components/FAQ.astro:45-50', reason: 'JS toggles display of answer blocks on question click' },
+  { selector: 'faq-icon-plus', source: 'src/components/FAQ.astro:32', reason: 'JS querySelector target for plus icon element' },
+  { selector: 'faq-icon-close', source: 'src/components/FAQ.astro:33', reason: 'JS querySelector target for close icon element' },
+  { selector: 'b-reveal', source: 'src/pages/hacks.astro:28', reason: 'JS toggles class on copy button for reveal animation' },
+  { selector: 'copied', source: 'src/pages/hacks.astro:29', reason: 'JS toggles class on copy button for success state' },
+  { selector: 'interactive', source: 'src/pages/hero-lab.astro:35-40', reason: 'JS adds on interactive element focus/interaction' },
+  { selector: 'idle-return', source: 'src/pages/hero-lab.astro:41-45', reason: 'JS adds when element returns to idle state' },
+  { selector: 'revealed-state', source: 'src/pages/hero-lab.astro:46', reason: 'JS adds when hidden content is revealed' },
+  { selector: 'faq-question', source: 'src/pages/pricing.astro:82', reason: 'JS querySelector target for FAQ question elements' }
 ];
 
-// Selectors that are applied via JavaScript or are structural and should not be in markup
-// Format: { pattern: regex, reason: 'explanation' }
 const ALLOWLIST = [
   { pattern: /^:global\(/, reason: 'Global scope prefix' },
   { pattern: /::/, reason: 'Pseudo-element' },
-  { pattern: /^\.is-/, reason: 'JS-applied state class' },
-  { pattern: /^\.has-/, reason: 'JS-applied state class' },
-  { pattern: /^\.open/, reason: 'JS-applied state class' },
-  { pattern: /^\.active/, reason: 'JS-applied state class' },
-  { pattern: /^\.visible/, reason: 'JS-applied state class' }
 ];
 
 function isAllowed(selector) {
+  // Check if selector is in APPROVED_RUNTIME_CLASSES
+  if (APPROVED_RUNTIME_CLASSES.some(r => r.selector === selector)) {
+    return true;
+  }
+
+  // Check allowlist patterns
   return ALLOWLIST.some(entry => entry.pattern.test(selector));
 }
 
 function extractClassSelectors(styleContent) {
   const selectors = [];
-  // Match .classname and variants like .classname:hover, .classname::before, etc.
-  const classPattern = /\.([a-zA-Z0-9_-]+)(?:[:#\[\s]|::?[a-z-]+)?/g;
+  const classPattern = /\.([a-zA-Z_][a-zA-Z0-9_-]*)(?:[:#\[\s]|::?[a-z-]+)?/g;
   let match;
 
   while ((match = classPattern.exec(styleContent)) !== null) {
-    const fullSelector = match[0];
     const className = match[1];
-    selectors.push({
-      class: className,
-      selector: fullSelector,
-      line: styleContent.substring(0, match.index).split('\n').length
-    });
+    selectors.push(className);
   }
 
-  return selectors;
+  return [...new Set(selectors)];
+}
+
+function extractJSClassReferences(scriptContent) {
+  const selectors = [];
+  const patterns = [
+    /querySelector(?:All)?\s*\(\s*['"](\.([a-zA-Z_][a-zA-Z0-9_-]*)['"]*)/g,
+    /querySelector(?:All)?\s*\(\s*`(\.([a-zA-Z_][a-zA-Z0-9_-]*)`)/g,
+    /classList\.(add|remove|toggle|contains)\s*\(\s*['"](([a-zA-Z_][a-zA-Z0-9_-]*))['"]/g
+  ];
+
+  for (const pattern of patterns) {
+    let match;
+    while ((match = pattern.exec(scriptContent)) !== null) {
+      const fullClass = match[2] || match[3];
+      if (fullClass) {
+        selectors.push(fullClass);
+      }
+    }
+  }
+
+  return [...new Set(selectors)];
 }
 
 function getStyleBlocks(astroContent) {
@@ -67,13 +95,28 @@ function getStyleBlocks(astroContent) {
   return styleBlocks;
 }
 
-async function checkSelectorInPage(page, className) {
-  try {
-    const elements = await page.locator(`.${className}`).count();
-    return elements > 0;
-  } catch (e) {
-    return false;
+function getScriptBlocks(astroContent) {
+  const scriptStart = astroContent.indexOf('<script');
+  if (scriptStart === -1) return [];
+
+  const scriptBlocks = [];
+  let current = scriptStart;
+
+  while (current !== -1) {
+    const blockStart = astroContent.indexOf('>', current) + 1;
+    const blockEnd = astroContent.indexOf('</script>', blockStart);
+
+    if (blockEnd === -1) break;
+
+    scriptBlocks.push({
+      content: astroContent.substring(blockStart, blockEnd),
+      startLine: astroContent.substring(0, blockStart).split('\n').length
+    });
+
+    current = astroContent.indexOf('<script', blockEnd);
   }
+
+  return scriptBlocks;
 }
 
 function findAstroFiles(dir) {
@@ -98,82 +141,169 @@ function findAstroFiles(dir) {
 async function auditOrphanSelectors() {
   const astroFiles = findAstroFiles('src');
   const browser = await chromium.launch({ headless: true });
-  const orphans = {};
+  const scannedRoutes = [];
+  const orphanList = [];
 
-  console.log('\n' + '═'.repeat(70));
-  console.log('ORPHAN CLASS SELECTOR AUDIT');
-  console.log('═'.repeat(70));
-  console.log(`Scanning ${astroFiles.length} .astro files across ${ROUTES.length} routes...\n`);
+  try {
+    if (!JSON_MODE) {
+      console.log('\n' + '═'.repeat(70));
+      console.log('ORPHAN CLASS SELECTOR AUDIT');
+      console.log('═'.repeat(70));
+      console.log(`Scanning ${astroFiles.length} .astro files across ${ROUTES.length} routes...`);
+      console.log('Step 1: Loading all routes...\n');
+    }
 
-  for (const filePath of astroFiles) {
-    const content = readFileSync(filePath, 'utf8');
-    const styleBlocks = getStyleBlocks(content);
+    const renderedClasses = new Set();
+    const pages = [];
 
-    if (styleBlocks.length === 0) continue;
+    for (let i = 0; i < ROUTES.length; i++) {
+      const route = ROUTES[i];
+      const page = await browser.newPage();
+      pages.push(page);
 
-    const relPath = filePath.replace(process.cwd() + '/', '');
-    orphans[relPath] = [];
+      try {
+        await page.setViewportSize({ width: 1440, height: 667 });
+        await page.goto(`http://localhost:${PORT}${route}`, { waitUntil: 'networkidle', timeout: 30000 });
+        scannedRoutes.push(route);
 
-    for (const block of styleBlocks) {
-      const selectors = extractClassSelectors(block.content);
-      const uniqueSelectors = [...new Set(selectors.map(s => s.class))];
-
-      for (const className of uniqueSelectors) {
-        if (isAllowed(`.${className}`)) continue;
-
-        // Test across all routes
-        let found = false;
-
-        for (const route of ROUTES) {
-          const page = await browser.newPage();
-          try {
-            await page.setViewportSize({ width: 1440, height: 667 });
-            await page.goto(`http://localhost:${PORT}${route}`, { waitUntil: 'networkidle' });
-
-            if (await checkSelectorInPage(page, className)) {
-              found = true;
-              page.close();
-              break;
+        const classes = await page.evaluate(() => {
+          const allElements = document.querySelectorAll('*');
+          const classSet = new Set();
+          allElements.forEach(el => {
+            if (el.className && typeof el.className === 'string') {
+              el.className.split(/\s+/).forEach(cls => {
+                if (cls.length > 0) classSet.add(cls);
+              });
             }
-          } catch (e) {
-            // Route might not exist, continue
-          } finally {
-            if (!page.isClosed()) page.close();
+          });
+          return Array.from(classSet);
+        });
+
+        classes.forEach(cls => renderedClasses.add(cls));
+        if (!JSON_MODE) console.log(`  ✓ ${route}`);
+      } catch (e) {
+        if (!JSON_MODE) console.log(`  ✗ ${route} (${e.message})`);
+      }
+    }
+
+    for (const page of pages) {
+      try {
+        await page.close();
+      } catch (e) {}
+    }
+
+    if (!JSON_MODE) {
+      console.log(`\nCoverage check: ${scannedRoutes.length}/${ROUTES.length} routes scanned`);
+      if (scannedRoutes.length < ROUTES.length) {
+        const unscanned = ROUTES.filter(r => !scannedRoutes.includes(r));
+        console.error(`\n❌ COVERAGE INCOMPLETE: Unscanned routes: ${unscanned.join(', ')}`);
+        console.error('Orphan audit will report false positives for CSS on unscanned routes.');
+        await browser.close();
+        process.exit(1);
+      }
+      console.log('✓ Full coverage verified\n');
+      console.log('Step 2: Scanning CSS and JS selectors in ' + astroFiles.length + ' files...\n');
+    }
+
+    for (const filePath of astroFiles) {
+      const content = readFileSync(filePath, 'utf8');
+      const styleBlocks = getStyleBlocks(content);
+      const scriptBlocks = getScriptBlocks(content);
+
+      const relPath = filePath.replace(process.cwd() + '/', '');
+
+      if (styleBlocks.length > 0) {
+        for (const block of styleBlocks) {
+          const selectors = extractClassSelectors(block.content);
+          for (const className of selectors) {
+            if (isAllowed(`.${className}`)) continue;
+            if (!renderedClasses.has(className)) {
+              orphanList.push({
+                selector: className,
+                file: relPath,
+                type: 'CSS'
+              });
+            }
           }
         }
+      }
 
-        if (!found) {
-          orphans[relPath].push(className);
+      if (scriptBlocks.length > 0) {
+        for (const block of scriptBlocks) {
+          const jsRefs = extractJSClassReferences(block.content);
+          for (const className of jsRefs) {
+            if (isAllowed(`.${className}`)) continue;
+            if (!renderedClasses.has(className)) {
+              orphanList.push({
+                selector: className,
+                file: relPath,
+                type: 'JS'
+              });
+            }
+          }
         }
       }
     }
-  }
 
-  await browser.close();
-
-  // Report results
-  console.log('ORPHAN SELECTORS (no matching elements across all routes):\n');
-
-  let totalOrphans = 0;
-  for (const [file, orphanList] of Object.entries(orphans)) {
-    if (orphanList.length > 0) {
-      totalOrphans += orphanList.length;
-      console.log(`${file}`);
-      for (const orphan of orphanList) {
-        console.log(`  • .${orphan}`);
-      }
-      console.log();
+    if (JSON_MODE) {
+      const uniqueSelectors = new Set(orphanList.map(o => o.selector)).size;
+      console.log(JSON.stringify({
+        routes_scanned: ROUTES.length,
+        orphans: orphanList,
+        unique_selectors: uniqueSelectors,
+        total_occurrences: orphanList.length
+      }, null, 2));
+      await browser.close();
+      process.exit(0);
     }
+
+    console.log('\n' + '═'.repeat(70));
+    console.log('ORPHAN SELECTORS (no matching elements across all routes):');
+    console.log('═'.repeat(70) + '\n');
+
+    const cssOrphans = {};
+    const jsOrphans = {};
+
+    for (const orphan of orphanList) {
+      if (orphan.type === 'CSS') {
+        if (!cssOrphans[orphan.file]) cssOrphans[orphan.file] = [];
+        cssOrphans[orphan.file].push(orphan.selector);
+      } else {
+        if (!jsOrphans[orphan.file]) jsOrphans[orphan.file] = [];
+        jsOrphans[orphan.file].push(orphan.selector);
+      }
+    }
+
+    for (const [file, selectors] of Object.entries(cssOrphans)) {
+      if (selectors.length > 0) {
+        console.log(`${file} (CSS)`);
+        [...new Set(selectors)].forEach(sel => console.log(`  • .${sel}`));
+        console.log();
+      }
+    }
+
+    for (const [file, selectors] of Object.entries(jsOrphans)) {
+      if (selectors.length > 0) {
+        console.log(`${file} (JS)`);
+        [...new Set(selectors)].forEach(sel => console.log(`  • .${sel}`));
+        console.log();
+      }
+    }
+
+    const uniqueCount = new Set(orphanList.map(o => o.selector)).size;
+    console.log('═'.repeat(70));
+    console.log(`SUMMARY: ${uniqueCount} unique orphan selector(s) found (${orphanList.length} occurrences)`);
+    console.log('═'.repeat(70) + '\n');
+
+    process.exit(orphanList.length > 0 ? 1 : 0);
+  } finally {
+    try {
+      await browser.close();
+    } catch (e) {}
   }
-
-  console.log('═'.repeat(70));
-  console.log(`SUMMARY: ${totalOrphans} orphan selector(s) found`);
-  console.log('═'.repeat(70) + '\n');
-
-  process.exit(totalOrphans > 0 ? 1 : 0);
 }
 
 auditOrphanSelectors().catch(err => {
-  console.error(err);
+  console.error('Audit failed:', err.message);
   process.exit(1);
 });

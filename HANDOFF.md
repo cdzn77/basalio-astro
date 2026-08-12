@@ -32,11 +32,11 @@ Last updated 2026-08-11 (FIN-1 through FIN-6 complete: site work finished)
 - CSS classes renamed (.courses→.blocks, .testimonials-v2→.audience)
 - Property names updated (headerType: 'ramp'→'split')
 - Ramp provenance comments removed
-- No regressions: 104/104 overflow checks pass
+- Overflow: 101/104 checks pass; 3 failures on / at 375px, 390px, 414px (pending fix)
 
 **FIN-5: Responsive Checks** (2026-08-11)
 - `scripts/verify-images.mjs`: Detects broken/missing images (naturalWidth = 0)
-- `scripts/verify-touch-targets.mjs`: WCAG 2.5.8 compliance at 375px (44×44px minimum)
+- `scripts/verify-touch-targets.mjs`: Touch target verification (WCAG criteria: 2.5.8 Level AA = 24×24 CSS px minimum; 2.5.5 Level AAA = 44×44 CSS px minimum). Script currently implements 44×44 threshold and is pending rewrite to 24×24.
 - Both exit code 0 (pass) or 1 (fail)
 
 **FIN-6: Maintenance Guide** (2026-08-11)
@@ -47,10 +47,10 @@ Last updated 2026-08-11 (FIN-1 through FIN-6 complete: site work finished)
 ### Verification Summary
 - ✅ Build: 13 pages, 0 errors
 - ✅ Type-check: `npx astro check` 0 errors
-- ✅ Overflow: `npm run verify:overflow` 104/104 checks pass
+- ⚠️ Overflow: `npm run verify:overflow` 101/104 checks pass (3 failures on / at 375px, 390px, 414px; pending fix)
 - ✅ Headings: `npm run verify:headings` 12/12 routes pass
 - ✅ Images: `node scripts/verify-images.mjs` 0 broken
-- ✅ Touch targets: `node scripts/verify-touch-targets.mjs` identified 16 undersized (pre-existing, logged but not blocking)
+- ⚠️ Touch targets: `node scripts/verify-touch-targets.mjs` figure of "16 undersized" came from analyze-targets.mjs (repo root), measured against incorrect 44×44 (AAA) threshold mislabelled as 2.5.8 (AA, 24×24). Count is DISPUTED and pending re-measurement at correct threshold with unrounded floats.
 
 ---
 
@@ -107,12 +107,12 @@ External steps: (1) Freemius Lifetime field → "$249" one-time, (2) Announcemen
 
 Site is **LIVE AND PUBLIC** at basalio.com. Netlify production branch: main.
 
-All verification checks pass:
-- Type-check: 0 errors
-- Overflow: 104/104 routes × 8 viewports
-- Headings: 12/12 routes
-- Images: 0 broken
-- Touch targets: identified 16 undersized (logged, pre-existing accessibility gap)
+Verification status:
+- Type-check: 0 errors ✅
+- Overflow: 101/104 routes × 8 viewports (3 failures on homepage at 375px, 390px, 414px; pending fix) ⚠️
+- Headings: 12/12 routes ✅
+- Images: 0 broken ✅
+- Touch targets: DISPUTED figure of "16 undersized" — measured against incorrect 44×44 threshold instead of correct 24×24 for WCAG 2.5.8 AA level. Pending re-measurement with correct threshold and unrounded floats. ⚠️
 
 ---
 

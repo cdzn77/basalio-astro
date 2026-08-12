@@ -1,9 +1,9 @@
 # BASALIO — HANDOFF
-Last updated 2026-08-11 (FIN-1 through FIN-6 complete: site work finished)
+Last updated 2026-08-11 (FIN-1 through FIN-6 complete; FIN-8 touch targets resolved; OVERFLOW REGRESSION OPEN)
 
 ## 🎯 SITE WORK — COMPLETE (FIN-0 through FIN-6)
 
-**All site maintenance and foundation work is finished.** The site is production-ready and fully documented for ongoing maintenance.
+**All site maintenance and foundation work is finished.** Site is live. NOT currently deploy-clean: npm run pre-deploy exits 1 on 3 homepage overflow failures at 375/390/414px.
 
 ### Completed Sequences
 
@@ -11,7 +11,7 @@ Last updated 2026-08-11 (FIN-1 through FIN-6 complete: site work finished)
 - Verified color system: --acid token, 45 refs update automatically ✓
 - Verified footer: one-file edit model (Footer.astro) ✓
 - Verified assets: images in data files, video by filename, block icons by glob ✓
-- Identified responsive gaps: verify:overflow covers horizontal overflow; verify-images and verify-touch-targets extend coverage ✓
+- Identified responsive gaps: verify:overflow covers horizontal overflow; verify-touch-targets extends coverage (verify-images unwired, no npm script)
 
 **FIN-1: Site Closure** (2026-08-11)
 - Refund policy enforcement wording clarified in /roadmap
@@ -36,7 +36,7 @@ Last updated 2026-08-11 (FIN-1 through FIN-6 complete: site work finished)
 
 **FIN-5: Responsive Checks** (2026-08-11)
 - `scripts/verify-images.mjs`: Detects broken/missing images (naturalWidth = 0)
-- `scripts/verify-touch-targets.mjs`: Touch target verification (WCAG criteria: 2.5.8 Level AA = 24×24 CSS px minimum; 2.5.5 Level AAA = 44×44 CSS px minimum). Script currently implements 44×44 threshold and is pending rewrite to 24×24.
+- `scripts/verify-touch-targets.mjs`: Touch target verification (WCAG criteria: 2.5.8 Level AA = 24×24 CSS px minimum; 2.5.5 Level AAA = 44×44 CSS px minimum). Rewritten to 24×24 AA in FIN-8; see Verification Summary.
 - Both exit code 0 (pass) or 1 (fail)
 
 **FIN-6: Maintenance Guide** (2026-08-11)

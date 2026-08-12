@@ -1,13 +1,15 @@
 # ORPHAN-TRIAGE
 
-Complete triaged inventory of all 74 unique orphaned CSS selectors found across the codebase.
+Complete triaged inventory of all 72 unique orphaned CSS selectors found across the codebase.
+
+**Baseline reconciliation:** Updated to deterministic stable count (72 unique, 94 occurrences) from commit 37ae421 (isAllowed fix). Previous 74 was stale (/tmp/orphans.json predates audit script changes).
 
 ## Counts
 
-- FALSE POSITIVE (runtime-added): 10
-- DEAD CODE (unused): 61
+- FALSE POSITIVE (runtime-added): 15 (10 approved + 5 new)
+- DEAD CODE (unused): 54 (61 - 7 reclassified as runtime or new discoveries)
 - REAL DIVERGENCE (CSS/markup mismatch): 3
-- **TOTAL: 74** (all 74 unique selectors accounted for)
+- **TOTAL: 72** (all 72 unique selectors accounted for)
 
 ## Triage Details
 
@@ -16,6 +18,7 @@ Complete triaged inventory of all 74 unique orphaned CSS selectors found across 
 | accordion | src/components/patterns/Accordion.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
 | accordion-header | src/components/patterns/Accordion.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
 | astro | src/pages/404.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
+| active | src/components/Header.astro:39 | FALSE_POSITIVE | JS adds via classList.toggle on menu dropdown |
 | audience-segment | src/components/WhoItsFor.astro:CSS | REAL_DIVERGENCE | CSS class exists but markup uses different class name; FIN-4 incomplete rename |
 | b-reveal | src/pages/hacks.astro:CSS,JS | FALSE_POSITIVE | Runtime-added class by JS; not part of static HTML |
 | block-image | src/components/BlocksCarousel.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
@@ -62,9 +65,12 @@ Complete triaged inventory of all 74 unique orphaned CSS selectors found across 
 | ledger-in-review | src/pages/index.astro:CSS; src/pages/pricing.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
 | ledger-label | src/components/patterns/StatusLedger.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
 | ledger-note | src/components/patterns/StatusLedger.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
+| is-in | src/pages/hacks.astro | FALSE_POSITIVE | JS adds via classList.add on reveal animation |
+| is-revealed | src/pages/blocks.astro:1231 | FALSE_POSITIVE | JS adds via classList.add on grid tile reveal |
 | ledger-status-cell | src/components/patterns/StatusLedger.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
 | load-more-button | src/pages/blocks.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
 | load-more-wrapper | src/pages/blocks.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
+| open | src/pages/pricing.astro:137 | FALSE_POSITIVE | JS adds via classList.remove on FAQ items |
 | md | src/pages/404.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
 | page-content | src/layouts/PageLayout.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |
 | page-content-narrow | src/layouts/PageLayout.astro:CSS | DEAD_CODE | Defined in CSS but no rendered markup uses it |

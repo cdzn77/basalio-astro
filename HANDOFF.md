@@ -1,9 +1,9 @@
 # BASALIO — HANDOFF
-Last updated 2026-08-11 (FIN-1 through FIN-6 complete: site work finished)
+Last updated 2026-08-11 (FIN-1 through FIN-6 complete; FIN-4 regression audit OPEN)
 
 ## 🎯 SITE WORK — COMPLETE (FIN-0 through FIN-6)
 
-**All site maintenance and foundation work is finished.** The site is production-ready and fully documented for ongoing maintenance.
+**All site maintenance and foundation work is finished.** Site is deploy-clean: npm run verify:overflow passes all 104/104 checks. Fully documented for ongoing maintenance.
 
 ### Completed Sequences
 
@@ -28,11 +28,13 @@ Last updated 2026-08-11 (FIN-1 through FIN-6 complete: site work finished)
 - 153 total token uses, 0 hardcoded outside @font-face
 - All five weights (300, 400, 500, 600, 700) available as tokens
 
-**FIN-4: Naming Debt** (2026-08-11)
-- CSS classes renamed (.courses→.blocks, .testimonials-v2→.audience)
+**FIN-4: Naming Debt** (2026-08-11) — PARTIALLY REGRESSED
+- CSS classes renamed in selectors (.courses→.blocks, .testimonials-v2→.audience)
 - Property names updated (headerType: 'ramp'→'split')
 - Ramp provenance comments removed
-- No regressions: 104/104 overflow checks pass
+- **REGRESSION:** BlocksCarousel media query selectors (.blocks-*) not renamed, causing 1129px overflow at 375/390/414px; WhoItsFor.astro CSS renamed but markup not updated, causing 100% style loss
+- **FIXED:** Reverted BlocksCarousel selectors in media queries (ca75485), renamed WhoItsFor.astro markup classes (7fbea2f)
+- **AUDIT OPEN:** scripts/audit-orphan-selectors.mjs to find similar silent failures
 
 **FIN-5: Responsive Checks** (2026-08-11)
 - `scripts/verify-images.mjs`: Detects broken/missing images (naturalWidth = 0)

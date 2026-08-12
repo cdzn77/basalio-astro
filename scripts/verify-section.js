@@ -2,17 +2,25 @@ import { chromium } from 'playwright';
 import { ALL_ROUTES, NOT_FOUND_PROBE } from './routes.js';
 
 const PORT = process.env.PORT || 4321;
-const DEV_PORTS = [4321, 4322, 4323, 4324];
 const VIEWPORTS = [320, 360, 375, 390, 414, 768, 1024, 1440];
 const ROUTES = ALL_ROUTES;
 
-// GATE: Fail loudly if running against dev server
-if (DEV_PORTS.includes(PORT)) {
-  console.error('\n❌ ERROR: verify:overflow cannot run against dev server (port ' + PORT + ')');
-  console.error('   Dev servers have different caching and timing behavior than production builds.\n');
-  console.error('   REQUIRED: Run `npm run preview` in another terminal, then:');
-  console.error('   $ PORT=4173 npm run verify:overflow\n');
-  process.exit(1);
+async function assertNotDevServer(page) {
+  // Detect dev server by inspecting document for dev-only markers
+  const isDev = await page.evaluate(() => {
+    const hasDevToolbar = !!document.querySelector('astro-dev-toolbar');
+    const hasViteClient = !!document.querySelector('script[src*="/@vite/client"]');
+    const hasViteRSC = !!window.__vite_plugin_react_preamble_installed__;
+    return hasDevToolbar || hasViteClient || hasViteRSC;
+  });
+
+  if (isDev) {
+    console.error('\n❌ ERROR: Detected dev server (astro dev)');
+    console.error('   Dev servers have different caching and timing behavior than production builds.\n');
+    console.error('   REQUIRED: Run `npm run build && npm run preview` in another terminal, then:');
+    console.error('   $ npm run verify:overflow\n');
+    process.exit(1);
+  }
 }
 
 async function verifySectionOverflow(browser, route, viewport) {
@@ -84,6 +92,15 @@ async function main() {
   const browser = await chromium.launch({ headless: true });
   const results = [];
   let totalFailures = 0;
+
+  // GATE: Assert not dev server (only check once at startup)
+  const probePage = await browser.newPage();
+  try {
+    await probePage.goto(`http://localhost:${PORT}/`, { waitUntil: 'networkidle' });
+    await assertNotDevServer(probePage);
+  } finally {
+    await probePage.close();
+  }
 
   console.log(
     '\n' + '═'.repeat(70)

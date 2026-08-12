@@ -3,13 +3,14 @@ import { ALL_ROUTES, NOT_FOUND_PROBE } from './routes.js';
 
 const PORT = process.env.PORT || 4321;
 const ROUTES = ALL_ROUTES;
-const TOUCH_VIEWPORT = 375; // WCAG 2.5.8 guideline testing viewport
+const VIEWPORTS = [320, 375, 414]; // Test across mobile-critical breakpoints
+const MIN_TARGET_SIZE = 24; // WCAG 2.5.8 Level AA minimum
 
-async function verifyTouchTargets(browser, route) {
+async function verifyTouchTargets(browser, route, viewportWidth) {
   const page = await browser.newPage();
 
   try {
-    await page.setViewportSize({ width: TOUCH_VIEWPORT, height: 667 });
+    await page.setViewportSize({ width: viewportWidth, height: 667 });
     const response = await page.goto(`http://localhost:${PORT}${route}`, {
       waitUntil: 'networkidle'
     });
@@ -23,38 +24,64 @@ async function verifyTouchTargets(browser, route) {
       }
     }
 
-    const results = await page.evaluate(() => {
+    const results = await page.evaluate((minSize) => {
       const targets = [];
       const elements = document.querySelectorAll('a, button');
+      let skipped = 0;
 
       elements.forEach((el, idx) => {
+        // Visibility filter: skip hidden/disabled elements and those with no layout
+        if (el.offsetParent === null) {
+          skipped++;
+          return;
+        }
+
+        const computed = window.getComputedStyle(el);
+        if (computed.visibility === 'hidden' || computed.display === 'none') {
+          skipped++;
+          return;
+        }
+
         const rect = el.getBoundingClientRect();
-        const width = Math.round(rect.width);
-        const height = Math.round(rect.height);
-        const pass = width >= 44 && height >= 44;
+        if (rect.width === 0 || rect.height === 0) {
+          skipped++;
+          return;
+        }
+
+        if (el.disabled) {
+          skipped++;
+          return;
+        }
+
+        const width = rect.width;
+        const height = rect.height;
+        const pass = width >= minSize && height >= minSize;
 
         targets.push({
           type: el.tagName.toLowerCase(),
           index: idx,
           text: el.textContent.trim().slice(0, 30) || '(empty)',
-          width,
-          height,
+          width: width.toFixed(2),
+          height: height.toFixed(2),
           pass
         });
       });
 
-      return targets;
-    });
+      return { targets, skipped };
+    }, MIN_TARGET_SIZE);
 
     return {
       route,
-      targets: results,
-      passCount: results.filter(t => t.pass).length,
-      failCount: results.filter(t => !t.pass).length
+      viewport: viewportWidth,
+      targets: results.targets,
+      skipped: results.skipped,
+      passCount: results.targets.filter(t => t.pass).length,
+      failCount: results.targets.filter(t => !t.pass).length
     };
   } catch (error) {
     return {
       route,
+      viewport: viewportWidth,
       error: error.message
     };
   } finally {
@@ -64,40 +91,55 @@ async function verifyTouchTargets(browser, route) {
 
 async function main() {
   const browser = await chromium.launch({ headless: true });
-  const results = [];
+  const allResults = [];
   let totalFailures = 0;
+  let totalSkipped = 0;
 
-  console.log('\n' + '═'.repeat(70));
-  console.log(`WCAG 2.5.8: TOUCH TARGET VERIFICATION (>= 44x44px at ${TOUCH_VIEWPORT}px)`);
-  console.log('═'.repeat(70) + '\n');
+  // Compute header dynamically from MIN_TARGET_SIZE constant
+  const headerText = `WCAG 2.5.8 Target Size (Minimum), Level AA — >= ${MIN_TARGET_SIZE}x${MIN_TARGET_SIZE} CSS px`;
+
+  console.log('\n' + '═'.repeat(72));
+  console.log(headerText);
+  console.log('═'.repeat(72) + '\n');
+
+  // Note: WCAG 2.5.8 section 4(a) includes Spacing and Equivalent exceptions.
+  // Those are not implemented here; all targets either measure >= 24×24 or are failures.
 
   for (const route of ROUTES) {
-    const result = await verifyTouchTargets(browser, route);
-    results.push(result);
+    console.log(`Route: ${route}`);
 
-    if (result.error) {
-      totalFailures++;
-      const label = route === NOT_FOUND_PROBE ? '404 handler' : route;
-      console.log(`❌ ${label.padEnd(15)}: ERROR: ${result.error}`);
-    } else {
-      const label = route === NOT_FOUND_PROBE ? '404 handler' : route;
-      const status = result.failCount === 0 ? '✅' : `❌ (${result.failCount} small)`;
-      console.log(`${status} ${label.padEnd(15)}: ${result.passCount} OK, ${result.failCount} undersized`);
+    for (const viewport of VIEWPORTS) {
+      const result = await verifyTouchTargets(browser, route, viewport);
+      allResults.push(result);
 
-      if (result.failCount > 0) {
-        totalFailures += result.failCount;
-        result.targets.filter(t => !t.pass).forEach(t => {
-          console.log(`     └─ ${t.type}[${t.index}]: ${t.width}×${t.height}px (text: "${t.text}")`);
-        });
+      if (result.error) {
+        totalFailures++;
+        console.log(`  ${viewport}px: ERROR: ${result.error}`);
+      } else {
+        const status = result.failCount === 0 ? '✅' : `❌ (${result.failCount} small)`;
+        console.log(`  ${viewport}px: ${status} ${result.passCount} pass, ${result.failCount} undersized${result.skipped > 0 ? `, ${result.skipped} skipped (hidden/disabled)` : ''}`);
+
+        if (result.failCount > 0) {
+          totalFailures += result.failCount;
+          result.targets.filter(t => !t.pass).forEach(t => {
+            console.log(`       └─ ${t.type}[${t.index}]: ${t.width}×${t.height}px "${t.text}"`);
+          });
+        }
+      }
+
+      if (result.skipped) {
+        totalSkipped += result.skipped;
       }
     }
+    console.log();
   }
 
   await browser.close();
 
-  console.log('\n' + '═'.repeat(70));
-  console.log(`Total: ${ROUTES.length} routes, ${totalFailures} undersized targets`);
-  console.log('═'.repeat(70) + '\n');
+  console.log('═'.repeat(72));
+  console.log(`SUMMARY: ${ROUTES.length} routes × ${VIEWPORTS.length} viewports = ${ROUTES.length * VIEWPORTS.length} checks`);
+  console.log(`Failures: ${totalFailures}, Skipped: ${totalSkipped}`);
+  console.log('═'.repeat(72) + '\n');
 
   process.exit(totalFailures > 0 ? 1 : 0);
 }

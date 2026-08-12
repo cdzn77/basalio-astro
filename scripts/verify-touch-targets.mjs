@@ -6,9 +6,11 @@ const ROUTES = ALL_ROUTES;
 const VIEWPORTS = [320, 375, 414]; // Test across mobile-critical breakpoints
 const MIN_TARGET_SIZE = 24; // WCAG 2.5.8 Level AA minimum
 
-// APPROVED_INLINE_EXEMPTIONS — entries added here exempts candidates from failCount
-// Format: { route, index, text } — route and index uniquely identify the element
-// Only entries in this list are exempt. Empty list = no exemptions.
+// APPROVED_INLINE_EXEMPTIONS — entries added here exempt candidates from failCount
+// FIX 2: Re-keyed on route + href + fullText (stable across DOM changes)
+// Format: { route, href, fullText }
+// href: getAttribute('href') to uniquely identify the link
+// fullText: untruncated textContent.trim() for verification
 // Add entries ONLY after human review of Stage 1 candidate report.
 const APPROVED_INLINE_EXEMPTIONS = [
   // (None yet — awaiting Stage 1 candidate report and manual review)
@@ -95,12 +97,21 @@ async function verifyTouchTargets(browser, route, viewportWidth) {
           }
         }
 
+        // FIX 2a: Capture fullText (untruncated) for stable exemption matching
+        const fullText = el.textContent.trim();
+        const displayText = fullText.slice(0, 30) || '(empty)';
+
+        // FIX 2b: Capture href for anchor tags
+        const href = el.tagName.toLowerCase() === 'a' ? (el.getAttribute('href') || '') : null;
+
         // B1 FIX: Candidates still push to targets with inlineCandidate flag
         // They count as failures unless matched in APPROVED_INLINE_EXEMPTIONS
         targets.push({
           type: el.tagName.toLowerCase(),
           index: idx,
-          text: el.textContent.trim().slice(0, 30) || '(empty)',
+          text: displayText,
+          fullText: fullText,
+          href: href,
           width: width, // B5 FIX: Full precision, no .toFixed() for display
           height: height,
           pass,
@@ -138,6 +149,12 @@ async function main() {
   let totalInlineCandidates = 0;
   let totalInlineCandidatesExempted = 0;
 
+  // FIX 3: Track elements that moved from skipped to measured
+  const elementsMovedFromSkipped = [];
+
+  // FIX 4: Deduplicated candidate tracking
+  const uniqueCandidates = new Map(); // key: "route|href|fullText"
+
   // Compute header dynamically from MIN_TARGET_SIZE constant
   const headerText = `WCAG 2.5.8 Target Size (Minimum), Level AA — >= ${MIN_TARGET_SIZE}x${MIN_TARGET_SIZE} CSS px`;
 
@@ -147,6 +164,7 @@ async function main() {
 
   console.log('STAGE 1: Structural inline candidates reported separately for manual review.');
   console.log('STAGE 2: Only entries in APPROVED_INLINE_EXEMPTIONS are exempted from failCount.\n');
+  console.log('Markers: ⊙ = exempted candidate, ⓘ = unapproved candidate, └ = plain failure\n');
 
   for (const route of ROUTES) {
     console.log(`Route: ${route}`);
@@ -165,13 +183,27 @@ async function main() {
         // Print failures
         if (result.failCount > 0) {
           result.targets.filter(t => !t.pass).forEach(t => {
-            // B1 FIX: Check if candidate is in approved exemption list
+            // FIX 2b/2c: Check if candidate is in approved exemption list using route + href + fullText
             let isExempted = false;
             if (t.inlineCandidate) {
               const exempted = APPROVED_INLINE_EXEMPTIONS.find(
-                e => e.route === route && e.index === t.index && e.text === t.text
+                e => e.route === route && e.href === t.href && e.fullText === t.fullText
               );
               isExempted = !!exempted;
+
+              // FIX 4: Deduplicate candidates for later report
+              const candidateKey = `${route}|${t.href}|${t.fullText}`;
+              if (!uniqueCandidates.has(candidateKey)) {
+                uniqueCandidates.set(candidateKey, {
+                  route,
+                  href: t.href,
+                  fullText: t.fullText,
+                  viewports: [{ viewport, width: t.width, height: t.height }]
+                });
+              } else {
+                uniqueCandidates.get(candidateKey).viewports.push({ viewport, width: t.width, height: t.height });
+              }
+
               if (isExempted) {
                 totalInlineCandidatesExempted++;
               } else {
@@ -182,10 +214,20 @@ async function main() {
               totalFailures++;
             }
 
-            // B5 FIX: Print full precision (no .toFixed())
-            const marker = isExempted ? '⊙' : '└';
-            const exemptLabel = isExempted ? ' (EXEMPTED)' : '';
-            console.log(`       ${marker}─ ${t.type}[${t.index}]: ${t.width}×${t.height}px "${t.text}"${exemptLabel}`);
+            // FIX 1: Three marker states
+            let marker, markerLabel;
+            if (isExempted) {
+              marker = '⊙';
+              markerLabel = ' (EXEMPTED — inline, approved)';
+            } else if (t.inlineCandidate) {
+              marker = 'ⓘ';
+              markerLabel = ' (INLINE CANDIDATE — awaiting review)';
+            } else {
+              marker = '└';
+              markerLabel = '';
+            }
+
+            console.log(`       ${marker}─ ${t.type}[${t.index}]: ${t.width}×${t.height}px "${t.text}"${markerLabel}`);
           });
         }
 
@@ -205,11 +247,44 @@ async function main() {
 
   console.log('═'.repeat(72));
   console.log(`SUMMARY: ${ROUTES.length} routes × ${VIEWPORTS.length} viewports = ${ROUTES.length * VIEWPORTS.length} checks`);
-  console.log(`Failures (unapproved): ${totalFailures}, Inline candidates (unapproved): ${totalInlineCandidates}, Exempted: ${totalInlineCandidatesExempted}, Skipped: ${totalSkipped}`);
+  console.log(`Failures (unapproved): ${totalFailures}, Inline candidates: ${totalInlineCandidates}, Exempted: ${totalInlineCandidatesExempted}, Skipped: ${totalSkipped}`);
   console.log('═'.repeat(72) + '\n');
 
-  if (totalInlineCandidates > 0) {
-    console.log(`⚠️  ${totalInlineCandidates} inline candidate(s) await human review and entry to APPROVED_INLINE_EXEMPTIONS.\n`);
+  // FIX 2c: Validation pass — check for stale exemptions
+  console.log('EXEMPTION VALIDATION:');
+  let staleCount = 0;
+  APPROVED_INLINE_EXEMPTIONS.forEach(exemption => {
+    const matched = uniqueCandidates.values().some(
+      c => c.route === exemption.route && c.href === exemption.href && c.fullText === exemption.fullText
+    );
+    if (!matched) {
+      console.log(`  STALE EXEMPTION: route='${exemption.route}' href='${exemption.href}' fullText='${exemption.fullText}'`);
+      staleCount++;
+    }
+  });
+  if (staleCount === 0 && APPROVED_INLINE_EXEMPTIONS.length > 0) {
+    console.log(`  ✓ All ${APPROVED_INLINE_EXEMPTIONS.length} approved exemptions matched elements.`);
+  }
+  console.log();
+
+  // FIX 4: Print deduplicated candidate report
+  if (uniqueCandidates.size > 0) {
+    console.log('STAGE 1 CANDIDATE REPORT (deduplicated):\n');
+    console.log('route | href | fullText | viewports (dimensions)');
+    console.log('------|------|----------|----------------------');
+    uniqueCandidates.forEach(candidate => {
+      const viewportList = candidate.viewports
+        .map(v => `${v.viewport}px (${v.width}×${v.height}px)`)
+        .join(' + ');
+      console.log(`${candidate.route.padEnd(5)} | ${candidate.href.padEnd(30).slice(0, 30)} | ${candidate.fullText.padEnd(20).slice(0, 20)} | ${viewportList}`);
+    });
+    console.log(`\n⚠️  ${uniqueCandidates.size} unique inline candidate(s) await human review.`);
+    console.log('Add approved entries to APPROVED_INLINE_EXEMPTIONS (route, href, fullText).\n');
+  }
+
+  if (staleCount > 0) {
+    console.log(`\n❌ STALE EXEMPTIONS FOUND: ${staleCount}. Remove from APPROVED_INLINE_EXEMPTIONS.\n`);
+    process.exit(1);
   }
 
   process.exit(totalFailures > 0 ? 1 : 0);

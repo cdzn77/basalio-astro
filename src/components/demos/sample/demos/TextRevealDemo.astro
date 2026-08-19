@@ -1,0 +1,103 @@
+---
+import StageShell from '../StageShell.astro';
+import '../sample-styles.css';
+
+const LINE = 'Give your work a foundation to stand on.';
+
+let charIndex = 0;
+---
+
+<div class="sample-tr-root" data-sample-tr-root>
+  <StageShell label="TEXT REVEAL — LIVE" showReplay={true}>
+    <div class="sample-tr-stage">
+      <p class="sample-tr-line sample-display" aria-label={LINE}>
+        {
+          LINE.split(' ').map((word) => {
+            const chars = word.split('').map((ch) => {
+              const d = charIndex++ * 28;
+              return (
+                <span class="sample-tr-char" style={`--d: ${d}ms;`}>
+                  {ch}
+                </span>
+              );
+            });
+            return (
+              <span class="sample-tr-word" aria-hidden="true">
+                {chars}
+              </span>
+            );
+          })
+        }
+      </p>
+    </div>
+  </StageShell>
+</div>
+
+<script is:inline>
+  (function () {
+    const root = document.currentScript?.previousElementSibling;
+    if (!root) return;
+    const stage = root.querySelector('[data-sample-stage]');
+    const line = root.querySelector('.sample-tr-line');
+    if (!stage || !line) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function reveal() {
+      line.classList.add('sample-tr-on');
+    }
+
+    function replay() {
+      line.classList.remove('sample-tr-on');
+      void line.offsetWidth;
+      reveal();
+    }
+
+    if (reduced) {
+      reveal();
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            reveal();
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.35 }
+    );
+
+    io.observe(stage);
+    stage.addEventListener('basalio:replay', replay);
+  })();
+</script>
+
+<style>
+  .sample-tr-root {
+    width: 100%;
+  }
+
+  .sample-tr-stage {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 0 8%;
+  }
+
+  .sample-tr-line {
+    margin: 0;
+    text-align: center;
+    font-size: clamp(18px, 3.4vw, 34px);
+    color: var(--text-on-ink);
+  }
+
+  .sample-tr-word {
+    display: inline-block;
+    white-space: nowrap;
+    margin-right: 0.28em;
+  }
+</style>

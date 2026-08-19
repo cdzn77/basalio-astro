@@ -1,0 +1,140 @@
+---
+import StageShell from '../StageShell.astro';
+import '../sample-styles.css';
+
+const GR_ITEMS = [
+  ['NORTHWIND', 'IDENTITY'],
+  ['SALT & PINE', 'PACKAGING'],
+  ['MERIDIAN', 'ART DIRECTION'],
+  ['FIELD NOTES', 'EDITORIAL'],
+  ['ATLAS & CO', 'BRAND SYSTEM'],
+  ['LOW TIDE', 'MOTION'],
+];
+
+const GRADIENTS = [
+  'linear-gradient(150deg, rgba(237, 255, 16, 0.14), transparent 60%)',
+  'linear-gradient(150deg, rgba(255, 255, 255, 0.08), transparent 60%)',
+  'linear-gradient(150deg, rgba(237, 255, 16, 0.10), transparent 60%)',
+  'linear-gradient(150deg, rgba(255, 255, 255, 0.06), transparent 60%)',
+  'linear-gradient(150deg, rgba(237, 255, 16, 0.08), transparent 60%)',
+  'linear-gradient(150deg, rgba(255, 255, 255, 0.10), transparent 60%)',
+];
+---
+
+<div class="sample-gr-root" data-sample-gr-root>
+  <StageShell label="GRID REVEAL — LIVE" showReplay={true}>
+    <div class="sample-gr-grid">
+      {
+        GR_ITEMS.map(([title, subtitle], i) => (
+          <div class="sample-gr-item sample-gr-card" style={`--d: ${i * 110}ms;`}>
+            <div
+              class="sample-gr-card-top"
+              style={`background: ${GRADIENTS[i]}, var(--surface-ink);`}
+            >
+              <div class="sample-slats" aria-hidden="true">
+                {Array.from({ length: 7 }).map((_, j) => (
+                  <i style={`--i: ${j};`} />
+                ))}
+              </div>
+            </div>
+            <div class="sample-gr-card-bottom">
+              <p class="sample-gr-card-title">{title}</p>
+              <p class="sample-gr-card-subtitle">{subtitle}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </StageShell>
+</div>
+
+<script is:inline>
+  (function () {
+    const root = document.currentScript?.previousElementSibling;
+    if (!root) return;
+    const stage = root.querySelector('[data-sample-stage]');
+    const grid = root.querySelector('.sample-gr-grid');
+    if (!stage || !grid) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function reveal() {
+      grid.classList.add('sample-gr-on');
+    }
+
+    function replay() {
+      grid.classList.remove('sample-gr-on');
+      void grid.offsetWidth;
+      reveal();
+    }
+
+    if (reduced) {
+      reveal();
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            reveal();
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.35 }
+    );
+
+    io.observe(stage);
+    stage.addEventListener('basalio:replay', replay);
+  })();
+</script>
+
+<style>
+  .sample-gr-root {
+    width: 100%;
+  }
+
+  .sample-gr-grid {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-content: center;
+    gap: 3%;
+    padding: 6%;
+    padding-top: 12%;
+  }
+
+  .sample-gr-card {
+    overflow: hidden;
+    border: 1px solid var(--overlay-light-10);
+    border-radius: 12px;
+  }
+
+  .sample-gr-card-top {
+    position: relative;
+    height: clamp(44px, 6vw, 72px);
+  }
+
+  .sample-gr-card-bottom {
+    padding: 10px 12px;
+    background: var(--overlay-light-05);
+  }
+
+  .sample-gr-card-title {
+    margin: 0;
+    font-size: clamp(9px, 1vw, 11px);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-on-ink);
+  }
+
+  .sample-gr-card-subtitle {
+    margin: 3px 0 0;
+    font-family: var(--font-mono);
+    font-size: clamp(7px, 0.8vw, 9px);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-on-ink-muted);
+  }
+</style>

@@ -99,7 +99,8 @@ Each section renders via a reusable `FeatureSection` component and passes a mock
 ## Assets
 
 - No new raster images required.
-- Existing block SVGs (`/assets/demos/block-*.svg`) may be referenced inside mockups if appropriate, but most visuals will be drawn with inline SVG/CSS.
+- Do not reuse the existing block SVGs (`/assets/demos/block-*.svg`) from the previous demos.
+- Every mockup must be newly created as inline SVG/CSS so the visual style matches the Semplice features page 1:1 — minimal browser chrome, abstract UI, and crisp vector shapes.
 
 ## Accessibility
 

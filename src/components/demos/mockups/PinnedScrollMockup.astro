@@ -1,0 +1,68 @@
+---
+// PinnedScrollMockup — panels stack and wipe in sequence
+import BrowserFrame from '../BrowserFrame.astro';
+---
+
+<BrowserFrame>
+  <div class="pinned-scroll">
+    <div class="ps-panel ps-panel-1"></div>
+    <div class="ps-panel ps-panel-2"></div>
+    <div class="ps-panel ps-panel-3"></div>
+  </div>
+</BrowserFrame>
+
+<style>
+  .pinned-scroll {
+    width: 100%;
+    height: 260px;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .ps-panel {
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    transform: translateY(100%);
+    animation: pinnedScroll 3.6s ease-in-out infinite;
+  }
+
+  .ps-panel-1 {
+    background: #1a1a1a;
+    animation-delay: 0s;
+  }
+
+  .ps-panel-2 {
+    background: var(--acid);
+    animation-delay: 1.2s;
+  }
+
+  .ps-panel-3 {
+    background: #2a2a2a;
+    animation-delay: 2.4s;
+  }
+
+  @keyframes pinnedScroll {
+    0%, 10% { transform: translateY(100%); }
+    25%, 60% { transform: translateY(0); }
+    75%, 100% { transform: translateY(-100%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ps-panel {
+      animation: none;
+      transform: none;
+      position: relative;
+      height: 80px;
+      margin-bottom: 8px;
+    }
+
+    .pinned-scroll {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      height: auto;
+    }
+  }
+</style>

@@ -28,11 +28,10 @@ import Stats from '../components/demos/sample/Stats.astro';
 import Testimonials from '../components/demos/sample/Testimonials.astro';
 import Faq from '../components/demos/sample/Faq.astro';
 
-import { pricingTiers, FOUNDER_PRICE, POST_CAP_PRICE } from '../data/pricing';
+import { pricingTiers, FOUNDER_PRICE, POST_CAP_PRICE, proShipTarget } from '../data/pricing';
 import { getFaqs } from '../data/faq';
-import { POST_CAP_PRICE as POST_CAP_PRICE_FAQ, proShipTarget } from '../data/pricing';
 
-const faqs = getFaqs(POST_CAP_PRICE_FAQ, proShipTarget);
+const faqs = getFaqs(POST_CAP_PRICE, proShipTarget);
 
 const title = 'Basalio — Interaction blocks for WordPress';
 const description = 'Framer-quality interactions, native to WordPress. Nine curated interaction blocks for portfolio and case-study sites.';

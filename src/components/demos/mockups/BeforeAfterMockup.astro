@@ -1,0 +1,115 @@
+---
+// BeforeAfterMockup — draggable divider sweeps across an abstract image
+import BrowserFrame from '../BrowserFrame.astro';
+---
+
+<BrowserFrame>
+  <div class="before-after">
+    <div class="ba-layer ba-before"></div>
+    <div class="ba-layer ba-after"></div>
+    <div class="ba-divider">
+      <div class="ba-handle">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M10 4l4 4-4 4M6 12L2 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</BrowserFrame>
+
+<style>
+  .before-after {
+    width: 100%;
+    height: 260px;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .ba-layer {
+    position: absolute;
+    inset: 0;
+  }
+
+  .ba-before {
+    background: #1a1a1a;
+  }
+
+  .ba-before::after {
+    content: 'Before';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .ba-after {
+    background: var(--acid);
+    clip-path: inset(0 50% 0 0);
+    animation: beforeAfterWipe 3s ease-in-out infinite alternate;
+  }
+
+  .ba-after::after {
+    content: 'After';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--surface-ink);
+  }
+
+  .ba-divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: #fff;
+    animation: beforeAfterDivider 3s ease-in-out infinite alternate;
+  }
+
+  .ba-handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0d0d0d;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  @keyframes beforeAfterWipe {
+    0% { clip-path: inset(0 80% 0 0); }
+    100% { clip-path: inset(0 20% 0 0); }
+  }
+
+  @keyframes beforeAfterDivider {
+    0% { left: 20%; }
+    100% { left: 80%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ba-after,
+    .ba-divider {
+      animation: none;
+    }
+
+    .ba-after { clip-path: inset(0 50% 0 0); }
+    .ba-divider { left: 50%; }
+  }
+</style>

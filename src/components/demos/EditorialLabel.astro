@@ -1,0 +1,49 @@
+---
+// EditorialLabel — small mono uppercase label with optional horizontal rule
+interface Props {
+  text: string;
+  showLine?: boolean;
+  color?: 'ink' | 'acid' | 'paper';
+}
+
+const { text, showLine = false, color = 'ink' } = Astro.props;
+
+const colorMap = {
+  ink: 'var(--surface-ink)',
+  acid: 'var(--acid)',
+  paper: 'var(--surface-paper)',
+};
+---
+
+<div class="editorial-label">
+  {showLine && <span class="label-line" aria-hidden="true" />}
+  <span class="label-text">{text}</span>
+</div>
+
+<style define:vars={{ labelColor: colorMap[color] }}>
+  .editorial-label {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .label-text {
+    font-family: var(--font-mono);
+    font-size: var(--label-size);
+    font-weight: var(--label-weight);
+    letter-spacing: var(--label-letter-spacing);
+    line-height: var(--label-line-height);
+    text-transform: uppercase;
+    color: var(--labelColor);
+    white-space: nowrap;
+  }
+
+  .label-line {
+    flex: 1;
+    height: 1px;
+    background-color: var(--labelColor);
+    opacity: 0.35;
+    min-width: 40px;
+    max-width: 120px;
+  }
+</style>

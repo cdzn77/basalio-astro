@@ -1,0 +1,176 @@
+---
+// DemoHero — configurable full-viewport hero shell
+import Button from './Button.astro';
+
+interface Props {
+  surface: 'acid' | 'ink' | 'paper';
+  eyebrow: string;
+  headline: string;
+  body?: string;
+  cta?: { label: string; href: string; variant?: 'ink' | 'acid' | 'paper' };
+  align?: 'left' | 'center';
+  heroSlot?: boolean;
+}
+
+const { surface, eyebrow, headline, body, cta, align = 'left', heroSlot = false } = Astro.props;
+
+const bgMap: Record<Props['surface'], string> = {
+  acid: 'var(--acid)',
+  ink: 'var(--surface-ink)',
+  paper: 'var(--surface-paper)',
+};
+
+const textMap: Record<Props['surface'], string> = {
+  acid: 'var(--text-on-acid)',
+  ink: 'var(--text-on-ink)',
+  paper: 'var(--text-on-paper)',
+};
+
+const mutedMap: Record<Props['surface'], string> = {
+  acid: 'var(--text-on-acid-muted)',
+  ink: 'var(--text-on-ink-muted)',
+  paper: 'var(--text-on-paper-muted)',
+};
+
+const ctaVariant = cta?.variant ?? 'ink';
+---
+
+<section class="demo-hero" data-surface={surface} data-align={align}>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">{eyebrow}</p>
+    <h1 class="hero-headline">{headline}</h1>
+    {body && <p class="hero-body">{body}</p>}
+    {cta && (
+      ctaVariant === 'paper' ? (
+        <a href={cta.href} class="hero-cta hero-cta-paper">{cta.label}</a>
+      ) : (
+        <Button label={cta.label} href={cta.href} variant={ctaVariant} />
+      )
+    )}
+    {heroSlot && (
+      <div class="hero-slot">
+        <slot name="demo" />
+      </div>
+    )}
+  </div>
+</section>
+
+<style define:vars={{ bg: bgMap[surface], color: textMap[surface], muted: mutedMap[surface] }}>
+  .demo-hero {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--bg);
+    padding: 120px 40px 80px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .demo-hero[data-align='left'] .hero-inner {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .demo-hero[data-align='center'] .hero-inner {
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--label-size);
+    font-weight: var(--label-weight);
+    letter-spacing: var(--label-letter-spacing);
+    line-height: var(--label-line-height);
+    text-transform: uppercase;
+    color: var(--color);
+    margin: 0;
+  }
+
+  .hero-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(56px, 9vw, 132px);
+    font-weight: var(--font-weight-bold);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--color);
+    margin: 0;
+    max-width: 14ch;
+    text-wrap: balance;
+  }
+
+  .demo-hero[data-align='center'] .hero-headline {
+    max-width: 16ch;
+  }
+
+  .hero-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--muted);
+    margin: 0;
+    max-width: 560px;
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 43.6px;
+    padding: 0 24px;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .hero-cta-paper {
+    background-color: var(--surface-paper);
+    color: var(--text-on-paper);
+  }
+
+  .hero-cta:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+  }
+
+  .hero-slot {
+    width: 100%;
+    margin-top: 40px;
+  }
+
+  @media (max-width: 768px) {
+    .demo-hero {
+      padding: 120px 20px 60px;
+    }
+
+    .hero-headline {
+      font-size: clamp(40px, 11vw, 72px);
+    }
+
+    .hero-body {
+      font-size: var(--font-size-18);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-cta {
+      transition: none;
+    }
+  }
+</style>

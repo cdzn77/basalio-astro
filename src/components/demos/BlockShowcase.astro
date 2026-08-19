@@ -1,0 +1,150 @@
+---
+// BlockShowcase — portfolio-piece card for a single Basalio block
+import type { BlockDemo } from '../data/blocks.ts';
+import EditorialLabel from './EditorialLabel.astro';
+
+interface Props {
+  block: BlockDemo;
+  index: number;
+  surface?: 'acid' | 'ink' | 'paper' | 'alt';
+  demo?: 'static' | 'minimal';
+}
+
+const { block, index, surface = 'paper', demo = 'minimal' } = Astro.props;
+
+const bgMap: Record<Props['surface'], string> = {
+  acid: 'var(--acid)',
+  ink: 'var(--surface-ink)',
+  paper: 'var(--surface-paper)',
+  alt: 'var(--surface-alt)',
+};
+
+const textMap: Record<Props['surface'], string> = {
+  acid: 'var(--text-on-acid)',
+  ink: 'var(--text-on-ink)',
+  paper: 'var(--text-on-paper)',
+  alt: 'var(--text-on-paper)',
+};
+
+const mutedMap: Record<Props['surface'], string> = {
+  acid: 'var(--text-on-acid-muted)',
+  ink: 'var(--text-on-ink-muted)',
+  paper: 'var(--text-on-paper-muted)',
+  alt: 'var(--text-on-paper-muted)',
+};
+
+const number = String(index + 1).padStart(2, '0');
+const labelColor = surface === 'ink' ? 'paper' : 'ink';
+const thumbSrc = `/assets/demos/block-${block.id}.svg`;
+---
+
+<article class="block-showcase" data-surface={surface}>
+  <div class="showcase-header">
+    <span class="showcase-number" aria-hidden="true">{number}</span>
+    <EditorialLabel text={block.name} color={labelColor} />
+  </div>
+  <h3 class="showcase-headline">{block.headline}</h3>
+  <p class="showcase-description">{block.description}</p>
+  <div class="showcase-demo">
+    {demo === 'static' ? (
+      <img src={thumbSrc} alt={`${block.name} preview`} class="showcase-thumb" loading="lazy" />
+    ) : (
+      <div class="showcase-minimal" aria-hidden="true">
+        <span class="minimal-shape" />
+      </div>
+    )}
+  </div>
+</article>
+
+<style define:vars={{ bg: bgMap[surface], color: textMap[surface], muted: mutedMap[surface] }}>
+  .block-showcase {
+    width: 100%;
+    height: 100%;
+    min-height: 480px;
+    background-color: var(--bg);
+    padding: 40px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .showcase-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .showcase-number {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--label-letter-spacing);
+    color: var(--muted);
+  }
+
+  .showcase-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--color);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .showcase-description {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--muted);
+    margin: 0;
+    max-width: 480px;
+  }
+
+  .showcase-demo {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    min-height: 180px;
+  }
+
+  .showcase-thumb {
+    width: 100%;
+    height: 100%;
+    max-height: 280px;
+    object-fit: contain;
+    object-position: bottom right;
+  }
+
+  .showcase-minimal {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+  }
+
+  .minimal-shape {
+    display: block;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color) 0%, var(--muted) 100%);
+    opacity: 0.25;
+  }
+
+  @media (max-width: 768px) {
+    .block-showcase {
+      padding: 24px;
+      min-height: 400px;
+    }
+
+    .showcase-headline {
+      font-size: clamp(24px, 7vw, 36px);
+    }
+  }
+</style>

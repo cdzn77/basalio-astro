@@ -1,0 +1,145 @@
+---
+// ColorBlockSection — full-bleed section with optional number, label, headline, body, and demo slot
+import EditorialLabel from './EditorialLabel.astro';
+
+interface Props {
+  surface: 'acid' | 'ink' | 'paper' | 'alt';
+  number?: string;
+  label?: string;
+  headline?: string;
+  body?: string;
+  padded?: boolean;
+}
+
+const { surface, number, label, headline, body, padded = true } = Astro.props;
+
+const bgMap: Record<Props['surface'], string> = {
+  acid: 'var(--acid)',
+  ink: 'var(--surface-ink)',
+  paper: 'var(--surface-paper)',
+  alt: 'var(--surface-alt)',
+};
+
+const textMap: Record<Props['surface'], string> = {
+  acid: 'var(--text-on-acid)',
+  ink: 'var(--text-on-ink)',
+  paper: 'var(--text-on-paper)',
+  alt: 'var(--text-on-paper)',
+};
+
+const mutedMap: Record<Props['surface'], string> = {
+  acid: 'var(--text-on-acid-muted)',
+  ink: 'var(--text-on-ink-muted)',
+  paper: 'var(--text-on-paper-muted)',
+  alt: 'var(--text-on-paper-muted)',
+};
+
+const labelColor = surface === 'ink' ? 'paper' : 'ink';
+---
+
+<section class="color-block-section" data-surface={surface} data-padded={padded}>
+  <div class="section-inner">
+    <div class="section-text">
+      {number && <span class="section-number" aria-hidden="true">{number}</span>}
+      {label && <EditorialLabel text={label} color={labelColor} />}
+      {headline && <h2 class="section-headline">{headline}</h2>}
+      {body && <p class="section-body">{body}</p>}
+    </div>
+    <div class="section-demo">
+      <slot name="demo" />
+    </div>
+  </div>
+</section>
+
+<style define:vars={{ bg: bgMap[surface], color: textMap[surface], muted: mutedMap[surface] }}>
+  .color-block-section {
+    width: 100%;
+    background-color: var(--bg);
+    padding: var(--section-padding-y, 120px) 40px;
+    box-sizing: border-box;
+  }
+
+  .color-block-section[data-padded='true'] {
+    --section-padding-y: 120px;
+  }
+
+  .color-block-section[data-padded='false'] {
+    --section-padding-y: 0px;
+  }
+
+  .section-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .section-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .section-number {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .section-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--color);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .section-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--muted);
+    margin: 0;
+    max-width: 560px;
+  }
+
+  .section-demo {
+    min-height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 1024px) {
+    .section-inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .color-block-section {
+      padding: var(--section-padding-y, 80px) 20px;
+    }
+
+    .color-block-section[data-padded='true'] {
+      --section-padding-y: 80px;
+    }
+
+    .section-headline {
+      font-size: clamp(28px, 8vw, 48px);
+    }
+
+    .section-demo {
+      min-height: 240px;
+    }
+  }
+</style>

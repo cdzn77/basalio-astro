@@ -1,0 +1,73 @@
+---
+// BlockGrid — asymmetric grid of BlockShowcase cards
+import type { BlockDemo } from '../data/blocks.ts';
+import BlockShowcase from './BlockShowcase.astro';
+
+interface Props {
+  blocks: BlockDemo[];
+  layout?: 'masonry' | 'balanced';
+}
+
+const { blocks, layout = 'balanced' } = Astro.props;
+
+const surfaces: Array<'acid' | 'ink' | 'paper' | 'alt'> = ['acid', 'ink', 'paper', 'alt'];
+---
+
+<section class="block-grid" data-layout={layout}>
+  <div class="grid-inner">
+    {blocks.map((block, i) => (
+      <BlockShowcase block={block} index={i} surface={surfaces[i % surfaces.length]} demo="static" />
+    ))}
+  </div>
+</section>
+
+<style>
+  .block-grid {
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .grid-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: grid;
+    gap: 0;
+  }
+
+  .block-grid[data-layout='balanced'] .grid-inner {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .block-grid[data-layout='masonry'] .grid-inner {
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: minmax(200px, auto);
+  }
+
+  .block-grid[data-layout='masonry'] .grid-inner > :global(:nth-child(6n + 1)),
+  .block-grid[data-layout='masonry'] .grid-inner > :global(:nth-child(6n + 3)),
+  .block-grid[data-layout='masonry'] .grid-inner > :global(:nth-child(6n + 5)) {
+    grid-row: span 2;
+  }
+
+  @media (max-width: 1024px) {
+    .block-grid[data-layout='balanced'] .grid-inner,
+    .block-grid[data-layout='masonry'] .grid-inner {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .block-grid[data-layout='balanced'] .grid-inner,
+    .block-grid[data-layout='masonry'] .grid-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .block-grid[data-layout='masonry'] .grid-inner > :global(:nth-child(6n + 1)),
+    .block-grid[data-layout='masonry'] .grid-inner > :global(:nth-child(6n + 3)),
+    .block-grid[data-layout='masonry'] .grid-inner > :global(:nth-child(6n + 5)) {
+      grid-row: span 1;
+    }
+  }
+</style>

@@ -1,0 +1,208 @@
+---
+import StageShell from '../StageShell.astro';
+import '../sample-styles.css';
+
+const SEQ = [
+  { n: '01', t: 'THE PROBLEM', d: 'Outline the challenge' },
+  { n: '02', t: 'THE APPROACH', d: 'Describe the strategy' },
+  { n: '03', t: 'THE RESULT', d: 'Show the outcome' },
+];
+---
+
+<div class="sample-seq-root" data-sample-seq-root>
+  <StageShell label="SCROLL SEQUENCE — LIVE">
+    <div class="sample-seq-stage">
+      <div class="sample-seq-rail" aria-hidden="true">
+        <div class="sample-seq-fill"></div>
+        {
+          SEQ.map((_, i) => (
+            <span class="sample-seq-dot" data-seq-dot style={`--i: ${i};`} />
+          ))
+        }
+      </div>
+      <div class="sample-seq-steps">
+        {
+          SEQ.map((s) => (
+            <div class="sample-seq-step" data-seq-step>
+              <span class="sample-seq-number">{s.n}</span>
+              <p class="sample-seq-title sample-display">{s.t}</p>
+              <p class="sample-seq-desc">{s.d}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </StageShell>
+</div>
+
+<script is:inline>
+  (function () {
+    const root = document.currentScript?.previousElementSibling;
+    if (!root) return;
+
+    const stage = root.querySelector('[data-sample-stage]');
+    const fill = root.querySelector('.sample-seq-fill');
+    const dots = root.querySelectorAll('[data-seq-dot]');
+    const steps = root.querySelectorAll('[data-seq-step]');
+    if (!stage || !fill || !dots.length || !steps.length) return;
+
+    const LOOP = 6600;
+    const total = steps.length;
+    let raf = 0;
+    let t0 = 0;
+    let playing = false;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+      root.classList.add('is-reduced');
+      return;
+    }
+
+    function update(p) {
+      const step = Math.min(total - 1, Math.floor(p * total));
+      root.style.setProperty('--seq-progress', String(p));
+      dots.forEach((dot, i) => dot.classList.toggle('is-active', i <= step));
+      steps.forEach((s, i) => s.classList.toggle('is-active', i === step));
+    }
+
+    function tick(now) {
+      if (!t0) t0 = now;
+      const p = ((now - t0) % LOOP) / LOOP;
+      update(p);
+      raf = requestAnimationFrame(tick);
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !playing) {
+            playing = true;
+            raf = requestAnimationFrame(tick);
+          } else if (!entry.isIntersecting && playing) {
+            playing = false;
+            cancelAnimationFrame(raf);
+            raf = 0;
+            t0 = 0;
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    io.observe(stage);
+  })();
+</script>
+
+<style>
+  .sample-seq-root {
+    width: 100%;
+  }
+
+  .sample-seq-stage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    gap: 6%;
+    padding-left: 7%;
+    padding-right: 7%;
+  }
+
+  .sample-seq-rail {
+    position: relative;
+    width: 1px;
+    height: 62%;
+    flex: none;
+    background: color-mix(in srgb, var(--text-on-ink) 12%, transparent);
+  }
+
+  .sample-seq-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(var(--seq-progress, 0) * 100%);
+    background: var(--acid);
+  }
+
+  .sample-seq-dot {
+    position: absolute;
+    top: calc((var(--i) / 2) * 100%);
+    left: -3.5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--text-on-ink) 25%, transparent);
+    transition: background-color 0.3s ease;
+  }
+
+  .sample-seq-dot.is-active {
+    background: var(--acid);
+  }
+
+  .sample-seq-steps {
+    position: relative;
+    flex: 1;
+    height: 62%;
+  }
+
+  .sample-seq-step {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sample-seq-step.is-active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .sample-seq-number {
+    font-family: var(--font-mono);
+    font-size: clamp(16px, 2.6vw, 26px);
+    font-weight: var(--font-weight-semibold);
+    color: var(--acid);
+  }
+
+  .sample-seq-title {
+    margin: 4px 0 0;
+    font-size: clamp(15px, 2.4vw, 24px);
+    color: var(--text-on-ink);
+  }
+
+  .sample-seq-desc {
+    margin: 6px 0 0;
+    font-size: clamp(10px, 1.4vw, 13px);
+    color: var(--text-on-ink-muted);
+  }
+
+  /* Reduced motion: reveal all steps, full progress, no animation. */
+  .sample-seq-root.is-reduced .sample-seq-step {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .sample-seq-root.is-reduced .sample-seq-fill {
+    height: 100%;
+  }
+
+  .sample-seq-root.is-reduced .sample-seq-dot {
+    background: var(--acid);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sample-seq-step,
+    .sample-seq-dot,
+    .sample-seq-fill {
+      transition: none !important;
+    }
+  }
+</style>

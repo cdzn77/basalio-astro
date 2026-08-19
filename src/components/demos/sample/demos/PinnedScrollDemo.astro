@@ -1,0 +1,144 @@
+---
+import StageShell from '../StageShell.astro';
+import '../sample-styles.css';
+
+const WORDS = ['The image holds.', 'The story moves.', 'Then releases.'];
+---
+
+<div class="sample-ps-root" data-sample-ps-root>
+  <StageShell label="PINNED SCROLL — LIVE · SCROLL INSIDE">
+    <div class="sample-ps-stage">
+      <div class="sample-ps-pinned">
+        <div class="sample-ps-pinned-bg" aria-hidden="true"></div>
+        <div class="sample-slats" aria-hidden="true">
+          {Array.from({ length: 9 }).map((_, j) => <i style={`--i: ${j};`} />)}
+        </div>
+        <div class="sample-ps-badge-wrap">
+          <span class="sample-ps-badge">PINNED</span>
+        </div>
+      </div>
+      <div class="sample-ps-scroll" data-sample-ps-scroll>
+        {
+          WORDS.map((w, i) => (
+            <div class="sample-ps-item" data-ps-item>
+              <p class="sample-ps-word sample-display">{w}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </StageShell>
+</div>
+
+<script is:inline>
+  (function () {
+    const root = document.currentScript?.previousElementSibling;
+    if (!root) return;
+
+    const scrollPanel = root.querySelector('[data-sample-ps-scroll]');
+    const items = root.querySelectorAll('[data-ps-item]');
+    if (!scrollPanel || !items.length) return;
+
+    function update() {
+      const max = scrollPanel.scrollHeight - scrollPanel.clientHeight;
+      const p = max > 0 ? scrollPanel.scrollTop / max : 0;
+      root.style.setProperty('--ps-p', String(p));
+      const active = Math.min(items.length - 1, Math.floor(p * items.length));
+      items.forEach((item, i) => item.classList.toggle('is-active', i === active));
+    }
+
+    scrollPanel.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+
+<style>
+  .sample-ps-root {
+    width: 100%;
+  }
+
+  .sample-ps-stage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+  }
+
+  .sample-ps-pinned {
+    position: relative;
+    width: 44%;
+    height: 100%;
+    flex: none;
+    overflow: hidden;
+    border-right: 1px solid var(--overlay-light-10);
+  }
+
+  .sample-ps-pinned-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      160deg,
+      color-mix(in srgb, var(--acid) 14%, transparent) 0%,
+      var(--surface-ink) 80%
+    );
+  }
+
+  .sample-ps-badge-wrap {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .sample-ps-badge {
+    font-family: var(--font-mono);
+    font-size: clamp(11px, 1.6vw, 15px);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-on-ink);
+    border: 1px solid var(--overlay-light-15);
+    border-radius: 999px;
+    padding: 6px 16px;
+    background: color-mix(in srgb, var(--surface-ink) 25%, transparent);
+    transform: scale(calc(1 + var(--ps-p, 0) * 0.12));
+    transition: transform 0.2s linear;
+  }
+
+  .sample-ps-scroll {
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--overlay-light-15) transparent;
+  }
+
+  .sample-ps-item {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 9%;
+    padding-right: 9%;
+  }
+
+  .sample-ps-word {
+    margin: 0;
+    font-size: clamp(14px, 2.2vw, 22px);
+    color: var(--text-on-ink-muted);
+    transform: translateX(6px);
+    transition:
+      color 0.4s ease,
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sample-ps-item.is-active .sample-ps-word {
+    color: var(--text-on-ink);
+    transform: translateX(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sample-ps-badge,
+    .sample-ps-word {
+      transition: none !important;
+      transform: none !important;
+    }
+  }
+</style>

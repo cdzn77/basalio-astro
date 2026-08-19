@@ -1,0 +1,64 @@
+---
+// TextRevealMockup — headline lines reveal with a stagger loop
+import BrowserFrame from '../BrowserFrame.astro';
+---
+
+<BrowserFrame>
+  <div class="text-reveal">
+    <div class="tr-line"><span>Design</span></div>
+    <div class="tr-line"><span>that</span></div>
+    <div class="tr-line"><span>moves.</span></div>
+  </div>
+</BrowserFrame>
+
+<style>
+  .text-reveal {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .tr-line {
+    overflow: hidden;
+    font-family: var(--font-sans);
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.1;
+    color: #fff;
+  }
+
+  .tr-line span {
+    display: inline-block;
+    transform: translateY(100%);
+    opacity: 0;
+    animation: textRevealLine 2.8s ease-in-out infinite;
+  }
+
+  .tr-line:nth-child(1) span { animation-delay: 0s; }
+  .tr-line:nth-child(2) span { animation-delay: 0.25s; }
+  .tr-line:nth-child(3) span { animation-delay: 0.5s; }
+
+  @keyframes textRevealLine {
+    0%, 30% {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    40%, 75% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    85%, 100% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tr-line span {
+      animation: none;
+      transform: none;
+      opacity: 1;
+    }
+  }
+</style>

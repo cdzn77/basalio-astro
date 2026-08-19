@@ -1,0 +1,401 @@
+---
+// homepage-v2.astro — Cinematic Block Gallery
+// A full-viewport, chapter-driven homepage demo: one block per screen,
+// a fixed progress indicator, and a closing pricing CTA.
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+import CinematicBlockChapter from '../components/demos/CinematicBlockChapter.astro';
+import EditorialLabel from '../components/demos/EditorialLabel.astro';
+import { blocks } from '../data/blocks';
+import { pricingTiers, FOUNDER_PRICE, POST_CAP_PRICE } from '../data/pricing';
+
+const title = 'Cinematic Block Gallery';
+const description =
+  'A cinematic homepage demo for Basalio — nine interaction blocks, one full-viewport chapter at a time.';
+
+const paidTier = pricingTiers.find((t) => t.id === 'paid');
+const ctaHref = paidTier?.cta?.href || '/early-access';
+const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
+---
+
+<BaseLayout {title} {description} noindex>
+  <Fragment slot="header">
+    <Header />
+  </Fragment>
+
+  <!-- 1. FIXED PROGRESS INDICATOR -->
+  <nav class="progress-indicator" aria-label="Chapter navigation">
+    {
+      blocks.map((block, index) => (
+        <a
+          href={`#chapter-${index}`}
+          class="progress-dot"
+          aria-label={`Go to ${block.name}`}
+          data-index={index}
+        >
+          <span class="visually-hidden">{block.name}</span>
+        </a>
+      ))
+    }
+  </nav>
+
+  <!-- 2. HERO: full-screen dark demo background + lower-left headline -->
+  <section class="cinematic-hero" data-surface="ink" id="chapter-hero">
+    <div class="hero-background" aria-hidden="true">
+      <img
+        src="/assets/demos/v2-hero.svg"
+        alt=""
+        class="hero-background-img"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow">A WordPress plugin for creatives</p>
+      <h1 class="hero-headline">Framer-quality interactions, native to WordPress.</h1>
+      <p class="hero-body">
+        Nine curated interaction blocks built only for portfolio and case-study sites. No page
+        builder, no premium theme, no circus.
+      </p>
+    </div>
+  </section>
+
+  <!-- 3. NINE CINEMATIC BLOCK CHAPTERS -->
+  {
+    blocks.map((block, index) => (
+      <CinematicBlockChapter
+        {block}
+        {index}
+        total={blocks.length}
+        surface={index % 2 === 0 ? 'ink' : 'paper'}
+      />
+    ))
+  }
+
+  <!-- 4. CLOSING PAPER SECTION: pricing and CTA -->
+  <section class="closing-section" data-surface="paper">
+    <div class="closing-inner">
+      <div class="closing-text">
+        <EditorialLabel text="Founder pricing" color="ink" />
+        <h2 class="closing-headline">Get the Pro control center at founder pricing.</h2>
+        <p class="closing-body">
+          {paidTier?.leadLine ||
+            `Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently — and refundable until the control center ships.`}
+        </p>
+      </div>
+      <div class="closing-card">
+        <p class="closing-label">{paidTier?.label || 'FOUNDER · 100 LICENSES'}</p>
+        <p class="closing-price">{FOUNDER_PRICE}</p>
+        <p class="closing-billing">one time</p>
+        <p class="closing-teaser">
+          {paidTier?.teaser || `100 founder licenses at ${FOUNDER_PRICE}, then ${POST_CAP_PRICE}.`}
+        </p>
+        <div class="closing-cta">
+          <Button
+            label={ctaLabel}
+            href={ctaHref}
+            variant="ink"
+            fontSize="clamp(10px, 2.5vw, 14px)"
+            letterSpacing="clamp(1.5px, 0.6vw, 2.8px)"
+          />
+        </div>
+        <p class="closing-micro">{paidTier?.microLine || '30-day refund, no questions asked.'}</p>
+      </div>
+    </div>
+  </section>
+
+  <Fragment slot="footer">
+    <Footer hideNewsletter={true} />
+  </Fragment>
+</BaseLayout>
+
+<script>
+  // Highlight the progress dot for the chapter currently in view.
+  const dots = document.querySelectorAll<HTMLAnchorElement>('.progress-dot');
+  const chapters = document.querySelectorAll<HTMLElement>('.cinematic-chapter');
+
+  if (dots.length && chapters.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const index = Number(entry.target.getAttribute('data-index'));
+          if (Number.isNaN(index)) return;
+          dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+          });
+        });
+      },
+      {
+        rootMargin: '-45% 0px -45% 0px',
+        threshold: 0,
+      }
+    );
+
+    chapters.forEach((chapter) => observer.observe(chapter));
+  }
+</script>
+
+<style>
+  /* PROGRESS INDICATOR */
+  .progress-indicator {
+    position: fixed;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px 8px;
+    background-color: rgba(28, 25, 23, 0.35);
+    backdrop-filter: blur(6px);
+    border-radius: 20px;
+  }
+
+  .progress-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--surface-paper);
+    opacity: 0.35;
+    transition: opacity 0.25s ease, transform 0.25s ease, background-color 0.25s ease;
+    text-decoration: none;
+  }
+
+  .progress-dot.active {
+    opacity: 1;
+    transform: scale(1.25);
+    background-color: var(--acid);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* HERO */
+  .cinematic-hero {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-color: var(--surface-ink);
+    padding: 120px 40px 100px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero-background-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--label-size);
+    font-weight: var(--label-weight);
+    letter-spacing: var(--label-letter-spacing);
+    line-height: var(--label-line-height);
+    text-transform: uppercase;
+    color: var(--text-on-ink);
+    margin: 0;
+  }
+
+  .hero-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(48px, 8vw, 120px);
+    font-weight: var(--font-weight-bold);
+    line-height: 0.95;
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-ink);
+    margin: 0;
+    max-width: 14ch;
+    text-wrap: balance;
+  }
+
+  .hero-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-ink-muted);
+    margin: 0;
+    max-width: 560px;
+  }
+
+  /* CLOSING PRICING SECTION */
+  .closing-section {
+    width: 100%;
+    background-color: var(--surface-paper);
+    padding: 120px 40px;
+    box-sizing: border-box;
+  }
+
+  .closing-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .closing-inner > * {
+    min-width: 0;
+  }
+
+  .closing-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .closing-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-paper);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .closing-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-paper-muted);
+    margin: 0;
+    max-width: 560px;
+  }
+
+  .closing-card {
+    background-color: var(--surface-alt);
+    border-radius: 8px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .closing-label {
+    font-family: var(--font-mono);
+    font-size: var(--label-size);
+    font-weight: var(--label-weight);
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
+    color: var(--text-on-paper);
+    margin: 0;
+  }
+
+  .closing-price {
+    font-family: var(--font-sans);
+    font-size: 64px;
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-paper);
+    margin: 0;
+  }
+
+  .closing-billing {
+    font-size: var(--font-size-body);
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  .closing-teaser {
+    font-size: var(--font-size-body);
+    font-style: italic;
+    color: var(--text-on-paper-muted);
+    margin: 0 0 12px;
+  }
+
+  .closing-cta {
+    margin-top: 8px;
+  }
+
+  .closing-micro {
+    font-size: var(--font-size-14);
+    color: var(--text-on-paper-muted);
+    margin: 8px 0 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .closing-inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .closing-card {
+      max-width: 480px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .progress-indicator {
+      right: 16px;
+      gap: 10px;
+      padding: 12px 6px;
+    }
+
+    .cinematic-hero {
+      padding: 120px 20px 80px;
+    }
+
+    .hero-headline {
+      font-size: clamp(36px, 11vw, 64px);
+    }
+
+    .closing-section {
+      padding: 80px 20px;
+    }
+
+    .closing-headline {
+      font-size: clamp(28px, 8vw, 48px);
+    }
+
+    .closing-card {
+      padding: 24px;
+    }
+
+    .closing-price {
+      font-size: 48px;
+    }
+  }
+</style>

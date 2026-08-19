@@ -1,0 +1,173 @@
+---
+// CinematicBlockChapter — full-viewport chapter for one Basalio block
+import type { BlockDemo } from '../data/blocks.ts';
+import EditorialLabel from './EditorialLabel.astro';
+
+interface Props {
+  block: BlockDemo;
+  index: number;
+  total: number;
+  surface?: 'ink' | 'paper';
+}
+
+const { block, index, total, surface = 'ink' } = Astro.props;
+
+const number = String(index + 1).padStart(2, '0');
+const totalNumber = String(total).padStart(2, '0');
+const labelColor = surface === 'ink' ? 'paper' : 'ink';
+
+const bgMap = {
+  ink: 'var(--surface-ink)',
+  paper: 'var(--surface-paper)',
+};
+
+const colorMap = {
+  ink: 'var(--text-on-ink)',
+  paper: 'var(--text-on-paper)',
+};
+
+const mutedMap = {
+  ink: 'var(--text-on-ink-muted)',
+  paper: 'var(--text-on-paper-muted)',
+};
+---
+
+<section
+  class="cinematic-chapter"
+  data-surface={surface}
+  id={`chapter-${index}`}
+  aria-label={`${block.name}: ${block.headline}`}
+>
+  <div class="chapter-backdrop" aria-hidden="true">
+    <div class="chapter-ring" />
+    <div class="chapter-ring chapter-ring--secondary" />
+    <div class="chapter-ring chapter-ring--tertiary" />
+  </div>
+
+  <div class="chapter-inner">
+    <div class="chapter-meta">
+      <span class="chapter-number" aria-hidden="true">{number}/{totalNumber}</span>
+      <EditorialLabel text={block.name} color={labelColor} />
+    </div>
+    <h2 class="chapter-headline">{block.headline}</h2>
+    <p class="chapter-description">{block.description}</p>
+  </div>
+</section>
+
+<style define:vars={{ bg: bgMap[surface], color: colorMap[surface], muted: mutedMap[surface] }}>
+  .cinematic-chapter {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-color: var(--bg);
+    padding: 120px 40px 100px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chapter-backdrop {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .chapter-ring {
+    position: absolute;
+    width: min(55%, 55vh);
+    height: min(55%, 55vh);
+    border-radius: 50%;
+    border: 2px solid var(--acid);
+    opacity: 0.18;
+    flex-shrink: 0;
+  }
+
+  .chapter-ring--secondary {
+    width: min(75%, 75vh);
+    height: min(75%, 75vh);
+    opacity: 0.1;
+  }
+
+  .chapter-ring--tertiary {
+    width: min(95%, 95vh);
+    height: min(95%, 95vh);
+    opacity: 0.06;
+  }
+
+  .chapter-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .chapter-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .chapter-number {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--label-letter-spacing);
+    color: var(--muted);
+  }
+
+  .chapter-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(48px, 8vw, 120px);
+    font-weight: var(--font-weight-bold);
+    line-height: 0.95;
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--color);
+    margin: 0;
+    max-width: 14ch;
+    text-wrap: balance;
+  }
+
+  .chapter-description {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--muted);
+    margin: 0;
+    max-width: 560px;
+  }
+
+  @media (max-width: 768px) {
+    .cinematic-chapter {
+      padding: 120px 20px 80px;
+    }
+
+    .chapter-headline {
+      font-size: clamp(36px, 11vw, 64px);
+    }
+
+    .chapter-ring {
+      width: min(70%, 70vh);
+      height: min(70%, 70vh);
+    }
+
+    .chapter-ring--secondary {
+      width: min(90%, 90vh);
+      height: min(90%, 90vh);
+    }
+
+    .chapter-ring--tertiary {
+      width: min(100%, 100vh);
+      height: min(100%, 100vh);
+    }
+  }
+</style>

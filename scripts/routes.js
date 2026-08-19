@@ -36,6 +36,7 @@ export const HEADING_ROUTES = [
   ...PRODUCTION_ROUTES,
   '/homepage-v1/',         // demo: color-block manifesto (noindex)
   '/homepage-v2/',         // demo: cinematic block gallery (noindex)
+  '/homepage-v3/',         // demo: studio product site (noindex)
   '/__404-handler-probe/'  // synthetic probe: nonexistent path → 404 error handler
 ];
 
@@ -49,6 +50,7 @@ export const ALL_ROUTES = [
   '/hero-lab/',       // internal, noindex, test route
   '/homepage-v1/',    // demo: color-block manifesto (noindex)
   '/homepage-v2/',    // demo: cinematic block gallery (noindex)
+  '/homepage-v3/',    // demo: studio product site (noindex)
   '/pricing/',
   '/privacy/',
   '/roadmap/',

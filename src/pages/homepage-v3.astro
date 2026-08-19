@@ -1,0 +1,413 @@
+---
+// homepage-v3.astro — Studio Product Site
+// A two-column studio homepage demo: manifesto on the left, an interactive
+// magnetic-button demo on the right, a process strip, and a portfolio grid.
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+import BlockGrid from '../components/demos/BlockGrid.astro';
+import EditorialLabel from '../components/demos/EditorialLabel.astro';
+import InteractiveHeroDemo from '../components/demos/InteractiveHeroDemo.astro';
+import { blocks } from '../data/blocks';
+import { pricingTiers } from '../data/pricing';
+
+const title = 'Studio Product Site';
+const description =
+  'A studio product-site homepage demo for Basalio — built for design portfolios and case studies.';
+
+const selectedBlocks = blocks.filter((b) =>
+  ['magnetic-button', 'custom-cursor', 'before-after'].includes(b.id)
+);
+
+const paidTier = pricingTiers.find((t) => t.id === 'paid');
+const ctaHref = paidTier?.cta?.href || '/early-access';
+const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
+---
+
+<BaseLayout {title} {description} noindex>
+  <Fragment slot="header">
+    <Header />
+  </Fragment>
+
+  <!-- 1. HERO: two-column studio layout -->
+  <section class="studio-hero" data-surface="ink">
+    <div class="hero-inner">
+      <div class="hero-manifesto">
+        <p class="hero-eyebrow">A WordPress plugin for creatives</p>
+        <h1 class="hero-headline">Crafted motion for product storytellers.</h1>
+        <p class="hero-body">
+          Nine curated interaction blocks built only for portfolio and case-study sites. No page
+          builder, no premium theme, no circus.
+        </p>
+        <div class="hero-actions">
+          <Button label="Explore the blocks" href="/blocks" variant="acid" />
+        </div>
+      </div>
+      <div class="hero-demo">
+        <InteractiveHeroDemo type="magnetic" />
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. PROCESS STRIP -->
+  <section class="process-section" data-surface="paper">
+    <div class="process-inner">
+      <EditorialLabel text="Our process" color="ink" />
+      <h2 class="process-title">From brief to launch in three steps.</h2>
+      <div class="process-steps">
+        <article class="process-step">
+          <span class="process-number" aria-hidden="true">01</span>
+          <h3 class="process-step-title">Define the story</h3>
+          <p class="process-step-body">
+            Clarify the narrative arc before adding motion so every interaction supports the
+            message.
+          </p>
+        </article>
+        <article class="process-step">
+          <span class="process-number" aria-hidden="true">02</span>
+          <h3 class="process-step-title">Build the system</h3>
+          <p class="process-step-body">
+            Drop in native WordPress blocks that behave like a custom front-end without the custom
+            cost.
+          </p>
+        </article>
+        <article class="process-step">
+          <span class="process-number" aria-hidden="true">03</span>
+          <h3 class="process-step-title">Ship with confidence</h3>
+          <p class="process-step-body">
+            Tune timing, accessibility, and responsiveness — then publish a site that feels
+            expensive.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. BLOCK GRID: selected demos as portfolio projects -->
+  <section class="portfolio-section" data-surface="alt">
+    <div class="portfolio-inner">
+      <EditorialLabel text="Selected work" color="ink" />
+      <h2 class="portfolio-title">Three blocks, three stories.</h2>
+      <BlockGrid blocks={selectedBlocks} layout="balanced" />
+    </div>
+  </section>
+
+  <!-- 4. STUDIO NOTE -->
+  <section class="note-section" data-surface="paper">
+    <div class="note-inner">
+      <p class="studio-note">
+        Basalio is built for studios that want editorial impact without a maintenance burden. Every
+        block is self-contained, accessibility-aware, and designed to sit inside any WordPress
+        theme.
+      </p>
+    </div>
+  </section>
+
+  <!-- 5. CENTERED FOOTER CTA -->
+  <section class="cta-section" data-surface="paper">
+    <div class="cta-inner">
+      <h2 class="cta-headline">Ready to make your site move?</h2>
+      <p class="cta-body">
+        Join the founder list and get the Pro control center at a one-time price.
+      </p>
+      <div class="cta-actions">
+        <Button
+          label={ctaLabel}
+          href={ctaHref}
+          variant="ink"
+          fontSize="clamp(10px, 2.5vw, 14px)"
+          letterSpacing="clamp(1.5px, 0.6vw, 2.8px)"
+        />
+      </div>
+      <p class="cta-micro">{paidTier?.microLine || '30-day refund, no questions asked.'}</p>
+    </div>
+  </section>
+
+  <Fragment slot="footer">
+    <Footer hideNewsletter={true} />
+  </Fragment>
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .studio-hero {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background-color: var(--surface-ink);
+    padding: 120px 40px 80px;
+    box-sizing: border-box;
+  }
+
+  .hero-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .hero-inner > * {
+    min-width: 0;
+  }
+
+  .hero-manifesto {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--label-size);
+    font-weight: var(--label-weight);
+    letter-spacing: var(--label-letter-spacing);
+    line-height: var(--label-line-height);
+    text-transform: uppercase;
+    color: var(--text-on-ink);
+    margin: 0;
+  }
+
+  .hero-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(48px, 7vw, 112px);
+    font-weight: var(--font-weight-bold);
+    line-height: 0.95;
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-ink);
+    margin: 0;
+    max-width: 14ch;
+    text-wrap: balance;
+  }
+
+  .hero-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-ink-muted);
+    margin: 0;
+    max-width: 520px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+  }
+
+  .hero-demo {
+    min-height: 420px;
+  }
+
+  /* PROCESS */
+  .process-section {
+    width: 100%;
+    background-color: var(--surface-paper);
+    padding: 120px 40px;
+    box-sizing: border-box;
+  }
+
+  .process-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .process-title {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-paper);
+    margin: 0;
+    max-width: 18ch;
+    text-wrap: balance;
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .process-step {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .process-number {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--label-letter-spacing);
+    color: var(--text-on-paper-muted);
+  }
+
+  .process-step-title {
+    font-family: var(--font-sans);
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-paper);
+    margin: 0;
+  }
+
+  .process-step-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  /* PORTFOLIO */
+  .portfolio-section {
+    width: 100%;
+    background-color: var(--surface-alt);
+    padding: 120px 40px;
+    box-sizing: border-box;
+  }
+
+  .portfolio-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .portfolio-title {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-paper);
+    margin: 0;
+    max-width: 18ch;
+    text-wrap: balance;
+  }
+
+  /* STUDIO NOTE */
+  .note-section {
+    width: 100%;
+    background-color: var(--surface-paper);
+    padding: 120px 40px;
+    box-sizing: border-box;
+  }
+
+  .note-inner {
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin: 0 auto;
+  }
+
+  .studio-note {
+    font-family: var(--font-sans);
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-relaxed);
+    letter-spacing: -0.01em;
+    color: var(--text-on-paper);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  /* CTA */
+  .cta-section {
+    width: 100%;
+    background-color: var(--surface-paper);
+    padding: 120px 40px;
+    box-sizing: border-box;
+  }
+
+  .cta-inner {
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 24px;
+  }
+
+  .cta-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-paper);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .cta-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-paper-muted);
+    margin: 0;
+    max-width: 520px;
+  }
+
+  .cta-actions {
+    margin-top: 8px;
+  }
+
+  .cta-micro {
+    font-size: var(--font-size-14);
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .hero-demo {
+      min-height: 320px;
+    }
+
+    .process-steps {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .studio-hero,
+    .process-section,
+    .portfolio-section,
+    .note-section,
+    .cta-section {
+      padding: 80px 20px;
+    }
+
+    .hero-headline {
+      font-size: clamp(40px, 11vw, 64px);
+    }
+
+    .process-title,
+    .portfolio-title,
+    .cta-headline {
+      font-size: clamp(28px, 8vw, 48px);
+    }
+
+    .studio-note {
+      font-size: clamp(20px, 5vw, 28px);
+    }
+  }
+</style>

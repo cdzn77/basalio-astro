@@ -106,7 +106,7 @@ async function main() {
     '\n' + '═'.repeat(70)
   );
   console.log(
-    'RM4: SECTION OVERFLOW VERIFICATION (ALL 13 ROUTES × 8 VIEWPORTS = 104 CHECKS)'
+    `RM4: SECTION OVERFLOW VERIFICATION (ALL ${ROUTES.length} ROUTES × ${VIEWPORTS.length} VIEWPORTS = ${ROUTES.length * VIEWPORTS.length} CHECKS)`
   );
   console.log(
     '═'.repeat(70) + '\n'

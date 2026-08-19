@@ -33,7 +33,7 @@ cleanup() {
 trap cleanup EXIT
 
 echo ""
-echo "3/6: Running overflow verification (104 checks)..."
+echo "3/6: Running overflow verification (136 checks)..."
 PORT=4321 npm run verify:overflow
 
 echo ""

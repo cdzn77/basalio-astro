@@ -1,0 +1,137 @@
+---
+interface Props {
+  number: string;
+  name: string;
+  category: string;
+  tagline: string;
+  href: string;
+  iconSvg: string;
+}
+
+const { number, name, category, tagline, href, iconSvg } = Astro.props;
+---
+
+<a
+  href={href}
+  class="sample-block-card sample-glass sample-lift sample-glow-hover"
+>
+  <span class="sample-block-number">{number}</span>
+  <span class="sample-block-icon-tile" aria-hidden="true">
+    <Fragment set:html={iconSvg} />
+  </span>
+  <h2 class="sample-block-name">{name}</h2>
+  <p class="sample-block-category">{category}</p>
+  <p class="sample-block-tagline">{tagline}</p>
+  <span class="sample-block-cta">
+    See it live
+    <svg
+      class="sample-block-arrow"
+      width="13"
+      height="13"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M4 12h16" />
+      <path d="M13 5l7 7-7 7" />
+    </svg>
+  </span>
+</a>
+
+<style>
+  .sample-block-card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 16px;
+    padding: 24px;
+    height: 100%;
+    text-decoration: none;
+  }
+
+  .sample-block-number {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--overlay-light-35);
+    transition: color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sample-block-card:hover .sample-block-number {
+    color: var(--acid);
+  }
+
+  .sample-block-icon-tile {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--overlay-light-06);
+    border: 1px solid var(--overlay-light-10);
+    color: var(--text-on-ink);
+    transition:
+      color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sample-block-icon-tile :global(svg) {
+    width: 22px;
+    height: 22px;
+  }
+
+  .sample-block-card:hover .sample-block-icon-tile {
+    color: var(--acid);
+    border-color: color-mix(in srgb, var(--acid) 40%, transparent);
+    transform: scale(1.05);
+  }
+
+  .sample-block-name {
+    margin: 20px 0 0;
+    font-size: 18px;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-ink);
+  }
+
+  .sample-block-category {
+    margin: 6px 0 0;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-on-ink-muted);
+  }
+
+  .sample-block-tagline {
+    margin: 12px 0 0;
+    font-size: 13.5px;
+    line-height: var(--line-height-relaxed);
+    color: var(--overlay-light-50);
+  }
+
+  .sample-block-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 20px;
+    font-size: 13px;
+    font-weight: var(--font-weight-medium);
+    color: var(--acid);
+  }
+
+  .sample-block-arrow {
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .sample-block-card:hover .sample-block-arrow {
+    transform: translateX(4px);
+  }
+</style>

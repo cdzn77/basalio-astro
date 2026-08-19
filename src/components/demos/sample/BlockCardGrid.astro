@@ -1,0 +1,46 @@
+---
+import BlockCard from './BlockCard.astro';
+import { blocks, blockCategories } from '../../../data/blocks';
+
+const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
+const iconFor = (id: string) => icons[`/public/assets/icons/blocks/${id}.svg`] as string;
+---
+
+<div class="sample-block-grid">
+  {
+    blocks.map((b, i) => (
+      <BlockCard
+        number={`0${i + 1}`}
+        name={b.name}
+        category={blockCategories[b.category]}
+        tagline={b.headline}
+        href={`/blocks#${b.id}`}
+        iconSvg={iconFor(b.id)}
+      />
+    ))
+  }
+</div>
+
+<style>
+  .sample-block-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  @media (min-width: 640px) {
+    .sample-block-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .sample-block-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

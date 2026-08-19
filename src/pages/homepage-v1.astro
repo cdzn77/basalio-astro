@@ -1,0 +1,336 @@
+---
+// homepage-v1.astro — Color-Block Manifesto
+// A Semplice-inspired homepage demo: full-bleed color blocks, massive type,
+// and a gallery of the nine Basalio interaction blocks.
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+import DemoHero from '../components/demos/DemoHero.astro';
+import ColorBlockSection from '../components/demos/ColorBlockSection.astro';
+import BlockGrid from '../components/demos/BlockGrid.astro';
+import EditorialLabel from '../components/demos/EditorialLabel.astro';
+import { blocks } from '../data/blocks';
+import { pricingTiers, FOUNDER_PRICE, POST_CAP_PRICE } from '../data/pricing';
+
+const title = 'Color-Block Manifesto';
+const description = 'A Semplice-inspired homepage demo for Basalio — nine interaction blocks, built native for WordPress portfolios.';
+
+const paidTier = pricingTiers.find((t) => t.id === 'paid');
+const ctaHref = paidTier?.cta?.href || '/early-access';
+const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
+---
+
+<BaseLayout {title} {description} noindex>
+  <Fragment slot="header">
+    <Header />
+  </Fragment>
+
+  <!-- 1. HERO: Acid yellow full-viewport manifesto -->
+  <DemoHero
+    surface="acid"
+    eyebrow="A WordPress plugin for creatives"
+    headline="Framer-quality interactions, native to WordPress."
+    body="Nine curated interaction blocks built only for portfolio and case-study sites. No page builder, no premium theme, no circus."
+    cta={{ label: 'Explore the blocks', href: '/blocks', variant: 'ink' }}
+  />
+
+  <!-- 2. VALUE PROPOSITION: Two-column editorial intro on paper -->
+  <section class="value-section" data-surface="paper">
+    <div class="value-inner">
+      <div class="value-header">
+        <EditorialLabel text="By designers, for designers" color="ink" />
+        <h2 class="value-headline">A foundation for work that needs to move.</h2>
+      </div>
+      <div class="value-columns">
+        <p class="value-lead">Basalio gives portfolio and case-study sites the interactions usually reserved for custom front-end builds — grid reveals, scroll sequences, before/after sliders, and more.</p>
+        <p class="value-body">Every block is native WordPress. No embeds, no iframes, no dependency on a page builder. You drop it in, tune it, and ship. The free blocks stay free. The Pro layer is a one-time founder license for the control center and Hacks vault.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. BLOCK GALLERY: Color-block intro + alternating-surface showcase grid -->
+  <ColorBlockSection
+    surface="alt"
+    number="01"
+    label="The blocks"
+    headline="Nine blocks. One plugin."
+    body="Each block is a self-contained interaction pattern, designed to sit inside any WordPress theme without fighting it."
+  />
+
+  <BlockGrid {blocks} layout="balanced" />
+
+  <!-- 4. SOCIAL PROOF: Ink section with editorial quote -->
+  <section class="social-section" data-surface="ink">
+    <div class="social-inner">
+      <EditorialLabel text="Built for the kind of sites that win awards" color="paper" />
+      <blockquote class="social-quote">
+        <p>“The first WordPress plugin that feels like it was made for design portfolios, not marketing pages.”</p>
+      </blockquote>
+      <p class="social-attribution">— Early design partner</p>
+    </div>
+  </section>
+
+  <!-- 5. FOUNDER PRICING CTA: Acid band with clear pricing and CTA -->
+  <section class="pricing-section" data-surface="acid">
+    <div class="pricing-inner">
+      <div class="pricing-text">
+        <EditorialLabel text="Founder pricing" color="ink" />
+        <h2 class="pricing-headline">Get the Pro control center at founder pricing.</h2>
+        <p class="pricing-body">{paidTier?.leadLine || `Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently — and refundable until the control center ships.`}</p>
+      </div>
+      <div class="pricing-card">
+        <p class="pricing-label">{paidTier?.label || 'FOUNDER · 100 LICENSES'}</p>
+        <p class="pricing-price">{FOUNDER_PRICE}</p>
+        <p class="pricing-billing">one time</p>
+        <p class="pricing-teaser">100 founder licenses at {FOUNDER_PRICE}, then {POST_CAP_PRICE}.</p>
+        <div class="pricing-cta">
+          <Button label={ctaLabel} href={ctaHref} variant="ink" />
+        </div>
+        <p class="pricing-micro">{paidTier?.microLine || '30-day refund, no questions asked.'}</p>
+      </div>
+    </div>
+  </section>
+
+  <Fragment slot="footer">
+    <Footer hideNewsletter={true} />
+  </Fragment>
+</BaseLayout>
+
+<style>
+  /* VALUE PROPOSITION */
+  .value-section {
+    width: 100%;
+    background-color: var(--surface-paper);
+    padding: 120px 40px;
+    box-sizing: border-box;
+  }
+
+  .value-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .value-header {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .value-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-paper);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .value-columns {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .value-lead {
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-paper);
+    margin: 0;
+  }
+
+  .value-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  /* SOCIAL PROOF */
+  .social-section {
+    width: 100%;
+    background-color: var(--surface-ink);
+    padding: 120px 40px;
+    box-sizing: border-box;
+  }
+
+  .social-inner {
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .social-quote {
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-style: normal;
+  }
+
+  .social-quote p {
+    font-family: var(--font-sans);
+    font-size: clamp(32px, 5vw, 64px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-ink);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .social-attribution {
+    font-family: var(--font-mono);
+    font-size: var(--label-size);
+    font-weight: var(--label-weight);
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
+    color: var(--text-on-ink-muted);
+    margin: 0;
+  }
+
+  /* FOUNDER PRICING CTA */
+  .pricing-section {
+    width: 100%;
+    background-color: var(--acid);
+    padding: 120px 40px;
+    box-sizing: border-box;
+  }
+
+  .pricing-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .pricing-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .pricing-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-acid);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .pricing-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-acid-muted);
+    margin: 0;
+    max-width: 560px;
+  }
+
+  .pricing-card {
+    background-color: var(--surface-paper);
+    border-radius: 8px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-sizing: border-box;
+  }
+
+  .pricing-label {
+    font-family: var(--font-mono);
+    font-size: var(--label-size);
+    font-weight: var(--label-weight);
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
+    color: var(--text-on-paper);
+    margin: 0;
+  }
+
+  .pricing-price {
+    font-family: var(--font-sans);
+    font-size: 64px;
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-paper);
+    margin: 0;
+  }
+
+  .pricing-billing {
+    font-size: var(--font-size-body);
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  .pricing-teaser {
+    font-size: var(--font-size-body);
+    font-style: italic;
+    color: var(--text-on-paper-muted);
+    margin: 0 0 12px;
+  }
+
+  .pricing-cta {
+    margin-top: 8px;
+  }
+
+  .pricing-micro {
+    font-size: var(--font-size-14);
+    color: var(--text-on-paper-muted);
+    margin: 8px 0 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .value-inner,
+    .pricing-inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .pricing-card {
+      max-width: 480px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .value-section,
+    .social-section,
+    .pricing-section {
+      padding: 80px 20px;
+    }
+
+    .value-headline,
+    .pricing-headline {
+      font-size: clamp(28px, 8vw, 48px);
+    }
+
+    .social-quote p {
+      font-size: clamp(24px, 7vw, 40px);
+    }
+
+    .pricing-card {
+      padding: 24px;
+    }
+
+    .pricing-price {
+      font-size: 48px;
+    }
+  }
+</style>

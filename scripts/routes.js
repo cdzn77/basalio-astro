@@ -34,6 +34,7 @@ export const PRODUCTION_ROUTES = [
 // Includes PRODUCTION_ROUTES + synthetic probe that tests the 404 error handler
 export const HEADING_ROUTES = [
   ...PRODUCTION_ROUTES,
+  '/homepage-v1',         // demo: color-block manifesto (noindex)
   '/__404-handler-probe'  // synthetic probe: nonexistent path → 404 error handler
 ];
 
@@ -45,6 +46,7 @@ export const ALL_ROUTES = [
   '/early-access',
   '/hacks',
   '/hero-lab',       // internal, noindex, test route
+  '/homepage-v1',    // demo: color-block manifesto (noindex)
   '/pricing',
   '/privacy',
   '/roadmap',

@@ -29,13 +29,12 @@ const mutedMap: Record<Props['surface'], string> = {
   alt: 'var(--text-on-paper-muted)',
 };
 
-const labelColor = surface === 'paper' ? 'ink' : 'ink';
 ---
 
 <section class="case-study-feature" data-surface={surface}>
   <div class="feature-inner">
     <div class="feature-text">
-      <EditorialLabel text={title} color={labelColor} />
+      <EditorialLabel text={title} color="ink" />
       <h2 class="feature-title">{title}</h2>
       <p class="feature-lead">{lead}</p>
     </div>

@@ -1,0 +1,60 @@
+---
+import './sample-styles.css';
+
+interface Props { items: string[] }
+const { items } = Astro.props;
+---
+
+<div class="sample-marquee-wrap">
+  <div class="sample-marquee" aria-hidden="false">
+    {items.map((s) => <span class="sample-marquee-item">{s}</span>)}
+    {items.map((s) => <span class="sample-marquee-item" aria-hidden="true">{s}</span>)}
+  </div>
+</div>
+
+<style>
+  .sample-marquee-wrap {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .sample-marquee-wrap::before,
+  .sample-marquee-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: clamp(24px, 5vw, 72px);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .sample-marquee-wrap::before {
+    left: 0;
+    background: linear-gradient(90deg, var(--surface-ink, #000), transparent);
+  }
+
+  .sample-marquee-wrap::after {
+    right: 0;
+    background: linear-gradient(270deg, var(--surface-ink, #000), transparent);
+  }
+
+  .sample-marquee-item {
+    flex-shrink: 0;
+    white-space: nowrap;
+    color: var(--text-on-ink-muted);
+    font-family: var(--font-display);
+    font-size: clamp(40px, 7vw, 96px);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sample-marquee {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+</style>

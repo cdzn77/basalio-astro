@@ -1,0 +1,117 @@
+---
+import './sample-styles.css';
+
+interface Props {
+  items: { value: number; suffix?: string; label: string }[];
+}
+
+const { items } = Astro.props;
+const desktopCols = Math.min(items.length, 4);
+---
+
+<section class="sample-stats">
+  <div class="sample-stats-grid" style={`--desktop-cols: ${desktopCols};`}>
+    {
+      items.map((item) => {
+        const suffix = item.suffix ?? '';
+        return (
+          <div class="sample-stat">
+            <span
+              class="sample-stat-value"
+              data-target={item.value}
+              data-suffix={suffix}
+              aria-label={`${item.value}${suffix}`}
+            >
+              0{suffix}
+            </span>
+            <p class="sample-stat-label">{item.label}</p>
+          </div>
+        );
+      })
+    }
+  </div>
+</section>
+
+<script>
+  (function () {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const duration = 1600;
+
+    document.querySelectorAll('.sample-stat-value').forEach((el) => {
+      const target = Number((el as HTMLElement).dataset.target || '0');
+      const suffix = (el as HTMLElement).dataset.suffix || '';
+
+      if (reduced) {
+        el.textContent = `${target}${suffix}`;
+        return;
+      }
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (!entries[0].isIntersecting) return;
+          observer.disconnect();
+          const t0 = performance.now();
+
+          const tick = (t: number) => {
+            const p = Math.min((t - t0) / duration, 1);
+            const eased = 1 - Math.pow(1 - p, 4);
+            const current = Math.round(target * eased);
+            el.textContent = `${current}${suffix}`;
+            if (p < 1) requestAnimationFrame(tick);
+          };
+
+          requestAnimationFrame(tick);
+        },
+        { threshold: 0.5 }
+      );
+
+      observer.observe(el);
+    });
+  })();
+</script>
+
+<style>
+  .sample-stats {
+    background-color: var(--surface-alt);
+    padding: 80px 24px;
+  }
+
+  .sample-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 48px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  @media (min-width: 1024px) {
+    .sample-stats-grid {
+      grid-template-columns: repeat(var(--desktop-cols, 4), 1fr);
+    }
+  }
+
+  .sample-stat-value {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: clamp(44px, 6vw, 72px);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    color: var(--text-on-paper);
+  }
+
+  .sample-stat-label {
+    margin: 8px auto 0;
+    max-width: 210px;
+    font-size: 13.5px;
+    line-height: 1.4;
+    color: var(--text-on-paper-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sample-stat-value {
+      transition: none !important;
+    }
+  }
+</style>

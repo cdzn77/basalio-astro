@@ -1,0 +1,171 @@
+---
+// FeatureSection — Semplice-style full-width feature block
+import EditorialLabel from './EditorialLabel.astro';
+
+interface Props {
+  surface: 'acid' | 'ink' | 'paper' | 'alt';
+  number?: string;
+  label?: string;
+  headline: string;
+  body?: string;
+  href?: string;
+  reverse?: boolean;
+}
+
+const { surface, number, label, headline, body, href, reverse = false } = Astro.props;
+
+const bgMap = {
+  acid: 'var(--acid)',
+  ink: 'var(--surface-ink)',
+  paper: 'var(--surface-paper)',
+  alt: 'var(--surface-alt)',
+};
+
+const colorMap = {
+  acid: 'var(--text-on-acid)',
+  ink: 'var(--text-on-ink)',
+  paper: 'var(--text-on-paper)',
+  alt: 'var(--text-on-paper)',
+};
+
+const mutedMap = {
+  acid: 'var(--text-on-acid-muted)',
+  ink: 'var(--text-on-ink-muted)',
+  paper: 'var(--text-on-paper-muted)',
+  alt: 'var(--text-on-paper-muted)',
+};
+
+const labelColor = surface === 'ink' ? 'paper' : 'ink';
+---
+
+<section class="feature-section" data-surface={surface} data-reverse={reverse}>
+  <div class="feature-inner reveal">
+    <div class="feature-text">
+      {number && <span class="feature-number" aria-hidden="true">{number}</span>}
+      {label && <EditorialLabel text={label} color={labelColor} />}
+      <h2 class="feature-headline">{headline}</h2>
+      {body && <p class="feature-body">{body}</p>}
+      {href && (
+        <a href={href} class="feature-cta">
+          <span>Learn more</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      )}
+    </div>
+    <div class="feature-mockup">
+      <slot name="mockup" />
+    </div>
+  </div>
+</section>
+
+<style define:vars={{ bg: bgMap[surface], color: colorMap[surface], muted: mutedMap[surface] }}>
+  .feature-section {
+    width: 100%;
+    background-color: var(--bg);
+    padding: 120px 40px;
+    box-sizing: border-box;
+  }
+
+  .feature-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .feature-section[data-reverse='true'] .feature-inner {
+    direction: rtl;
+  }
+
+  .feature-section[data-reverse='true'] .feature-text,
+  .feature-section[data-reverse='true'] .feature-mockup {
+    direction: ltr;
+  }
+
+  .feature-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .feature-number {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .feature-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--color);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .feature-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--muted);
+    margin: 0;
+    max-width: 520px;
+  }
+
+  .feature-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    padding: 12px 20px;
+    border: 1px solid currentColor;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-14);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .feature-cta:hover {
+    background-color: var(--color);
+    color: var(--bg);
+  }
+
+  .feature-cta svg {
+    transition: transform 0.3s ease;
+  }
+
+  .feature-cta:hover svg {
+    transform: translateX(4px);
+  }
+
+  @media (max-width: 1024px) {
+    .feature-inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .feature-section {
+      padding: 80px 20px;
+    }
+
+    .feature-headline {
+      font-size: clamp(28px, 8vw, 48px);
+    }
+  }
+</style>

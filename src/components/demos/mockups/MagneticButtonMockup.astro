@@ -1,0 +1,77 @@
+---
+// MagneticButtonMockup — button with orbiting dot and scale pulse
+import BrowserFrame from '../BrowserFrame.astro';
+---
+
+<BrowserFrame>
+  <div class="magnetic-button">
+    <button class="mb-btn">
+      <span class="mb-orbit"></span>
+      <span class="mb-label">Get in touch</span>
+    </button>
+  </div>
+</BrowserFrame>
+
+<style>
+  .magnetic-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mb-btn {
+    position: relative;
+    padding: 18px 36px;
+    border: none;
+    border-radius: 100px;
+    background: var(--acid);
+    color: var(--surface-ink);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    animation: magneticPulse 2.4s ease-in-out infinite;
+  }
+
+  .mb-orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    margin-left: -6px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translate(60px, 0);
+    animation: magneticOrbit 2.4s ease-in-out infinite;
+  }
+
+  .mb-label {
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes magneticOrbit {
+    0% { transform: translate(60px, 0); }
+    25% { transform: translate(0, 30px); }
+    50% { transform: translate(-60px, 0); }
+    75% { transform: translate(0, -30px); }
+    100% { transform: translate(60px, 0); }
+  }
+
+  @keyframes magneticPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mb-btn,
+    .mb-orbit {
+      animation: none;
+    }
+  }
+</style>

@@ -7,11 +7,21 @@ interface Props {
 const { label, showReplay = false } = Astro.props;
 ---
 
-<div class="sample-stage sample-stage-grid-lines" data-stage-label={label}>
+<div class="sample-stage sample-stage-grid-lines" data-sample-stage data-stage-label={label}>
   <span class="sample-stage-label">{label}</span>
-  {showReplay && <button class="sample-stage-replay" type="button">↺ Replay</button>}
+  {showReplay && <button class="sample-stage-replay" data-sample-replay-trigger type="button">↺ Replay</button>}
   <slot />
 </div>
+
+<script is:inline>
+  document.querySelectorAll('[data-sample-stage]').forEach(stage => {
+    const btn = stage.querySelector('[data-sample-replay-trigger]');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+      stage.dispatchEvent(new CustomEvent('basalio:replay', { bubbles: true }));
+    });
+  });
+</script>
 
 <style>
   .sample-stage-label {

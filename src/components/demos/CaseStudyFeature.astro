@@ -1,0 +1,129 @@
+---
+// CaseStudyFeature — editorial two-column feature section for a block category
+import type { BlockDemo } from '../data/blocks';
+import EditorialLabel from './EditorialLabel.astro';
+import BlockShowcase from './BlockShowcase.astro';
+
+interface Props {
+  category: 'reveal' | 'sequence' | 'interaction';
+  title: string;
+  lead: string;
+  blocks: BlockDemo[];
+  surface?: 'paper' | 'alt';
+}
+
+const { category, title, lead, blocks, surface = 'paper' } = Astro.props;
+
+const bgMap: Record<Props['surface'], string> = {
+  paper: 'var(--surface-paper)',
+  alt: 'var(--surface-alt)',
+};
+
+const colorMap: Record<Props['surface'], string> = {
+  paper: 'var(--text-on-paper)',
+  alt: 'var(--text-on-paper)',
+};
+
+const mutedMap: Record<Props['surface'], string> = {
+  paper: 'var(--text-on-paper-muted)',
+  alt: 'var(--text-on-paper-muted)',
+};
+
+const labelColor = surface === 'paper' ? 'ink' : 'ink';
+---
+
+<section class="case-study-feature" data-surface={surface}>
+  <div class="feature-inner">
+    <div class="feature-text">
+      <EditorialLabel text={title} color={labelColor} />
+      <h2 class="feature-title">{title}</h2>
+      <p class="feature-lead">{lead}</p>
+    </div>
+    <div class="feature-blocks">
+      {blocks.map((block, index) => (
+        <BlockShowcase block={block} index={index} surface={surface === 'paper' ? 'alt' : 'paper'} demo="static" />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style define:vars={{ bg: bgMap[surface], color: colorMap[surface], muted: mutedMap[surface] }}>
+  .case-study-feature {
+    width: 100%;
+    background-color: var(--bg);
+    padding: 120px 40px;
+    box-sizing: border-box;
+  }
+
+  .feature-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .feature-inner > * {
+    min-width: 0;
+  }
+
+  .feature-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: sticky;
+    top: 120px;
+  }
+
+  .feature-title {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--color);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .feature-lead {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--muted);
+    margin: 0;
+    max-width: 480px;
+  }
+
+  .feature-blocks {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .feature-inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .feature-text {
+      position: static;
+    }
+
+    .feature-blocks {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .case-study-feature {
+      padding: 80px 20px;
+    }
+
+    .feature-title {
+      font-size: clamp(28px, 8vw, 48px);
+    }
+  }
+</style>

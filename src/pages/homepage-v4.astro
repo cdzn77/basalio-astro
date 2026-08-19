@@ -1,0 +1,415 @@
+---
+// homepage-v4.astro — Editorial Case Study
+// A magazine-cover homepage demo: full-bleed abstract hero, category-driven
+// case-study features, and an editorial pull-quote break.
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+import CaseStudyFeature from '../components/demos/CaseStudyFeature.astro';
+import PullQuote from '../components/demos/PullQuote.astro';
+import EditorialLabel from '../components/demos/EditorialLabel.astro';
+import { blocks, blockCategories } from '../data/blocks';
+import { pricingTiers, FOUNDER_PRICE, POST_CAP_PRICE } from '../data/pricing';
+
+const title = 'Editorial Case Study';
+const description =
+  'An editorial case-study homepage demo for Basalio — built for design portfolios and storytelling sites.';
+
+const revealBlocks = blocks.filter((b) => b.category === 'reveal');
+const sequenceBlocks = blocks.filter((b) => b.category === 'sequence');
+const interactionBlocks = blocks.filter((b) => b.category === 'interaction');
+
+const paidTier = pricingTiers.find((t) => t.id === 'paid');
+const ctaHref = paidTier?.cta?.href || '/early-access';
+const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
+
+const issueLabel = 'ISSUE 04';
+const dateLabel = 'AUGUST 2026';
+---
+
+<BaseLayout {title} {description} noindex>
+  <Fragment slot="header">
+    <Header />
+  </Fragment>
+
+  <!-- 1. HERO: magazine-cover full-bleed abstract image with issue/date label -->
+  <section class="editorial-hero" data-surface="ink">
+    <div class="hero-background" aria-hidden="true">
+      <img
+        src="/assets/demos/v4-hero.svg"
+        alt=""
+        class="hero-background-img"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+    <div class="hero-masthead">
+      <span class="hero-issue">{issueLabel}</span>
+      <span class="hero-date" aria-hidden="true">·</span>
+      <span class="hero-date">{dateLabel}</span>
+    </div>
+    <div class="hero-inner">
+      <h1 class="hero-headline">Motion as editorial craft.</h1>
+      <p class="hero-dek">
+        A case-study approach to Basalio's nine interaction blocks — how reveal,
+        sequence, and interaction patterns shape the stories portfolios tell.
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. TWO-COLUMN LEAD PARAGRAPH -->
+  <section class="lead-section" data-surface="paper">
+    <div class="lead-inner">
+      <div class="lead-header">
+        <EditorialLabel text="The brief" color="ink" />
+        <h2 class="lead-title">Every block is a story decision.</h2>
+      </div>
+      <div class="lead-columns">
+        <p class="lead-paragraph">
+          Basalio gives WordPress portfolios the motion language of custom editorial
+          sites. Reveals that pace the read, sequences that hold a narrative, and
+          interactions that invite the visitor to participate.
+        </p>
+        <p class="lead-paragraph">
+          The plugin ships nine self-contained blocks. Each one is designed to drop
+          into any theme, respect reduced-motion preferences, and scale from studio
+          case studies to agency portfolios without a page builder in sight.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. THREE CASE-STUDY FEATURES -->
+  <CaseStudyFeature
+    category="reveal"
+    title={blockCategories.reveal}
+    lead="Reveal blocks control when content enters the frame. They turn scrolling into pacing, letting visitors read the page at the rhythm you set."
+    blocks={revealBlocks}
+    surface="paper"
+  />
+
+  <CaseStudyFeature
+    category="sequence"
+    title={blockCategories.sequence}
+    lead="Sequence blocks build longer narratives from discrete scenes. Pin, progress, and transition between moments without leaving WordPress."
+    blocks={sequenceBlocks}
+    surface="alt"
+  />
+
+  <CaseStudyFeature
+    category="interaction"
+    title={blockCategories.interaction}
+    lead="Interaction blocks add tactile, exploratory moments — draggable sliders, magnetic buttons, and cursors that respond to intent."
+    blocks={interactionBlocks}
+    surface="paper"
+  />
+
+  <!-- 4. PULL QUOTE EDITORIAL BREAK -->
+  <PullQuote
+    quote="The best portfolio sites don't decorate content. They reveal it, sequence it, and let people touch it."
+    attribution="Editorial note"
+    surface="alt"
+  />
+
+  <!-- 5. CREDITS / FOOTER CTA -->
+  <section class="credits-section" data-surface="paper">
+    <div class="credits-inner">
+      <div class="credits-text">
+        <EditorialLabel text="Credits" color="ink" />
+        <p class="credits-line">
+          Built with Basalio — Framer-quality interactions, native to WordPress.
+        </p>
+      </div>
+      <div class="credits-card">
+        <p class="credits-label">{paidTier?.label || 'FOUNDER · 100 LICENSES'}</p>
+        <p class="credits-price">{FOUNDER_PRICE}</p>
+        <p class="credits-billing">one time</p>
+        <p class="credits-teaser">
+          {paidTier?.teaser || `100 founder licenses at ${FOUNDER_PRICE}, then ${POST_CAP_PRICE}.`}
+        </p>
+        <div class="credits-cta">
+          <Button
+            label={ctaLabel}
+            href={ctaHref}
+            variant="ink"
+            fontSize="clamp(10px, 2.5vw, 14px)"
+            letterSpacing="clamp(1.5px, 0.6vw, 2.8px)"
+          />
+        </div>
+        <p class="credits-micro">{paidTier?.microLine || '30-day refund, no questions asked.'}</p>
+      </div>
+    </div>
+  </section>
+
+  <Fragment slot="footer">
+    <Footer hideNewsletter={true} />
+  </Fragment>
+</BaseLayout>
+
+<style>
+  /* HERO */
+  .editorial-hero {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background-color: var(--surface-ink);
+    padding: 120px 40px 80px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero-background-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-masthead {
+    position: absolute;
+    top: 120px;
+    left: 40px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--label-size);
+    font-weight: var(--label-weight);
+    letter-spacing: var(--label-letter-spacing);
+    line-height: var(--label-line-height);
+    text-transform: uppercase;
+    color: var(--text-on-ink);
+  }
+
+  .hero-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(48px, 8vw, 120px);
+    font-weight: var(--font-weight-bold);
+    line-height: 0.95;
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-ink);
+    margin: 0;
+    max-width: 14ch;
+    text-wrap: balance;
+  }
+
+  .hero-dek {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-ink-muted);
+    margin: 0;
+    max-width: 560px;
+  }
+
+  /* LEAD */
+  .lead-section {
+    width: 100%;
+    background-color: var(--surface-paper);
+    padding: 120px 40px;
+    box-sizing: border-box;
+  }
+
+  .lead-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .lead-inner > * {
+    min-width: 0;
+  }
+
+  .lead-header {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .lead-title {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-paper);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .lead-columns {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .lead-paragraph {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-paper);
+    margin: 0;
+  }
+
+  /* CREDITS / CTA */
+  .credits-section {
+    width: 100%;
+    background-color: var(--surface-paper);
+    padding: 120px 40px;
+    box-sizing: border-box;
+  }
+
+  .credits-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .credits-inner > * {
+    min-width: 0;
+  }
+
+  .credits-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .credits-line {
+    font-family: var(--font-sans);
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-relaxed);
+    letter-spacing: -0.01em;
+    color: var(--text-on-paper);
+    margin: 0;
+    max-width: 24ch;
+    text-wrap: balance;
+  }
+
+  .credits-card {
+    background-color: var(--surface-alt);
+    border-radius: 8px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .credits-label {
+    font-family: var(--font-mono);
+    font-size: var(--label-size);
+    font-weight: var(--label-weight);
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
+    color: var(--text-on-paper);
+    margin: 0;
+  }
+
+  .credits-price {
+    font-family: var(--font-sans);
+    font-size: 64px;
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-paper);
+    margin: 0;
+  }
+
+  .credits-billing {
+    font-size: var(--font-size-body);
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  .credits-teaser {
+    font-size: var(--font-size-body);
+    font-style: italic;
+    color: var(--text-on-paper-muted);
+    margin: 0 0 12px;
+  }
+
+  .credits-cta {
+    margin-top: 8px;
+  }
+
+  .credits-micro {
+    font-size: var(--font-size-14);
+    color: var(--text-on-paper-muted);
+    margin: 8px 0 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .lead-inner,
+    .credits-inner {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+
+    .credits-card {
+      max-width: 480px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .editorial-hero,
+    .lead-section,
+    .credits-section {
+      padding: 80px 20px;
+    }
+
+    .hero-masthead {
+      top: 80px;
+      left: 20px;
+    }
+
+    .hero-headline {
+      font-size: clamp(40px, 11vw, 64px);
+    }
+
+    .lead-title {
+      font-size: clamp(28px, 8vw, 48px);
+    }
+
+    .credits-card {
+      padding: 24px;
+    }
+
+    .credits-price {
+      font-size: 48px;
+    }
+  }
+</style>

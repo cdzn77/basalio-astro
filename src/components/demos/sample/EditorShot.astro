@@ -174,15 +174,17 @@ import './sample-styles.css';
 
 <script is:inline>
   (function () {
-    const root = document.currentScript?.closest('[data-sample-editor-shot]');
-    if (!root) return;
-    const targets = root.querySelectorAll('.px-value');
+    const roots = document.querySelectorAll('[data-sample-editor-shot]');
+    if (!roots.length) return;
+
     const vals = [47, 48, 48, 47, 46, 47];
     let i = 0;
+
     setInterval(() => {
       i = (i + 1) % vals.length;
-      targets.forEach((el) => {
-        el.textContent = String(vals[i]);
+      roots.forEach((root) => {
+        const target = root.querySelector('.px-value');
+        if (target) target.textContent = String(vals[i]);
       });
     }, 1400);
   })();

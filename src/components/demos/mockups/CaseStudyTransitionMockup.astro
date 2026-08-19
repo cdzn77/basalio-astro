@@ -1,0 +1,147 @@
+---
+// CaseStudyTransitionMockup — project card expands into detail view
+import BrowserFrame from '../BrowserFrame.astro';
+---
+
+<BrowserFrame>
+  <div class="case-study-transition">
+    <div class="cst-card">
+      <div class="cst-thumb"></div>
+      <div class="cst-meta">
+        <span class="cst-label">Project</span>
+        <span class="cst-title">Monograph</span>
+      </div>
+    </div>
+    <div class="cst-detail">
+      <span class="cst-detail-label">Case Study</span>
+      <span class="cst-detail-title">Monograph Studio</span>
+      <div class="cst-detail-line"></div>
+      <div class="cst-detail-line cst-detail-line-short"></div>
+    </div>
+  </div>
+</BrowserFrame>
+
+<style>
+  .case-study-transition {
+    width: 100%;
+    height: 260px;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cst-card {
+    position: absolute;
+    width: 140px;
+    background: #1a1a1a;
+    border-radius: 8px;
+    overflow: hidden;
+    animation: cstCard 4s ease-in-out infinite;
+  }
+
+  .cst-thumb {
+    height: 100px;
+    background: linear-gradient(135deg, #7b61ff 0%, #ff61d2 100%);
+  }
+
+  .cst-meta {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .cst-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .cst-title {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: var(--font-weight-bold);
+    color: #fff;
+  }
+
+  .cst-detail {
+    position: absolute;
+    width: 100%;
+    max-width: 320px;
+    padding: 24px;
+    opacity: 0;
+    transform: scale(0.95);
+    animation: cstDetail 4s ease-in-out infinite;
+  }
+
+  .cst-detail-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--acid);
+    margin-bottom: 8px;
+  }
+
+  .cst-detail-title {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 28px;
+    font-weight: var(--font-weight-bold);
+    color: #fff;
+    margin-bottom: 16px;
+  }
+
+  .cst-detail-line {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+
+  .cst-detail-line-short {
+    width: 60%;
+  }
+
+  @keyframes cstCard {
+    0%, 25% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    40%, 100% {
+      opacity: 0;
+      transform: scale(1.08);
+    }
+  }
+
+  @keyframes cstDetail {
+    0%, 35% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    50%, 90% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cst-card,
+    .cst-detail {
+      animation: none;
+    }
+
+    .cst-card { opacity: 0; }
+    .cst-detail { opacity: 1; transform: none; }
+  }
+</style>

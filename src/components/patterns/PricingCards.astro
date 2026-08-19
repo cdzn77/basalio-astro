@@ -1,5 +1,5 @@
 ---
-import { pricingTiers } from '../../data/pricing';
+import { pricingTiers, POST_CAP_PRICE } from '../../data/pricing';
 
 interface Props {
   variant: 'compact' | 'full';
@@ -13,7 +13,18 @@ const Tag = level;
 <div class="pricing-wrapper">
   <div class="pricing-cards-grid">
     {pricingTiers.map((tier) => (
-    <div class="pricing-card" class:list={{ featured: tier.featured }}>
+    <div
+      class="pricing-card"
+      class:list={{ featured: tier.featured }}
+      {...(tier.id === 'paid' ? {
+        id: 'basalio-pro-tier',
+        'data-standard-label': 'PRO · CONTROL CENTER',
+        'data-standard-price': POST_CAP_PRICE,
+        'data-standard-teaser': '',
+        'data-standard-lead-line': 'Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently.',
+        'data-standard-cta-label': 'Get Pro'
+      } : {})}
+    >
       {/* Tier Label */}
       <div class="card-header">
         <p class="tier-label">{tier.label}</p>
@@ -79,6 +90,32 @@ const Tag = level;
   </div>
 
 </div>
+
+<script>
+  // Client-side founder-license cap guard.
+  // This is a best-effort, browser-local guard. A real cap requires a backend counter.
+  (function () {
+    const FOUNDER_CAP = 100;
+    const STORAGE_KEY = 'basalio_founder_count';
+    const count = parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
+    if (count < FOUNDER_CAP) return;
+
+    const card = document.getElementById('basalio-pro-tier');
+    if (!card) return;
+
+    const label = card.querySelector('.tier-label');
+    const price = card.querySelector('.price');
+    const teaser = card.querySelector('.teaser');
+    const leadLine = card.querySelector('.lead-line');
+    const cta = card.querySelector('.cta-button');
+
+    if (label) label.textContent = card.dataset.standardLabel || label.textContent;
+    if (price) price.textContent = card.dataset.standardPrice || price.textContent;
+    if (teaser) teaser.style.display = 'none';
+    if (leadLine) leadLine.textContent = card.dataset.standardLeadLine || leadLine.textContent;
+    if (cta) cta.textContent = card.dataset.standardCtaLabel || cta.textContent;
+  })();
+</script>
 
 <style scoped>
   .pricing-wrapper {

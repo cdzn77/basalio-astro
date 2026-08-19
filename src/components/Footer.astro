@@ -63,10 +63,16 @@ const { hideNewsletter = false } = Astro.props;
         <div class="footer-right-section">
           <h2 class="footer-column-label">{footerCopy.newsletterHeading}</h2>
           <p class="footer-newsletter-text">{footerCopy.newsletterBody}</p>
-          <div class="footer-newsletter-form">
-            <input type="email" placeholder="Email" class="footer-email-input" />
-            <button class="footer-subscribe-btn">Subscribe</button>
-          </div>
+          <form name="newsletter" class="footer-newsletter-form" method="POST" action="/welcome" data-netlify="true" data-netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="newsletter" />
+            <div class="honeypot">
+              <label for="bot-field">Don't fill this out if you're human:</label>
+              <input id="bot-field" name="bot-field" type="text" />
+            </div>
+            <label for="footer-email" class="visually-hidden">Email address</label>
+            <input id="footer-email" type="email" name="email" placeholder="Email" class="footer-email-input" required autocomplete="email" />
+            <button type="submit" class="footer-subscribe-btn">Subscribe</button>
+          </form>
         </div>
       )}
     </div>
@@ -257,6 +263,22 @@ const { hideNewsletter = false } = Astro.props;
     gap: 8px;
     margin: 0;
     padding: 0;
+  }
+
+  .honeypot {
+    display: none;
+  }
+
+  .visually-hidden:where(:not(:focus-within, :active)) {
+    position: absolute !important;
+    clip-path: inset(50%) !important;
+    overflow: hidden !important;
+    width: 1px !important;
+    height: 1px !important;
+    margin: -1px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    white-space: nowrap !important;
   }
 
   .footer-email-input {

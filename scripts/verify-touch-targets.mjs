@@ -33,14 +33,14 @@ const APPROVED_INLINE_EXEMPTIONS = [
   // Sub-processor link inside privacy-policy prose; height set by body line-height.
   // Enlarging to 24px would inflate paragraph leading sitewide.
 
-  { route: '/privacy', href: 'https://www.netlify.com/privacy',
+  { route: '/privacy', href: 'https://www.netlify.com/privacy/',
     fullText: 'Netlify privacy policy',
-    ancestor: 'Netlify: Hosts the application. Data is encrypted in transit. Netlify privacy policy' },
+    ancestor: 'Netlify: Hosts this site. Netlify privacy policy' },
   // Same: sub-processor link in running text.
 
-  { route: '/privacy', href: 'https://docs.github.com/en/site-policy',
+  { route: '/privacy', href: 'https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement',
     fullText: 'GitHub privacy policy',
-    ancestor: 'GitHub: Hosts the repository. GitHub privacy policy' },
+    ancestor: 'GitHub: Stores our code. GitHub privacy policy' },
   // Same: sub-processor link in running text.
 
   { route: '/privacy', href: 'mailto:hello@basalio.com',

@@ -340,8 +340,32 @@ const blocks = [
       level="h2"
       surface="paper"
     >
-      <div class="block-icon-container">
-        <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/case-study-transition.svg`]} aria-hidden="true" />
+      <div class="demo-container">
+        <div class="block-icon-container">
+          <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/case-study-transition.svg`]} aria-hidden="true" />
+        </div>
+        <p class="demo-caption">Transition preview between case study states. See it running in WordPress →</p>
+      </div>
+      <div class="block-controls">
+        <h3 class="controls-heading">What you can control</h3>
+        <div class="controls-list">
+          <div class="control-item">
+            <span class="control-name">data-transition</span>
+            <span class="control-desc">Transition style: parallax, fade, or slide (default: parallax)</span>
+          </div>
+          <div class="control-item">
+            <span class="control-name">data-duration</span>
+            <span class="control-desc">Transition duration in milliseconds (default: 800)</span>
+          </div>
+          <div class="control-item">
+            <span class="control-name">data-easing</span>
+            <span class="control-desc">CSS easing function (default: cubic-bezier(0.4, 0, 0.2, 1))</span>
+          </div>
+        </div>
+
+        <div class="accessibility-note">
+          <strong>Accessible:</strong> Case Study Transition respects prefers-reduced-motion and is fully keyboard-navigable. Focusable controls move between studies without trapping the cursor.
+        </div>
       </div>
     </HeaderSplit>
   </section>
@@ -355,8 +379,32 @@ const blocks = [
       level="h2"
       surface="alt"
     >
-      <div class="block-icon-container">
-        <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/text-reveal.svg`]} aria-hidden="true" />
+      <div class="demo-container">
+        <div class="block-icon-container">
+          <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/text-reveal.svg`]} aria-hidden="true" />
+        </div>
+        <p class="demo-caption">Character-by-character text reveal preview. See it running in WordPress →</p>
+      </div>
+      <div class="block-controls">
+        <h3 class="controls-heading">What you can control</h3>
+        <div class="controls-list">
+          <div class="control-item">
+            <span class="control-name">data-mode</span>
+            <span class="control-desc">Reveal mode: character, word, or line (default: character)</span>
+          </div>
+          <div class="control-item">
+            <span class="control-name">data-stagger</span>
+            <span class="control-desc">Delay between each revealed unit in milliseconds (default: 30)</span>
+          </div>
+          <div class="control-item">
+            <span class="control-name">data-trigger</span>
+            <span class="control-desc">Scroll threshold percentage to start reveal (default: 50)</span>
+          </div>
+        </div>
+
+        <div class="accessibility-note">
+          <strong>Accessible:</strong> Text Reveal respects prefers-reduced-motion and is fully keyboard-navigable. Content remains readable when motion is reduced.
+        </div>
       </div>
     </HeaderSplit>
   </section>
@@ -370,8 +418,32 @@ const blocks = [
       level="h2"
       surface="paper"
     >
-      <div class="block-icon-container">
-        <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/magnetic-button.svg`]} aria-hidden="true" />
+      <div class="demo-container">
+        <div class="block-icon-container">
+          <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/magnetic-button.svg`]} aria-hidden="true" />
+        </div>
+        <p class="demo-caption">Magnetic attraction behavior on hover. See it running in WordPress →</p>
+      </div>
+      <div class="block-controls">
+        <h3 class="controls-heading">What you can control</h3>
+        <div class="controls-list">
+          <div class="control-item">
+            <span class="control-name">data-strength</span>
+            <span class="control-desc">Magnetic pull strength as a decimal multiplier (default: 0.5)</span>
+          </div>
+          <div class="control-item">
+            <span class="control-name">data-radius</span>
+            <span class="control-desc">Activation radius around the button in pixels (default: 120)</span>
+          </div>
+          <div class="control-item">
+            <span class="control-name">data-easing</span>
+            <span class="control-desc">CSS easing function for the return animation (default: cubic-bezier(0.34, 1.56, 0.64, 1))</span>
+          </div>
+        </div>
+
+        <div class="accessibility-note">
+          <strong>Accessible:</strong> Magnetic Button respects prefers-reduced-motion and is fully keyboard-operable. The effect is disabled for pointer-coarse devices and reduced-motion users.
+        </div>
       </div>
     </HeaderSplit>
   </section>
@@ -385,8 +457,32 @@ const blocks = [
       level="h2"
       surface="alt"
     >
-      <div class="block-icon-container">
-        <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/filterable-grid.svg`]} aria-hidden="true" />
+      <div class="demo-container">
+        <div class="block-icon-container">
+          <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/filterable-grid.svg`]} aria-hidden="true" />
+        </div>
+        <p class="demo-caption">Filterable grid layout with animated category transitions. See it running in WordPress →</p>
+      </div>
+      <div class="block-controls">
+        <h3 class="controls-heading">What you can control</h3>
+        <div class="controls-list">
+          <div class="control-item">
+            <span class="control-name">data-filter</span>
+            <span class="control-desc">Default active filter category slug (default: all)</span>
+          </div>
+          <div class="control-item">
+            <span class="control-name">data-duration</span>
+            <span class="control-desc">Layout animation duration in milliseconds (default: 500)</span>
+          </div>
+          <div class="control-item">
+            <span class="control-name">data-layout</span>
+            <span class="control-desc">Grid layout mode: masonry or equal (default: masonry)</span>
+          </div>
+        </div>
+
+        <div class="accessibility-note">
+          <strong>Accessible:</strong> Filterable Grid respects prefers-reduced-motion and is fully keyboard-operable. Filter buttons expose active state to screen readers.
+        </div>
       </div>
     </HeaderSplit>
   </section>
@@ -400,8 +496,32 @@ const blocks = [
       level="h2"
       surface="paper"
     >
-      <div class="block-icon-container">
-        <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/custom-cursor.svg`]} aria-hidden="true" />
+      <div class="demo-container">
+        <div class="block-icon-container">
+          <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/custom-cursor.svg`]} aria-hidden="true" />
+        </div>
+        <p class="demo-caption">Custom cursor following pointer movement within the demo area. See it running in WordPress →</p>
+      </div>
+      <div class="block-controls">
+        <h3 class="controls-heading">What you can control</h3>
+        <div class="controls-list">
+          <div class="control-item">
+            <span class="control-name">data-size</span>
+            <span class="control-desc">Cursor diameter in pixels (default: 48)</span>
+          </div>
+          <div class="control-item">
+            <span class="control-name">data-color</span>
+            <span class="control-desc">Cursor color as CSS custom property or hex value (default: var(--acid))</span>
+          </div>
+          <div class="control-item">
+            <span class="control-name">data-blend</span>
+            <span class="control-desc">Blend mode for cursor overlays (default: difference)</span>
+          </div>
+        </div>
+
+        <div class="accessibility-note">
+          <strong>Accessible:</strong> Custom Cursor respects prefers-reduced-motion and does not replace the native cursor for keyboard users. Pointer events remain accessible on all interactive elements.
+        </div>
       </div>
     </HeaderSplit>
   </section>
@@ -415,8 +535,32 @@ const blocks = [
       level="h2"
       surface="alt"
     >
-      <div class="block-icon-container">
-        <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/pinned-scroll.svg`]} aria-hidden="true" />
+      <div class="demo-container">
+        <div class="block-icon-container">
+          <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/pinned-scroll.svg`]} aria-hidden="true" />
+        </div>
+        <p class="demo-caption">Pinned scroll narrative with locked viewport moments. See it running in WordPress →</p>
+      </div>
+      <div class="block-controls">
+        <h3 class="controls-heading">What you can control</h3>
+        <div class="controls-list">
+          <div class="control-item">
+            <span class="control-name">data-pin-start</span>
+            <span class="control-desc">Scroll progress percentage to start pinning (default: 20)</span>
+          </div>
+          <div class="control-item">
+            <span class="control-name">data-pin-end</span>
+            <span class="control-desc">Scroll progress percentage to release the pin (default: 80)</span>
+          </div>
+          <div class="control-item">
+            <span class="control-name">data-snap</span>
+            <span class="control-desc">Enable or disable snap-to-step behavior (default: false)</span>
+          </div>
+        </div>
+
+        <div class="accessibility-note">
+          <strong>Accessible:</strong> Pinned Scroll respects prefers-reduced-motion and is fully keyboard-navigable. Pinned panels do not trap focus or block content access.
+        </div>
       </div>
     </HeaderSplit>
   </section>

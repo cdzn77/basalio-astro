@@ -1,7 +1,7 @@
 {
   "name": "basalio-astro",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.5.1",
   "engines": {
     "node": ">=22.12.0"
   },
@@ -16,9 +16,7 @@
     "pre-deploy": "bash scripts/pre-deploy.sh"
   },
   "dependencies": {
-    "astro": "^7.0.7",
-    "gsap": "^3.15.0",
-    "wcag-contrast": "^3.0.0"
+    "astro": "^7.0.7"
   },
   "devDependencies": {
     "playwright": "^1.62.1"

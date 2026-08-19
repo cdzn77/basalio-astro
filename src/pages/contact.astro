@@ -27,29 +27,38 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     surface="paper"
   >
     <div class="contact-form-wrapper">
-      <form class="contact-form" id="contact-form">
+      <form name="contact" class="contact-form" id="contact-form" method="POST" action="/welcome" data-netlify="true" data-netlify-honeypot="bot-field">
+        <!-- Netlify form detection -->
+        <input type="hidden" name="form-name" value="contact" />
+
+        <!-- Honeypot field (hidden) -->
+        <div class="honeypot">
+          <label for="bot-field">Don't fill this out if you're human:</label>
+          <input id="bot-field" name="bot-field" type="text" />
+        </div>
+
         <!-- Name Field -->
         <div class="form-group">
-          <label class="form-label">Name</label>
-          <input type="text" name="name" placeholder="Your name" class="form-input" required />
+          <label for="contact-name" class="form-label">Name</label>
+          <input id="contact-name" type="text" name="name" placeholder="Your name" class="form-input" required autocomplete="name" />
         </div>
 
         <!-- Email Field -->
         <div class="form-group">
-          <label class="form-label">Email</label>
-          <input type="email" name="email" placeholder="you@company.com" class="form-input" required />
+          <label for="contact-email" class="form-label">Email</label>
+          <input id="contact-email" type="email" name="email" placeholder="you@company.com" class="form-input" required autocomplete="email" />
         </div>
 
         <!-- Company Field (Optional) -->
         <div class="form-group">
-          <label class="form-label">Company (optional)</label>
-          <input type="text" name="company" placeholder="Your company" class="form-input" />
+          <label for="contact-company" class="form-label">Company (optional)</label>
+          <input id="contact-company" type="text" name="company" placeholder="Your company" class="form-input" autocomplete="organization" />
         </div>
 
         <!-- Inquiry Type -->
         <div class="form-group">
-          <label class="form-label">Inquiry Type</label>
-          <select name="inquiry-type" class="form-input" required>
+          <label for="contact-inquiry-type" class="form-label">Inquiry Type</label>
+          <select id="contact-inquiry-type" name="inquiry-type" class="form-input" required>
             <option value="">Select a type...</option>
             <option value="sales">Sales inquiry</option>
             <option value="support">Technical support</option>
@@ -62,8 +71,8 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
 
         <!-- Message Field -->
         <div class="form-group">
-          <label class="form-label">Message</label>
-          <textarea name="message" placeholder="Tell us what's on your mind..." class="form-textarea" required></textarea>
+          <label for="contact-message" class="form-label">Message</label>
+          <textarea id="contact-message" name="message" placeholder="Tell us what's on your mind..." class="form-textarea" required></textarea>
         </div>
 
         <!-- Submit Button -->
@@ -113,6 +122,10 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     display: flex;
     flex-direction: column;
     gap: 24px;
+  }
+
+  .honeypot {
+    display: none;
   }
 
   .form-group {
@@ -327,28 +340,3 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     }
   }
 </style>
-
-<script>
-  // Form submission handler
-  const form = document.getElementById('contact-form');
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const formData = new FormData(form);
-      const data = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        company: formData.get('company'),
-        inquiryType: formData.get('inquiry-type'),
-        message: formData.get('message'),
-        submittedAt: new Date().toISOString()
-      };
-
-      // For now, just log and show success
-      console.log('Form submission:', data);
-      alert('Thank you for your message! We will get back to you shortly.');
-      form.reset();
-    });
-  }
-</script>

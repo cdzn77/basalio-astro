@@ -318,3 +318,20 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
     }
   }
 </style>
+
+<script>
+  // Best-effort founder-license counter (browser-local). A real cap requires a backend.
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('form[name="early-access"]');
+    if (!form) return;
+
+    form.addEventListener('submit', () => {
+      const intent = form.querySelector('input[name="intent"]:checked');
+      if (intent && intent.value.includes('founder license')) {
+        const STORAGE_KEY = 'basalio_founder_count';
+        const current = parseInt(localStorage.getItem(STORAGE_KEY) || '0', 10);
+        localStorage.setItem(STORAGE_KEY, String(current + 1));
+      }
+    });
+  });
+</script>

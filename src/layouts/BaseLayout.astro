@@ -23,6 +23,13 @@ const {
   headerType = 'split',
   noindex = false
 } = Astro.props;
+
+const siteOrigin = 'https://basalio.com';
+const canonical = new URL(Astro.url.pathname, Astro.site || siteOrigin);
+const pageTitle = title && title !== 'Basalio' && !title.includes('Basalio')
+  ? `${title} | Basalio`
+  : title;
+const ogImage = new URL('/assets/basalio-hero-poster.webp', Astro.site || siteOrigin);
 ---
 
 <!DOCTYPE html>
@@ -30,9 +37,23 @@ const {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{title}</title>
+  <title>{pageTitle}</title>
   <meta name="description" content={description} />
   {noindex && <meta name="robots" content="noindex" />}
+  <link rel="canonical" href={canonical.href} />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical.href} />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Basalio" />
+  <meta property="og:image" content={ogImage.href} />
+  <meta property="og:image:alt" content="Basalio - WordPress Portfolio Blocks" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={pageTitle} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage.href} />
 
   <!-- Fonts -->
   <link rel="preload" as="font" type="font/woff2" href="/fonts/instrument-sans-var.woff2" crossorigin />

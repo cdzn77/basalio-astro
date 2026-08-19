@@ -1,0 +1,67 @@
+---
+// BrowserFrame — minimal dark browser chrome for mockups
+---
+
+<div class="browser-frame" aria-hidden="true">
+  <div class="browser-chrome">
+    <span class="browser-dot"></span>
+    <span class="browser-dot"></span>
+    <span class="browser-dot"></span>
+  </div>
+  <div class="browser-content">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .browser-frame {
+    width: 100%;
+    background: #0d0d0d;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .browser-chrome {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .browser-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .browser-dot:first-child {
+    background: #ff5f57;
+  }
+
+  .browser-dot:nth-child(2) {
+    background: #febc2e;
+  }
+
+  .browser-dot:nth-child(3) {
+    background: #28c840;
+  }
+
+  .browser-content {
+    padding: 24px;
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    .browser-content {
+      min-height: 220px;
+      padding: 16px;
+    }
+  }
+</style>

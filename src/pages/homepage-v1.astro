@@ -40,7 +40,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
   <section class="value-section" data-surface="paper">
     <div class="value-inner">
       <div class="value-header">
-        <EditorialLabel text="By designers, for designers" color="ink" />
+        <EditorialLabel text="By designers, for designers" color="ink" wrap />
         <h2 class="value-headline">A foundation for work that needs to move.</h2>
       </div>
       <div class="value-columns">
@@ -64,7 +64,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
   <!-- 4. SOCIAL PROOF: Ink section with editorial quote -->
   <section class="social-section" data-surface="ink">
     <div class="social-inner">
-      <EditorialLabel text="Built for the kind of sites that win awards" color="paper" />
+      <EditorialLabel text="Built for the kind of sites that win awards" color="paper" wrap />
       <blockquote class="social-quote">
         <p>“The first WordPress plugin that feels like it was made for design portfolios, not marketing pages.”</p>
       </blockquote>
@@ -86,7 +86,13 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
         <p class="pricing-billing">one time</p>
         <p class="pricing-teaser">100 founder licenses at {FOUNDER_PRICE}, then {POST_CAP_PRICE}.</p>
         <div class="pricing-cta">
-          <Button label={ctaLabel} href={ctaHref} variant="ink" />
+          <Button
+            label={ctaLabel}
+            href={ctaHref}
+            variant="ink"
+            fontSize="clamp(10px, 2.5vw, 14px)"
+            letterSpacing="clamp(1.5px, 0.6vw, 2.8px)"
+          />
         </div>
         <p class="pricing-micro">{paidTier?.microLine || '30-day refund, no questions asked.'}</p>
       </div>
@@ -115,6 +121,10 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: start;
+  }
+
+  .value-inner > * {
+    min-width: 0;
   }
 
   .value-header {
@@ -218,6 +228,10 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     align-items: center;
   }
 
+  .pricing-inner > * {
+    min-width: 0;
+  }
+
   .pricing-text {
     display: flex;
     flex-direction: column;
@@ -251,6 +265,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     flex-direction: column;
     gap: 12px;
     box-sizing: border-box;
+    overflow: hidden;
   }
 
   .pricing-label {

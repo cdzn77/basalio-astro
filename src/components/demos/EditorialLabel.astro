@@ -4,9 +4,10 @@ interface Props {
   text: string;
   showLine?: boolean;
   color?: 'ink' | 'acid' | 'paper';
+  wrap?: boolean;
 }
 
-const { text, showLine = false, color = 'ink' } = Astro.props;
+const { text, showLine = false, color = 'ink', wrap = false } = Astro.props;
 
 const colorMap = {
   ink: 'var(--surface-ink)',
@@ -15,7 +16,7 @@ const colorMap = {
 };
 ---
 
-<div class="editorial-label">
+<div class="editorial-label" data-wrap={wrap}>
   {showLine && <span class="label-line" aria-hidden="true" />}
   <span class="label-text">{text}</span>
 </div>
@@ -36,6 +37,10 @@ const colorMap = {
     text-transform: uppercase;
     color: var(--labelColor);
     white-space: nowrap;
+  }
+
+  .editorial-label[data-wrap='true'] .label-text {
+    white-space: normal;
   }
 
   .label-line {

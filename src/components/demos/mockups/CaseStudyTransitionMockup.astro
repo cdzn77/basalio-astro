@@ -36,7 +36,7 @@ import BrowserFrame from '../BrowserFrame.astro';
   .cst-card {
     position: absolute;
     width: 140px;
-    background: #1a1a1a;
+    background: var(--surface-ink);
     border-radius: 8px;
     overflow: hidden;
     animation: cstCard 4s ease-in-out infinite;
@@ -44,7 +44,7 @@ import BrowserFrame from '../BrowserFrame.astro';
 
   .cst-thumb {
     height: 100px;
-    background: linear-gradient(135deg, #7b61ff 0%, #ff61d2 100%);
+    background: linear-gradient(135deg, var(--acid) 0%, var(--surface-paper) 100%);
   }
 
   .cst-meta {
@@ -66,7 +66,7 @@ import BrowserFrame from '../BrowserFrame.astro';
     font-family: var(--font-sans);
     font-size: 16px;
     font-weight: var(--font-weight-bold);
-    color: #fff;
+    color: var(--surface-paper);
   }
 
   .cst-detail {
@@ -94,7 +94,7 @@ import BrowserFrame from '../BrowserFrame.astro';
     font-family: var(--font-sans);
     font-size: 28px;
     font-weight: var(--font-weight-bold);
-    color: #fff;
+    color: var(--surface-paper);
     margin-bottom: 16px;
   }
 

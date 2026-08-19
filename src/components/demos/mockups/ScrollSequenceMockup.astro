@@ -36,21 +36,21 @@ import BrowserFrame from '../BrowserFrame.astro';
     flex-shrink: 0;
   }
 
-  .ss-frame-1 { background: linear-gradient(135deg, #ff5f57 0%, #febc2e 100%); }
-  .ss-frame-2 { background: linear-gradient(135deg, #28c840 0%, #00d2ff 100%); }
-  .ss-frame-3 { background: linear-gradient(135deg, #7b61ff 0%, #ff61d2 100%); }
-  .ss-frame-4 { background: linear-gradient(135deg, #febc2e 0%, #ff5f57 100%); }
+  .ss-frame-1 { background: linear-gradient(135deg, var(--acid) 0%, var(--surface-paper) 100%); }
+  .ss-frame-2 { background: linear-gradient(135deg, var(--surface-paper) 0%, var(--surface-alt) 100%); }
+  .ss-frame-3 { background: linear-gradient(135deg, var(--acid) 0%, var(--surface-ink) 100%); }
+  .ss-frame-4 { background: linear-gradient(135deg, var(--surface-alt) 0%, var(--acid) 100%); }
 
   @keyframes scrollSequence {
     0%, 20% { transform: translateY(0); }
-    33%, 53% { transform: translateY(calc(-100% / 4 - 12px)); }
-    66%, 86% { transform: translateY(calc(-100% / 2 - 24px)); }
-    100% { transform: translateY(calc(-100% * 3 / 4 - 36px)); }
+    33%, 53% { transform: translateY(-232px); }
+    66%, 86% { transform: translateY(-464px); }
+    100% { transform: translateY(-696px); }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .ss-strip {
-      animation: none;
-    }
+    .scroll-sequence { height: auto; }
+    .ss-strip { animation: none; }
+    .ss-frame { height: 80px; }
   }
 </style>

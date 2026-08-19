@@ -32,7 +32,7 @@ import BrowserFrame from '../BrowserFrame.astro';
   }
 
   .ba-before {
-    background: #1a1a1a;
+    background: var(--surface-ink);
   }
 
   .ba-before::after {
@@ -73,7 +73,7 @@ import BrowserFrame from '../BrowserFrame.astro';
     bottom: 0;
     left: 50%;
     width: 2px;
-    background: #fff;
+    background: var(--surface-paper);
     animation: beforeAfterDivider 3s ease-in-out infinite alternate;
   }
 
@@ -84,12 +84,12 @@ import BrowserFrame from '../BrowserFrame.astro';
     transform: translate(-50%, -50%);
     width: 36px;
     height: 36px;
-    background: #fff;
+    background: var(--surface-paper);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #0d0d0d;
+    color: var(--surface-ink);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
 

@@ -1,0 +1,56 @@
+---
+// ScrollSequenceMockup — frame strip scrolls upward in a loop
+import BrowserFrame from '../BrowserFrame.astro';
+---
+
+<BrowserFrame>
+  <div class="scroll-sequence">
+    <div class="ss-strip">
+      <div class="ss-frame ss-frame-1"></div>
+      <div class="ss-frame ss-frame-2"></div>
+      <div class="ss-frame ss-frame-3"></div>
+      <div class="ss-frame ss-frame-4"></div>
+    </div>
+  </div>
+</BrowserFrame>
+
+<style>
+  .scroll-sequence {
+    width: 100%;
+    height: 260px;
+    overflow: hidden;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .ss-strip {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: scrollSequence 4s ease-in-out infinite;
+  }
+
+  .ss-frame {
+    height: 220px;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .ss-frame-1 { background: linear-gradient(135deg, #ff5f57 0%, #febc2e 100%); }
+  .ss-frame-2 { background: linear-gradient(135deg, #28c840 0%, #00d2ff 100%); }
+  .ss-frame-3 { background: linear-gradient(135deg, #7b61ff 0%, #ff61d2 100%); }
+  .ss-frame-4 { background: linear-gradient(135deg, #febc2e 0%, #ff5f57 100%); }
+
+  @keyframes scrollSequence {
+    0%, 20% { transform: translateY(0); }
+    33%, 53% { transform: translateY(calc(-100% / 4 - 12px)); }
+    66%, 86% { transform: translateY(calc(-100% / 2 - 24px)); }
+    100% { transform: translateY(calc(-100% * 3 / 4 - 36px)); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ss-strip {
+      animation: none;
+    }
+  }
+</style>

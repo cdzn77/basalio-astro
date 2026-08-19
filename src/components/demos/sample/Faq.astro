@@ -1,0 +1,142 @@
+---
+import './sample-styles.css';
+
+interface Props {
+  items: { question: string; answer: string }[];
+  id?: string;
+}
+
+const { items, id } = Astro.props;
+---
+
+<div class="sample-faq" id={id} data-sample-faq>
+  {
+    items.map((item, i) => {
+      const isOpen = i === 0;
+      return (
+        <div class={`sample-acc-item ${isOpen ? 'open' : ''}`} data-sample-acc-item>
+          <button
+            class="sample-acc-head"
+            type="button"
+            aria-expanded={isOpen ? 'true' : 'false'}
+            data-sample-acc-trigger
+          >
+            <span class="sample-acc-question">{item.question}</span>
+            <span class="sample-acc-icon" aria-hidden="true">+</span>
+          </button>
+          <div class={`sample-acc-body ${isOpen ? 'open' : ''}`} data-sample-acc-body>
+            <div>
+              <p class="sample-acc-answer">{item.answer}</p>
+            </div>
+          </div>
+        </div>
+      );
+    })
+  }
+</div>
+
+<script>
+  (function () {
+    document.querySelectorAll('[data-sample-faq]').forEach((faq) => {
+      if ((faq as HTMLElement).dataset.sampleFaqWired === 'true') return;
+      (faq as HTMLElement).dataset.sampleFaqWired = 'true';
+
+      faq.querySelectorAll('[data-sample-acc-trigger]').forEach((trigger) => {
+        trigger.addEventListener('click', () => {
+          const item = trigger.closest('[data-sample-acc-item]') as HTMLElement;
+          const body = item.querySelector('[data-sample-acc-body]') as HTMLElement;
+          const isOpen = item.classList.contains('open');
+
+          // Close all siblings in this instance.
+          faq.querySelectorAll('[data-sample-acc-item]').forEach((sibling) => {
+            const sibBody = sibling.querySelector('[data-sample-acc-body]') as HTMLElement;
+            const sibTrigger = sibling.querySelector('[data-sample-acc-trigger]') as HTMLElement;
+            sibling.classList.remove('open');
+            sibBody.classList.remove('open');
+            sibTrigger.setAttribute('aria-expanded', 'false');
+          });
+
+          // Toggle the clicked item: open if it was closed, keep closed if it was open.
+          if (!isOpen) {
+            item.classList.add('open');
+            body.classList.add('open');
+            trigger.setAttribute('aria-expanded', 'true');
+          }
+        });
+      });
+    });
+  })();
+</script>
+
+<style>
+  .sample-faq {
+    background: var(--surface-paper);
+    border-top: 1px solid var(--overlay-dark-08);
+  }
+
+  .sample-acc-item {
+    border-bottom: 1px solid var(--overlay-dark-08);
+  }
+
+  .sample-acc-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    width: 100%;
+    padding: 20px 0;
+    text-align: left;
+    color: var(--text-on-paper);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .sample-acc-head:hover .sample-acc-question,
+  .sample-acc-head:focus-visible .sample-acc-question {
+    color: var(--text-on-paper);
+  }
+
+  .sample-acc-head:focus-visible {
+    outline: 2px solid var(--acid);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .sample-acc-question {
+    font-size: clamp(16px, 1.25vw, 18px);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.35;
+    color: var(--text-on-paper);
+    opacity: 0.85;
+    transition: opacity 0.3s ease, color 0.3s ease;
+  }
+
+  .sample-acc-item.open .sample-acc-question,
+  .sample-acc-head:hover .sample-acc-question {
+    opacity: 1;
+  }
+
+  .sample-acc-icon {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    line-height: 1;
+    color: var(--text-on-paper);
+    opacity: 0.7;
+    border: 1px solid var(--overlay-dark-15);
+    border-radius: 50%;
+  }
+
+  .sample-acc-answer {
+    max-width: 640px;
+    padding: 0 48px 24px 0;
+    margin: 0;
+    font-size: 14.5px;
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-paper-muted);
+  }
+</style>

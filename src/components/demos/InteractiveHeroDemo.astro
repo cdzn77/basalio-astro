@@ -11,9 +11,9 @@ const { type } = Astro.props;
 <div class="interactive-hero" data-interactive-hero={type}>
   {
     type === 'magnetic' ? (
-      <button class="magnetic-target" type="button" aria-label="Magnetic button demo">
+      <div class="magnetic-target" role="img" aria-label="Magnetic button demo">
         <span class="magnetic-label">Explore</span>
-      </button>
+      </div>
     ) : (
       <>
         <div class="cursor-target">Move</div>
@@ -94,8 +94,9 @@ const { type } = Astro.props;
   }
 
   .magnetic-target {
-    appearance: none;
-    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background-color: var(--acid);
     color: var(--text-on-acid);
     border-radius: 999px;
@@ -106,13 +107,9 @@ const { type } = Astro.props;
     font-weight: var(--font-weight-medium);
     letter-spacing: 2.8px;
     text-transform: uppercase;
-    cursor: pointer;
+    user-select: none;
     transition: transform 0.15s ease-out;
     will-change: transform;
-  }
-
-  .magnetic-target:hover {
-    opacity: 0.9;
   }
 
   .cursor-target {

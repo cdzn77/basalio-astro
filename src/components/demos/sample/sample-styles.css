@@ -79,6 +79,8 @@
   background: var(--surface-ink);
   border: 1px solid var(--overlay-light-08);
   border-radius: 18px;
+  height: 100%;
+  min-height: clamp(220px, 32vw, 360px);
 }
 
 .sample-stage-grid-lines {

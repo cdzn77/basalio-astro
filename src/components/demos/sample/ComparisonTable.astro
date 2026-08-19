@@ -1,0 +1,259 @@
+---
+import SampleIcons from './SampleIcons.astro';
+
+interface ComparisonRow {
+  label: string;
+  basalio: boolean | 'partial';
+  pageBuilders: boolean | 'partial';
+  framer: boolean | 'partial';
+}
+
+const comparisonData: ComparisonRow[] = [
+  { label: 'Portfolio-specific interactions', basalio: true, pageBuilders: false, framer: true },
+  { label: 'Runs natively in WordPress', basalio: true, pageBuilders: true, framer: false },
+  { label: 'No page-builder lock-in', basalio: true, pageBuilders: false, framer: true },
+  { label: 'Keyboard-operable by default', basalio: true, pageBuilders: false, framer: false },
+  { label: 'Reduced-motion aware by default', basalio: true, pageBuilders: false, framer: false },
+  { label: 'One payment, no subscription', basalio: true, pageBuilders: false, framer: false },
+  { label: 'GPL — the code stays yours', basalio: true, pageBuilders: false, framer: false },
+];
+---
+
+<section class="comparison-section">
+  <div class="comparison-container">
+    <div class="comparison-header">
+      <p class="sample-mono-label comparison-eyebrow">The honest comparison</p>
+      <h2 class="sample-display comparison-title">Nothing you&rsquo;d need Framer for.</h2>
+    </div>
+
+    <div class="sample-glass comparison-panel">
+      <div class="comparison-scroll">
+        <table class="comparison-table">
+          <thead>
+            <tr class="comparison-row-head">
+              <th class="comparison-cell-head comparison-cell-capability" scope="col">Capability</th>
+              <th class="comparison-cell-head comparison-cell-brand" scope="col">
+                <span class="comparison-brand">
+                  <span class="comparison-badge">B.</span>
+                  Basalio
+                </span>
+              </th>
+              <th class="comparison-cell-head comparison-cell-muted" scope="col">Page builders</th>
+              <th class="comparison-cell-head comparison-cell-muted" scope="col">Framer</th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparisonData.map((row, index) => (
+              <tr class={`comparison-row ${index % 2 === 1 ? 'comparison-row-alt' : ''}`}>
+                <td class="comparison-cell comparison-cell-label">{row.label}</td>
+                <td class="comparison-cell comparison-cell-value">
+                  {row.basalio === true ? (
+                    <SampleIcons name="check" size={18} class="comparison-check" />
+                  ) : row.basalio === 'partial' ? (
+                    <span class="comparison-partial">Partial</span>
+                  ) : (
+                    <span class="comparison-dash" aria-hidden="true">—</span>
+                  )}
+                </td>
+                <td class="comparison-cell comparison-cell-value">
+                  {row.pageBuilders === true ? (
+                    <SampleIcons name="check" size={18} class="comparison-check" />
+                  ) : row.pageBuilders === 'partial' ? (
+                    <span class="comparison-partial">Partial</span>
+                  ) : (
+                    <span class="comparison-dash" aria-hidden="true">—</span>
+                  )}
+                </td>
+                <td class="comparison-cell comparison-cell-value">
+                  {row.framer === true ? (
+                    <SampleIcons name="check" size={18} class="comparison-check" />
+                  ) : row.framer === 'partial' ? (
+                    <span class="comparison-partial">Partial</span>
+                  ) : (
+                    <span class="comparison-dash" aria-hidden="true">—</span>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .comparison-section {
+    padding-top: 96px;
+    padding-bottom: 96px;
+    border-top: 1px solid var(--overlay-light-08);
+  }
+
+  @media (min-width: 640px) {
+    .comparison-section {
+      padding-top: 128px;
+      padding-bottom: 128px;
+    }
+  }
+
+  .comparison-container {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  @media (min-width: 640px) {
+    .comparison-container {
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+  }
+
+  .comparison-header {
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .comparison-eyebrow {
+    color: var(--acid);
+  }
+
+  .comparison-title {
+    margin-top: 16px;
+    font-size: clamp(28px, 4vw, 44px);
+    color: var(--text-on-ink);
+  }
+
+  .comparison-panel {
+    margin-top: 48px;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .comparison-scroll {
+    overflow-x: auto;
+  }
+
+  .comparison-table {
+    width: 100%;
+    min-width: 560px;
+    text-align: left;
+    border-collapse: collapse;
+  }
+
+  .comparison-row-head {
+    border-bottom: 1px solid var(--overlay-light-10);
+  }
+
+  .comparison-cell-head {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: 13px;
+    font-weight: var(--font-weight-medium);
+    line-height: 1.3;
+  }
+
+  .comparison-cell-capability {
+    padding-left: 20px;
+    padding-right: 20px;
+    color: var(--overlay-light-40);
+  }
+
+  @media (min-width: 640px) {
+    .comparison-cell-capability {
+      padding-left: 28px;
+      padding-right: 28px;
+    }
+  }
+
+  .comparison-cell-brand {
+    padding-left: 16px;
+    padding-right: 16px;
+    color: var(--text-on-ink);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .comparison-cell-muted {
+    padding-left: 16px;
+    padding-right: 16px;
+    color: var(--text-on-ink-muted);
+  }
+
+  .comparison-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .comparison-badge {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    background: var(--acid);
+    color: var(--text-on-acid);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0;
+    line-height: 1;
+  }
+
+  .comparison-row {
+    border-bottom: 1px solid var(--overlay-light-05);
+  }
+
+  .comparison-row:last-child {
+    border-bottom: 0;
+  }
+
+  .comparison-row-alt {
+    background: var(--overlay-light-05);
+  }
+
+  .comparison-cell {
+    padding-top: 14px;
+    padding-bottom: 14px;
+    font-size: 13.5px;
+    line-height: 1.4;
+  }
+
+  .comparison-cell-label {
+    padding-left: 20px;
+    padding-right: 20px;
+    color: var(--overlay-light-50);
+  }
+
+  @media (min-width: 640px) {
+    .comparison-cell-label {
+      padding-left: 28px;
+      padding-right: 28px;
+    }
+  }
+
+  .comparison-cell-value {
+    padding-left: 16px;
+    padding-right: 16px;
+    color: var(--text-on-ink);
+  }
+
+  .comparison-check {
+    display: block;
+    color: var(--acid);
+  }
+
+  .comparison-partial {
+    color: var(--text-on-ink-muted);
+    font-size: 12px;
+  }
+
+  .comparison-dash {
+    color: var(--overlay-light-35);
+  }
+</style>

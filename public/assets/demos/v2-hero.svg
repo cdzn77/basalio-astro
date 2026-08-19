@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" fill="none">
+  <rect width="1440" height="900" fill="#1C1917"/>
+  <g stroke="#EDFF10" stroke-width="2">
+    <line x1="720" y1="450" x2="120" y2="120"/>
+    <line x1="720" y1="450" x2="200" y2="80"/>
+    <line x1="720" y1="450" x2="280" y2="60"/>
+    <line x1="720" y1="450" x2="360" y2="50"/>
+    <line x1="720" y1="450" x2="440" y2="60"/>
+    <line x1="720" y1="450" x2="520" y2="90"/>
+    <line x1="720" y1="450" x2="600" y2="140"/>
+    <line x1="720" y1="450" x2="840" y2="140"/>
+    <line x1="720" y1="450" x2="920" y2="90"/>
+    <line x1="720" y1="450" x2="1000" y2="60"/>
+    <line x1="720" y1="450" x2="1080" y2="50"/>
+    <line x1="720" y1="450" x2="1160" y2="60"/>
+    <line x1="720" y1="450" x2="1240" y2="80"/>
+    <line x1="720" y1="450" x2="1320" y2="120"/>
+  </g>
+  <circle cx="720" cy="450" r="180" stroke="#EDFF10" stroke-width="4"/>
+  <circle cx="720" cy="450" r="260" stroke="#EDFF10" stroke-width="2" stroke-opacity="0.5"/>
+  <circle cx="720" cy="450" r="340" stroke="#EDFF10" stroke-width="1" stroke-opacity="0.25"/>
+  <rect x="660" y="390" width="120" height="120" fill="#EDFF10"/>
+  <rect x="100" y="680" width="240" height="120" fill="#FFFFFF" fill-opacity="0.08"/>
+  <rect x="1100" y="680" width="240" height="120" fill="#FFFFFF" fill-opacity="0.08"/>
+</svg>

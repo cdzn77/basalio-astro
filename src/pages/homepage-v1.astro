@@ -244,6 +244,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     display: flex;
     flex-direction: column;
     gap: 56px;
+    overflow: hidden;
   }
 
   .sample-hero-glow {
@@ -257,17 +258,17 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
   }
 
   .sample-hero-glow-1 {
-    width: 560px;
-    height: 560px;
-    top: -180px;
-    left: -140px;
+    width: min(360px, 60vw);
+    height: min(360px, 60vw);
+    top: -120px;
+    left: -40px;
   }
 
   .sample-hero-glow-2 {
-    width: 480px;
-    height: 480px;
-    top: 80px;
-    right: -120px;
+    width: min(320px, 55vw);
+    height: min(320px, 55vw);
+    top: 60px;
+    right: -40px;
   }
 
   .sample-hero-text {

@@ -58,39 +58,39 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
   </section>
 
   <!-- 3. FEATURE SECTIONS: Semplice-style full-width block showcase -->
-  <FeatureSection surface="alt" number="01" label="Grid Reveal" headline="Content that cascades into view." body="Reveal work in a cascading grid pattern as visitors scroll." reverse={false}>
+  <FeatureSection surface="alt" number="01" label="Grid Reveal" headline="Content that cascades into view." body="Reveal work in a cascading grid pattern as visitors scroll." href="/blocks">
     <GridRevealMockup slot="mockup" />
   </FeatureSection>
 
-  <FeatureSection surface="ink" number="02" label="Text Reveal" headline="Headlines that assemble themselves." body="Animate type into place with split-line or character-driven reveals." reverse={true}>
+  <FeatureSection surface="ink" number="02" label="Text Reveal" headline="Headlines that assemble themselves." body="Animate type into place with split-line or character-driven reveals." reverse={true} href="/blocks">
     <TextRevealMockup slot="mockup" />
   </FeatureSection>
 
-  <FeatureSection surface="acid" number="03" label="Scroll Sequence" headline="A story told one scroll at a time." body="Progress through a timed sequence of frames tied to scroll position." reverse={false}>
+  <FeatureSection surface="acid" number="03" label="Scroll Sequence" headline="A story told one scroll at a time." body="Progress through a timed sequence of frames tied to scroll position." href="/blocks">
     <ScrollSequenceMockup slot="mockup" />
   </FeatureSection>
 
-  <FeatureSection surface="paper" number="04" label="Pinned Scroll" headline="Panels that hold their ground." body="Pin key scenes in place while content scrolls past in sticky layers." reverse={true}>
+  <FeatureSection surface="paper" number="04" label="Pinned Scroll" headline="Panels that hold their ground." body="Pin key scenes in place while content scrolls past in sticky layers." reverse={true} href="/blocks">
     <PinnedScrollMockup slot="mockup" />
   </FeatureSection>
 
-  <FeatureSection surface="alt" number="05" label="Before/After" headline="Two states, one draggable moment." body="Let visitors wipe between before and after views with a clean slider." reverse={false}>
+  <FeatureSection surface="alt" number="05" label="Before/After" headline="Two states, one draggable moment." body="Let visitors wipe between before and after views with a clean slider." href="/blocks">
     <BeforeAfterMockup slot="mockup" />
   </FeatureSection>
 
-  <FeatureSection surface="ink" number="06" label="Case Study Transition" headline="Seamless project handoffs." body="Morph from overview into detail with a smooth editorial transition." reverse={true}>
+  <FeatureSection surface="ink" number="06" label="Case Study Transition" headline="Seamless project handoffs." body="Morph from overview into detail with a smooth editorial transition." reverse={true} href="/blocks">
     <CaseStudyTransitionMockup slot="mockup" />
   </FeatureSection>
 
-  <FeatureSection surface="acid" number="07" label="Custom Cursor" headline="A cursor with intention." body="Replace the default pointer with a context-aware follow element." reverse={false}>
+  <FeatureSection surface="acid" number="07" label="Custom Cursor" headline="A cursor with intention." body="Replace the default pointer with a context-aware follow element." href="/blocks">
     <CustomCursorMockup slot="mockup" />
   </FeatureSection>
 
-  <FeatureSection surface="paper" number="08" label="Filterable Grid" headline="Sort without losing the rhythm." body="Reorder gallery items with animated, keyboard-friendly filtering." reverse={true}>
+  <FeatureSection surface="paper" number="08" label="Filterable Grid" headline="Sort without losing the rhythm." body="Reorder gallery items with animated, keyboard-friendly filtering." reverse={true} href="/blocks">
     <FilterableGridMockup slot="mockup" />
   </FeatureSection>
 
-  <FeatureSection surface="alt" number="09" label="Magnetic Button" headline="Calls to action that pull people in." body="Add subtle magnetic attraction to buttons on hover and focus." reverse={false}>
+  <FeatureSection surface="alt" number="09" label="Magnetic Button" headline="Calls to action that pull people in." body="Add subtle magnetic attraction to buttons on hover and focus." href="/blocks">
     <MagneticButtonMockup slot="mockup" />
   </FeatureSection>
 
@@ -137,6 +137,12 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
       const initReveal = () => {
         const reveals = document.querySelectorAll('.reveal');
         if (!reveals.length) return;
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          reveals.forEach((el) => el.classList.add('reveal-visible'));
+          return;
+        }
+
         const observer = new IntersectionObserver(
           (entries) => {
             entries.forEach((entry) => {
@@ -146,7 +152,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
               }
             });
           },
-          { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+          { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
         );
         reveals.forEach((el) => observer.observe(el));
       };

@@ -32,14 +32,22 @@
   --overlay-dark-08: rgba(0, 0, 0, 0.08);
   --overlay-dark-10: rgba(0, 0, 0, 0.1);
   --overlay-dark-15: rgba(0, 0, 0, 0.15);
+  --overlay-dark-30: rgba(0, 0, 0, 0.3);
+  --overlay-dark-35: rgba(0, 0, 0, 0.35);
   --overlay-dark-40: rgba(0, 0, 0, 0.4);
+  --overlay-dark-45: rgba(0, 0, 0, 0.45);
   --overlay-dark-55: rgba(0, 0, 0, 0.55);
   --overlay-dark-60: rgba(0, 0, 0, 0.6);
   --overlay-dark-65: rgba(0, 0, 0, 0.65);
   --overlay-light-05: rgba(255, 255, 255, 0.05);
   --overlay-light-08: rgba(255, 255, 255, 0.08);
   --overlay-light-10: rgba(255, 255, 255, 0.1);
+  --overlay-light-12: rgba(255, 255, 255, 0.12);
   --overlay-light-15: rgba(255, 255, 255, 0.15);
+  --overlay-light-18: rgba(255, 255, 255, 0.18);
+  --overlay-light-35: rgba(255, 255, 255, 0.35);
+  --overlay-light-40: rgba(255, 255, 255, 0.4);
+  --overlay-light-50: rgba(255, 255, 255, 0.5);
 
   /* ============================================================
      TYPOGRAPHY – Font Sizes (normalized, no whitespace)

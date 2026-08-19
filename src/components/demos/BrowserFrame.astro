@@ -19,14 +19,14 @@
     background: var(--surface-ink);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 60px var(--overlay-dark-35);
+    border: 1px solid var(--overlay-light-08);
     transition: transform 0.35s ease, box-shadow 0.35s ease;
   }
 
   .browser-frame:hover {
     transform: translateY(-4px);
-    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 32px 80px var(--overlay-dark-45);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -44,14 +44,14 @@
     align-items: center;
     gap: 8px;
     padding: 14px 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--overlay-light-08);
   }
 
   .browser-dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.18);
+    background: var(--overlay-light-18);
   }
 
   .browser-dot:first-child {

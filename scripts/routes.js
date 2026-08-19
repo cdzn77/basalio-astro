@@ -30,8 +30,8 @@ export const PRODUCTION_ROUTES = [
   '/welcome/'        // disallowed by robots.txt but live and user-reachable
 ];
 
-// HEADING_ROUTES (12): Pages requiring exactly 1 h1 for heading hierarchy verification
-// Includes PRODUCTION_ROUTES + synthetic probe that tests the 404 error handler
+// HEADING_ROUTES (16): Pages requiring exactly 1 h1 for heading hierarchy verification
+// Includes PRODUCTION_ROUTES + homepage demo routes + synthetic probe that tests the 404 error handler
 export const HEADING_ROUTES = [
   ...PRODUCTION_ROUTES,
   '/homepage-v1/',         // demo: color-block manifesto (noindex)
@@ -41,7 +41,7 @@ export const HEADING_ROUTES = [
   '/__404-handler-probe/'  // synthetic probe: nonexistent path → 404 error handler
 ];
 
-// ALL_ROUTES (13): All routes tested by overflow verification (includes internal test routes)
+// ALL_ROUTES (17): All routes tested by overflow verification (includes internal test routes and homepage demo routes)
 export const ALL_ROUTES = [
   '/',
   '/blocks/',

@@ -47,7 +47,7 @@ const thumbSrc = `/assets/demos/block-${block.id}.svg`;
   <p class="showcase-description">{block.description}</p>
   <div class="showcase-demo">
     {demo === 'static' ? (
-      <img src={thumbSrc} alt={`${block.name} preview`} class="showcase-thumb" loading="lazy" />
+      <img src={thumbSrc} alt={`${block.name} preview`} class="showcase-thumb" loading="eager" decoding="async" />
     ) : (
       <div class="showcase-minimal" aria-hidden="true">
         <span class="minimal-shape" />

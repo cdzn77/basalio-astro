@@ -27,28 +27,28 @@ const MIN_TARGET_SIZE = 24; // WCAG 2.5.8 Level AA minimum
 // Re-keyed on route + href + fullText (stable across DOM changes)
 // Format: { route, href, fullText, ancestor }
 const APPROVED_INLINE_EXEMPTIONS = [
-  { route: '/privacy', href: 'https://stripe.com/privacy',
+  { route: '/privacy/', href: 'https://stripe.com/privacy',
     fullText: 'Stripe privacy policy',
     ancestor: 'Stripe: Handles all payment processing. We never touch your card data. Stripe privacy policy' },
   // Sub-processor link inside privacy-policy prose; height set by body line-height.
   // Enlarging to 24px would inflate paragraph leading sitewide.
 
-  { route: '/privacy', href: 'https://www.netlify.com/privacy/',
+  { route: '/privacy/', href: 'https://www.netlify.com/privacy/',
     fullText: 'Netlify privacy policy',
     ancestor: 'Netlify: Hosts this site. Netlify privacy policy' },
   // Same: sub-processor link in running text.
 
-  { route: '/privacy', href: 'https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement',
+  { route: '/privacy/', href: 'https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement',
     fullText: 'GitHub privacy policy',
     ancestor: 'GitHub: Stores our code. GitHub privacy policy' },
   // Same: sub-processor link in running text.
 
-  { route: '/privacy', href: 'mailto:hello@basalio.com',
+  { route: '/privacy/', href: 'mailto:hello@basalio.com',
     fullText: 'hello@basalio.com',
     ancestor: 'To exercise any of these rights, email hello@basalio.com with "Privacy Request" in the subject line.' },
   // Contact address inside a sentence; line-height constrained.
 
-  { route: '/terms', href: 'mailto:hello@basalio.com',
+  { route: '/terms/', href: 'mailto:hello@basalio.com',
     fullText: 'hello@basalio.com',
     ancestor: 'Questions about these terms? Email hello@basalio.com' },
   // Contact address inside a sentence; line-height constrained.

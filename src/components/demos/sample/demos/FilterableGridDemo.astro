@@ -1,0 +1,208 @@
+---
+import StageShell from '../StageShell.astro';
+import '../sample-styles.css';
+
+const FILTERS = ['All', 'Identity', 'Packaging', 'Editorial'];
+
+const ITEMS = [
+  { title: 'Northwind', category: 'Identity' },
+  { title: 'Salt & Pine', category: 'Packaging' },
+  { title: 'Field Notes', category: 'Editorial' },
+  { title: 'Atlas & Co', category: 'Identity' },
+  { title: 'Low Tide', category: 'Packaging' },
+  { title: 'Meridian', category: 'Editorial' },
+];
+
+const GRADIENTS = [
+  'linear-gradient(150deg, rgba(237, 255, 16, 0.14), transparent 60%)',
+  'linear-gradient(150deg, rgba(255, 255, 255, 0.08), transparent 60%)',
+  'linear-gradient(150deg, rgba(237, 255, 16, 0.10), transparent 60%)',
+  'linear-gradient(150deg, rgba(255, 255, 255, 0.06), transparent 60%)',
+  'linear-gradient(150deg, rgba(237, 255, 16, 0.08), transparent 60%)',
+  'linear-gradient(150deg, rgba(255, 255, 255, 0.10), transparent 60%)',
+];
+---
+
+<div class="sample-fg-root" data-sample-fg-root>
+  <StageShell label="FILTERABLE GRID — LIVE">
+    <div class="sample-fg-stage">
+      <div class="sample-fg-tabs" role="tablist" aria-label="Filter work" data-sample-fg-tabs>
+        {
+          FILTERS.map((filter) => (
+            <button
+              type="button"
+              class={`sample-fg-tab ${filter === 'All' ? 'is-active' : ''}`}
+              role="tab"
+              aria-selected={filter === 'All' ? 'true' : 'false'}
+              data-sample-fg-tab={filter}
+            >
+              {filter}
+            </button>
+          ))
+        }
+      </div>
+      <div class="sample-fg-grid">
+        {
+          ITEMS.map((item, i) => (
+            <div
+              class="sample-fg-item"
+              data-sample-fg-item
+              data-category={item.category}
+              style={`--d: ${i * 40}ms;`}
+            >
+              <div
+                class="sample-fg-item-top"
+                style={`background: ${GRADIENTS[i]}, var(--surface-ink);`}
+              >
+                <div class="sample-slats" aria-hidden="true">
+                  {Array.from({ length: 5 }).map((_, j) => (
+                    <i style={`--i: ${j};`} />
+                  ))}
+                </div>
+              </div>
+              <div class="sample-fg-item-bottom">
+                <p class="sample-fg-item-title">{item.title}</p>
+                <p class="sample-fg-item-category">{item.category}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </StageShell>
+</div>
+
+<script is:inline>
+  (function () {
+    const root = document.currentScript?.previousElementSibling;
+    if (!root) return;
+
+    const tabs = root.querySelectorAll('[data-sample-fg-tab]');
+    const items = root.querySelectorAll('[data-sample-fg-item]');
+    if (!tabs.length || !items.length) return;
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const filter = tab.dataset.sampleFgTab;
+
+        tabs.forEach((t) => {
+          const active = t === tab;
+          t.classList.toggle('is-active', active);
+          t.setAttribute('aria-selected', String(active));
+        });
+
+        items.forEach((item) => {
+          const cat = item.dataset.category;
+          const show = filter === 'All' || cat === filter;
+          item.classList.toggle('is-hidden', !show);
+        });
+      });
+    });
+  })();
+</script>
+
+<style>
+  .sample-fg-root {
+    width: 100%;
+  }
+
+  .sample-fg-stage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 6%;
+    padding-top: 12%;
+  }
+
+  .sample-fg-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .sample-fg-tab {
+    padding: 6px 12px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-on-ink-muted);
+    background: transparent;
+    border: 1px solid var(--overlay-light-15);
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .sample-fg-tab:hover {
+    color: var(--text-on-ink);
+    border-color: var(--overlay-light-40);
+  }
+
+  .sample-fg-tab.is-active {
+    color: var(--surface-ink);
+    background: var(--acid);
+    border-color: var(--acid);
+  }
+
+  .sample-fg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3%;
+    flex: 1;
+  }
+
+  .sample-fg-item {
+    overflow: hidden;
+    border: 1px solid var(--overlay-light-10);
+    border-radius: 12px;
+    opacity: 1;
+    transform: scale(1);
+    filter: saturate(1);
+    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--d, 0ms);
+  }
+
+  .sample-fg-item.is-hidden {
+    opacity: 0.12;
+    transform: scale(0.9);
+    filter: saturate(0);
+  }
+
+  .sample-fg-item-top {
+    position: relative;
+    height: clamp(38px, 5vw, 56px);
+  }
+
+  .sample-fg-item-bottom {
+    padding: 8px 10px;
+    background: var(--overlay-light-05);
+  }
+
+  .sample-fg-item-title {
+    margin: 0;
+    font-size: clamp(9px, 1vw, 11px);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-on-ink);
+  }
+
+  .sample-fg-item-category {
+    margin: 3px 0 0;
+    font-family: var(--font-mono);
+    font-size: clamp(7px, 0.8vw, 9px);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-on-ink-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sample-fg-item,
+    .sample-fg-tab {
+      transition: none !important;
+    }
+  }
+</style>

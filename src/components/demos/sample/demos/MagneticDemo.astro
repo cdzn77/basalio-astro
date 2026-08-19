@@ -1,0 +1,108 @@
+---
+import StageShell from '../StageShell.astro';
+import '../sample-styles.css';
+---
+
+<div class="sample-mag-root" data-sample-mag-root>
+  <StageShell label="MAGNETIC BUTTON — LIVE">
+    <div class="sample-mag-stage" data-sample-mag-stage>
+      <div class="sample-mag-center">
+        <button type="button" class="sample-mag-btn" data-sample-mag-btn>
+          View case study →
+        </button>
+        <p class="sample-mag-note">data-strength="0.5" · data-radius="120"</p>
+      </div>
+    </div>
+  </StageShell>
+</div>
+
+<script is:inline>
+  (function () {
+    const root = document.currentScript?.previousElementSibling;
+    if (!root) return;
+
+    const stage = root.querySelector('[data-sample-mag-stage]');
+    const btn = root.querySelector('[data-sample-mag-btn]');
+    if (!stage || !btn) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return;
+
+    function springBack() {
+      btn.style.transition = 'transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      btn.style.transform = 'translate(0, 0)';
+    }
+
+    stage.addEventListener('pointermove', (e) => {
+      if (e.pointerType !== 'mouse') return;
+      const r = btn.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist < 120) {
+        btn.style.transition = 'transform 0.1s linear';
+        btn.style.transform = `translate(${dx * 0.45}px, ${dy * 0.45}px)`;
+      } else {
+        springBack();
+      }
+    });
+
+    stage.addEventListener('pointerleave', springBack);
+  })();
+</script>
+
+<style>
+  .sample-mag-root {
+    width: 100%;
+  }
+
+  .sample-mag-stage {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .sample-mag-center {
+    text-align: center;
+  }
+
+  .sample-mag-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 32px;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--surface-ink);
+    background: var(--acid);
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    will-change: transform;
+  }
+
+  .sample-mag-btn:focus-visible {
+    outline: 2px solid var(--text-on-ink);
+    outline-offset: 2px;
+  }
+
+  .sample-mag-note {
+    margin: 20px 0 0;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-on-ink-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sample-mag-btn {
+      transition: none !important;
+    }
+  }
+</style>

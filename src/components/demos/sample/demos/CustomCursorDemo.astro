@@ -1,0 +1,161 @@
+---
+import StageShell from '../StageShell.astro';
+import '../sample-styles.css';
+---
+
+<div class="sample-cc-root" data-sample-cc-root>
+  <StageShell label="CUSTOM CURSOR — LIVE">
+    <div class="sample-cc-stage" data-sample-cc-stage>
+      <div class="sample-cc-content">
+        <p class="sample-cc-title">Move your pointer here</p>
+        <div class="sample-cc-links">
+          <span class="sample-cc-link" data-sample-cc-link>A link grows the ring</span>
+          <span class="sample-cc-link" data-sample-cc-link>data-blend="difference"</span>
+        </div>
+      </div>
+      <div class="sample-cc-cursor" data-sample-cc-cursor>
+        <div class="sample-cc-ring" data-sample-cc-ring></div>
+        <div class="sample-cc-dot" data-sample-cc-dot></div>
+      </div>
+    </div>
+  </StageShell>
+</div>
+
+<script is:inline>
+  (function () {
+    const root = document.currentScript?.previousElementSibling;
+    if (!root) return;
+
+    const stage = root.querySelector('[data-sample-cc-stage]');
+    const ring = root.querySelector('[data-sample-cc-ring]');
+    const dot = root.querySelector('[data-sample-cc-dot]');
+    const cursor = root.querySelector('[data-sample-cc-cursor]');
+    const links = root.querySelectorAll('[data-sample-cc-link]');
+    if (!stage || !ring || !dot || !cursor) return;
+
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (coarse || reduced) return;
+
+    stage.style.cursor = 'none';
+
+    let targetX = 0;
+    let targetY = 0;
+    let ringX = 0;
+    let ringY = 0;
+    let hoverLink = false;
+    let raf = 0;
+
+    function loop() {
+      ringX += (targetX - ringX) * 0.18;
+      ringY += (targetY - ringY) * 0.18;
+      const ringSize = hoverLink ? 52 : 34;
+      ring.style.width = `${ringSize}px`;
+      ring.style.height = `${ringSize}px`;
+      ring.style.transform = `translate(${ringX - ringSize / 2}px, ${ringY - ringSize / 2}px)`;
+      dot.style.transform = `translate(${targetX - 3}px, ${targetY - 3}px)`;
+      raf = requestAnimationFrame(loop);
+    }
+
+    stage.addEventListener('pointermove', (e) => {
+      const r = stage.getBoundingClientRect();
+      targetX = e.clientX - r.left;
+      targetY = e.clientY - r.top;
+    });
+
+    stage.addEventListener('pointerenter', () => {
+      cursor.style.opacity = '1';
+    });
+
+    stage.addEventListener('pointerleave', () => {
+      cursor.style.opacity = '0';
+    });
+
+    links.forEach((link) => {
+      link.addEventListener('pointerenter', () => {
+        hoverLink = true;
+      });
+      link.addEventListener('pointerleave', () => {
+        hoverLink = false;
+      });
+    });
+
+    raf = requestAnimationFrame(loop);
+  })();
+</script>
+
+<style>
+  .sample-cc-root {
+    width: 100%;
+  }
+
+  .sample-cc-stage {
+    position: absolute;
+    inset: 0;
+  }
+
+  .sample-cc-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .sample-cc-title {
+    margin: 0;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    font-size: clamp(16px, 2.6vw, 26px);
+    color: var(--text-on-ink);
+  }
+
+  .sample-cc-links {
+    display: flex;
+    gap: 24px;
+  }
+
+  .sample-cc-link {
+    font-size: 13px;
+    color: var(--acid);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .sample-cc-cursor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .sample-cc-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 9999px;
+    border: 1.5px solid var(--text-on-ink);
+    mix-blend-mode: difference;
+    will-change: transform;
+    transition: width 0.3s ease, height 0.3s ease;
+  }
+
+  .sample-cc-dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background: var(--acid);
+    will-change: transform;
+  }
+</style>

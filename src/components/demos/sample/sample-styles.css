@@ -232,4 +232,14 @@
   .sample-bob {
     transform: none !important;
   }
+
+  .sample-block-number,
+  .sample-block-icon-tile,
+  .sample-block-arrow,
+  .sample-block-card:hover .sample-block-number,
+  .sample-block-card:hover .sample-block-icon-tile,
+  .sample-block-card:hover .sample-block-arrow {
+    transition: none !important;
+    transform: none !important;
+  }
 }

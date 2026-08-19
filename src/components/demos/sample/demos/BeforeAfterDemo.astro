@@ -1,0 +1,265 @@
+---
+import StageShell from '../StageShell.astro';
+import '../sample-styles.css';
+---
+
+<div class="sample-ba-root" data-sample-ba-root>
+  <StageShell label="BEFORE / AFTER — LIVE">
+    <div
+      class="sample-ba-stage"
+      data-sample-ba-stage
+      style="touch-action: none;"
+      data-cursor="Drag"
+    >
+      {/* AFTER (base layer) */}
+      <div class="sample-ba-after">
+        <div class="sample-slats" aria-hidden="true">
+          {Array.from({ length: 14 }).map((_, j) => (
+            <i style={`--i: ${j};`} />
+          ))}
+        </div>
+        <span class="sample-ba-label sample-ba-label-after">After — Grid reveal</span>
+        <div class="sample-ba-text-wrap">
+          <p class="sample-ba-text">Salt &amp; Pine</p>
+        </div>
+      </div>
+
+      {/* BEFORE (clipped layer) */}
+      <div class="sample-ba-before" data-sample-ba-before>
+        <div class="sample-ba-grid-pattern" aria-hidden="true" />
+        <span class="sample-ba-label sample-ba-label-before">Before — Static</span>
+        <div class="sample-ba-text-wrap">
+          <p class="sample-ba-text sample-ba-text-muted">Salt &amp; Pine</p>
+        </div>
+      </div>
+
+      {/* divider handle */}
+      <div class="sample-ba-divider" data-sample-ba-divider>
+        <button
+          class="sample-ba-handle"
+          data-sample-ba-handle
+          type="button"
+          aria-label="Comparison position 50 percent. Use arrow keys to move."
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M8 7 3 12l5 5M16 7l5 5-5 5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </StageShell>
+</div>
+
+<script is:inline>
+  (function () {
+    const root = document.currentScript?.previousElementSibling;
+    if (!root) return;
+
+    const stage = root.querySelector('[data-sample-ba-stage]');
+    const before = root.querySelector('[data-sample-ba-before]');
+    const divider = root.querySelector('[data-sample-ba-divider]');
+    const handle = root.querySelector('[data-sample-ba-handle]');
+    if (!stage || !before || !divider || !handle) return;
+
+    let pos = 50;
+    let dragging = false;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function clamp(value) {
+      return Math.min(90, Math.max(10, value));
+    }
+
+    function render() {
+      before.style.clipPath = `inset(0 ${100 - pos}% 0 0)`;
+      divider.style.left = `${pos}%`;
+      handle.setAttribute('aria-label', `Comparison position ${Math.round(pos)} percent. Use arrow keys to move.`);
+    }
+
+    function setFromClientX(clientX) {
+      const r = stage.getBoundingClientRect();
+      pos = clamp(((clientX - r.left) / r.width) * 100);
+      render();
+    }
+
+    function moveBy(delta) {
+      pos = clamp(pos + delta);
+      render();
+    }
+
+    stage.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      stage.setPointerCapture(e.pointerId);
+      setFromClientX(e.clientX);
+    });
+
+    stage.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      setFromClientX(e.clientX);
+    });
+
+    stage.addEventListener('pointerup', () => {
+      dragging = false;
+    });
+
+    stage.addEventListener('pointercancel', () => {
+      dragging = false;
+    });
+
+    handle.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        moveBy(-4);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        moveBy(4);
+      }
+    });
+
+    if (reduced) {
+      before.style.transition = 'none';
+      divider.style.transition = 'none';
+      handle.style.transition = 'none';
+    }
+
+    render();
+  })();
+</script>
+
+<style>
+  .sample-ba-root {
+    width: 100%;
+  }
+
+  .sample-ba-stage {
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    top: 16%;
+    bottom: 10%;
+    overflow: hidden;
+    border: 1px solid var(--overlay-light-12);
+    border-radius: 12px;
+    user-select: none;
+  }
+
+  .sample-ba-after,
+  .sample-ba-before {
+    position: absolute;
+    inset: 0;
+  }
+
+  .sample-ba-after {
+    background:
+      linear-gradient(150deg, rgba(237, 255, 16, 0.12), transparent 60%),
+      linear-gradient(150deg, rgba(60, 55, 48, 0.55), var(--surface-ink) 78%);
+  }
+
+  .sample-ba-before {
+    background: var(--surface-ink);
+    clip-path: inset(0 50% 0 0);
+  }
+
+  .sample-ba-grid-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 32px),
+      repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 32px);
+  }
+
+  .sample-ba-label {
+    position: absolute;
+    bottom: 12px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .sample-ba-label-after {
+    right: 16px;
+    color: var(--text-on-ink-muted);
+  }
+
+  .sample-ba-label-before {
+    left: 16px;
+    color: var(--text-on-ink-muted);
+    opacity: 0.75;
+  }
+
+  .sample-ba-text-wrap {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+
+  .sample-ba-text {
+    margin: 0;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    font-size: clamp(15px, 2.6vw, 26px);
+    color: var(--text-on-ink);
+  }
+
+  .sample-ba-text-muted {
+    color: var(--text-on-ink-muted);
+    opacity: 0.45;
+  }
+
+  .sample-ba-divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  .sample-ba-handle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: 9999px;
+    background: var(--surface-paper);
+    color: var(--surface-ink);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+    cursor: ew-resize;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .sample-ba-handle:hover {
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.55);
+  }
+
+  .sample-ba-handle:focus-visible {
+    outline: 2px solid var(--acid);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sample-ba-before,
+    .sample-ba-divider,
+    .sample-ba-handle {
+      transition: none !important;
+    }
+  }
+</style>

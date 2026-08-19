@@ -1,0 +1,260 @@
+---
+import StageShell from '../StageShell.astro';
+import '../sample-styles.css';
+
+const STUDIES = [
+  {
+    t: 'Northwind',
+    s: 'Identity',
+    bg: 'linear-gradient(150deg, rgba(237, 255, 16, 0.14), transparent 58%), linear-gradient(150deg, rgba(70, 65, 55, 0.45), var(--surface-ink) 74%)',
+  },
+  {
+    t: 'Meridian',
+    s: 'Art Direction',
+    bg: 'linear-gradient(150deg, rgba(255, 255, 255, 0.08), transparent 58%), linear-gradient(150deg, rgba(55, 52, 45, 0.5), var(--surface-ink) 74%)',
+  },
+  {
+    t: 'Low Tide',
+    s: 'Motion',
+    bg: 'linear-gradient(150deg, rgba(237, 255, 16, 0.10), transparent 58%), linear-gradient(150deg, rgba(45, 48, 52, 0.5), var(--surface-ink) 74%)',
+  },
+];
+---
+
+<div class="sample-cs-root" data-sample-cs-root>
+  <StageShell label="CASE STUDY TRANSITION — LIVE">
+    <div class="sample-cs-stack" data-sample-cs-stack>
+      {
+        STUDIES.map((st, i) => (
+          <div
+            class="sample-cs-card"
+            data-sample-cs-card
+            data-index={i}
+            style={`background: ${st.bg};`}
+          >
+            <div class="sample-slats" aria-hidden="true">
+              {Array.from({ length: 12 }).map((_, j) => (
+                <i style={`--i: ${j};`} />
+              ))}
+            </div>
+            <div class="sample-cs-copy">
+              <p class="sample-cs-meta">
+                0{i + 1} — {st.s}
+              </p>
+              <p class="sample-cs-title">{st.t}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="sample-cs-controls">
+      <div class="sample-cs-dots" data-sample-cs-dots>
+        {STUDIES.map((_, i) => <span class="sample-cs-dot" data-index={i} />)}
+      </div>
+      <div class="sample-cs-buttons">
+        <button
+          class="sample-cs-btn"
+          data-sample-cs-prev
+          type="button"
+          aria-label="Previous case study"
+        >
+          ←
+        </button>
+        <button
+          class="sample-cs-btn"
+          data-sample-cs-next
+          type="button"
+          aria-label="Next case study"
+        >
+          →
+        </button>
+      </div>
+    </div>
+  </StageShell>
+</div>
+
+<script is:inline>
+  (function () {
+    const root = document.currentScript?.previousElementSibling;
+    if (!root) return;
+
+    const cards = Array.from(root.querySelectorAll('[data-sample-cs-card]'));
+    const dots = Array.from(root.querySelectorAll('[data-sample-cs-dot]'));
+    const prevBtn = root.querySelector('[data-sample-cs-prev]');
+    const nextBtn = root.querySelector('[data-sample-cs-next]');
+    if (cards.length === 0) return;
+
+    let idx = 0;
+    let prev = null;
+    const total = cards.length;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function render() {
+      cards.forEach((card, i) => {
+        const isActive = i === idx;
+        const isPrev = i === prev;
+
+        card.style.opacity = isActive ? '1' : '0';
+        card.style.transform = isActive
+          ? 'translateY(0) scale(1)'
+          : isPrev
+            ? 'translateY(-14px) scale(0.985)'
+            : 'translateY(22px) scale(0.97)';
+        card.style.zIndex = isActive ? '2' : '1';
+
+        if (reduced) {
+          card.style.transition = 'none';
+        }
+      });
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('is-active', i === idx);
+      });
+    }
+
+    function go(next) {
+      prev = idx;
+      idx = (next + total) % total;
+      render();
+    }
+
+    prevBtn?.addEventListener('click', () => go(idx - 1));
+    nextBtn?.addEventListener('click', () => go(idx + 1));
+
+    if (reduced) {
+      cards.forEach((card) => {
+        card.style.transition = 'none';
+      });
+    }
+
+    render();
+  })();
+</script>
+
+<style>
+  .sample-cs-root {
+    width: 100%;
+  }
+
+  .sample-cs-stack {
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    top: 15%;
+    bottom: 12%;
+  }
+
+  .sample-cs-card {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border: 1px solid var(--overlay-light-12);
+    border-radius: 12px;
+    opacity: 0;
+    transform: translateY(22px) scale(0.97);
+    transition:
+      opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+  }
+
+  .sample-cs-card:first-child {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    z-index: 2;
+  }
+
+  .sample-cs-copy {
+    position: absolute;
+    left: 6%;
+    bottom: 9%;
+  }
+
+  .sample-cs-meta {
+    margin: 0 0 6px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-on-ink-muted);
+  }
+
+  .sample-cs-title {
+    margin: 0;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+    font-size: clamp(18px, 3vw, 30px);
+    color: var(--text-on-ink);
+  }
+
+  .sample-cs-controls {
+    position: absolute;
+    bottom: 3.5%;
+    left: 5%;
+    right: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+  }
+
+  .sample-cs-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .sample-cs-dot {
+    display: block;
+    height: 4px;
+    width: 10px;
+    border-radius: 9999px;
+    background: var(--overlay-light-20);
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sample-cs-dot.is-active {
+    width: 24px;
+    background: var(--acid);
+  }
+
+  .sample-cs-buttons {
+    display: flex;
+    gap: 8px;
+  }
+
+  .sample-cs-btn {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    font-size: 14px;
+    line-height: 1;
+    color: var(--text-on-ink-muted);
+    background: var(--overlay-light-05);
+    border: 1px solid var(--overlay-light-15);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .sample-cs-btn:hover {
+    color: var(--text-on-ink);
+    background: var(--overlay-light-08);
+    border-color: var(--overlay-light-30);
+  }
+
+  .sample-cs-btn:focus-visible {
+    outline: 2px solid var(--acid);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sample-cs-card,
+    .sample-cs-dot {
+      transition: none !important;
+    }
+  }
+</style>

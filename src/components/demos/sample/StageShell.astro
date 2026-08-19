@@ -16,7 +16,8 @@ const { label, showReplay = false } = Astro.props;
 <script is:inline>
   document.querySelectorAll('[data-sample-stage]').forEach(stage => {
     const btn = stage.querySelector('[data-sample-replay-trigger]');
-    if (!btn) return;
+    if (!btn || btn.dataset.sampleReplayWired === 'true') return;
+    btn.dataset.sampleReplayWired = 'true';
     btn.addEventListener('click', () => {
       stage.dispatchEvent(new CustomEvent('basalio:replay', { bubbles: true }));
     });

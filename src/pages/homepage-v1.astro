@@ -1,28 +1,42 @@
 ---
-// homepage-v1.astro — Semplice-style product showcase
-// Full-viewport hero, editorial value prop, nine feature sections with
-// looping browser mockups, and the existing social proof / pricing CTA.
+// homepage-v1.astro — Sample-blend product showcase
+// Full-viewport hero, block grid, nine live feature demos, comparison,
+// stats, testimonials, FAQ, and founder-pricing CTA.
+
+import '../components/demos/sample/sample-styles.css';
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
-import DemoHero from '../components/demos/DemoHero.astro';
-import EditorialLabel from '../components/demos/EditorialLabel.astro';
 import FeatureSection from '../components/demos/FeatureSection.astro';
-import GridRevealMockup from '../components/demos/mockups/GridRevealMockup.astro';
-import TextRevealMockup from '../components/demos/mockups/TextRevealMockup.astro';
-import ScrollSequenceMockup from '../components/demos/mockups/ScrollSequenceMockup.astro';
-import PinnedScrollMockup from '../components/demos/mockups/PinnedScrollMockup.astro';
-import BeforeAfterMockup from '../components/demos/mockups/BeforeAfterMockup.astro';
-import CaseStudyTransitionMockup from '../components/demos/mockups/CaseStudyTransitionMockup.astro';
-import CustomCursorMockup from '../components/demos/mockups/CustomCursorMockup.astro';
-import FilterableGridMockup from '../components/demos/mockups/FilterableGridMockup.astro';
-import MagneticButtonMockup from '../components/demos/mockups/MagneticButtonMockup.astro';
+
+import EditorShot from '../components/demos/sample/EditorShot.astro';
+import Marquee from '../components/demos/sample/Marquee.astro';
+import BlockCardGrid from '../components/demos/sample/BlockCardGrid.astro';
+import StageShell from '../components/demos/sample/StageShell.astro';
+import GridRevealDemo from '../components/demos/sample/demos/GridRevealDemo.astro';
+import TextRevealDemo from '../components/demos/sample/demos/TextRevealDemo.astro';
+import ScrollSequenceDemo from '../components/demos/sample/demos/ScrollSequenceDemo.astro';
+import PinnedScrollDemo from '../components/demos/sample/demos/PinnedScrollDemo.astro';
+import BeforeAfterDemo from '../components/demos/sample/demos/BeforeAfterDemo.astro';
+import CaseStudyDemo from '../components/demos/sample/demos/CaseStudyDemo.astro';
+import CustomCursorDemo from '../components/demos/sample/demos/CustomCursorDemo.astro';
+import FilterableGridDemo from '../components/demos/sample/demos/FilterableGridDemo.astro';
+import MagneticDemo from '../components/demos/sample/demos/MagneticDemo.astro';
+import ComparisonTable from '../components/demos/sample/ComparisonTable.astro';
+import Stats from '../components/demos/sample/Stats.astro';
+import Testimonials from '../components/demos/sample/Testimonials.astro';
+import Faq from '../components/demos/sample/Faq.astro';
+
 import { pricingTiers, FOUNDER_PRICE, POST_CAP_PRICE } from '../data/pricing';
+import { getFaqs } from '../data/faq';
+import { POST_CAP_PRICE as POST_CAP_PRICE_FAQ, proShipTarget } from '../data/pricing';
+
+const faqs = getFaqs(POST_CAP_PRICE_FAQ, proShipTarget);
 
 const title = 'Basalio — Interaction blocks for WordPress';
-const description = 'A Semplice-inspired product showcase for Basalio — nine native WordPress interaction blocks for portfolio and case-study sites.';
+const description = 'Framer-quality interactions, native to WordPress. Nine curated interaction blocks for portfolio and case-study sites.';
 
 const paidTier = pricingTiers.find((t) => t.id === 'paid');
 const ctaHref = paidTier?.cta?.href || '/early-access';
@@ -34,82 +48,124 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     <Header />
   </Fragment>
 
-  <!-- 1. HERO: Acid yellow full-viewport manifesto -->
-  <DemoHero
-    surface="acid"
-    eyebrow="A WordPress plugin for creatives"
-    headline="Framer-quality interactions, native to WordPress."
-    body="Nine curated interaction blocks built only for portfolio and case-study sites. No page builder, no premium theme, no circus."
-    cta={{ label: 'Explore the blocks', href: '/blocks', variant: 'ink' }}
-  />
-
-  <!-- 2. VALUE PROPOSITION: Two-column editorial intro on paper -->
-  <section class="value-section" data-surface="paper">
-    <div class="value-inner reveal">
-      <div class="value-header">
-        <EditorialLabel text="By designers, for designers" color="ink" wrap />
-        <h2 class="value-headline">A foundation for work that needs to move.</h2>
+  <!-- 1. HERO: Full-viewport dark manifesto with editor shot -->
+  <section class="sample-hero" data-surface="ink">
+    <div class="sample-hero-inner reveal">
+      <div class="sample-hero-glow sample-hero-glow-1" aria-hidden="true"></div>
+      <div class="sample-hero-glow sample-hero-glow-2" aria-hidden="true"></div>
+      <div class="sample-hero-text">
+        <p class="sample-mono-label sample-hero-eyebrow">A WordPress plugin for creatives</p>
+        <h1 class="sample-hero-headline">Framer-quality interactions, native to WordPress.</h1>
+        <p class="sample-hero-body">Nine curated interaction blocks built only for portfolio and case-study sites. No page builder, no premium theme, no circus.</p>
+        <div class="sample-hero-ctas">
+          <Button variant="acid" label="Explore the blocks" href="/blocks" />
+          <a href="/pricing" class="sample-hero-cta-secondary">Pricing</a>
+        </div>
       </div>
-      <div class="value-columns">
-        <p class="value-lead">Basalio gives portfolio and case-study sites the interactions usually reserved for custom front-end builds — grid reveals, scroll sequences, before/after sliders, and more.</p>
-        <p class="value-body">Every block is native WordPress. No embeds, no iframes, no dependency on a page builder. You drop it in, tune it, and ship. The free blocks stay free. The Pro layer is a one-time founder license for the control center and Hacks vault.</p>
+      <div class="sample-hero-shot">
+        <EditorShot />
       </div>
     </div>
   </section>
 
-  <!-- 3. FEATURE SECTIONS: Semplice-style full-width block showcase -->
+  <!-- 2. MARQUEE: Client-name strip -->
+  <section class="sample-marquee-section" data-surface="ink">
+    <div class="sample-marquee-inner reveal">
+      <Marquee items={['Northwind', 'Salt & Pine', 'Meridian', 'Field Notes', 'Atlas & Co', 'Low Tide', 'Fjeld', 'Studio Aar']} />
+    </div>
+  </section>
+
+  <!-- 3. BLOCK CARD GRID: Overview of all nine blocks -->
+  <section class="sample-blocks-section" data-surface="ink">
+    <div class="sample-blocks-inner reveal">
+      <div class="sample-blocks-header">
+        <p class="sample-mono-label sample-blocks-eyebrow">The blocks</p>
+        <h2 class="sample-blocks-headline">Nine blocks. One plugin.</h2>
+        <p class="sample-blocks-description">Every block is native WordPress — no embeds, no iframes, no page-builder lock-in.</p>
+      </div>
+      <BlockCardGrid />
+    </div>
+  </section>
+
+  <!-- 4. FEATURE SECTIONS: Live demos of each block -->
   <FeatureSection surface="alt" number="01" label="Grid Reveal" headline="Content that cascades into view." body="Reveal work in a cascading grid pattern as visitors scroll." href="/blocks">
-    <GridRevealMockup slot="mockup" />
+    <GridRevealDemo slot="mockup" />
   </FeatureSection>
 
   <FeatureSection surface="ink" number="02" label="Text Reveal" headline="Headlines that assemble themselves." body="Animate type into place with split-line or character-driven reveals." reverse={true} href="/blocks">
-    <TextRevealMockup slot="mockup" />
+    <TextRevealDemo slot="mockup" />
   </FeatureSection>
 
   <FeatureSection surface="acid" number="03" label="Scroll Sequence" headline="A story told one scroll at a time." body="Progress through a timed sequence of frames tied to scroll position." href="/blocks">
-    <ScrollSequenceMockup slot="mockup" />
+    <ScrollSequenceDemo slot="mockup" />
   </FeatureSection>
 
   <FeatureSection surface="paper" number="04" label="Pinned Scroll" headline="Panels that hold their ground." body="Pin key scenes in place while content scrolls past in sticky layers." reverse={true} href="/blocks">
-    <PinnedScrollMockup slot="mockup" />
+    <PinnedScrollDemo slot="mockup" />
   </FeatureSection>
 
   <FeatureSection surface="alt" number="05" label="Before/After" headline="Two states, one draggable moment." body="Let visitors wipe between before and after views with a clean slider." href="/blocks">
-    <BeforeAfterMockup slot="mockup" />
+    <BeforeAfterDemo slot="mockup" />
   </FeatureSection>
 
   <FeatureSection surface="ink" number="06" label="Case Study Transition" headline="Seamless project handoffs." body="Morph from overview into detail with a smooth editorial transition." reverse={true} href="/blocks">
-    <CaseStudyTransitionMockup slot="mockup" />
+    <CaseStudyDemo slot="mockup" />
   </FeatureSection>
 
   <FeatureSection surface="acid" number="07" label="Custom Cursor" headline="A cursor with intention." body="Replace the default pointer with a context-aware follow element." href="/blocks">
-    <CustomCursorMockup slot="mockup" />
+    <CustomCursorDemo slot="mockup" />
   </FeatureSection>
 
   <FeatureSection surface="paper" number="08" label="Filterable Grid" headline="Sort without losing the rhythm." body="Reorder gallery items with animated, keyboard-friendly filtering." reverse={true} href="/blocks">
-    <FilterableGridMockup slot="mockup" />
+    <FilterableGridDemo slot="mockup" />
   </FeatureSection>
 
   <FeatureSection surface="alt" number="09" label="Magnetic Button" headline="Calls to action that pull people in." body="Add subtle magnetic attraction to buttons on hover and focus." href="/blocks">
-    <MagneticButtonMockup slot="mockup" />
+    <MagneticDemo slot="mockup" />
   </FeatureSection>
 
-  <!-- 4. SOCIAL PROOF: Ink section with editorial quote -->
-  <section class="social-section" data-surface="ink">
-    <div class="social-inner reveal">
-      <EditorialLabel text="Built for the kind of sites that win awards" color="paper" wrap />
-      <blockquote class="social-quote">
-        <p>“The first WordPress plugin that feels like it was made for design portfolios, not marketing pages.”</p>
-      </blockquote>
-      <p class="social-attribution">— Early design partner</p>
+  <!-- 5. COMPARISON TABLE: Why Basalio wins -->
+  <section class="sample-comparison-section" data-surface="ink">
+    <div class="sample-comparison-inner reveal">
+      <ComparisonTable />
     </div>
   </section>
 
-  <!-- 5. FOUNDER PRICING CTA: Acid band with clear pricing and CTA -->
+  <!-- 6. STATS: Editorial proof points -->
+  <section class="sample-stats-section" data-surface="alt">
+    <div class="sample-stats-inner reveal">
+      <Stats items={[
+        { value: 9, label: 'Blocks, not 90' },
+        { value: 1, label: 'Plugin, zero page-builder lock-in' },
+        { value: 0, label: 'Generic presets — only opinionated ones' },
+        { value: 100, label: 'Founder licenses at $149, then $249' },
+      ]} />
+    </div>
+  </section>
+
+  <!-- 7. TESTIMONIALS: Early design partners -->
+  <section class="sample-testimonials-section" data-surface="ink">
+    <div class="sample-testimonials-inner reveal">
+      <Testimonials />
+    </div>
+  </section>
+
+  <!-- 8. FAQ: Common questions -->
+  <section class="sample-faq-section" data-surface="paper">
+    <div class="sample-faq-inner reveal">
+      <div class="sample-faq-header">
+        <p class="sample-faq-eyebrow">FAQ</p>
+        <h2 class="sample-faq-headline">Questions, answered.</h2>
+      </div>
+      <Faq items={faqs} />
+    </div>
+  </section>
+
+  <!-- 9. FOUNDER PRICING CTA: Acid band with clear pricing and CTA -->
   <section class="pricing-section" data-surface="acid">
     <div class="pricing-inner reveal">
       <div class="pricing-text">
-        <EditorialLabel text="Founder pricing" color="ink" />
+        <p class="pricing-eyebrow">Founder pricing</p>
         <h2 class="pricing-headline">Get the Pro control center at founder pricing.</h2>
         <p class="pricing-body">{paidTier?.leadLine || `Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently — and refundable until the control center ships.`}</p>
       </div>
@@ -170,35 +226,255 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
 </BaseLayout>
 
 <style>
-  /* VALUE PROPOSITION */
-  .value-section {
+  /* ---------- HERO ---------- */
+  .sample-hero {
+    position: relative;
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    background-color: var(--surface-ink);
+    padding: 80px 40px 40px;
+    box-sizing: border-box;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .sample-hero-inner {
+    position: relative;
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+
+  .sample-hero-glow {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(120px);
+    background: radial-gradient(circle, color-mix(in srgb, var(--acid) 55%, transparent), transparent 70%);
+    opacity: 0.45;
+    z-index: 0;
+  }
+
+  .sample-hero-glow-1 {
+    width: 560px;
+    height: 560px;
+    top: -180px;
+    left: -140px;
+  }
+
+  .sample-hero-glow-2 {
+    width: 480px;
+    height: 480px;
+    top: 80px;
+    right: -120px;
+  }
+
+  .sample-hero-text {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .sample-hero-eyebrow {
+    color: var(--acid);
+  }
+
+  .sample-hero-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(40px, 6.5vw, 92px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-ink);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .sample-hero-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-ink-muted);
+    margin: 0;
+    max-width: 620px;
+  }
+
+  .sample-hero-ctas {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 8px;
+  }
+
+  .sample-hero-cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 43.6px;
+    padding: 0 24px;
+    border: 1px solid var(--text-on-ink);
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-on-ink);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .sample-hero-cta-secondary:hover {
+    background-color: var(--text-on-ink);
+    color: var(--surface-ink);
+  }
+
+  .sample-hero-shot {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* ---------- MARQUEE ---------- */
+  .sample-marquee-section {
+    width: 100%;
+    background-color: var(--surface-ink);
+    padding: 48px 0;
+    box-sizing: border-box;
+  }
+
+  .sample-marquee-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+  }
+
+  /* ---------- BLOCK CARD GRID ---------- */
+  .sample-blocks-section {
+    width: 100%;
+    background-color: var(--surface-ink);
+    padding: 120px 40px;
+    box-sizing: border-box;
+  }
+
+  .sample-blocks-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  .sample-blocks-header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 640px;
+  }
+
+  .sample-blocks-eyebrow {
+    color: var(--acid);
+  }
+
+  .sample-blocks-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-ink);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .sample-blocks-description {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-ink-muted);
+    margin: 0;
+  }
+
+  /* ---------- COMPARISON ---------- */
+  .sample-comparison-section {
+    width: 100%;
+    background-color: var(--surface-ink);
+    box-sizing: border-box;
+  }
+
+  .sample-comparison-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+  }
+
+  /* ---------- STATS ---------- */
+  .sample-stats-section {
+    width: 100%;
+    background-color: var(--surface-alt);
+    box-sizing: border-box;
+  }
+
+  .sample-stats-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+  }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .sample-testimonials-section {
+    width: 100%;
+    background-color: var(--surface-ink);
+    box-sizing: border-box;
+  }
+
+  .sample-testimonials-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+  }
+
+  /* ---------- FAQ ---------- */
+  .sample-faq-section {
     width: 100%;
     background-color: var(--surface-paper);
     padding: 120px 40px;
     box-sizing: border-box;
   }
 
-  .value-inner {
+  .sample-faq-inner {
     width: 100%;
-    max-width: var(--container-wide);
+    max-width: var(--container-narrow);
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: start;
-  }
-
-  .value-inner > * {
-    min-width: 0;
-  }
-
-  .value-header {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 48px;
   }
 
-  .value-headline {
+  .sample-faq-header {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .sample-faq-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  .sample-faq-headline {
     font-family: var(--font-sans);
     font-size: clamp(36px, 5vw, 72px);
     font-weight: var(--font-weight-bold);
@@ -209,73 +485,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     text-wrap: balance;
   }
 
-  .value-columns {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .value-lead {
-    font-size: var(--font-size-body);
-    font-weight: var(--font-weight-medium);
-    line-height: var(--line-height-relaxed);
-    color: var(--text-on-paper);
-    margin: 0;
-  }
-
-  .value-body {
-    font-size: var(--font-size-body);
-    line-height: var(--line-height-relaxed);
-    color: var(--text-on-paper-muted);
-    margin: 0;
-  }
-
-  /* SOCIAL PROOF */
-  .social-section {
-    width: 100%;
-    background-color: var(--surface-ink);
-    padding: 120px 40px;
-    box-sizing: border-box;
-  }
-
-  .social-inner {
-    width: 100%;
-    max-width: var(--container-narrow);
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-  }
-
-  .social-quote {
-    margin: 0;
-    padding: 0;
-    border: none;
-    font-style: normal;
-  }
-
-  .social-quote p {
-    font-family: var(--font-sans);
-    font-size: clamp(32px, 5vw, 64px);
-    font-weight: var(--font-weight-bold);
-    line-height: var(--line-height-tight);
-    letter-spacing: var(--heading-letter-spacing);
-    color: var(--text-on-ink);
-    margin: 0;
-    text-wrap: balance;
-  }
-
-  .social-attribution {
-    font-family: var(--font-mono);
-    font-size: var(--label-size);
-    font-weight: var(--label-weight);
-    letter-spacing: var(--label-letter-spacing);
-    text-transform: uppercase;
-    color: var(--text-on-ink-muted);
-    margin: 0;
-  }
-
-  /* FOUNDER PRICING CTA */
+  /* ---------- FOUNDER PRICING CTA ---------- */
   .pricing-section {
     width: 100%;
     background-color: var(--acid);
@@ -301,6 +511,15 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     display: flex;
     flex-direction: column;
     gap: 24px;
+  }
+
+  .pricing-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-on-acid-muted);
+    margin: 0;
   }
 
   .pricing-headline {
@@ -376,9 +595,17 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     margin: 8px 0 0;
   }
 
-  /* RESPONSIVE */
+  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 1024px) {
-    .value-inner,
+    .sample-hero-glow-1,
+    .sample-hero-glow-2 {
+      opacity: 0.3;
+    }
+
+    .sample-blocks-inner {
+      gap: 40px;
+    }
+
     .pricing-inner {
       grid-template-columns: 1fr;
       gap: 48px;
@@ -390,19 +617,30 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
   }
 
   @media (max-width: 768px) {
-    .value-section,
-    .social-section,
+    .sample-hero {
+      min-height: auto;
+      padding: 60px 20px 40px;
+    }
+
+    .sample-hero-headline {
+      font-size: clamp(32px, 10vw, 48px);
+    }
+
+    .sample-hero-ctas {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .sample-blocks-section,
+    .sample-faq-section,
     .pricing-section {
       padding: 80px 20px;
     }
 
-    .value-headline,
+    .sample-blocks-headline,
+    .sample-faq-headline,
     .pricing-headline {
       font-size: clamp(28px, 8vw, 48px);
-    }
-
-    .social-quote p {
-      font-size: clamp(24px, 7vw, 40px);
     }
 
     .pricing-card {

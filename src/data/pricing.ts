@@ -23,6 +23,7 @@ export const licenseScope = {
 
 export const FOUNDER_PRICE = '$149';
 export const POST_CAP_PRICE = '$249';
+export const proShipTarget = 'Q1 2026';
 
 /* CHECKOUT_STATE: Single-line flag controls site-wide pricing.
 

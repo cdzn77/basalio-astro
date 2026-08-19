@@ -1,21 +1,28 @@
 ---
-// homepage-v1.astro — Color-Block Manifesto
-// A Semplice-inspired homepage demo: full-bleed color blocks, massive type,
-// and a gallery of the nine Basalio interaction blocks.
+// homepage-v1.astro — Semplice-style product showcase
+// Full-viewport hero, editorial value prop, nine feature sections with
+// looping browser mockups, and the existing social proof / pricing CTA.
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
 import DemoHero from '../components/demos/DemoHero.astro';
-import ColorBlockSection from '../components/demos/ColorBlockSection.astro';
-import BlockGrid from '../components/demos/BlockGrid.astro';
 import EditorialLabel from '../components/demos/EditorialLabel.astro';
-import { blocks } from '../data/blocks';
+import FeatureSection from '../components/demos/FeatureSection.astro';
+import GridRevealMockup from '../components/demos/mockups/GridRevealMockup.astro';
+import TextRevealMockup from '../components/demos/mockups/TextRevealMockup.astro';
+import ScrollSequenceMockup from '../components/demos/mockups/ScrollSequenceMockup.astro';
+import PinnedScrollMockup from '../components/demos/mockups/PinnedScrollMockup.astro';
+import BeforeAfterMockup from '../components/demos/mockups/BeforeAfterMockup.astro';
+import CaseStudyTransitionMockup from '../components/demos/mockups/CaseStudyTransitionMockup.astro';
+import CustomCursorMockup from '../components/demos/mockups/CustomCursorMockup.astro';
+import FilterableGridMockup from '../components/demos/mockups/FilterableGridMockup.astro';
+import MagneticButtonMockup from '../components/demos/mockups/MagneticButtonMockup.astro';
 import { pricingTiers, FOUNDER_PRICE, POST_CAP_PRICE } from '../data/pricing';
 
-const title = 'Color-Block Manifesto';
-const description = 'A Semplice-inspired homepage demo for Basalio — nine interaction blocks, built native for WordPress portfolios.';
+const title = 'Basalio — Interaction blocks for WordPress';
+const description = 'A Semplice-inspired product showcase for Basalio — nine native WordPress interaction blocks for portfolio and case-study sites.';
 
 const paidTier = pricingTiers.find((t) => t.id === 'paid');
 const ctaHref = paidTier?.cta?.href || '/early-access';
@@ -38,7 +45,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
 
   <!-- 2. VALUE PROPOSITION: Two-column editorial intro on paper -->
   <section class="value-section" data-surface="paper">
-    <div class="value-inner">
+    <div class="value-inner reveal">
       <div class="value-header">
         <EditorialLabel text="By designers, for designers" color="ink" wrap />
         <h2 class="value-headline">A foundation for work that needs to move.</h2>
@@ -50,20 +57,46 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     </div>
   </section>
 
-  <!-- 3. BLOCK GALLERY: Color-block intro + alternating-surface showcase grid -->
-  <ColorBlockSection
-    surface="alt"
-    number="01"
-    label="The blocks"
-    headline="Nine blocks. One plugin."
-    body="Each block is a self-contained interaction pattern, designed to sit inside any WordPress theme without fighting it."
-  />
+  <!-- 3. FEATURE SECTIONS: Semplice-style full-width block showcase -->
+  <FeatureSection surface="alt" number="01" label="Grid Reveal" headline="Content that cascades into view." body="Reveal work in a cascading grid pattern as visitors scroll." reverse={false}>
+    <GridRevealMockup slot="mockup" />
+  </FeatureSection>
 
-  <BlockGrid {blocks} layout="balanced" />
+  <FeatureSection surface="ink" number="02" label="Text Reveal" headline="Headlines that assemble themselves." body="Animate type into place with split-line or character-driven reveals." reverse={true}>
+    <TextRevealMockup slot="mockup" />
+  </FeatureSection>
+
+  <FeatureSection surface="acid" number="03" label="Scroll Sequence" headline="A story told one scroll at a time." body="Progress through a timed sequence of frames tied to scroll position." reverse={false}>
+    <ScrollSequenceMockup slot="mockup" />
+  </FeatureSection>
+
+  <FeatureSection surface="paper" number="04" label="Pinned Scroll" headline="Panels that hold their ground." body="Pin key scenes in place while content scrolls past in sticky layers." reverse={true}>
+    <PinnedScrollMockup slot="mockup" />
+  </FeatureSection>
+
+  <FeatureSection surface="alt" number="05" label="Before/After" headline="Two states, one draggable moment." body="Let visitors wipe between before and after views with a clean slider." reverse={false}>
+    <BeforeAfterMockup slot="mockup" />
+  </FeatureSection>
+
+  <FeatureSection surface="ink" number="06" label="Case Study Transition" headline="Seamless project handoffs." body="Morph from overview into detail with a smooth editorial transition." reverse={true}>
+    <CaseStudyTransitionMockup slot="mockup" />
+  </FeatureSection>
+
+  <FeatureSection surface="acid" number="07" label="Custom Cursor" headline="A cursor with intention." body="Replace the default pointer with a context-aware follow element." reverse={false}>
+    <CustomCursorMockup slot="mockup" />
+  </FeatureSection>
+
+  <FeatureSection surface="paper" number="08" label="Filterable Grid" headline="Sort without losing the rhythm." body="Reorder gallery items with animated, keyboard-friendly filtering." reverse={true}>
+    <FilterableGridMockup slot="mockup" />
+  </FeatureSection>
+
+  <FeatureSection surface="alt" number="09" label="Magnetic Button" headline="Calls to action that pull people in." body="Add subtle magnetic attraction to buttons on hover and focus." reverse={false}>
+    <MagneticButtonMockup slot="mockup" />
+  </FeatureSection>
 
   <!-- 4. SOCIAL PROOF: Ink section with editorial quote -->
   <section class="social-section" data-surface="ink">
-    <div class="social-inner">
+    <div class="social-inner reveal">
       <EditorialLabel text="Built for the kind of sites that win awards" color="paper" wrap />
       <blockquote class="social-quote">
         <p>“The first WordPress plugin that feels like it was made for design portfolios, not marketing pages.”</p>
@@ -74,7 +107,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
 
   <!-- 5. FOUNDER PRICING CTA: Acid band with clear pricing and CTA -->
   <section class="pricing-section" data-surface="acid">
-    <div class="pricing-inner">
+    <div class="pricing-inner reveal">
       <div class="pricing-text">
         <EditorialLabel text="Founder pricing" color="ink" />
         <h2 class="pricing-headline">Get the Pro control center at founder pricing.</h2>
@@ -98,6 +131,32 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
       </div>
     </div>
   </section>
+
+  <script>
+    (function () {
+      const initReveal = () => {
+        const reveals = document.querySelectorAll('.reveal');
+        if (!reveals.length) return;
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('reveal-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+        );
+        reveals.forEach((el) => observer.observe(el));
+      };
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initReveal);
+      } else {
+        initReveal();
+      }
+    })();
+  </script>
 
   <Fragment slot="footer">
     <Footer hideNewsletter={true} />

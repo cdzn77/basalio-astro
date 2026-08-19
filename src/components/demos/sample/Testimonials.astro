@@ -1,0 +1,200 @@
+---
+import './sample-styles.css';
+
+interface Testimonial {
+  quote: string;
+  name: string;
+  role: string;
+  initials: string;
+  gradient: string;
+}
+
+const testimonials: Testimonial[] = [
+  {
+    quote:
+      'The pinned scroll block replaced a 400-line GSAP setup I used to copy between client sites. It just lives in the editor now.',
+    name: 'Jonas Feld',
+    role: 'Independent designer, Copenhagen',
+    initials: 'JF',
+    gradient:
+      'linear-gradient(140deg, color-mix(in srgb, var(--acid) 18%, #31456f), #101527)',
+  },
+  {
+    quote:
+      'My case studies finally move the way my mockups did. Clients think I hired a developer. I dragged in a block.',
+    name: 'Mara Chen',
+    role: 'Brand & packaging, Salt & Pine',
+    initials: 'MC',
+    gradient:
+      'linear-gradient(140deg, color-mix(in srgb, var(--acid) 18%, #40356b), #14101f)',
+  },
+  {
+    quote:
+      'Reduced-motion support out of the box is why I recommend it. Nobody else ships that as the floor instead of an upsell.',
+    name: 'Theo Adeyemi',
+    role: 'Design engineer, Atlas & Co',
+    initials: 'TA',
+    gradient:
+      'linear-gradient(140deg, color-mix(in srgb, var(--acid) 18%, #1f3b57), #0a101d)',
+  },
+];
+---
+
+<section class="sample-testimonials">
+  <div class="sample-testimonials-inner">
+    <div class="sample-testimonials-header">
+      <p class="sample-mono-label sample-testimonials-eyebrow">Early voices</p>
+      <h2 class="sample-display sample-testimonials-title">
+        Built for people who actually make things.
+      </h2>
+    </div>
+
+    <div class="sample-testimonials-grid">
+      {
+        testimonials.map((t) => (
+          <figure class="sample-glass sample-lift sample-testimonial-card">
+            <div
+              class="sample-testimonials-stars"
+              aria-label="5 out of 5 stars"
+            >
+              {'★★★★★'.split('').map((star, index) => (
+                <span key={index} class="sample-testimonials-star">
+                  {star}
+                </span>
+              ))}
+            </div>
+
+            <blockquote class="sample-testimonials-quote">
+              &ldquo;{t.quote}&rdquo;
+            </blockquote>
+
+            <figcaption class="sample-testimonials-attribution">
+              <span
+                class="sample-testimonials-avatar"
+                style={`background: ${t.gradient};`}
+                aria-hidden="true"
+              >
+                {t.initials}
+              </span>
+              <span>
+                <span class="sample-testimonials-name">{t.name}</span>
+                <span class="sample-testimonials-role">{t.role}</span>
+              </span>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .sample-testimonials {
+    padding: 96px 20px;
+    border-top: 1px solid var(--overlay-light-08);
+    background-color: var(--surface-ink);
+  }
+
+  @media (min-width: 640px) {
+    .sample-testimonials {
+      padding: 112px 32px;
+    }
+  }
+
+  .sample-testimonials-inner {
+    max-width: var(--container-wide, 1200px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .sample-testimonials-header {
+    max-width: 560px;
+    margin-bottom: 48px;
+  }
+
+  .sample-testimonials-eyebrow {
+    color: var(--acid);
+  }
+
+  .sample-testimonials-title {
+    margin-top: 16px;
+    font-size: clamp(28px, 4vw, 44px);
+    color: var(--text-on-ink);
+  }
+
+  .sample-testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .sample-testimonials-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .sample-testimonial-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 28px;
+    border-radius: 16px;
+  }
+
+  .sample-testimonials-stars {
+    display: flex;
+    gap: 4px;
+    color: var(--acid);
+  }
+
+  .sample-testimonials-star {
+    font-size: 13px;
+    line-height: 1;
+  }
+
+  .sample-testimonials-quote {
+    flex: 1;
+    margin: 20px 0 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-on-ink-muted);
+  }
+
+  .sample-testimonials-attribution {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--overlay-light-08);
+  }
+
+  .sample-testimonials-avatar {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    flex: none;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: var(--font-weight-bold);
+    color: var(--text-on-ink);
+  }
+
+  .sample-testimonials-name,
+  .sample-testimonials-role {
+    display: block;
+  }
+
+  .sample-testimonials-name {
+    font-size: 14px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-on-ink);
+  }
+
+  .sample-testimonials-role {
+    font-size: 12px;
+    color: var(--text-on-ink-muted);
+  }
+</style>

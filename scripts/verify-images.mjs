@@ -4,9 +4,7 @@ import { ALL_ROUTES, NOT_FOUND_PROBE } from './routes.js';
 const PORT = process.env.PORT || 4321;
 const ROUTES = ALL_ROUTES;
 
-async function verifyImages(browser, route) {
-  const page = await browser.newPage();
-
+async function verifyImages(page, route) {
   try {
     await page.setViewportSize({ width: 1440, height: 900 });
     const response = await page.goto(`http://localhost:${PORT}${route}`, {
@@ -64,8 +62,6 @@ async function verifyImages(browser, route) {
       route,
       error: error.message
     };
-  } finally {
-    await page.close();
   }
 }
 
@@ -74,12 +70,16 @@ async function main() {
   const results = [];
   let totalFailures = 0;
 
+  // Reuse a single page across all routes to avoid Playwright instability
+  // when many pages are created in quick succession.
+  const page = await browser.newPage();
+
   console.log('\n' + '═'.repeat(70));
   console.log('IMAGE/VIDEO LOADING VERIFICATION (naturalWidth > 0)');
   console.log('═'.repeat(70) + '\n');
 
   for (const route of ROUTES) {
-    const result = await verifyImages(browser, route);
+    const result = await verifyImages(page, route);
     results.push(result);
 
     if (result.error) {
@@ -100,6 +100,7 @@ async function main() {
     }
   }
 
+  await page.close();
   await browser.close();
 
   console.log('\n' + '═'.repeat(70));

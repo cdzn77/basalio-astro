@@ -23,9 +23,7 @@ async function assertNotDevServer(page) {
   }
 }
 
-async function verifySectionOverflow(browser, route, viewport) {
-  const page = await browser.newPage();
-
+async function verifySectionOverflow(page, route, viewport) {
   try {
     // Set viewport BEFORE navigation
     await page.setViewportSize({ width: viewport, height: 900 });
@@ -83,8 +81,6 @@ async function verifySectionOverflow(browser, route, viewport) {
       viewport,
       error: error.message
     };
-  } finally {
-    await page.close();
   }
 }
 
@@ -93,13 +89,18 @@ async function main() {
   const results = [];
   let totalFailures = 0;
 
+  // Reuse a single page across all route×viewport checks to avoid
+  // Playwright instability when many pages are created in quick succession.
+  const page = await browser.newPage();
+
   // GATE: Assert not dev server (only check once at startup)
-  const probePage = await browser.newPage();
   try {
-    await probePage.goto(`http://localhost:${PORT}/`, { waitUntil: 'networkidle' });
-    await assertNotDevServer(probePage);
-  } finally {
-    await probePage.close();
+    await page.goto(`http://localhost:${PORT}/`, { waitUntil: 'networkidle' });
+    await assertNotDevServer(page);
+  } catch (err) {
+    await page.close();
+    await browser.close();
+    throw err;
   }
 
   console.log(
@@ -114,7 +115,7 @@ async function main() {
 
   for (const route of ROUTES) {
     for (const viewport of VIEWPORTS) {
-      const result = await verifySectionOverflow(browser, route, viewport);
+      const result = await verifySectionOverflow(page, route, viewport);
       results.push(result);
 
       if (result.error) {
@@ -145,6 +146,7 @@ async function main() {
     }
   }
 
+  await page.close();
   await browser.close();
 
   // Summary

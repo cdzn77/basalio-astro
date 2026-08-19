@@ -54,9 +54,7 @@ const APPROVED_INLINE_EXEMPTIONS = [
   // Contact address inside a sentence; line-height constrained.
 ];
 
-async function verifyTouchTargets(browser, route, viewportWidth) {
-  const page = await browser.newPage();
-
+async function verifyTouchTargets(page, route, viewportWidth) {
   try {
     await page.setViewportSize({ width: viewportWidth, height: 667 });
     const response = await page.goto(`http://localhost:${PORT}${route}`, {
@@ -174,13 +172,16 @@ async function verifyTouchTargets(browser, route, viewportWidth) {
       viewport: viewportWidth,
       error: error.message
     };
-  } finally {
-    await page.close();
   }
 }
 
 async function main() {
   const browser = await chromium.launch({ headless: true });
+
+  // Reuse a single page across all route×viewport checks to avoid
+  // Playwright instability when many pages are created in quick succession.
+  const page = await browser.newPage();
+
   const allResults = [];
   let totalFailures = 0;
   let totalSkipped = 0;
@@ -208,7 +209,7 @@ async function main() {
     console.log(`Route: ${route}`);
 
     for (const viewport of VIEWPORTS) {
-      const result = await verifyTouchTargets(browser, route, viewport);
+      const result = await verifyTouchTargets(page, route, viewport);
       allResults.push(result);
 
       if (result.error) {
@@ -281,6 +282,7 @@ async function main() {
     console.log();
   }
 
+  await page.close();
   await browser.close();
 
   console.log('═'.repeat(72));

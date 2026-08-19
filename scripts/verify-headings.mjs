@@ -18,8 +18,11 @@ const LEVEL_ORDER = { h1: 1, h2: 2, h3: 3, h4: 4, h5: 5, h6: 6 };
   const browser = await chromium.launch();
   let allPassed = true;
 
+  // Reuse a single page across routes to avoid Playwright instability
+  // when many pages are created in quick succession.
+  const page = await browser.newPage();
+
   for (const route of ROUTES) {
-    const page = await browser.newPage();
     const url = `http://localhost:4321${route}`;
     const displayLabel = route === NOT_FOUND_PROBE ? '404 handler' : route;
 
@@ -49,7 +52,6 @@ const LEVEL_ORDER = { h1: 1, h2: 2, h3: 3, h4: 4, h5: 5, h6: 6 };
       if (h1Count !== 1) {
         console.error(`❌ ${displayLabel}: Expected 1 h1, found ${h1Count}`);
         allPassed = false;
-        await page.close();
         continue;
       }
 
@@ -57,7 +59,6 @@ const LEVEL_ORDER = { h1: 1, h2: 2, h3: 3, h4: 4, h5: 5, h6: 6 };
       if (headings[0]?.tag !== 'h1') {
         console.error(`❌ ${displayLabel}: h1 is not first heading (first is ${headings[0]?.tag})`);
         allPassed = false;
-        await page.close();
         continue;
       }
 
@@ -78,7 +79,6 @@ const LEVEL_ORDER = { h1: 1, h2: 2, h3: 3, h4: 4, h5: 5, h6: 6 };
 
       if (levelSkip) {
         allPassed = false;
-        await page.close();
         continue;
       }
 
@@ -88,10 +88,9 @@ const LEVEL_ORDER = { h1: 1, h2: 2, h3: 3, h4: 4, h5: 5, h6: 6 };
       console.error(`❌ ${displayLabel}: Navigation or assertion error: ${error.message}`);
       allPassed = false;
     }
-
-    await page.close();
   }
 
+  await page.close();
   await browser.close();
   process.exit(allPassed ? 0 : 1);
 })();

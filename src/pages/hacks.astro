@@ -68,13 +68,14 @@ document.querySelectorAll('video[data-cover]').forEach(v => {
     <Header />
   </Fragment>
 
-  <HeaderSplit
-    eyebrow="Hacks"
-    heading="Copy-paste craft."
-    body="Four free snippets for portfolio sites - no plugin required. The full vault (five more recipes) ships with the founder license."
-    level="h1"
-    surface="paper"
-  >
+  <div class="hacks-page" data-surface="ink">
+    <HeaderSplit
+      eyebrow="Hacks"
+      heading="Copy-paste craft."
+      body="Four free snippets for portfolio sites - no plugin required. The full vault (five more recipes) ships with the founder license."
+      level="h1"
+      surface="ink"
+    >
     <div class="hacks-hero-right">
       <p class="hacks-hero-lead">Four effects you can paste into your site right now. No plugin, no account, no email.</p>
       <p class="hacks-hero-body">Paste the code once, then add a class to whichever block you want it on. The class field is in the block settings sidebar, under <strong>Advanced → Additional CSS class(es)</strong>.</p>
@@ -90,20 +91,22 @@ document.querySelectorAll('video[data-cover]').forEach(v => {
           lang={hack.lang}
           code={hack.code}
           index={i}
+          surface="ink"
         />
       ))}
     </div>
   </section>
 
-  <section class="vault-cta" data-surface="acid">
-    <div class="vault-cta-inner">
-      <div>
-        <h3 class="vault-title">Five more in the vault.</h3>
-        <p class="vault-body">Specced and in development - founder licenses include all five as they ship, plus one-click versions of every hack.</p>
+    <section class="vault-cta">
+      <div class="vault-cta-inner glass">
+        <div>
+          <h3 class="vault-title">Five more in the vault.</h3>
+          <p class="vault-body">Specced and in development - founder licenses include all five as they ship, plus one-click versions of every hack.</p>
+        </div>
+        <Button href="/pricing/" label="Unlock the vault" variant="ink" fontSize="14px" fontWeight="600" letterSpacing="0.2em" />
       </div>
-      <Button href="/pricing/" label="Unlock the vault" variant="ink" fontSize="14px" fontWeight="600" letterSpacing="0.2em" />
-    </div>
-  </section>
+    </section>
+  </div>
 
   <Fragment slot="footer">
     <Footer />
@@ -111,6 +114,15 @@ document.querySelectorAll('video[data-cover]').forEach(v => {
 </BaseLayout>
 
 <style>
+  .hacks-page {
+    background: var(--surface-ink);
+    color: var(--text-on-ink);
+  }
+
+  .hacks-grid-section {
+    background: transparent;
+  }
+
   .hacks-hero-right {
     display: flex;
     flex-direction: column;
@@ -121,20 +133,24 @@ document.querySelectorAll('video[data-cover]').forEach(v => {
     font-size: clamp(18px, 2vw, 24px);
     font-weight: var(--font-weight-bold);
     line-height: 1.4;
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     margin: 0;
   }
 
   .hacks-hero-body {
     font-size: 16px;
     line-height: 1.5;
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     margin: 0;
+  }
+
+  .hacks-hero-body strong {
+    color: var(--text-on-ink);
   }
 
   .hacks-grid-section {
     width: 100%;
-    background: var(--surface-paper);
+    background: transparent;
     padding: 80px 40px;
     box-sizing: border-box;
   }
@@ -150,8 +166,8 @@ document.querySelectorAll('video[data-cover]').forEach(v => {
 
   .vault-cta {
     width: 100%;
-    background: var(--acid);
-    padding: 60px 40px;
+    background: transparent;
+    padding: 80px 40px;
     box-sizing: border-box;
   }
 
@@ -161,22 +177,23 @@ document.querySelectorAll('video[data-cover]').forEach(v => {
     justify-content: space-between;
     gap: 40px;
     width: 100%;
-    max-width: var(--container-wide);
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 40px;
   }
 
   .vault-title {
     font-size: 26px;
     font-weight: var(--font-weight-normal);
     line-height: 1.2;
-    color: var(--text-on-acid);
+    color: var(--text-on-ink);
     margin: 0;
   }
 
   .vault-body {
     font-size: 14.5px;
     line-height: 1.5;
-    color: var(--text-on-acid-muted);
+    color: var(--text-on-ink-muted);
     margin: 8px 0 0;
     max-width: 440px;
   }

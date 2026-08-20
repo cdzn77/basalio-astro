@@ -1,27 +1,27 @@
 export const headerNav = [
-  { label: 'BLOCKS',  href: '/blocks' },
-  { label: 'HACKS',   href: '/hacks' },
-  { label: 'PRICING', href: '/pricing' },
+  { label: 'BLOCKS',  href: '/blocks/' },
+  { label: 'HACKS',   href: '/hacks/' },
+  { label: 'PRICING', href: '/pricing/' },
 ];
 
 export const headerCta = {
   label: 'GET EARLY ACCESS',
-  href: '/early-access'
+  href: '/early-access/'
 };
 
 export const footerNav = {
   product: [
     { label: 'Home',    href: '/' },
-    { label: 'Blocks',  href: '/blocks' },
-    { label: 'Hacks',   href: '/hacks' },
-    { label: 'Pricing', href: '/pricing' },
-    { label: 'Roadmap', href: '/roadmap' },
+    { label: 'Blocks',  href: '/blocks/' },
+    { label: 'Hacks',   href: '/hacks/' },
+    { label: 'Pricing', href: '/pricing/' },
+    { label: 'Roadmap', href: '/roadmap/' },
   ],
   support: [
-    { label: 'Contact', href: '/contact' },
-    { label: 'Support', href: '/support' },
-    { label: 'Terms',   href: '/terms' },
-    { label: 'Privacy', href: '/privacy' },
+    { label: 'Contact', href: '/contact/' },
+    { label: 'Support', href: '/support/' },
+    { label: 'Terms',   href: '/terms/' },
+    { label: 'Privacy', href: '/privacy/' },
   ],
 };
 

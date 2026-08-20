@@ -3,44 +3,43 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+import FAQ from '../components/FAQ.astro';
 
-const title = "Support & Help Center - Basalio";
-const description = "Basalio support documentation, FAQs, and troubleshooting guides for WordPress portfolio blocks.";
+const title = "Support - Basalio";
+const description = "Basalio support, troubleshooting, and help documentation.";
 
-const faqs = [
+const categories = [
   {
-    question: "How do I install Basalio blocks?",
-    answer: "Basalio blocks are installed as a WordPress plugin. Download from WordPress.org, upload to your site, and activate. Once activated, all nine blocks appear in your block editor immediately."
+    title: "Getting started",
+    faqs: [
+      { question: "How do I install Basalio?", answer: "Download the plugin from WordPress.org, upload it to your WordPress site, and activate it. All nine blocks appear in the block editor immediately." },
+      { question: "Do the blocks work with any theme?", answer: "Yes. Basalio blocks are built for the WordPress block editor and work with any modern block-ready theme." },
+    ]
   },
   {
-    question: "Do I need coding experience to use Basalio?",
-    answer: "No. Basalio is designed for WordPress users with no coding knowledge. All interactions work through the block editor interface. Click, drag, customize. No code required."
+    title: "Block behavior",
+    faqs: [
+      { question: "Why isn't my animation playing?", answer: "Check that motion is not disabled in your OS or browser settings. Basalio respects prefers-reduced-motion, so animations are disabled when the user requests reduced motion." },
+      { question: "Can I use multiple blocks on the same page?", answer: "Yes. You can stack and combine blocks however you like. Each block loads the shared script only once per page." },
+    ]
   },
   {
-    question: "Are the nine blocks free forever?",
-    answer: "Yes. All nine blocks are free forever on WordPress.org. No locked features, no watermarks, no upgrades. The Pro tier (control center sidebar) is optional."
+    title: "Licensing",
+    faqs: [
+      { question: "Are the nine blocks free forever?", answer: "Yes. All nine blocks are free on WordPress.org under GPL-2.0-or-later. No locked features, no watermarks." },
+      { question: "What does the founder license include?", answer: "The Pro control center sidebar, the full Hacks vault, future blocks, and a direct support line. It is a one-time payment for unlimited sites." },
+    ]
   },
   {
-    question: "Which themes do the blocks work with?",
-    answer: "Basalio blocks work with any modern WordPress theme that supports the block editor (Gutenberg). They're theme-agnostic and don't require a specific theme."
+    title: "Performance",
+    faqs: [
+      { question: "Will Basalio slow down my site?", answer: "No. A single shared script loads only on pages that use a Basalio block. There is no global framework, no jQuery, and no render-blocking stylesheet." },
+      { question: "What happens if I uninstall Basalio?", answer: "Your blocks degrade to static, semantic markup. Grids stay grids; text stays text. Nothing breaks." },
+    ]
   },
-  {
-    question: "Can I use multiple blocks on one page?",
-    answer: "Yes. Combine blocks however you like. Stack multiple Grid Reveals, Scroll Sequences, Case Study Transitions. They all work together."
-  },
-  {
-    question: "How do I customize block colors and timing?",
-    answer: "Each block has a settings panel in the editor sidebar. Adjust colors, easing, duration, and other parameters directly without touching code. Save changes instantly."
-  },
-  {
-    question: "What's the performance impact?",
-    answer: "Basalio is optimized for performance. One shared script loads only on pages that use blocks, keeping the overhead minimal across your site."
-  },
-  {
-    question: "Does Basalio support WooCommerce?",
-    answer: "Basalio blocks work in WooCommerce, but they're optimized for portfolio and case-study sites. For store-specific functionality, check WooCommerce's native block library."
-  }
 ];
+
+const allFaqs = categories.flatMap((c) => c.faqs);
 ---
 
 <BaseLayout {title} {description}>
@@ -48,58 +47,34 @@ const faqs = [
     <Header />
   </Fragment>
 
-  <!-- HERO: Header with light background, search integration -->
-  <HeaderSplit
-    eyebrow="Help Center"
-    heading="Support & Documentation"
-    body="Find answers to common questions and get help with Basalio blocks."
-    level="h1"
-    surface="alt"
-  >
-    <div class="search-box">
-      <input type="text" id="searchInput" class="search-input" placeholder="Search documentation..." aria-label="Search documentation">
-    </div>
-  </HeaderSplit>
+  <div class="support-page" data-surface="ink">
+    <HeaderSplit
+      eyebrow="Help Center"
+      heading="Support & troubleshooting"
+      body="Find answers to common questions about installation, blocks, licensing, and performance. Still stuck? Contact us directly."
+      level="h1"
+      surface="ink"
+    >
+      <div class="support-hero-right">
+        <p class="support-hero-lead">Search the knowledge base</p>
+        <input type="text" class="support-search" placeholder="What do you need help with?" aria-label="Search support" />
+      </div>
+    </HeaderSplit>
 
-  <!-- FAQ: HeaderSplit with accordion in right slot -->
-  <HeaderSplit
-    eyebrow="QUESTIONS"
-    heading="Frequently Asked Questions"
-    body=""
-    level="h2"
-    surface="paper"
-  >
-    <div class="accordion-list">
-      {faqs.map((item, index) => (
-        <div class="accordion-item" id={`accordion-item-${index}`}>
-          <button
-            id={`accordion-button-${index}`}
-            aria-expanded="false"
-            aria-controls={`accordion-item-${index}-panel`}
-            class="accordion-button"
-          >
-            <span class="accordion-question">{item.question}</span>
-            <span class="accordion-icon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor">
-                <path fill-rule="evenodd" d="M 8 2 A 0.5 0.5 0 0 1 8.5 2.5 V 7.5 H 13.5 A 0.5 0.5 0 0 1 13.5 8.5 H 8.5 V 13.5 A 0.5 0.5 0 0 1 7.5 13.5 V 8.5 H 2.5 A 0.5 0.5 0 0 1 2.5 7.5 H 7.5 V 2.5 A 0.5 0.5 0 0 1 8 2"/>
-              </svg>
-            </span>
-          </button>
-          <div id={`accordion-item-${index}-panel`} role="region" aria-labelledby={`accordion-button-${index}`} class="accordion-panel" hidden>
-            <p class="accordion-answer">{item.answer}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </HeaderSplit>
+    <section class="support-faq-section">
+      <div class="support-faq-inner">
+        <FAQ faqs={allFaqs} heading="Common issues" surface="ink" />
+      </div>
+    </section>
 
-  <!-- CONTACT: Still need help section -->
-  <section class="support-contact">
-    <div class="support-container">
-      <h2 class="contact-heading">Still need help?</h2>
-      <p class="contact-text">Can't find what you're looking for? Email us at <a href="mailto:hello@basalio.com" class="contact-link">hello@basalio.com</a> and we'll get back to you within 24 hours.</p>
-    </div>
-  </section>
+    <section class="support-contact-section">
+      <div class="support-contact-inner glass">
+        <h2 class="support-contact-heading">Still need help?</h2>
+        <p class="support-contact-body">Can't find what you're looking for? Send a message and we'll get back to you within 48 hours.</p>
+        <a href="/contact/" class="support-contact-button">Contact support</a>
+      </div>
+    </section>
+  </div>
 
   <Fragment slot="footer">
     <Footer hideNewsletter={true} />
@@ -107,215 +82,122 @@ const faqs = [
 </BaseLayout>
 
 <style>
-  /* Accordion list (right column content) */
-  .accordion-list {
+  .support-page {
+    background: var(--surface-ink);
+    color: var(--text-on-ink);
+  }
+
+  .support-hero-right {
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
 
-  .accordion-item {
-    width: 100%;
+  .support-hero-lead {
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.4;
+    color: var(--text-on-ink);
+    margin: 0;
   }
 
-  .accordion-button {
+  .support-search {
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 20px;
-    background: transparent;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 6px;
-    cursor: pointer;
-    text-align: left;
+    padding: 14px 18px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    color: var(--text-on-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    outline: none;
     transition: border-color 0.2s ease, background-color 0.2s ease;
-    font-family: inherit;
   }
 
-  .accordion-button:hover {
+  .support-search::placeholder {
+    color: var(--text-on-ink-muted);
+  }
+
+  .support-search:focus {
     border-color: var(--acid);
+    background: rgba(255, 255, 255, 0.08);
   }
 
-  .accordion-button:focus-visible {
-    outline: 3px solid var(--acid);
-    outline-offset: 2px;
-  }
-
-  .accordion-question {
-    font-size: 18px;
-    font-weight: var(--font-weight-medium);
-    line-height: 25.2px;
-    letter-spacing: -0.36px;
-    color: var(--text-on-paper);
-    flex-grow: 1;
-    margin: 0;
-  }
-
-  .accordion-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-    min-height: 24px;
-    color: var(--text-on-paper-muted);
-    transition: transform 0.3s ease, color 0.2s ease;
-    flex-shrink: 0;
-  }
-
-  .accordion-icon svg {
-    width: 20px;
-    height: 20px;
-  }
-
-  .accordion-button[aria-expanded="true"] .accordion-icon {
-    transform: rotate(45deg);
-    color: var(--acid);
-  }
-
-  .accordion-panel {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-
-  .accordion-panel[hidden] {
-    display: none;
-  }
-
-  .accordion-answer {
-    font-size: var(--font-size-body);
-    font-weight: var(--font-weight-normal);
-    line-height: 24px;
-    color: var(--text-on-paper-muted);
-    margin: 0;
-    padding: 20px 20px 20px 20px;
-    background: transparent;
-    border-top: 1px solid rgba(0, 0, 0, 0.08);
-  }
-
-  .support-container {
-    max-width: var(--container-narrow);
-    margin: 0 auto;
-  }
-
-  .search-box {
+  .support-faq-section {
     width: 100%;
-    max-width: 100%;
-  }
-
-  .search-input {
-    width: 100%;
-    padding: 12px 16px;
-    background: rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 6px;
-    color: var(--text-on-paper);
-    font-family: 'Inter', sans-serif;
-    font-size: var(--font-size-body);
-    transition: border-color 0.2s ease, background-color 0.2s ease;
+    padding: 0 40px 80px;
     box-sizing: border-box;
   }
 
-  .search-input:focus {
-    outline: none;
-    border-color: var(--acid);
-    background: rgba(0, 0, 0, 0.06);
+  .support-faq-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
   }
 
-  .search-input::placeholder {
-    color: var(--text-on-paper-muted);
+  .support-contact-section {
+    width: 100%;
+    padding: 0 40px 120px;
+    box-sizing: border-box;
   }
 
-  .support-contact {
-    background: var(--surface-paper);
-    padding: 80px 40px;
-    text-align: center;
+  .support-contact-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px;
   }
 
-  .contact-heading {
-    font-size: 40px;
+  .support-contact-heading {
+    font-size: 28px;
     font-weight: var(--font-weight-normal);
-    line-height: 48px;
-    letter-spacing: var(--heading-letter-spacing);
-    margin: 0 0 16px 0;
-    color: var(--text-on-paper);
-  }
-
-  .contact-text {
-    color: var(--text-on-paper-muted);
-    font-size: var(--font-size-body);
+    color: var(--text-on-ink);
     margin: 0;
-    line-height: 24px;
   }
 
-  .contact-link {
-    color: var(--text-on-paper);
-    text-decoration: underline;
-    text-decoration-color: var(--acid);
-    display: inline-block;
-    padding: 8px 12px;
-    min-height: 24px;
-    min-width: 24px;
-    transition: text-decoration-thickness 0.2s ease;
+  .support-contact-body {
+    color: var(--text-on-ink-muted);
+    margin: 0;
   }
 
-  .contact-link:hover {
-    text-decoration-thickness: 2px;
+  .support-contact-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 24px;
+    background: var(--acid);
+    color: var(--text-on-acid);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: transform 150ms ease;
   }
 
-  @media (max-width: 1024px) {
-    .support-contact {
-      padding: 60px 30px;
+  .support-contact-button:hover {
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .support-faq-section,
+    .support-contact-section {
+      padding-left: 20px;
+      padding-right: 20px;
     }
 
-    .contact-heading {
-      font-size: 32px;
-      line-height: 40px;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .support-contact {
-      padding: 40px 20px;
+    .support-contact-inner {
+      padding: 24px;
     }
 
-    .contact-heading {
+    .support-contact-heading {
       font-size: 24px;
-      line-height: 32px;
-    }
-
-    .contact-text {
-      font-size: 15px;
     }
   }
 </style>
-
-<script>
-  document.querySelectorAll('.accordion-button').forEach((button) => {
-    button.addEventListener('click', () => {
-      const isExpanded = button.getAttribute('aria-expanded') === 'true';
-      const panelId = button.getAttribute('aria-controls');
-      const panel = document.getElementById(panelId);
-
-      if (isExpanded) {
-        button.setAttribute('aria-expanded', 'false');
-        panel.hidden = true;
-      } else {
-        button.setAttribute('aria-expanded', 'true');
-        panel.hidden = false;
-      }
-    });
-
-    button.addEventListener('keydown', (e) => {
-      if (e.key === ' ' || e.key === 'Enter') {
-        e.preventDefault();
-        button.click();
-      }
-    });
-  });
-</script>

@@ -21,59 +21,61 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
     <Header />
   </Fragment>
 
-  <HeaderSplit
-    eyebrow="Our blocks"
-    heading="Nine blocks. Nothing you don't need."
-    body="Grid reveals, case study transitions, scroll sequences, and more. Every one is keyboard-operable, reduced-motion aware, and loaded only on the pages that use it. Click any block to see it running live."
-    level="h1"
-    surface="paper"
-  >
-    <div class="hero-right-content">
-      <h2 class="hero-right-heading">Every one of them is keyboard-operable, reduced-motion aware, and loaded only on the pages that use it.</h2>
-      <p class="hero-right-subheading">That isn't a Pro feature. That's the floor.</p>
-    </div>
-  </HeaderSplit>
-
-  <section class="blocks-grid-section">
-    <div class="blocks-grid">
-      {blocks.map((block, i) => (
-        <a href={`/blocks/${block.slug}/`} class="block-card">
-          <span class="block-number">0{i + 1}</span>
-          <span class="block-icon-tile" aria-hidden="true" set:html={icons[`/public/assets/icons/blocks/${block.slug}.svg`]} />
-          <h2 class="block-name">{block.name}</h2>
-          <p class="block-category">{block.categoryLabel}</p>
-          <p class="block-tagline">{block.headline}</p>
-          <span class="block-cta">
-            See it live
-            <svg class="block-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M4 12h16" />
-              <path d="M13 5l7 7-7 7" />
-            </svg>
-          </span>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <section class="closing-banner" data-surface="acid">
-    <div class="closing-banner-inner">
-      <div>
-        <h3 class="closing-title">All nine. Free. Forever.</h3>
-        <p class="closing-body">No locked blocks, no watermarks, no instance limits. Free is not a trial. It is the product.</p>
+  <div class="blocks-page" data-surface="ink">
+    <HeaderSplit
+      eyebrow="Our blocks"
+      heading="Nine blocks. Nothing you don't need."
+      body="Grid reveals, case study transitions, scroll sequences, and more. Every one is keyboard-operable, reduced-motion aware, and loaded only on the pages that use it. Click any block to see it running live."
+      level="h1"
+      surface="ink"
+    >
+      <div class="hero-right-content">
+        <h2 class="hero-right-heading">Every one of them is keyboard-operable, reduced-motion aware, and loaded only on the pages that use it.</h2>
+        <p class="hero-right-subheading">That isn't a Pro feature. That's the floor.</p>
       </div>
-      <Button href="/pricing/" label="Get the blocks" variant="ink" fontSize="14px" fontWeight="600" letterSpacing="0.2em" />
-    </div>
-  </section>
+    </HeaderSplit>
 
-  <script is:inline define:vars={{ blockSlugs: blocks.map((b) => b.slug) }}>
-    (function () {
-      var hash = window.location.hash.slice(1);
-      if (!hash) return;
-      if (blockSlugs.indexOf(hash) !== -1) {
-        window.location.replace('/blocks/' + hash + '/');
-      }
-    })();
-  </script>
+    <section class="blocks-grid-section">
+      <div class="blocks-grid">
+        {blocks.map((block, i) => (
+          <a href={`/blocks/${block.slug}/`} class="block-card">
+            <span class="block-number">0{i + 1}</span>
+            <span class="block-icon-tile" aria-hidden="true" set:html={icons[`/public/assets/icons/blocks/${block.slug}.svg`]} />
+            <h2 class="block-name">{block.name}</h2>
+            <p class="block-category">{block.categoryLabel}</p>
+            <p class="block-tagline">{block.headline}</p>
+            <span class="block-cta">
+              See it live
+              <svg class="block-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 12h16" />
+                <path d="M13 5l7 7-7 7" />
+              </svg>
+            </span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="closing-banner">
+      <div class="closing-banner-inner">
+        <div>
+          <h3 class="closing-title">All nine. Free. Forever.</h3>
+          <p class="closing-body">No locked blocks, no watermarks, no instance limits. Free is not a trial. It is the product.</p>
+        </div>
+        <Button href="/pricing/" label="Get the blocks" variant="ink" fontSize="14px" fontWeight="600" letterSpacing="0.2em" />
+      </div>
+    </section>
+
+    <script is:inline define:vars={{ blockSlugs: blocks.map((b) => b.slug) }}>
+      (function () {
+        var hash = window.location.hash.slice(1);
+        if (!hash) return;
+        if (blockSlugs.indexOf(hash) !== -1) {
+          window.location.replace('/blocks/' + hash + '/');
+        }
+      })();
+    </script>
+  </div>
 
   <Fragment slot="footer">
     <Footer />
@@ -81,6 +83,10 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
 </BaseLayout>
 
 <style>
+  .blocks-page {
+    background: var(--surface-ink);
+  }
+
   .hero-right-content {
     display: flex;
     flex-direction: column;
@@ -91,7 +97,7 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
     font-size: clamp(18px, 2vw, 24px);
     font-weight: var(--font-weight-bold);
     line-height: 1.4;
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     margin: 0;
   }
 
@@ -99,13 +105,13 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
     font-size: clamp(18px, 2vw, 24px);
     font-weight: var(--font-weight-normal);
     line-height: 1.4;
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     margin: 0;
   }
 
   .blocks-grid-section {
     width: 100%;
-    background: var(--surface-paper);
+    background: transparent;
     padding: 80px 40px;
     box-sizing: border-box;
   }
@@ -124,16 +130,17 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
     display: flex;
     flex-direction: column;
     padding: 24px;
-    background: var(--surface-paper);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
     text-decoration: none;
-    transition: border-color 0.2s ease, transform 0.2s ease;
+    transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
   }
 
   .block-card:hover {
-    border-color: rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.16);
+    transform: translateY(-4px);
+    box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.6);
   }
 
   .block-number {
@@ -142,22 +149,22 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
     right: 20px;
     font-family: var(--font-mono);
     font-size: 11px;
-    color: var(--text-on-paper-muted);
+    color: rgba(255, 255, 255, 0.3);
   }
 
   .block-card:hover .block-number {
-    color: var(--text-on-paper);
+    color: var(--acid);
   }
 
   .block-icon-tile {
     width: 48px;
     height: 48px;
     border-radius: 8px;
-    background: var(--surface-alt);
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     display: grid;
     place-items: center;
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     transition: transform 0.2s ease;
   }
 
@@ -173,7 +180,7 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
   .block-name {
     font-size: 18px;
     font-weight: var(--font-weight-semibold);
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     margin: 20px 0 0;
   }
 
@@ -182,14 +189,14 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
     font-size: 9px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     margin: 6px 0 0;
   }
 
   .block-tagline {
     font-size: 13.5px;
     line-height: 1.5;
-    color: var(--text-on-paper-muted);
+    color: rgba(255, 255, 255, 0.55);
     margin: 12px 0 0;
   }
 
@@ -200,7 +207,7 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
     margin-top: 20px;
     font-size: 13px;
     font-weight: var(--font-weight-medium);
-    color: var(--text-on-paper);
+    color: var(--acid);
   }
 
   .block-arrow {
@@ -213,8 +220,8 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
 
   .closing-banner {
     width: 100%;
-    background: var(--acid);
-    padding: 60px 40px;
+    background: transparent;
+    padding: 80px 40px;
     box-sizing: border-box;
   }
 
@@ -224,22 +231,26 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
     justify-content: space-between;
     gap: 40px;
     width: 100%;
-    max-width: var(--container-wide);
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
   }
 
   .closing-title {
     font-size: 26px;
     font-weight: var(--font-weight-normal);
     line-height: 1.2;
-    color: var(--text-on-acid);
+    color: var(--text-on-ink);
     margin: 0;
   }
 
   .closing-body {
     font-size: 14.5px;
     line-height: 1.5;
-    color: var(--text-on-acid-muted);
+    color: var(--text-on-ink-muted);
     margin: 8px 0 0;
     max-width: 440px;
   }

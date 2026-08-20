@@ -100,7 +100,7 @@ html {
 body {
   font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: var(--text-on-paper);
-  background-color: var(--surface-paper);
+  background-color: var(--surface-ink);
   line-height: var(--line-height-relaxed);
 }
 

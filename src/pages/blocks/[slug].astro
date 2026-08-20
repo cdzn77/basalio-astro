@@ -1,0 +1,65 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import BlockDetailLayout from '../../components/patterns/BlockDetailLayout.astro';
+import { blocks, getBlock, getAdjacentBlocks } from '../../data/blocks';
+
+import GridRevealDemo from '../../components/demos/sample/demos/GridRevealDemo.astro';
+import TextRevealDemo from '../../components/demos/sample/demos/TextRevealDemo.astro';
+import ScrollSequenceDemo from '../../components/demos/sample/demos/ScrollSequenceDemo.astro';
+import PinnedScrollDemo from '../../components/demos/sample/demos/PinnedScrollDemo.astro';
+import BeforeAfterDemo from '../../components/demos/sample/demos/BeforeAfterDemo.astro';
+import CaseStudyDemo from '../../components/demos/sample/demos/CaseStudyDemo.astro';
+import CustomCursorDemo from '../../components/demos/sample/demos/CustomCursorDemo.astro';
+import FilterableGridDemo from '../../components/demos/sample/demos/FilterableGridDemo.astro';
+import MagneticDemo from '../../components/demos/sample/demos/MagneticDemo.astro';
+
+export function getStaticPaths() {
+  return blocks.map((block) => ({
+    params: { slug: block.slug },
+    props: { block },
+  }));
+}
+
+const { block } = Astro.props;
+const adjacent = getAdjacentBlocks(block.slug);
+if (!adjacent) {
+  throw new Error(`Block not found: ${block.slug}`);
+}
+const { prev, next, index } = adjacent;
+
+const demoComponents: Record<string, any> = {
+  GridRevealDemo,
+  TextRevealDemo,
+  ScrollSequenceDemo,
+  PinnedScrollDemo,
+  BeforeAfterDemo,
+  CaseStudyDemo,
+  CustomCursorDemo,
+  FilterableGridDemo,
+  MagneticDemo,
+};
+
+const DemoComponent = demoComponents[block.demoComponent];
+if (!DemoComponent) {
+  throw new Error(`Demo component not found: ${block.demoComponent}`);
+}
+
+const title = `${block.name} — Basalio blocks`;
+const description = block.description;
+---
+
+<BaseLayout {title} {description}>
+  <Fragment slot="header">
+    <Header />
+  </Fragment>
+
+  <BlockDetailLayout {block} {prev} {next} {index}>
+    <DemoComponent slot="demo" />
+  </BlockDetailLayout>
+
+  <Fragment slot="footer">
+    <Footer />
+  </Fragment>
+</BaseLayout>

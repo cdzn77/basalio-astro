@@ -252,7 +252,9 @@ const { surface = 'paper' } = Astro.props;
   }
 
   .header-container[data-surface='ink'] .menu-item:hover {
-    color: var(--acid);
+    color: var(--text-on-paper);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   /* Paper surface (light background): dark dropdown with light text */

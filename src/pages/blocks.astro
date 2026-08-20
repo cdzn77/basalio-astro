@@ -1,582 +1,76 @@
 ---
-// Blocks Page - All 9 interaction blocks for WordPress portfolios
-// Reuses Nav, Testimonials, Footer from homepage
-
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
-import WhoItsFor from '../components/WhoItsFor.astro';
 import Footer from '../components/Footer.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 import Button from '../components/Button.astro';
-
-const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
-  query: '?raw', import: 'default', eager: true
-});
+import { blocks, blockCategories } from '../data/blocks';
 
 const title = "Blocks - Basalio";
 const description = "Nine curated interaction blocks built for WordPress portfolios. Grid reveals, case study transitions, scroll sequences, and more.";
 
-const blocks = [
-  {
-    title: "Grid Reveal",
-    description: "Reveal content in a cascading grid pattern as users scroll down the page",
-    tag: "Layout Block",
-    slug: "grid-reveal"
-  },
-  {
-    title: "Case Study Transition",
-    description: "Smooth transitions between case studies with parallax and fade effects",
-    tag: "Navigation Block",
-    slug: "case-study-transition"
-  },
-  {
-    title: "Text Reveal",
-    description: "Reveal text character-by-character or word-by-word as users scroll",
-    tag: "Typography Block",
-    slug: "text-reveal"
-  },
-  {
-    title: "Magnetic Button",
-    description: "Interactive button that responds to mouse movement with magnetic attraction",
-    tag: "Interaction Block",
-    slug: "magnetic-button"
-  },
-  {
-    title: "Before/After",
-    description: "Side-by-side image comparison with draggable divider",
-    tag: "Media Block",
-    slug: "before-after"
-  },
-  {
-    title: "Filterable Grid",
-    description: "Grid content that filters and animates on category selection",
-    tag: "Layout Block",
-    slug: "filterable-grid"
-  },
-  {
-    title: "Custom Cursor",
-    description: "Replace browser cursor with custom branded interaction feedback",
-    tag: "Interaction Block",
-    slug: "custom-cursor"
-  },
-  {
-    title: "Scroll Sequence",
-    description: "Trigger animations based on scroll position for synchronized storytelling",
-    tag: "Animation Block",
-    slug: "scroll-sequence"
-  },
-  {
-    title: "Pinned Scroll",
-    description: "Lock elements in place while content scrolls for immersive narratives",
-    tag: "Animation Block",
-    slug: "pinned-scroll"
-  }
-];
+const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
 ---
 
-<BaseLayout title={title} description={description}>
-  <!-- HEADER: Navigation bar -->
+<BaseLayout {title} {description}>
   <Fragment slot="header">
     <Header />
   </Fragment>
 
-  <!-- HERO SECTION: HeaderSplit pattern with eyebrow, headline, and description in right column -->
   <HeaderSplit
-    eyebrow="OUR BLOCKS"
+    eyebrow="Our blocks"
     heading="Nine blocks. Nothing you don't need."
-    body={description}
+    body="Grid reveals, case study transitions, scroll sequences, and more. Every one is keyboard-operable, reduced-motion aware, and loaded only on the pages that use it. Click any block to see it running live."
     level="h1"
     surface="paper"
   >
-    <!-- RIGHT SLOT: Hero copy about block features -->
     <div class="hero-right-content">
       <h2 class="hero-right-heading">Every one of them is keyboard-operable, reduced-motion aware, and loaded only on the pages that use it.</h2>
       <p class="hero-right-subheading">That isn't a Pro feature. That's the floor.</p>
     </div>
   </HeaderSplit>
 
-  <!-- BLOCKS GRID -->
-  <section class="courses-grid-section">
-    <div class="courses-grid">
-      {blocks.map((block, index) => {
-        return (
-        <a href={`#${block.slug}`} class={`block-card ${index >= 9 ? 'hidden-course' : ''}`}>
-          <!-- Block Icon Tile -->
-          <div class="block-image-placeholder">
-            <div class="block-icon-tile">
-              <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/${block.slug}.svg`]} aria-hidden="true" />
-            </div>
-          </div>
-
-          <!-- Block Info -->
-          <div class="block-info">
-            <h2 class="block-title">{block.title}</h2>
-            <p class="block-description">{block.description}</p>
-
-            <!-- Tag Pill -->
-            <span class="block-tag">{block.tag}</span>
-          </div>
+  <section class="blocks-grid-section">
+    <div class="blocks-grid">
+      {blocks.map((block, i) => (
+        <a href={`/blocks/${block.slug}/`} class="block-card">
+          <span class="block-number">0{i + 1}</span>
+          <span class="block-icon-tile" aria-hidden="true" set:html={icons[`/public/assets/icons/blocks/${block.slug}.svg`]} />
+          <h2 class="block-name">{block.name}</h2>
+          <p class="block-category">{block.categoryLabel}</p>
+          <p class="block-tagline">{block.headline}</p>
+          <span class="block-cta">
+            See it live
+            <svg class="block-arrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 12h16" />
+              <path d="M13 5l7 7-7 7" />
+            </svg>
+          </span>
         </a>
-      );
-      })}
+      ))}
     </div>
   </section>
 
-  <!-- BLOCK DETAIL SECTIONS -->
-
-  <!-- 1. GRID REVEAL SECTION -->
-  <section id="grid-reveal" class="block-detail-section" data-surface="paper">
-    <HeaderSplit
-      eyebrow="GRID REVEAL"
-      heading="Cascading grid reveal"
-      body="Reveal content in a cascading grid pattern as users scroll down the page. Perfect for portfolio pages where you want to introduce work gradually, guiding the viewer's eye through your case studies one by one."
-      level="h2"
-      surface="alt"
-    >
-      <div class="demo-container">
-        <div class="grid-reveal-demo">
-          {/* Placeholder portfolio tiles — not real client work */}
-          <div class="grid-tile" style={`--tile-index: 0`} data-surface="ink">
-            <div class="tile-content">
-              <h3 class="tile-title">NORTHWIND</h3>
-              <p class="tile-category">IDENTITY</p>
-            </div>
-          </div>
-          <div class="grid-tile" style={`--tile-index: 1`} data-surface="alt">
-            <div class="tile-content">
-              <h3 class="tile-title">SALT & PINE</h3>
-              <p class="tile-category">PACKAGING</p>
-            </div>
-          </div>
-          <div class="grid-tile" style={`--tile-index: 2`} data-surface="ink">
-            <div class="tile-content">
-              <h3 class="tile-title">MERIDIAN</h3>
-              <p class="tile-category">ART DIRECTION</p>
-            </div>
-          </div>
-          <div class="grid-tile" style={`--tile-index: 3`} data-surface="alt">
-            <div class="tile-content">
-              <h3 class="tile-title">FIELD NOTES</h3>
-              <p class="tile-category">EDITORIAL</p>
-            </div>
-          </div>
-          <div class="grid-tile" style={`--tile-index: 4`} data-surface="ink">
-            <div class="tile-content">
-              <h3 class="tile-title">ATLAS & CO</h3>
-              <p class="tile-category">BRAND SYSTEM</p>
-            </div>
-          </div>
-          <div class="grid-tile" style={`--tile-index: 5`} data-surface="alt">
-            <div class="tile-content">
-              <h3 class="tile-title">LOW TIDE</h3>
-              <p class="tile-category">MOTION</p>
-            </div>
-          </div>
-        </div>
-        <div class="grid-replay-controls">
-          <Button id="grid-replay-btn" label="Replay" variant="ink" fontSize="13px" fontWeight="600" letterSpacing="0.05em" type="button" />
-        </div>
-        <p class="demo-caption">Recreated for the web. See it running in WordPress →</p>
+  <section class="closing-banner" data-surface="acid">
+    <div class="closing-banner-inner">
+      <div>
+        <h3 class="closing-title">All nine. Free. Forever.</h3>
+        <p class="closing-body">No locked blocks, no watermarks, no instance limits. Free is not a trial. It is the product.</p>
       </div>
-      <div class="block-controls">
-        <h3 class="controls-heading">What you can control</h3>
-        <div class="controls-list">
-          <div class="control-item">
-            <span class="control-name">data-delay</span>
-            <span class="control-desc">Milliseconds between each item reveal (default: 100)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-duration</span>
-            <span class="control-desc">Animation duration for each item in milliseconds (default: 600)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-easing</span>
-            <span class="control-desc">CSS easing function (default: cubic-bezier(0.34, 1.56, 0.64, 1))</span>
-          </div>
-        </div>
-
-        <div class="accessibility-note">
-          <strong>Accessible:</strong> Grid Reveal respects prefers-reduced-motion and is fully keyboard-navigable. Content reveals without disabling interactions.
-        </div>
-      </div>
-    </HeaderSplit>
+      <Button href="/pricing/" label="Get the blocks" variant="ink" fontSize="14px" fontWeight="600" letterSpacing="0.2em" />
+    </div>
   </section>
 
-  <!-- 2. SCROLL SEQUENCE SECTION -->
-  <section id="scroll-sequence" class="block-detail-section" data-surface="paper">
-    <HeaderSplit
-      eyebrow="SCROLL SEQUENCE"
-      heading="Synchronized scroll storytelling"
-      body="Trigger animations based on scroll position for synchronized storytelling. Ideal for case studies where you want to reveal key moments at precise scroll points, creating a cinematic experience."
-      level="h2"
-      surface="paper"
-    >
-      <div class="demo-container">
-        <div class="scroll-sequence-demo">
-          <div class="sequence-left">
-            <div class="sequence-copy-block" data-state="0">
-              <p class="sequence-number">01</p>
-              <p class="sequence-label">THE PROBLEM</p>
-              <p class="sequence-body">Outline the challenge</p>
-            </div>
-            <div class="sequence-copy-block" data-state="1">
-              <p class="sequence-number">02</p>
-              <p class="sequence-label">THE APPROACH</p>
-              <p class="sequence-body">Describe the strategy</p>
-            </div>
-            <div class="sequence-copy-block" data-state="2">
-              <p class="sequence-number">03</p>
-              <p class="sequence-label">THE RESULT</p>
-              <p class="sequence-body">Show the outcome</p>
-            </div>
-          </div>
-          <div class="sequence-right">
-            <div class="sequence-panel sequence-state-0"></div>
-          </div>
-        </div>
-        <p class="demo-caption">Recreated for the web. See it running in WordPress →</p>
-      </div>
-      <div class="block-controls">
-        <h3 class="controls-heading">What you can control</h3>
-        <div class="controls-list">
-          <div class="control-item">
-            <span class="control-name">data-trigger</span>
-            <span class="control-desc">Scroll threshold percentage to trigger animation (default: 50)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-duration</span>
-            <span class="control-desc">Animation duration in milliseconds (default: 800)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-easing</span>
-            <span class="control-desc">CSS easing function (default: ease-out-quart)</span>
-          </div>
-        </div>
-
-        <div class="accessibility-note">
-          <strong>Accessible:</strong> Scroll Sequence respects prefers-reduced-motion and does not block content interaction during animations.
-        </div>
-      </div>
-    </HeaderSplit>
-  </section>
-
-  <!-- 3. BEFORE/AFTER SECTION -->
-  <section id="before-after" class="block-detail-section" data-surface="paper">
-    <HeaderSplit
-      eyebrow="BEFORE/AFTER"
-      heading="Before and after, side by side"
-      body="Compare two states of the same image with a divider between them. Show retouching, design iterations, or transformation work."
-      level="h2"
-      surface="alt"
-    >
-      <div class="demo-container">
-        <div class="before-after-demo"
-             role="slider"
-             tabindex="0"
-             aria-valuemin="10"
-             aria-valuemax="90"
-             aria-valuenow="50"
-             aria-label="Comparison divider position"
-             data-initial-position="50"
-             data-min-position="10"
-             data-max-position="90">
-          <div class="comparison-before">
-            <h3 class="comparison-heading-before">LAYOUT</h3>
-            <div class="comparison-caption-row">
-              <span>GRID</span>
-              <span>TYPE</span>
-              <span>SPACE</span>
-            </div>
-            <div class="comparison-rule-before"></div>
-          </div>
-          <div class="comparison-after">
-            <h3 class="comparison-heading-after">LAYOUT</h3>
-            <div class="comparison-caption-row-after">
-              <span>GRID</span>
-              <span>TYPE</span>
-              <span>SPACE</span>
-            </div>
-            <div class="comparison-rule-after"></div>
-          </div>
-          <div class="comparison-divider" aria-hidden="true">
-            <svg class="comparison-handle" width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <polyline points="6,4 10,8 6,12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <polyline points="10,4 6,8 10,12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-        </div>
-        <p class="demo-caption">Recreated for the web. See it running in WordPress →</p>
-      </div>
-      <div class="block-controls">
-        <h3 class="controls-heading">What you can control</h3>
-        <div class="controls-list">
-          <div class="control-item">
-            <span class="control-name">data-initial-position</span>
-            <span class="control-desc">Starting divider position as percentage (default: 50)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-min-position</span>
-            <span class="control-desc">Minimum allowed divider position (default: 10)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-max-position</span>
-            <span class="control-desc">Maximum allowed divider position (default: 90)</span>
-          </div>
-        </div>
-
-        <div class="accessibility-note">
-          <strong>Accessible:</strong> Before/After slider is fully keyboard-operable (arrow keys) and touch-friendly. Screen reader announces position updates.
-        </div>
-      </div>
-    </HeaderSplit>
-  </section>
-
-  <!-- 4. CASE STUDY TRANSITION SECTION -->
-  <section id="case-study-transition" class="block-detail-section" data-surface="paper">
-    <HeaderSplit
-      eyebrow="CASE STUDY TRANSITION"
-      heading="Smooth transitions between case studies"
-      body="Smooth transitions between case studies with parallax and fade effects"
-      level="h2"
-      surface="paper"
-    >
-      <div class="demo-container">
-        <div class="block-icon-container">
-          <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/case-study-transition.svg`]} aria-hidden="true" />
-        </div>
-        <p class="demo-caption">Transition preview between case study states. See it running in WordPress →</p>
-      </div>
-      <div class="block-controls">
-        <h3 class="controls-heading">What you can control</h3>
-        <div class="controls-list">
-          <div class="control-item">
-            <span class="control-name">data-transition</span>
-            <span class="control-desc">Transition style: parallax, fade, or slide (default: parallax)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-duration</span>
-            <span class="control-desc">Transition duration in milliseconds (default: 800)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-easing</span>
-            <span class="control-desc">CSS easing function (default: cubic-bezier(0.4, 0, 0.2, 1))</span>
-          </div>
-        </div>
-
-        <div class="accessibility-note">
-          <strong>Accessible:</strong> Case Study Transition respects prefers-reduced-motion and is fully keyboard-navigable. Focusable controls move between studies without trapping the cursor.
-        </div>
-      </div>
-    </HeaderSplit>
-  </section>
-
-  <!-- 5. TEXT REVEAL SECTION -->
-  <section id="text-reveal" class="block-detail-section" data-surface="paper">
-    <HeaderSplit
-      eyebrow="TEXT REVEAL"
-      heading="Reveal text character by character"
-      body="Reveal text character-by-character or word-by-word as users scroll"
-      level="h2"
-      surface="alt"
-    >
-      <div class="demo-container">
-        <div class="block-icon-container">
-          <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/text-reveal.svg`]} aria-hidden="true" />
-        </div>
-        <p class="demo-caption">Character-by-character text reveal preview. See it running in WordPress →</p>
-      </div>
-      <div class="block-controls">
-        <h3 class="controls-heading">What you can control</h3>
-        <div class="controls-list">
-          <div class="control-item">
-            <span class="control-name">data-mode</span>
-            <span class="control-desc">Reveal mode: character, word, or line (default: character)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-stagger</span>
-            <span class="control-desc">Delay between each revealed unit in milliseconds (default: 30)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-trigger</span>
-            <span class="control-desc">Scroll threshold percentage to start reveal (default: 50)</span>
-          </div>
-        </div>
-
-        <div class="accessibility-note">
-          <strong>Accessible:</strong> Text Reveal respects prefers-reduced-motion and is fully keyboard-navigable. Content remains readable when motion is reduced.
-        </div>
-      </div>
-    </HeaderSplit>
-  </section>
-
-  <!-- 6. MAGNETIC BUTTON SECTION -->
-  <section id="magnetic-button" class="block-detail-section" data-surface="paper">
-    <HeaderSplit
-      eyebrow="MAGNETIC BUTTON"
-      heading="Interactive button with magnetic attraction"
-      body="Interactive button that responds to mouse movement with magnetic attraction"
-      level="h2"
-      surface="paper"
-    >
-      <div class="demo-container">
-        <div class="block-icon-container">
-          <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/magnetic-button.svg`]} aria-hidden="true" />
-        </div>
-        <p class="demo-caption">Magnetic attraction behavior on hover. See it running in WordPress →</p>
-      </div>
-      <div class="block-controls">
-        <h3 class="controls-heading">What you can control</h3>
-        <div class="controls-list">
-          <div class="control-item">
-            <span class="control-name">data-strength</span>
-            <span class="control-desc">Magnetic pull strength as a decimal multiplier (default: 0.5)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-radius</span>
-            <span class="control-desc">Activation radius around the button in pixels (default: 120)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-easing</span>
-            <span class="control-desc">CSS easing function for the return animation (default: cubic-bezier(0.34, 1.56, 0.64, 1))</span>
-          </div>
-        </div>
-
-        <div class="accessibility-note">
-          <strong>Accessible:</strong> Magnetic Button respects prefers-reduced-motion and is fully keyboard-operable. The effect is disabled for pointer-coarse devices and reduced-motion users.
-        </div>
-      </div>
-    </HeaderSplit>
-  </section>
-
-  <!-- 7. FILTERABLE GRID SECTION -->
-  <section id="filterable-grid" class="block-detail-section" data-surface="paper">
-    <HeaderSplit
-      eyebrow="FILTERABLE GRID"
-      heading="Grid content that filters and animates"
-      body="Grid content that filters and animates on category selection"
-      level="h2"
-      surface="alt"
-    >
-      <div class="demo-container">
-        <div class="block-icon-container">
-          <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/filterable-grid.svg`]} aria-hidden="true" />
-        </div>
-        <p class="demo-caption">Filterable grid layout with animated category transitions. See it running in WordPress →</p>
-      </div>
-      <div class="block-controls">
-        <h3 class="controls-heading">What you can control</h3>
-        <div class="controls-list">
-          <div class="control-item">
-            <span class="control-name">data-filter</span>
-            <span class="control-desc">Default active filter category slug (default: all)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-duration</span>
-            <span class="control-desc">Layout animation duration in milliseconds (default: 500)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-layout</span>
-            <span class="control-desc">Grid layout mode: masonry or equal (default: masonry)</span>
-          </div>
-        </div>
-
-        <div class="accessibility-note">
-          <strong>Accessible:</strong> Filterable Grid respects prefers-reduced-motion and is fully keyboard-operable. Filter buttons expose active state to screen readers.
-        </div>
-      </div>
-    </HeaderSplit>
-  </section>
-
-  <!-- 8. CUSTOM CURSOR SECTION -->
-  <section id="custom-cursor" class="block-detail-section" data-surface="paper">
-    <HeaderSplit
-      eyebrow="CUSTOM CURSOR"
-      heading="Replace the browser cursor with custom feedback"
-      body="Replace browser cursor with custom branded interaction feedback"
-      level="h2"
-      surface="paper"
-    >
-      <div class="demo-container">
-        <div class="block-icon-container">
-          <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/custom-cursor.svg`]} aria-hidden="true" />
-        </div>
-        <p class="demo-caption">Custom cursor following pointer movement within the demo area. See it running in WordPress →</p>
-      </div>
-      <div class="block-controls">
-        <h3 class="controls-heading">What you can control</h3>
-        <div class="controls-list">
-          <div class="control-item">
-            <span class="control-name">data-size</span>
-            <span class="control-desc">Cursor diameter in pixels (default: 48)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-color</span>
-            <span class="control-desc">Cursor color as CSS custom property or hex value (default: var(--acid))</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-blend</span>
-            <span class="control-desc">Blend mode for cursor overlays (default: difference)</span>
-          </div>
-        </div>
-
-        <div class="accessibility-note">
-          <strong>Accessible:</strong> Custom Cursor respects prefers-reduced-motion and does not replace the native cursor for keyboard users. Pointer events remain accessible on all interactive elements.
-        </div>
-      </div>
-    </HeaderSplit>
-  </section>
-
-  <!-- 9. PINNED SCROLL SECTION -->
-  <section id="pinned-scroll" class="block-detail-section" data-surface="paper">
-    <HeaderSplit
-      eyebrow="PINNED SCROLL"
-      heading="Lock elements in place while content scrolls"
-      body="Lock elements in place while content scrolls for immersive narratives"
-      level="h2"
-      surface="alt"
-    >
-      <div class="demo-container">
-        <div class="block-icon-container">
-          <span class="block-icon" set:html={icons[`/public/assets/icons/blocks/pinned-scroll.svg`]} aria-hidden="true" />
-        </div>
-        <p class="demo-caption">Pinned scroll narrative with locked viewport moments. See it running in WordPress →</p>
-      </div>
-      <div class="block-controls">
-        <h3 class="controls-heading">What you can control</h3>
-        <div class="controls-list">
-          <div class="control-item">
-            <span class="control-name">data-pin-start</span>
-            <span class="control-desc">Scroll progress percentage to start pinning (default: 20)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-pin-end</span>
-            <span class="control-desc">Scroll progress percentage to release the pin (default: 80)</span>
-          </div>
-          <div class="control-item">
-            <span class="control-name">data-snap</span>
-            <span class="control-desc">Enable or disable snap-to-step behavior (default: false)</span>
-          </div>
-        </div>
-
-        <div class="accessibility-note">
-          <strong>Accessible:</strong> Pinned Scroll respects prefers-reduced-motion and is fully keyboard-navigable. Pinned panels do not trap focus or block content access.
-        </div>
-      </div>
-    </HeaderSplit>
-  </section>
-
-  <!-- WHO IT'S FOR CAROUSEL: Uses default whoIsThisFor data from WhoItsFor -->
-  <WhoItsFor />
-
-  <!-- FOOTER: Reused from homepage -->
   <Fragment slot="footer">
     <Footer />
   </Fragment>
 </BaseLayout>
 
 <style>
-
-  /* Hero Right Content */
   .hero-right-content {
     display: flex;
     flex-direction: column;
@@ -589,7 +83,6 @@ const blocks = [
     line-height: 1.4;
     color: var(--text-on-paper);
     margin: 0;
-    padding: 0;
   }
 
   .hero-right-subheading {
@@ -598,923 +91,167 @@ const blocks = [
     line-height: 1.4;
     color: var(--text-on-paper-muted);
     margin: 0;
-    padding: 0;
   }
 
-  /* BLOCKS GRID SECTION: Full width container, content centered via HeaderSplit layout above */
-  .courses-grid-section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 80px 40px;
-    padding-left: calc(35% + 40px);
+  .blocks-grid-section {
+    width: 100%;
     background: var(--surface-paper);
+    padding: 80px 40px;
+    box-sizing: border-box;
+  }
+
+  .blocks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
     width: 100%;
     max-width: var(--container-wide);
-    box-sizing: border-box;
-    gap: 80px;
-    overflow-x: hidden;
     margin: 0 auto;
   }
 
-  /* BLOCKS GRID: 2 columns, full width of right container */
-  .courses-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px 60px;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  /* BLOCK CARD */
   .block-card {
+    position: relative;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    min-width: 0;
-    overflow: visible;
+    padding: 24px;
+    background: var(--surface-paper);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
   }
 
-  .block-card:focus-visible {
-    outline: 2px solid var(--text-on-paper);
-    outline-offset: 2px;
-    box-shadow: 0 0 0 4px var(--surface-paper);
+  .block-card:hover {
+    border-color: rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
   }
 
-  /* Hide courses 4-9 initially */
-  .block-card.hidden-course {
-    display: none;
+  .block-number {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-on-paper-muted);
   }
 
-  /* Show courses when loaded */
-  .courses-grid.loaded .block-card.hidden-course {
-    display: flex;
-  }
-
-  /* Block Image Placeholder - Yellow background with black icon */
-  .block-image-placeholder {
-    width: 100%;
-    aspect-ratio: 2/1;
-    background: var(--acid);
-    border-radius: 6px;
-    overflow: hidden;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    position: relative;
+  .block-card:hover .block-number {
+    color: var(--text-on-paper);
   }
 
   .block-icon-tile {
-    background: var(--acid);
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: var(--surface-alt);
+    border: 1px solid rgba(0, 0, 0, 0.08);
     display: grid;
     place-items: center;
-    width: 100%;
-    height: 100%;
-  }
-
-  .block-icon {
-    color: var(--text-on-acid);
-    display: block;
-    width: clamp(77px, 21.6%, 125px);
-  }
-
-  .block-icon svg {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  /* Block Icon Container - for stub sections in HeaderSplit */
-  .block-icon-container {
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    background: var(--acid);
-    border-radius: 6px;
-    display: grid;
-    place-items: center;
-  }
-
-  .block-icon-container .block-icon {
-    color: var(--text-on-acid);
-    width: clamp(60px, 20%, 100px);
-  }
-
-  /* Block Info */
-  .block-info {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .block-title {
-    font-size: 18px;
-    font-weight: var(--font-weight-normal);
-    line-height: 1.3;
     color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
+    transition: transform 0.2s ease;
   }
 
-  .block-description {
-    font-size: 14px;
-    font-weight: var(--font-weight-normal);
+  .block-icon-tile :global(svg) {
+    width: 22px;
+    height: 22px;
+  }
+
+  .block-card:hover .block-icon-tile {
+    transform: scale(1.05);
+  }
+
+  .block-name {
+    font-size: 18px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-on-paper);
+    margin: 20px 0 0;
+  }
+
+  .block-category {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-on-paper-muted);
+    margin: 6px 0 0;
+  }
+
+  .block-tagline {
+    font-size: 13.5px;
     line-height: 1.5;
     color: var(--text-on-paper-muted);
-    margin: 0;
-    padding: 0;
+    margin: 12px 0 0;
   }
 
-  /* Tag Pill */
-  .block-tag {
+  .block-cta {
     display: inline-flex;
-    width: fit-content;
-    padding: 8px;
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 6px;
-    font-family: "Azeret Mono", monospace;
-    font-size: 14px;
+    align-items: center;
+    gap: 6px;
+    margin-top: 20px;
+    font-size: 13px;
     font-weight: var(--font-weight-medium);
-    letter-spacing: 2.8px;
-    color: var(--text-on-paper-muted);
-    text-transform: uppercase;
-    transition: all 200ms ease;
+    color: var(--text-on-paper);
   }
 
-  .block-card:hover .block-tag {
-    background: var(--text-on-paper-muted);
-    color: var(--surface-paper);
+  .block-arrow {
+    transition: transform 0.2s ease;
   }
 
-  /* LOAD MORE BUTTON */
-  .load-more-wrapper {
-    display: flex;
-    justify-content: flex-end;
+  .block-card:hover .block-arrow {
+    transform: translateX(4px);
+  }
+
+  .closing-banner {
     width: 100%;
-    padding-right: 40px;
+    background: var(--acid);
+    padding: 60px 40px;
+    box-sizing: border-box;
   }
 
-  .load-more-button {
-    padding: 14px 32px;
-    background: rgb(235, 235, 235);
-    border-radius: 6px;
-    border: none;
-    color: rgb(0, 0, 0);
-    font-family: "Azeret Mono", monospace;
-    font-size: 14px;
-    font-weight: var(--font-weight-medium);
-    letter-spacing: 2.8px;
-    line-height: 19.6px;
-    text-align: start;
-    text-decoration: none;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 200ms ease;
-    -webkit-font-smoothing: antialiased;
+  .closing-banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
   }
 
-
-  .load-more-button:hover {
-    opacity: 0.8;
+  .closing-title {
+    font-size: 26px;
+    font-weight: var(--font-weight-normal);
+    line-height: 1.2;
+    color: var(--text-on-acid);
+    margin: 0;
   }
 
-  .load-more-button:active {
-    transform: scale(0.98);
+  .closing-body {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--text-on-acid-muted);
+    margin: 8px 0 0;
+    max-width: 440px;
   }
 
-  /* Block Detail Sections - anchors clear the fixed header */
-  .block-detail-section {
-    scroll-margin-top: 80px;
-  }
-
-  /* Testimonials section: Background only (structure from BaseLayout) */
-  .testimonials-rounded {
-    overflow: visible;
-    padding-bottom: 200px;
-    background: var(--surface-paper);
-  }
-
-  /* RESPONSIVE */
   @media (max-width: 1024px) {
-    .courses-hero {
-      flex-direction: column;
-      gap: 40px;
-      padding: 80px 20px;
-    }
-
-    .hero-left {
-      flex: 0 0 auto;
-    }
-
-    .courses-grid {
+    .blocks-grid {
       grid-template-columns: repeat(2, 1fr);
-      gap: 30px;
     }
   }
 
   @media (max-width: 768px) {
-    .courses-hero {
-      flex-direction: column;
-      gap: 40px;
+    .blocks-grid-section {
       padding: 60px 20px;
     }
 
-    .hero-left {
-      flex: 0 0 auto;
-    }
-
-
-    .courses-grid {
+    .blocks-grid {
       grid-template-columns: 1fr;
-      gap: 24px;
     }
 
-    .courses-grid-section {
-      padding: 60px 20px;
-    }
-
-    .block-title {
-      font-size: var(--font-size-body);
-    }
-
-    .block-description {
-      font-size: 13px;
-    }
-
-    .grid-reveal-demo {
-      max-width: 300px;
-    }
-
-    .grid-tile {
-      aspect-ratio: 0.75;
-    }
-
-    .tile-title {
-      font-size: 12px;
-    }
-
-    .tile-category {
-      font-size: 10px;
-    }
-  }
-
-  /* BLOCK DETAIL SECTIONS */
-  .block-detail-section {
-    scroll-margin-top: 80px;
-    width: 100%;
-  }
-
-  .demo-container {
-    width: 100%;
-    min-height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: var(--surface-alt);
-    border-radius: 8px;
-    border: 1px solid var(--stone);
-    padding: 40px;
-    box-sizing: border-box;
-    gap: 24px;
-  }
-
-  .demo-caption {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--text-on-paper-muted);
-    margin: 0;
-    padding: 0;
-    text-align: center;
-  }
-
-  /* GRID REVEAL DEMO */
-  .grid-reveal-demo {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-    width: 100%;
-    max-width: 450px;
-  }
-
-  /* GRID REVEAL DEMO MOBILE: 2-column layout below 640px */
-  @media (max-width: 640px) {
-    .demo-container {
-      padding: 20px;
-      max-width: 100%;
-      width: 100%;
-    }
-
-    .grid-reveal-demo {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      max-width: 100%;
-      width: 100%;
-    }
-
-    .grid-tile {
-      aspect-ratio: 0.75;
-    }
-  }
-
-  .grid-tile {
-    aspect-ratio: 0.75;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-start;
-    padding: 20px;
-    border-radius: 0;
-    opacity: 0;
-    transform: translateY(24px);
-  }
-
-  .grid-tile.is-revealed {
-    animation: tileReveal 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    animation-delay: calc(var(--tile-index) * 180ms);
-  }
-
-  .grid-tile[data-surface="ink"] {
-    background: var(--surface-ink);
-    color: var(--text-on-ink);
-  }
-
-  .grid-tile[data-surface="alt"] {
-    background: var(--surface-paper);
-    color: var(--text-on-paper);
-  }
-
-  .tile-content {
-    width: 100%;
-  }
-
-  .tile-title {
-    font-size: 14px;
-    font-weight: var(--font-weight-semibold);
-    margin: 0 0 4px 0;
-    padding: 0;
-    line-height: 1.2;
-    text-transform: uppercase;
-  }
-
-  .tile-category {
-    font-size: 11px;
-    font-weight: var(--font-weight-normal);
-    margin: 0;
-    padding: 0;
-    font-family: var(--font-mono);
-    letter-spacing: 0.1em;
-    opacity: 0.8;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .grid-tile {
-      animation: none;
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes tileReveal {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .grid-replay-controls {
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
-    width: 100%;
-  }
-
-  /* SCROLL SEQUENCE DEMO */
-  .scroll-sequence-demo {
-    display: flex;
-    width: 100%;
-    max-width: 1000px;
-    height: 160vh;
-    gap: 40px;
-    position: relative;
-  }
-
-  .sequence-left {
-    flex: 0 0 40%;
-    display: flex;
-    flex-direction: column;
-    padding-top: 120px;
-  }
-
-  .sequence-copy-block {
-    height: 50vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    opacity: 0.6;
-    transition: opacity 0.4s ease-out;
-  }
-
-  .sequence-copy-block[data-state="0"],
-  .sequence-copy-block[data-state="1"],
-  .sequence-copy-block[data-state="2"] {
-    opacity: 0.35;
-  }
-
-  .sequence-copy-block.is-active {
-    opacity: 1;
-  }
-
-  .sequence-number {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: var(--font-weight-semibold);
-    letter-spacing: 0.1em;
-    color: var(--text-on-paper-muted);
-    margin: 0 0 8px 0;
-    padding: 0;
-  }
-
-  .sequence-label {
-    font-size: 18px;
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-on-paper);
-    margin: 0 0 8px 0;
-    padding: 0;
-  }
-
-  .sequence-body {
-    font-size: 14px;
-    color: var(--text-on-paper-muted);
-    margin: 0;
-    padding: 0;
-  }
-
-  .sequence-right {
-    flex: 0 0 60%;
-    position: sticky;
-    top: 120px;
-    height: 240px;
-    background: var(--surface-ink);
-    border-radius: 0;
-  }
-
-  .sequence-panel {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
-    transition: background-color 0.4s ease-out;
-    position: relative;
-  }
-
-  .sequence-panel::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 0%;
-    height: 100%;
-    background: var(--acid);
-    transition: width 0.4s ease-out;
-  }
-
-  .sequence-panel.sequence-state-1::after {
-    width: 100%;
-  }
-
-  .sequence-panel.sequence-state-2 {
-    background: var(--acid);
-  }
-
-  .sequence-panel.sequence-state-2::after {
-    display: none;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .sequence-copy-block {
-      transition: none;
-    }
-
-    .sequence-panel,
-    .sequence-panel::after {
-      transition: none;
-    }
-  }
-
-  @media (max-width: 900px) {
-    .scroll-sequence-demo {
+    .closing-banner-inner {
       flex-direction: column;
-      height: auto;
-      gap: 0;
-    }
-
-    .sequence-left {
-      flex: 1;
-      padding-top: 0;
-    }
-
-    .sequence-copy-block {
-      height: auto;
-      padding: 40px 0;
-      opacity: 1;
-    }
-
-    .sequence-right {
-      position: static;
-      top: auto;
-      height: 200px;
-      margin-bottom: 0;
+      align-items: flex-start;
     }
   }
-
-  /* BEFORE/AFTER DEMO */
-  .before-after-demo {
-    position: relative;
-    width: 100%;
-    max-width: 480px;
-    height: 200px;
-    overflow: hidden;
-    cursor: col-resize;
-    user-select: none;
-    touch-action: none;
-    --pos: 50%;
-  }
-
-  .comparison-before,
-  .comparison-after {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 24px;
-  }
-
-  .comparison-before {
-    background: var(--surface-paper);
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 16px;
-  }
-
-  .comparison-after {
-    background: var(--surface-ink);
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 16px;
-    clip-path: inset(0 0 0 var(--pos));
-  }
-
-  .comparison-heading-before {
-    font-family: var(--font-sans);
-    font-size: 56px;
-    font-weight: var(--font-weight-normal);
-    letter-spacing: normal;
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-    line-height: 1;
-    word-spacing: 9999px;
-  }
-
-  .comparison-heading-after {
-    font-family: var(--font-sans);
-    font-size: 56px;
-    font-weight: var(--font-weight-bold);
-    letter-spacing: -0.04em;
-    color: var(--text-on-ink);
-    margin: 0;
-    padding: 0;
-    line-height: 1;
-    word-spacing: 9999px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: clip;
-  }
-
-  .comparison-caption-row,
-  .comparison-caption-row-after {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    font-size: 12px;
-    font-weight: var(--font-weight-normal);
-  }
-
-  .comparison-caption-row {
-    color: var(--text-on-paper-muted);
-    font-family: var(--font-sans);
-  }
-
-  .comparison-caption-row-after {
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--text-on-ink-muted);
-  }
-
-  .comparison-rule-before {
-    width: 100%;
-    height: 1px;
-    background: var(--stone);
-  }
-
-  .comparison-rule-after {
-    width: 100%;
-    height: 2px;
-    background: var(--acid);
-  }
-
-  .comparison-divider {
-    position: absolute;
-    left: var(--pos);
-    top: 0;
-    width: 32px;
-    height: 100%;
-    transform: translateX(-50%);
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .comparison-divider::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 0;
-    width: 2px;
-    height: 100%;
-    background: var(--surface-paper);
-    transform: translateX(-50%);
-  }
-
-  .comparison-handle {
-    width: 24px;
-    height: 24px;
-    background: var(--surface-paper);
-    border-radius: 50%;
-    position: relative;
-    z-index: 1;
-    color: var(--surface-ink);
-    flex-shrink: 0;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .before-after-demo {
-      cursor: auto;
-    }
-
-    .comparison-divider::before {
-      background: var(--surface-paper);
-    }
-  }
-
-  @media (max-width: 900px) {
-    .before-after-demo {
-      flex-direction: column;
-      height: auto;
-    }
-
-    .comparison-before,
-    .comparison-after {
-      height: 200px;
-    }
-
-    .comparison-label {
-      position: static;
-      margin-bottom: 12px;
-    }
-
-    .comparison-divider {
-      display: none;
-    }
-  }
-
-  /* BLOCK CONTROLS SECTION */
-  .block-controls {
-    width: 100%;
-    margin-top: 40px;
-    padding-top: 40px;
-  }
-
-
-  .controls-heading {
-    font-size: 18px;
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-on-paper);
-    margin: 0 0 24px 0;
-    padding: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .controls-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-bottom: 32px;
-  }
-
-  .control-item {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .control-name {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-on-paper);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .control-desc {
-    font-size: 14px;
-    font-weight: var(--font-weight-normal);
-    color: var(--text-on-paper-muted);
-    line-height: 1.5;
-  }
-
-  .accessibility-note {
-    padding: 16px;
-    background: var(--surface-alt);
-    border-left: 2px solid var(--stone);
-    border-radius: 4px;
-    font-size: 14px;
-    line-height: 1.6;
-    color: var(--text-on-paper);
-  }
-
-  .accessibility-note strong {
-    color: var(--text-on-paper);
-  }
-</style>
-
-<script>
-  // Show all blocks on load (no "Load More" button)
-  const coursesGrid = document.querySelector('.courses-grid');
-  if (coursesGrid) {
-    coursesGrid.classList.add('loaded');
-  }
-
-  // GRID REVEAL INTERSECTION OBSERVER
-  function setupGridRevealObserver() {
-    const gridDemo = document.querySelector('.grid-reveal-demo');
-    if (!gridDemo) return;
-
-    const tiles = gridDemo.querySelectorAll('.grid-tile');
-    const replayBtn = document.getElementById('grid-replay-btn');
-
-    function playAnimation() {
-      tiles.forEach(tile => {
-        tile.classList.add('is-revealed');
-      });
-    }
-
-    function resetAndReplay() {
-      tiles.forEach(tile => {
-        tile.classList.remove('is-revealed');
-      });
-      void gridDemo.offsetHeight; // Force reflow
-      requestAnimationFrame(() => {
-        playAnimation();
-      });
-    }
-
-    // IntersectionObserver to trigger animation on scroll
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          playAnimation();
-          observer.unobserve(gridDemo);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    observer.observe(gridDemo);
-
-    // Replay button handler
-    if (replayBtn) {
-      replayBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        resetAndReplay();
-      });
-    }
-  }
-
-  // SCROLL SEQUENCE - SCROLL-DRIVEN STICKY PANEL
-  function setupScrollSequence() {
-    const demo = document.querySelector('.scroll-sequence-demo');
-    if (!demo) return;
-
-    const blocks = demo.querySelectorAll('.sequence-copy-block');
-    const panel = demo.querySelector('.sequence-panel');
-    let currentState = -1;
-
-    function updatePanelState(state) {
-      if (state === currentState) return;
-      currentState = state;
-      panel.className = `sequence-panel sequence-state-${state}`;
-    }
-
-    blocks.forEach((block, index) => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              updatePanelState(index);
-            }
-          });
-        },
-        {
-          rootMargin: '-50% 0px -50% 0px',
-          threshold: 0
-        }
-      );
-      observer.observe(block);
-    });
-  }
-
-  // BEFORE/AFTER - DRAGGABLE DIVIDER
-  function setupBeforeAfter() {
-    const demo = document.querySelector('.before-after-demo');
-    if (!demo) return;
-
-    const divider = demo.querySelector('.comparison-divider');
-    const minPos = parseInt(demo.dataset.minPosition) || 10;
-    const maxPos = parseInt(demo.dataset.maxPosition) || 90;
-    let currentPos = parseInt(demo.dataset.initialPosition) || 50;
-    let isDragging = false;
-
-    function updateDivider(pos) {
-      pos = Math.max(minPos, Math.min(maxPos, pos));
-      if (pos === currentPos) return;
-      currentPos = pos;
-      demo.style.setProperty('--pos', currentPos + '%');
-      demo.setAttribute('aria-valuenow', currentPos);
-    }
-
-    function onPointerDown(e) {
-      if (e.button && e.button !== 0) return;
-      isDragging = true;
-      demo.setPointerCapture(e.pointerId);
-    }
-
-    function onPointerMove(e) {
-      if (!isDragging) return;
-      const rect = demo.getBoundingClientRect();
-      const pos = ((e.clientX - rect.left) / rect.width) * 100;
-      updateDivider(pos);
-    }
-
-    function onPointerUp() {
-      isDragging = false;
-    }
-
-    function onKeyDown(e) {
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        updateDivider(currentPos - 2);
-      } else if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        updateDivider(currentPos + 2);
-      } else if (e.key === 'Home') {
-        e.preventDefault();
-        updateDivider(minPos);
-      } else if (e.key === 'End') {
-        e.preventDefault();
-        updateDivider(maxPos);
-      }
-    }
-
-    demo.addEventListener('pointerdown', onPointerDown);
-    demo.addEventListener('pointermove', onPointerMove);
-    demo.addEventListener('pointerup', onPointerUp);
-    demo.addEventListener('pointercancel', onPointerUp);
-    demo.addEventListener('keydown', onKeyDown);
-
-    updateDivider(currentPos);
-  }
-
-  // Delay setup to ensure DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      setupGridRevealObserver();
-      setupScrollSequence();
-      setupBeforeAfter();
-    });
-  } else {
-    setupGridRevealObserver();
-    setupScrollSequence();
-    setupBeforeAfter();
-  }
-</script>
-
-<style>
-  /* Spring animation for nav bar */
 </style>

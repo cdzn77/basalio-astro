@@ -4,7 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
 import Button from '../components/Button.astro';
-import { blocks, blockCategories } from '../data/blocks';
+import { blocks } from '../data/blocks';
 
 const title = "Blocks - Basalio";
 const description = "Nine curated interaction blocks built for WordPress portfolios. Grid reveals, case study transitions, scroll sequences, and more.";
@@ -64,6 +64,16 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
       <Button href="/pricing/" label="Get the blocks" variant="ink" fontSize="14px" fontWeight="600" letterSpacing="0.2em" />
     </div>
   </section>
+
+  <script is:inline define:vars={{ blockSlugs: blocks.map((b) => b.slug) }}>
+    (function () {
+      var hash = window.location.hash.slice(1);
+      if (!hash) return;
+      if (blockSlugs.indexOf(hash) !== -1) {
+        window.location.replace('/blocks/' + hash + '/');
+      }
+    })();
+  </script>
 
   <Fragment slot="footer">
     <Footer />

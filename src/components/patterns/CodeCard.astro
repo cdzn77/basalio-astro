@@ -22,7 +22,7 @@ const codeId = `hack-code-${index}`;
   </div>
   <div class="code-card-body">
     <pre class="code-card-pre"><code id={codeId}>{code}</code></pre>
-    <button class="copy-code-btn" data-copy-target={codeId} type="button">Copy</button>
+    <button class="copy-code-btn" data-copy-target={codeId} data-original="Copy" type="button">Copy</button>
   </div>
 </article>
 
@@ -34,9 +34,10 @@ const codeId = `hack-code-${index}`;
     const codeEl = targetId ? document.getElementById(targetId) : null;
     if (!codeEl) return;
 
+    const original = button.getAttribute('data-original') || 'Copy';
+
     try {
       await navigator.clipboard.writeText(codeEl.textContent || '');
-      const original = button.textContent;
       button.textContent = 'Copied!';
       button.classList.add('copied');
       setTimeout(() => {
@@ -46,7 +47,7 @@ const codeId = `hack-code-${index}`;
     } catch {
       button.textContent = 'Failed';
       setTimeout(() => {
-        button.textContent = 'Copy';
+        button.textContent = original;
       }, 1800);
     }
   });

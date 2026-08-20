@@ -29,7 +29,10 @@ if (!adjacent) {
 }
 const { prev, next, index } = adjacent;
 
-const demoComponents: Record<string, any> = {
+// Astro does not expose a public component type from the `astro` package, and
+// imported `.astro` modules resolve to an internal runtime shape. We keep the
+// map typed as `unknown` and assert at runtime before rendering.
+const demoComponents: Record<string, unknown> = {
   GridRevealDemo,
   TextRevealDemo,
   ScrollSequenceDemo,
@@ -42,7 +45,7 @@ const demoComponents: Record<string, any> = {
 };
 
 const DemoComponent = demoComponents[block.demoComponent];
-if (!DemoComponent) {
+if (!DemoComponent || typeof DemoComponent !== 'function') {
   throw new Error(`Demo component not found: ${block.demoComponent}`);
 }
 

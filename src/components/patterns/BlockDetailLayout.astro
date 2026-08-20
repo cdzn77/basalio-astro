@@ -29,7 +29,11 @@ const iconSvg = icons[`/public/assets/icons/blocks/${block.slug}.svg`] as string
     cta={{ label: 'Get this block - free', href: '/pricing/', variant: 'acid' }}
   >
     <div class="block-detail-hero-right">
-      <div class="block-detail-icon-tile" set:html={iconSvg} aria-hidden="true" />
+      {iconSvg ? (
+        <div class="block-detail-icon-tile" set:html={iconSvg} aria-hidden="true" />
+      ) : (
+        <span class="block-detail-icon-tile block-detail-icon-missing" aria-hidden="true" />
+      )}
       <p class="block-detail-category">{block.categoryLabel} · Block 0{index + 1} / 09</p>
       <a href="/blocks/" class="back-link">← All blocks</a>
     </div>

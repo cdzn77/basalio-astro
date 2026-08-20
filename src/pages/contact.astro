@@ -4,6 +4,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+import { socialLinks } from '../data/navigation';
 
 const title = "Contact Basalio";
 const description = "Get in touch with Basalio. Submit a message and we'll get back to you within 48 hours.";
@@ -15,20 +17,15 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     <Header />
   </Fragment>
 
-  <!-- CONTACT SECTION: Copy left, form right -->
-  <section class="contact-section">
-    <div class="contact-inner">
-      <div class="contact-copy">
-        <p class="contact-eyebrow">Contact</p>
-        <h1 class="contact-heading">A direct line to the person building it.</h1>
-        <p class="contact-body">Basalio is a one-person studio. No support tickets disappearing into a queue. Your message lands in the inbox of the developer who wrote the block you are asking about.</p>
-        <ul class="contact-highlights">
-          <li><strong>Response time</strong>Usually within 48 hours, CET</li>
-          <li><strong>Founder licenses</strong>Refundable until the control center ships</li>
-          <li><strong>Bug reports</strong>Include your WordPress + PHP versions</li>
-        </ul>
-      </div>
-
+  <!-- HERO + FORM SECTION: HeaderSplit with form in right slot -->
+  <HeaderSplit
+    eyebrow="Contact"
+    heading="A direct line to the person building it."
+    body="Basalio is a one-person studio. No support tickets disappearing into a queue. Your message lands in the inbox of the developer who wrote the block you are asking about."
+    level="h1"
+    surface="paper"
+  >
+    <div class="contact-form-wrapper">
       <form
         name="contact"
         method="POST"
@@ -36,20 +33,21 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
         data-netlify="true"
         netlify-honeypot="bot-field"
         class="contact-form"
+        id="contact-form"
       >
         <input type="hidden" name="form-name" value="contact" />
-        <p class="hidden">
+        <p class="honeypot">
           <label>Don't fill this out if you're human: <input name="bot-field" /></label>
         </p>
 
         <div class="form-row">
           <label class="form-field">
             <span class="form-label">Name</span>
-            <input type="text" name="name" placeholder="Your name" required />
+            <input type="text" name="name" placeholder="Your name" required autocomplete="name" />
           </label>
           <label class="form-field">
             <span class="form-label">Email</span>
-            <input type="email" name="email" placeholder="you@studio.com" required />
+            <input type="email" name="email" placeholder="you@studio.com" required autocomplete="email" />
           </label>
         </div>
 
@@ -74,6 +72,28 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
         <p class="form-note">This form sends via Netlify. A copy also goes to hello@basalio.com.</p>
       </form>
     </div>
+  </HeaderSplit>
+
+  <!-- RESOURCES SECTION -->
+  <section class="resources-section">
+    <div class="resources-container">
+      <h2 class="resources-heading">Need help right now?</h2>
+      <p class="resources-description">Browse our resources or connect with the community.</p>
+
+      <div class="resources-grid">
+        <div class="resource-card">
+          <h3 class="resource-title">FAQ</h3>
+          <p class="resource-description">Answers to common questions about setup, customization, and pricing.</p>
+          <a href="/pricing/#faq" class="resource-link">View FAQ →</a>
+        </div>
+
+        <div class="resource-card">
+          <h3 class="resource-title">GitHub community</h3>
+          <p class="resource-description">Report bugs, request features, and share your implementations.</p>
+          <a href={socialLinks.github} class="resource-link" target="_blank" rel="noopener noreferrer">Join on GitHub →</a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- FOOTER: Reused from homepage -->
@@ -83,103 +103,18 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
 </BaseLayout>
 
 <style>
-  /* CONTACT SECTION (2-COLUMN LAYOUT) */
-  .contact-section {
+  /* HERO + FORM SECTION (2-COLUMN LAYOUT) */
+  .contact-form-wrapper {
     width: 100%;
-    padding: 200px 40px 120px 40px;
-    background: var(--surface-paper);
-    box-sizing: border-box;
   }
 
-  .contact-inner {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    max-width: var(--container-wide);
-    margin: 0 auto;
-    gap: 80px;
-    box-sizing: border-box;
-  }
-
-  /* LEFT COLUMN: Copy */
-  .contact-copy {
-    flex: 0 1 32%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .contact-eyebrow {
-    font-family: var(--font-sans);
-    font-size: 14px;
-    font-weight: var(--font-weight-medium);
-    letter-spacing: 2.8px;
-    text-transform: uppercase;
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-  }
-
-  .contact-heading {
-    font-family: var(--font-sans);
-    font-size: 40px;
-    font-weight: var(--font-weight-normal);
-    line-height: 48px;
-    letter-spacing: var(--heading-letter-spacing);
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-  }
-
-  .contact-body {
-    font-family: var(--font-sans);
-    font-size: var(--font-size-body);
-    font-weight: var(--font-weight-normal);
-    line-height: 24px;
-    color: var(--text-on-paper-muted);
-    margin: 0;
-    padding: 0;
-  }
-
-  .contact-highlights {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    list-style: none;
-    margin: 20px 0 0 0;
-    padding: 0;
-  }
-
-  .contact-highlights li {
-    font-family: var(--font-sans);
-    font-size: var(--font-size-body);
-    font-weight: var(--font-weight-normal);
-    line-height: 24px;
-    color: var(--text-on-paper-muted);
-    margin: 0;
-    padding: 0;
-  }
-
-  .contact-highlights li strong {
-    display: block;
-    font-weight: var(--font-weight-medium);
-    color: var(--text-on-paper);
-    margin-bottom: 2px;
-  }
-
-  /* RIGHT COLUMN: Form */
   .contact-form {
-    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 24px;
-    width: 100%;
   }
 
-  .hidden {
+  .honeypot {
     display: none;
   }
 
@@ -314,54 +249,125 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     padding: 0;
   }
 
-  /* Responsive */
-  @media (max-width: 1024px) {
-    .contact-section {
-      padding: 160px 30px 100px 30px;
-    }
-
-    .contact-inner {
-      flex-direction: column;
-      gap: 50px;
-    }
-
-    .contact-copy {
-      flex: 1 1 100%;
-    }
-
-    .contact-heading {
-      font-size: 32px;
-      line-height: 40px;
-    }
+  /* RESOURCES SECTION */
+  .resources-section {
+    width: 100%;
+    padding: 0 40px 160px 40px;
+    background: var(--surface-paper);
+    box-sizing: border-box;
   }
 
-  @media (max-width: 640px) {
-    .contact-section {
-      padding: 120px 20px 80px 20px;
+  .resources-container {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+  }
+
+  .resources-heading {
+    font-family: var(--font-sans);
+    font-size: 32px;
+    font-weight: var(--font-weight-normal);
+    letter-spacing: var(--heading-letter-spacing);
+    line-height: 1.2;
+    color: var(--text-on-paper);
+    margin: 0 0 12px 0;
+    padding: 0;
+  }
+
+  .resources-description {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-normal);
+    line-height: 24px;
+    color: var(--text-on-paper-muted);
+    margin: 0 0 40px 0;
+    padding: 0;
+  }
+
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .resource-card {
+    padding: 24px;
+    background: var(--surface-alt);
+    border: 1px solid var(--surface-alt);
+    border-radius: 8px;
+    transition: border-color 200ms ease, transform 200ms ease;
+  }
+
+  .resource-card:hover {
+    border-color: var(--stone);
+    transform: translateY(-2px);
+  }
+
+  .resource-card .resource-title {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    font-weight: var(--font-weight-medium);
+    color: var(--text-on-paper);
+    margin: 0 0 8px 0;
+    padding: 0;
+  }
+
+  .resource-card .resource-description {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: var(--font-weight-normal);
+    line-height: 20px;
+    color: var(--text-on-paper-muted);
+    margin: 0 0 16px 0;
+    padding: 0;
+  }
+
+  .resource-link {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: var(--font-weight-medium);
+    color: var(--text-on-paper);
+    display: inline-block;
+    padding: 8px 0;
+    min-height: 24px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--stone);
+    transition: color 200ms ease, border-color 200ms ease;
+  }
+
+  .resource-link:hover {
+    color: var(--text-on-paper-muted);
+    border-color: var(--text-on-paper);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .resources-section {
+      padding: 0 30px 120px 30px;
     }
 
-    .contact-inner {
-      gap: 40px;
-    }
-
-    .contact-eyebrow {
-      font-size: 12px;
-      letter-spacing: 2.4px;
-    }
-
-    .contact-heading {
+    .resources-heading {
       font-size: 28px;
-      line-height: 34px;
-    }
-
-    .contact-body,
-    .contact-highlights li {
-      font-size: 14px;
-      line-height: 22px;
     }
 
     .form-row {
       flex-direction: column;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .resources-section {
+      padding: 0 20px 100px 20px;
+    }
+
+    .resources-heading {
+      font-size: 24px;
+    }
+
+    .resources-description,
+    .resource-card .resource-description {
+      font-size: 14px;
+      line-height: 22px;
     }
 
     .topic-options {
@@ -379,13 +385,8 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
 
   /* WCAG 1.4.10 REFLOW: Below 375px, constrain copy to container */
   @media (max-width: 374px) {
-    .contact-inner {
-      padding: 0;
-    }
-
-    .contact-copy {
-      flex-basis: 100%;
-      max-width: 100%;
+    .resources-section {
+      padding: 0 20px 100px 20px;
     }
   }
 </style>

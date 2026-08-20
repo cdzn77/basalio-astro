@@ -38,7 +38,7 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
     <section class="blocks-grid-section">
       <div class="blocks-grid">
         {blocks.map((block, i) => (
-          <a href={`/blocks/${block.slug}/`} class="block-card">
+          <a href={`/blocks/${block.slug}/`} class="block-card" id={block.slug}>
             <span class="block-number">0{i + 1}</span>
             <span class="block-icon-tile" aria-hidden="true" set:html={icons[`/public/assets/icons/blocks/${block.slug}.svg`]} />
             <h2 class="block-name">{block.name}</h2>

@@ -1,6 +1,6 @@
 ---
 // CaseStudyFeature — editorial two-column feature section for a block category
-import type { BlockDemo } from '../data/blocks';
+import type { BlockMeta } from '../data/blocks';
 import EditorialLabel from './EditorialLabel.astro';
 import BlockShowcase from './BlockShowcase.astro';
 
@@ -8,7 +8,7 @@ interface Props {
   category: 'reveal' | 'sequence' | 'interaction';
   title: string;
   lead: string;
-  blocks: BlockDemo[];
+  blocks: BlockMeta[];
   surface?: 'paper' | 'alt';
 }
 

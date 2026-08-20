@@ -1,10 +1,10 @@
 ---
 // CinematicBlockChapter — full-viewport chapter for one Basalio block
-import type { BlockDemo } from '../data/blocks.ts';
+import type { BlockMeta } from '../data/blocks.ts';
 import EditorialLabel from './EditorialLabel.astro';
 
 interface Props {
-  block: BlockDemo;
+  block: BlockMeta;
   index: number;
   total: number;
   surface?: 'ink' | 'paper';

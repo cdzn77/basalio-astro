@@ -18,8 +18,8 @@ const iconFor = (id: string) => icons[`/public/assets/icons/blocks/${id}.svg`] a
         name={b.name}
         category={blockCategories[b.category]}
         tagline={b.headline}
-        href={`/blocks#${b.id}`}
-        iconSvg={iconFor(b.id)}
+        href={`/blocks#${b.slug}`}
+        iconSvg={iconFor(b.slug)}
       />
     ))
   }

@@ -1,10 +1,10 @@
 ---
 // BlockGrid — asymmetric grid of BlockShowcase cards
-import type { BlockDemo } from '../data/blocks.ts';
+import type { BlockMeta } from '../data/blocks.ts';
 import BlockShowcase from './BlockShowcase.astro';
 
 interface Props {
-  blocks: BlockDemo[];
+  blocks: BlockMeta[];
   layout?: 'masonry' | 'balanced';
 }
 

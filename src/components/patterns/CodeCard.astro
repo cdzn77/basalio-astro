@@ -5,13 +5,14 @@ interface Props {
   lang: string;
   code: string;
   index: number;
+  surface?: 'paper' | 'ink';
 }
 
-const { name, description, lang, code, index } = Astro.props;
+const { name, description, lang, code, index, surface = 'paper' } = Astro.props;
 const codeId = `hack-code-${index}`;
 ---
 
-<article class="code-card">
+<article class:list={['code-card', { 'code-card-ink': surface === 'ink' }]}>
   <div class="code-card-header">
     <div class="code-card-meta">
       <span class="code-card-index">HACK 0{index + 1}</span>
@@ -62,6 +63,54 @@ const codeId = `hack-code-${index}`;
     border-radius: 8px;
     overflow: hidden;
     height: 100%;
+  }
+
+  .code-card-ink {
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .code-card-ink .code-card-index,
+  .code-card-ink .code-card-lang {
+    color: var(--text-on-ink-muted);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .code-card-ink .code-card-name {
+    color: var(--text-on-ink);
+  }
+
+  .code-card-ink .code-card-desc {
+    color: var(--text-on-ink-muted);
+  }
+
+  .code-card-ink .code-card-body {
+    background: rgba(0, 0, 0, 0.35);
+    border-top-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .code-card-ink .code-card-pre {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .code-card-ink .copy-code-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-on-ink);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .code-card-ink .copy-code-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .code-card-ink .copy-code-btn.copied {
+    background: var(--acid);
+    color: var(--text-on-acid);
+    border-color: var(--acid);
+  }
+
+  .code-card-ink .copy-code-btn:focus-visible {
+    outline-color: var(--acid);
   }
 
   .code-card-header {
@@ -126,7 +175,7 @@ const codeId = `hack-code-${index}`;
     font-family: var(--font-mono);
     font-size: 12px;
     line-height: 1.6;
-    color: var(--text-on-paper);
+    color: rgba(255, 255, 255, 0.85);
     overflow-x: auto;
     white-space: pre;
     word-wrap: normal;

@@ -109,8 +109,8 @@ const { surface = 'paper' } = Astro.props;
         threshold: [0, 0.1, 0.25, 0.5, 0.75, 1.0]
       });
 
-      // Observe all sections with data-surface attribute
-      document.querySelectorAll('section[data-surface]').forEach(section => {
+      // Observe all elements with data-surface attribute (sections + footer)
+      document.querySelectorAll('[data-surface]').forEach(section => {
         observer.observe(section);
       });
     };
@@ -289,6 +289,28 @@ const { surface = 'paper' } = Astro.props;
   }
 
   .header-container[data-surface='alt'] .menu-item:hover {
+    color: var(--acid);
+  }
+
+  /* Acid surface (footer): dark logo/button/dropdown for contrast against yellow */
+  .header-container[data-surface='acid'] .brand-logo {
+    color: rgb(0, 0, 0);
+  }
+
+  .header-container[data-surface='acid'] .menu-btn {
+    background: var(--surface-ink);
+    color: var(--text-on-ink);
+  }
+
+  .header-container[data-surface='acid'] .menu-dropdown {
+    background: var(--surface-ink);
+  }
+
+  .header-container[data-surface='acid'] .menu-item {
+    color: var(--surface-paper);
+  }
+
+  .header-container[data-surface='acid'] .menu-item:hover {
     color: var(--acid);
   }
 

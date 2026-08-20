@@ -54,19 +54,31 @@ const { surface = 'paper' } = Astro.props;
     });
   }
 
-  // Surface tracking: update header based on which section is under the header
-  const headerContainer = document.querySelector('.header-container');
+  // Surface tracking: update header based on which section is under the header.
+  // Runs after DOMContentLoaded so the sections we observe are already parsed.
+  const initHeaderSurface = () => {
+    const headerContainer = document.querySelector('.header-container');
+    if (!headerContainer) return;
 
-  if (headerContainer) {
     // Calculate header height dynamically
     const getHeaderHeight = () => {
       const header = document.querySelector('.base-header');
       return header?.offsetHeight || 80;
     };
 
+    // Preserve the surface set by the server / initial prop; only change when a
+    // different section is clearly occupying the area below the header.
+    let currentSurface = headerContainer.getAttribute('data-surface') || 'paper';
+
+    const setSurface = (surface) => {
+      currentSurface = surface;
+      headerContainer.setAttribute('data-surface', surface);
+      const baseHeader = document.querySelector('.base-header');
+      if (baseHeader) baseHeader.setAttribute('data-surface', surface);
+    };
+
     const updateHeaderSurface = (entries) => {
-      // Find which section is occupying the header's band
-      // Sections that are visible in the header's area win
+      // Find which section is most visible in the band just below the header.
       const visibleSections = entries
         .filter(entry => entry.isIntersecting)
         .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
@@ -74,25 +86,26 @@ const { surface = 'paper' } = Astro.props;
       if (visibleSections.length > 0) {
         const section = visibleSections[0].target;
         const surface = section.getAttribute('data-surface') || 'paper';
-        headerContainer.setAttribute('data-surface', surface);
-        // Sync to .base-header so CSS selectors can apply surface-aware styles
-        const baseHeader = document.querySelector('.base-header');
-        if (baseHeader) baseHeader.setAttribute('data-surface', surface);
-      } else {
-        // Fallback to paper if no sections are visible
-        headerContainer.setAttribute('data-surface', 'paper');
-        const baseHeader = document.querySelector('.base-header');
-        if (baseHeader) baseHeader.setAttribute('data-surface', 'paper');
+        if (surface !== currentSurface) {
+          setSurface(surface);
+        }
       }
     };
 
-    // Create observer with rootMargin tuned to header height
+    // Observe a band that starts just below the header and covers the top 40%
+    // of the viewport. This catches the hero even though body padding pushes
+    // sections down from the very top.
     let observer;
     const createObserver = () => {
       const headerHeight = getHeaderHeight();
+      const bandStart = headerHeight + 1;
+      const bandEnd = Math.round(window.innerHeight * 0.4);
+      const topMargin = -bandStart;
+      const bottomMargin = -(window.innerHeight - bandEnd);
+
       observer = new IntersectionObserver(updateHeaderSurface, {
         root: null,
-        rootMargin: `-${headerHeight}px 0px -${window.innerHeight - headerHeight}px 0px`,
+        rootMargin: `${topMargin}px 0px ${bottomMargin}px 0px`,
         threshold: [0, 0.1, 0.25, 0.5, 0.75, 1.0]
       });
 
@@ -109,6 +122,12 @@ const { surface = 'paper' } = Astro.props;
       if (observer) observer.disconnect();
       createObserver();
     });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeaderSurface);
+  } else {
+    initHeaderSurface();
   }
 </script>
 
@@ -207,7 +226,7 @@ const { surface = 'paper' } = Astro.props;
     background: var(--surface-ink);
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 20px 0px;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 16px 34px 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -221,6 +240,32 @@ const { surface = 'paper' } = Astro.props;
     pointer-events: none;
     transition: opacity 0.3s ease, visibility 0.3s ease;
     z-index: 10;
+  }
+
+  /* Ink surface (dark background): light dropdown with dark text */
+  .header-container[data-surface='ink'] .menu-dropdown {
+    background: var(--surface-paper);
+  }
+
+  .header-container[data-surface='ink'] .menu-item {
+    color: var(--text-on-paper);
+  }
+
+  .header-container[data-surface='ink'] .menu-item:hover {
+    color: var(--acid);
+  }
+
+  /* Paper surface (light background): dark dropdown with light text */
+  .header-container[data-surface='paper'] .menu-dropdown {
+    background: var(--surface-ink);
+  }
+
+  .header-container[data-surface='paper'] .menu-item {
+    color: var(--surface-paper);
+  }
+
+  .header-container[data-surface='paper'] .menu-item:hover {
+    color: var(--acid);
   }
 
   .menu-dropdown.active {

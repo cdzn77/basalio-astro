@@ -6,12 +6,28 @@ export interface FAQ {
 export function getFaqs(postCapPrice: string, proShipTarget: string): FAQ[] {
   return [
     {
-      question: "Do the nine blocks stay free?",
-      answer: `Yes. All nine, complete, on WordPress.org, forever. No block gets moved behind Pro later. Free is not a trial and the free tier is not a countdown.`
+      question: "Do the nine blocks really stay free?",
+      answer: `Yes. The blocks ship on WordPress.org under GPL-2.0-or-later: no locked blocks, no watermarks, no instance limits. Free is not a trial. Nothing in the free version expires or gets pulled into Pro later.`
     },
     {
-      question: "It's GPL - why pay for it?",
-      answer: `You're not paying for permission; the license already grants that. You're paying for the Hacks vault, the sidebar, and the ongoing work of testing against every WordPress release before it lands. The code is free. Someone maintaining it isn't.`
+      question: "What does the founder license actually buy?",
+      answer: `The Pro layer: a control center in the editor sidebar for live-tuning all nine blocks, the full Hacks vault, one-click hack-trailer effects, and every future block. One payment, unlimited sites, refundable until the control center ships.`
+    },
+    {
+      question: "Does it work with my theme?",
+      answer: `Yes. Basalio blocks are native WordPress blocks. They work with any block theme or classic theme running the block editor. No page builder, no premium theme required.`
+    },
+    {
+      question: "Is it actually lightweight?",
+      answer: `A single shared script loads only on pages that use a block, and only the blocks on that page are initialized. There is no runtime framework, no jQuery, and no global stylesheet overriding your theme.`
+    },
+    {
+      question: "What happens to my content if I uninstall?",
+      answer: `Your content stays intact. Blocks degrade to static, semantic markup. Grids stay grids, text stays text. Nothing is stored in a proprietary format.`
+    },
+    {
+      question: "It's GPL. Why pay for it?",
+      answer: `You are paying for the control center, the Hacks vault, and a direct line to the person building it. Not for permission to use code you could already fork. If Basalio disappears tomorrow, what you have keeps working.`
     },
     {
       question: "How many sites?",
@@ -20,18 +36,6 @@ export function getFaqs(postCapPrice: string, proShipTarget: string): FAQ[] {
     {
       question: "What happens after the 100 founder licenses?",
       answer: `Price goes to ${postCapPrice}. Founder licenses stay valid, keep every future block and Hack, and are never re-billed.`
-    },
-    {
-      question: "What if my license lapses?",
-      answer: `Licenses don't lapse. Founder and standard are both one payment with no renewal and no re-billing. Everything you've built keeps working, and you keep receiving updates to the nine blocks and the Hacks vault.`
-    },
-    {
-      question: "Does my content break if I uninstall?",
-      answer: `No. Basalio is theme-agnostic and your content survives uninstall. The interactions stop; the content stays.`
-    },
-    {
-      question: "Is it actually lightweight?",
-      answer: `One shared script, loaded only on pages that use a block. No jQuery, no framework, no bundle you didn't ask for.`
     },
     {
       question: "When does Pro ship?",

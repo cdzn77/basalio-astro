@@ -84,7 +84,7 @@ const founderTier: PricingTier = {
   billing: 'one time',
   oneLiner: 'The Pro control center and the full Hacks vault.',
   teaser: `100 founder licenses at ${FOUNDER_PRICE}, then ${POST_CAP_PRICE}.`,
-  leadLine: 'Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently — and refundable until the control center ships.',
+  leadLine: 'Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently, and refundable until the control center ships.',
   features: [
     'Full Hacks vault. Five recipes in development, included as they ship.',
     'Pro control center: live-tune all nine blocks from the editor sidebar',

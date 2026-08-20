@@ -8,7 +8,7 @@ let charIndex = 0;
 ---
 
 <div class="sample-tr-root" data-sample-tr-root>
-  <StageShell label="TEXT REVEAL — LIVE" showReplay={true}>
+  <StageShell label="TEXT REVEAL / LIVE" showReplay={true}>
     <div class="sample-tr-stage">
       <p class="sample-tr-line sample-display" aria-label={LINE}>
         {
@@ -35,8 +35,13 @@ let charIndex = 0;
 
 <script is:inline>
   (function () {
-    const root = document.currentScript?.previousElementSibling;
+    const script = document.currentScript;
+    let root = script?.previousElementSibling;
+    while (root && !root.matches('[data-sample-tr-root]')) {
+      root = root.previousElementSibling;
+    }
     if (!root) return;
+
     const stage = root.querySelector('[data-sample-stage]');
     const line = root.querySelector('.sample-tr-line');
     if (!stage || !line) return;
@@ -48,8 +53,19 @@ let charIndex = 0;
     }
 
     function replay() {
+      const chars = Array.from(line.querySelectorAll('.sample-tr-char'));
       line.classList.remove('sample-tr-on');
+      chars.forEach((ch) => {
+        ch.style.transition = 'none';
+        ch.style.opacity = '0';
+        ch.style.transform = 'translateY(0.6em) rotate(4deg)';
+      });
       void line.offsetWidth;
+      chars.forEach((ch) => {
+        ch.style.transition = '';
+        ch.style.opacity = '';
+        ch.style.transform = '';
+      });
       reveal();
     }
 

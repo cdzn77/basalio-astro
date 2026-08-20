@@ -125,14 +125,9 @@ const ogImage = new URL('/assets/basalio-hero-poster.webp', Astro.site || siteOr
   }
 
   .base-header.scrolled {
-    background: transparent;
-    backdrop-filter: blur(12px);
-  }
-
-  /* Tint overlay for paper surfaces only (gated by data-surface attribute) */
-  .base-header[data-surface="paper"].scrolled {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(12px) saturate(160%);
+    backdrop-filter: blur(12px) saturate(160%);
   }
 
   .base-main {
@@ -144,24 +139,5 @@ const ogImage = new URL('/assets/basalio-hero-poster.webp', Astro.site || siteOr
   .base-footer {
     position: relative;
     z-index: 1;
-  }
-
-  /* Sticky footer reveal on desktop/large tablet (min-width 900px and min-height 800px) */
-  @media (min-width: 900px) and (min-height: 800px) {
-    .base-footer {
-      position: sticky;
-      bottom: 0;
-      z-index: 1;
-    }
-  }
-
-  /* Footer overlap effect - automatically applied to last section via structural selector */
-  /* Uses :last-of-type to skip <script> tags injected by Astro */
-  /* Pages must declare background-color on their last section (white for light, --surface-ink for dark) */
-  .base-main > section:last-of-type {
-    border-radius: 0 0 40px 40px !important;
-    margin-bottom: -40px !important;
-    position: relative;
-    z-index: 2;
   }
 </style>

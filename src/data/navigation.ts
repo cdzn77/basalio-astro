@@ -26,7 +26,7 @@ export const footerNav = {
 };
 
 export const footerCopy = {
-  description: 'Nine interaction blocks for WordPress portfolios. Nothing you would need Framer for.',
+  description: 'Nine interaction blocks for WordPress portfolios. No Framer required.',
   newsletterHeading: 'STAY IN THE LOOP',
   newsletterBody: 'Get notified when a new block ships. No spam, unsubscribe anytime.',
   tagline: 'Built for portfolios. Nothing else.',

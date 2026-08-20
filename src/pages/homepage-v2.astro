@@ -14,7 +14,7 @@ import { pricingTiers, FOUNDER_PRICE, POST_CAP_PRICE } from '../data/pricing';
 
 const title = 'Cinematic Block Gallery';
 const description =
-  'A cinematic homepage demo for Basalio — nine interaction blocks, one full-viewport chapter at a time.';
+  'A cinematic homepage demo for Basalio. Nine interaction blocks, one full-viewport chapter at a time.';
 
 const paidTier = pricingTiers.find((t) => t.id === 'paid');
 const ctaHref = paidTier?.cta?.href || '/early-access';
@@ -83,7 +83,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
         <h2 class="closing-headline">Get the Pro control center at founder pricing.</h2>
         <p class="closing-body">
           {paidTier?.leadLine ||
-            `Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently — and refundable until the control center ships.`}
+            `Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently, and refundable until the control center ships.`}
         </p>
       </div>
       <div class="closing-card">

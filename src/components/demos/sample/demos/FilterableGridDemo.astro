@@ -24,7 +24,7 @@ const GRADIENTS = [
 ---
 
 <div class="sample-fg-root" data-sample-fg-root>
-  <StageShell label="FILTERABLE GRID — LIVE">
+  <StageShell label="FILTERABLE GRID / LIVE">
     <div class="sample-fg-stage">
       <div class="sample-fg-tabs" role="tablist" aria-label="Filter work" data-sample-fg-tabs>
         {
@@ -74,7 +74,11 @@ const GRADIENTS = [
 
 <script is:inline>
   (function () {
-    const root = document.currentScript?.previousElementSibling;
+    const script = document.currentScript;
+    let root = script?.previousElementSibling;
+    while (root && !root.matches('[data-sample-fg-root]')) {
+      root = root.previousElementSibling;
+    }
     if (!root) return;
 
     const tabs = root.querySelectorAll('[data-sample-fg-tab]');
@@ -94,7 +98,14 @@ const GRADIENTS = [
         items.forEach((item) => {
           const cat = item.dataset.category;
           const show = filter === 'All' || cat === filter;
+          const wasHidden = item.classList.contains('is-hidden');
           item.classList.toggle('is-hidden', !show);
+          if (show && wasHidden) {
+            // Restart the entrance animation for newly revealed items
+            item.style.animation = 'none';
+            void item.offsetWidth;
+            item.style.animation = '';
+          }
         });
       });
     });
@@ -158,19 +169,22 @@ const GRADIENTS = [
     overflow: hidden;
     border: 1px solid var(--overlay-light-10);
     border-radius: 12px;
-    opacity: 1;
-    transform: scale(1);
-    filter: saturate(1);
-    transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-                transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-                filter 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: var(--d, 0ms);
+    animation: sample-fg-pop 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   .sample-fg-item.is-hidden {
-    opacity: 0.12;
-    transform: scale(0.9);
-    filter: saturate(0);
+    display: none;
+  }
+
+  @keyframes sample-fg-pop {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
   .sample-fg-item-top {

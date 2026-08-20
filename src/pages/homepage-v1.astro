@@ -33,7 +33,7 @@ import { getFaqs } from '../data/faq';
 
 const faqs = getFaqs(POST_CAP_PRICE, proShipTarget);
 
-const title = 'Basalio — Interaction blocks for WordPress';
+const title = 'Basalio | Interaction blocks for WordPress';
 const description = 'Framer-quality interactions, native to WordPress. Nine curated interaction blocks for portfolio and case-study sites.';
 
 const paidTier = pricingTiers.find((t) => t.id === 'paid');
@@ -43,7 +43,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
 
 <BaseLayout {title} {description} noindex>
   <Fragment slot="header">
-    <Header />
+    <Header surface="ink" />
   </Fragment>
 
   <!-- 1. HERO: Full-viewport dark manifesto with editor shot -->
@@ -52,13 +52,14 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
       <div class="sample-hero-glow sample-hero-glow-1" aria-hidden="true"></div>
       <div class="sample-hero-glow sample-hero-glow-2" aria-hidden="true"></div>
       <div class="sample-hero-text">
-        <p class="sample-mono-label sample-hero-eyebrow">A WordPress plugin for creatives</p>
+        <p class="sample-mono-label sample-hero-eyebrow">For WordPress. Not a page builder.</p>
         <h1 class="sample-hero-headline">Framer-quality interactions, native to WordPress.</h1>
-        <p class="sample-hero-body">Nine curated interaction blocks built only for portfolio and case-study sites. No page builder, no premium theme, no circus.</p>
+        <p class="sample-hero-body">Give your work a foundation to stand on. Nine curated interaction blocks, from grid reveals to case-study transitions to scroll-tied sequences, built only for portfolio and case-study sites.</p>
         <div class="sample-hero-ctas">
           <Button variant="acid" label="Explore the blocks" href="/blocks" />
           <a href="/pricing" class="sample-hero-cta-secondary">Pricing</a>
         </div>
+        <p class="sample-hero-trust">GPL-2.0 · No lock-in · Keyboard-operable by default</p>
       </div>
       <div class="sample-hero-shot">
         <EditorShot />
@@ -78,8 +79,8 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     <div class="sample-blocks-inner reveal">
       <div class="sample-blocks-header">
         <p class="sample-mono-label sample-blocks-eyebrow">The blocks</p>
-        <h2 class="sample-blocks-headline">Nine blocks. One plugin.</h2>
-        <p class="sample-blocks-description">Every block is native WordPress — no embeds, no iframes, no page-builder lock-in.</p>
+        <h2 class="sample-blocks-headline">Nine blocks. Nothing you don't need.</h2>
+        <p class="sample-blocks-description">Each block solves one specific problem. No bloat, no learning curve, and every one is keyboard-operable and reduced-motion aware. That isn't a Pro feature. That's the floor.</p>
       </div>
       <BlockCardGrid />
     </div>
@@ -135,7 +136,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
       <Stats items={[
         { value: 9, label: 'Blocks, not 90' },
         { value: 1, label: 'Plugin, zero page-builder lock-in' },
-        { value: 0, label: 'Generic presets — only opinionated ones' },
+        { value: 0, label: 'Generic presets. Only opinionated ones.' },
         { value: 100, label: 'Founder licenses at $149, then $249' },
       ]} />
     </div>
@@ -152,20 +153,20 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
   <section class="sample-faq-section" data-surface="paper">
     <div class="sample-faq-inner reveal">
       <div class="sample-faq-header">
-        <p class="sample-faq-eyebrow">FAQ</p>
-        <h2 class="sample-faq-headline">Questions, answered.</h2>
+        <p class="sample-faq-eyebrow">Questions</p>
+        <h2 class="sample-faq-headline">Asked before you did.</h2>
       </div>
       <Faq items={faqs} />
     </div>
   </section>
 
-  <!-- 9. FOUNDER PRICING CTA: Acid band with clear pricing and CTA -->
-  <section class="pricing-section" data-surface="acid">
+  <!-- 9. FOUNDER PRICING CTA: Ink band so the acid card pops and separates from the acid footer -->
+  <section class="pricing-section" data-surface="ink">
     <div class="pricing-inner reveal">
       <div class="pricing-text">
         <p class="pricing-eyebrow">Founder pricing</p>
         <h2 class="pricing-headline">Get the Pro control center at founder pricing.</h2>
-        <p class="pricing-body">{paidTier?.leadLine || `Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently — and refundable until the control center ships.`}</p>
+        <p class="pricing-body">{paidTier?.leadLine || `Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently, and refundable until the control center ships.`}</p>
       </div>
       <div class="pricing-card">
         <p class="pricing-label">{paidTier?.label || 'FOUNDER · 100 LICENSES'}</p>
@@ -228,9 +229,10 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
   .sample-hero {
     position: relative;
     width: 100%;
-    min-height: calc(100vh - 80px);
+    min-height: auto;
     background-color: var(--surface-ink);
-    padding: 80px 40px 40px;
+    padding: 230px 40px 80px;
+    margin-top: -80px;
     box-sizing: border-box;
     display: flex;
     overflow: hidden;
@@ -244,7 +246,6 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     display: flex;
     flex-direction: column;
     gap: 56px;
-    overflow: hidden;
   }
 
   .sample-hero-glow {
@@ -311,6 +312,15 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     margin-top: 8px;
   }
 
+  .sample-hero-trust {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-on-ink-muted);
+    margin: 0;
+  }
+
   .sample-hero-cta-secondary {
     display: inline-flex;
     align-items: center;
@@ -338,8 +348,8 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     position: relative;
     z-index: 1;
     width: 100%;
-    flex: 1;
-    min-height: 0;
+    max-width: min(900px, 90%);
+    margin: 0 auto;
   }
 
   /* ---------- MARQUEE ---------- */
@@ -487,7 +497,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
   /* ---------- FOUNDER PRICING CTA ---------- */
   .pricing-section {
     width: 100%;
-    background-color: var(--acid);
+    background-color: var(--surface-ink);
     padding: 120px 40px;
     box-sizing: border-box;
   }
@@ -517,7 +527,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--text-on-acid-muted);
+    color: var(--text-on-ink-muted);
     margin: 0;
   }
 
@@ -527,7 +537,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     font-weight: var(--font-weight-bold);
     line-height: var(--line-height-tight);
     letter-spacing: var(--heading-letter-spacing);
-    color: var(--text-on-acid);
+    color: var(--text-on-ink);
     margin: 0;
     text-wrap: balance;
   }
@@ -535,13 +545,13 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
   .pricing-body {
     font-size: var(--font-size-body);
     line-height: var(--line-height-relaxed);
-    color: var(--text-on-acid-muted);
+    color: var(--text-on-ink-muted);
     margin: 0;
     max-width: 560px;
   }
 
   .pricing-card {
-    background-color: var(--surface-paper);
+    background-color: var(--acid);
     border-radius: 8px;
     padding: 40px;
     display: flex;
@@ -557,7 +567,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     font-weight: var(--label-weight);
     letter-spacing: var(--label-letter-spacing);
     text-transform: uppercase;
-    color: var(--text-on-paper);
+    color: var(--text-on-acid);
     margin: 0;
   }
 
@@ -567,20 +577,20 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     font-weight: var(--font-weight-bold);
     line-height: 1;
     letter-spacing: var(--heading-letter-spacing);
-    color: var(--text-on-paper);
+    color: var(--text-on-acid);
     margin: 0;
   }
 
   .pricing-billing {
     font-size: var(--font-size-body);
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-acid-muted);
     margin: 0;
   }
 
   .pricing-teaser {
     font-size: var(--font-size-body);
     font-style: italic;
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-acid-muted);
     margin: 0 0 12px;
   }
 
@@ -590,7 +600,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
 
   .pricing-micro {
     font-size: var(--font-size-14);
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-acid-muted);
     margin: 8px 0 0;
   }
 
@@ -618,7 +628,8 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
   @media (max-width: 768px) {
     .sample-hero {
       min-height: auto;
-      padding: 60px 20px 40px;
+      padding: 180px 20px 60px;
+      margin-top: -80px;
     }
 
     .sample-hero-headline {

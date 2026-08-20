@@ -93,6 +93,8 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--surface-ink);
+  overscroll-behavior-y: none;
 }
 
 body {
@@ -331,16 +333,6 @@ figcaption {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-/* Footer overlap effect – structural only, applied to all pages
-   Uses :last-of-type to skip <script> tags injected by Astro
-   Each page declares only background-color on its last section */
-.base-main > section:last-of-type {
-  border-radius: 0 0 40px 40px;
-  margin-bottom: -40px;
-  position: relative;
-  z-index: 2;
 }
 
 /* Hero surface-aware colors – global rules to reach slotted content across scopes

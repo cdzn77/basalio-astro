@@ -22,7 +22,7 @@ const GRADIENTS = [
 ---
 
 <div class="sample-gr-root" data-sample-gr-root>
-  <StageShell label="GRID REVEAL — LIVE" showReplay={true}>
+  <StageShell label="GRID REVEAL / LIVE" showReplay={true}>
     <div class="sample-gr-grid">
       {
         GR_ITEMS.map(([title, subtitle], i) => (
@@ -50,8 +50,13 @@ const GRADIENTS = [
 
 <script is:inline>
   (function () {
-    const root = document.currentScript?.previousElementSibling;
+    const script = document.currentScript;
+    let root = script?.previousElementSibling;
+    while (root && !root.matches('[data-sample-gr-root]')) {
+      root = root.previousElementSibling;
+    }
     if (!root) return;
+
     const stage = root.querySelector('[data-sample-stage]');
     const grid = root.querySelector('.sample-gr-grid');
     if (!stage || !grid) return;
@@ -63,8 +68,19 @@ const GRADIENTS = [
     }
 
     function replay() {
+      const items = Array.from(grid.querySelectorAll('.sample-gr-item'));
       grid.classList.remove('sample-gr-on');
+      items.forEach((item) => {
+        item.style.transition = 'none';
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(26px) scale(0.92)';
+      });
       void grid.offsetWidth;
+      items.forEach((item) => {
+        item.style.transition = '';
+        item.style.opacity = '';
+        item.style.transform = '';
+      });
       reveal();
     }
 

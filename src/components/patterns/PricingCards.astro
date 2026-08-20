@@ -4,13 +4,14 @@ import { pricingTiers, POST_CAP_PRICE } from '../../data/pricing';
 interface Props {
   variant: 'compact' | 'full';
   level?: 'h2' | 'h3' | 'h4';
+  surface?: 'paper' | 'ink';
 }
 
-const { variant, level = 'h3' } = Astro.props;
+const { variant, level = 'h3', surface = 'paper' } = Astro.props;
 const Tag = level;
 ---
 
-<div class="pricing-wrapper">
+<div class:list={['pricing-wrapper', { 'pricing-wrapper-ink': surface === 'ink' }]}>
   <div class="pricing-cards-grid">
     {pricingTiers.map((tier) => (
     <div
@@ -135,6 +136,7 @@ const Tag = level;
     margin: 0 auto;
     padding: 0 32px;
     box-sizing: border-box;
+    align-items: stretch;
   }
 
   .pricing-card {
@@ -144,6 +146,13 @@ const Tag = level;
     border-radius: 8px;
     padding: 32px;
     gap: 24px;
+    flex: 1 1 auto;
+  }
+
+  .pricing-wrapper-ink .pricing-card {
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px) saturate(140%);
   }
 
   .pricing-card.featured {
@@ -173,6 +182,51 @@ const Tag = level;
   .pricing-card.featured .micro-line {
     font-size: 11px;
     font-weight: var(--font-weight-medium);
+  }
+
+  .pricing-wrapper-ink .tier-label,
+  .pricing-wrapper-ink .card-name,
+  .pricing-wrapper-ink .price,
+  .pricing-wrapper-ink .billing,
+  .pricing-wrapper-ink .teaser,
+  .pricing-wrapper-ink .one-liner,
+  .pricing-wrapper-ink .lead-line,
+  .pricing-wrapper-ink .feature-item,
+  .pricing-wrapper-ink .footnote,
+  .pricing-wrapper-ink .micro-line {
+    color: var(--text-on-ink);
+  }
+
+  .pricing-wrapper-ink .billing,
+  .pricing-wrapper-ink .teaser,
+  .pricing-wrapper-ink .one-liner,
+  .pricing-wrapper-ink .feature-item,
+  .pricing-wrapper-ink .footnote,
+  .pricing-wrapper-ink .micro-line {
+    color: var(--text-on-ink-muted);
+  }
+
+  .pricing-wrapper-ink .feature-item::before {
+    color: var(--text-on-ink);
+  }
+
+  .pricing-wrapper-ink .card-footer {
+    border-top-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .pricing-wrapper-ink .cta-button {
+    background: var(--acid);
+    color: var(--text-on-acid);
+  }
+
+  .pricing-wrapper-ink .pricing-card.featured {
+    background: var(--acid);
+    border-color: var(--acid);
+  }
+
+  .pricing-wrapper-ink .pricing-card.featured .cta-button {
+    background: var(--text-on-paper);
+    color: var(--surface-paper);
   }
 
   .card-header {
@@ -237,6 +291,7 @@ const Tag = level;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    flex: 1 1 auto;
   }
 
   .one-liner {
@@ -282,6 +337,7 @@ const Tag = level;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-top: auto;
   }
 
   .cta-button {

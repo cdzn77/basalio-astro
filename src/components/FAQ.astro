@@ -18,7 +18,7 @@ interface Props {
 const {
   faqs,
   heading = "FAQ",
-  backgroundColor = "var(--text-on-paper)",
+  backgroundColor = "var(--surface-ink)",
   surface = 'paper'
 } = Astro.props;
 
@@ -74,7 +74,7 @@ const faqDataJson = JSON.stringify(faqs);
   }
 
   .faq-ink {
-    background-color: var(--surface-ink) !important;
+    background-color: var(--surface-ink);
   }
 
   .faq-ink .faq-card {
@@ -95,15 +95,15 @@ const faqDataJson = JSON.stringify(faqs);
   }
 
   .faq-ink .faq-icon:hover {
-    background-color: var(--acid) !important;
+    background-color: var(--acid);
   }
 
   .faq-ink .faq-icon:hover svg {
-    fill: var(--text-on-paper) !important;
+    fill: var(--text-on-paper);
   }
 
   .faq-ink .faq-answer {
-    color: var(--text-on-ink-muted) !important;
+    color: var(--text-on-ink-muted);
     border-top-color: rgba(255, 255, 255, 0.1);
   }
 

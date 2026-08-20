@@ -39,7 +39,7 @@ const iconSvg = icons[`/public/assets/icons/blocks/${block.slug}.svg`] as string
     </div>
   </HeaderSplit>
 
-  <section class="block-demo-section" data-surface="alt">
+  <section class="block-demo-section" data-surface="ink">
     <div class="block-demo-inner">
       <div class="demo-stage">
         <slot name="demo" />
@@ -55,7 +55,7 @@ const iconSvg = icons[`/public/assets/icons/blocks/${block.slug}.svg`] as string
     </div>
   </section>
 
-  <section class="block-accessibility-section" data-surface="alt">
+  <section class="block-accessibility-section" data-surface="ink">
     <div class="block-accessibility-inner">
       <span class="accessibility-icon" aria-hidden="true">✓</span>
       <p><strong>Accessible:</strong> {block.accessibility}</p>

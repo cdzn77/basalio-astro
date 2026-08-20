@@ -37,9 +37,14 @@ const categories = [
       { question: "What happens if I uninstall Basalio?", answer: "Your blocks degrade to static, semantic markup. Grids stay grids; text stays text. Nothing breaks." },
     ]
   },
+  {
+    title: "Common errors",
+    faqs: [
+      { question: "Why does my block look different on the front end?", answer: "Some themes add extra CSS that conflicts with block styles. Try switching to a default WordPress theme temporarily to isolate the conflict, or check your custom CSS for rules that override Basalio classes." },
+      { question: "Can I use Basalio with a page builder?", answer: "Basalio blocks are native WordPress blocks. They work best inside the block editor. Page-builder shortcode or widget areas may not support all block features." },
+    ]
+  },
 ];
-
-const allFaqs = categories.flatMap((c) => c.faqs);
 ---
 
 <BaseLayout {title} {description}>
@@ -61,11 +66,13 @@ const allFaqs = categories.flatMap((c) => c.faqs);
       </div>
     </HeaderSplit>
 
-    <section class="support-faq-section">
-      <div class="support-faq-inner">
-        <FAQ faqs={allFaqs} heading="Common issues" surface="ink" />
-      </div>
-    </section>
+    {categories.map((category) => (
+      <section class="support-faq-section">
+        <div class="support-faq-inner">
+          <FAQ faqs={category.faqs} heading={category.title} surface="ink" />
+        </div>
+      </section>
+    ))}
 
     <section class="support-contact-section">
       <div class="support-contact-inner glass">

@@ -39,14 +39,34 @@ const surfaceVars = {
   },
 }[surface];
 
-const statusStyles = {
-  'LIVE': { bg: 'var(--acid)', text: 'var(--text-on-acid)' },
-  'IN PROGRESS': { bg: 'transparent', text: 'var(--text-on-paper)', border: '1px solid var(--text-on-paper-muted)' },
-  'PLANNED': { bg: 'var(--stone)', text: 'var(--text-on-paper)' },
-  'IN TESTING': { bg: 'transparent', text: 'var(--text-on-paper)', border: '1px solid var(--text-on-paper-muted)' },
-  'NOT STARTED': { bg: 'transparent', text: 'var(--text-on-paper)', border: '1px solid var(--text-on-paper-muted)' },
-  'ONGOING': { bg: 'transparent', text: 'var(--text-on-paper)', border: '1px solid var(--text-on-paper-muted)' },
+const statusStylesBySurface = {
+  paper: {
+    'LIVE': { bg: 'var(--acid)', text: 'var(--text-on-acid)' },
+    'IN PROGRESS': { bg: 'transparent', text: 'var(--text-on-paper)', border: '1px solid var(--text-on-paper-muted)' },
+    'PLANNED': { bg: 'var(--stone)', text: 'var(--text-on-paper)' },
+    'IN TESTING': { bg: 'transparent', text: 'var(--text-on-paper)', border: '1px solid var(--text-on-paper-muted)' },
+    'NOT STARTED': { bg: 'transparent', text: 'var(--text-on-paper)', border: '1px solid var(--text-on-paper-muted)' },
+    'ONGOING': { bg: 'transparent', text: 'var(--text-on-paper)', border: '1px solid var(--text-on-paper-muted)' },
+  },
+  ink: {
+    'LIVE': { bg: 'var(--acid)', text: 'var(--text-on-acid)' },
+    'IN PROGRESS': { bg: 'transparent', text: 'var(--text-on-ink)', border: '1px solid rgba(255, 255, 255, 0.35)' },
+    'PLANNED': { bg: 'var(--stone)', text: 'var(--text-on-paper)' },
+    'IN TESTING': { bg: 'transparent', text: 'var(--text-on-ink)', border: '1px solid rgba(255, 255, 255, 0.35)' },
+    'NOT STARTED': { bg: 'transparent', text: 'var(--text-on-ink)', border: '1px solid rgba(255, 255, 255, 0.35)' },
+    'ONGOING': { bg: 'transparent', text: 'var(--text-on-ink)', border: '1px solid rgba(255, 255, 255, 0.35)' },
+  },
+  alt: {
+    'LIVE': { bg: 'var(--acid)', text: 'var(--text-on-acid)' },
+    'IN PROGRESS': { bg: 'transparent', text: 'var(--text-on-paper)', border: '1px solid var(--text-on-paper-muted)' },
+    'PLANNED': { bg: 'var(--stone)', text: 'var(--text-on-paper)' },
+    'IN TESTING': { bg: 'transparent', text: 'var(--text-on-paper)', border: '1px solid var(--text-on-paper-muted)' },
+    'NOT STARTED': { bg: 'transparent', text: 'var(--text-on-paper)', border: '1px solid var(--text-on-paper-muted)' },
+    'ONGOING': { bg: 'transparent', text: 'var(--text-on-paper)', border: '1px solid var(--text-on-paper-muted)' },
+  },
 };
+
+const statusStyles = statusStylesBySurface[surface];
 ---
 
 <section class="ledger" style={`--ledger-bg: ${surfaceVars.bg}; --ledger-text: ${surfaceVars.text}; --ledger-text-muted: ${surfaceVars.textMuted}; --ledger-border: ${surfaceVars.border};`}>

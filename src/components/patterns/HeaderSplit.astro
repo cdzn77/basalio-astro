@@ -30,7 +30,7 @@ const surfaceClass = {
 const bodyArray = Array.isArray(body) ? body : [body];
 ---
 
-<section class="header-split" style={`background: ${surfaceClass};`}>
+<section class="header-split" data-surface={surface} style={`background: ${surfaceClass};`}>
   <div class="header-split-inner">
     <!-- LEFT: Eyebrow, heading, body -->
     <div class="header-split-left">
@@ -121,6 +121,26 @@ const bodyArray = Array.isArray(body) ? body : [body];
     color: var(--text-on-paper-muted);
     margin: 0;
     padding: 0;
+  }
+
+  .header-split[data-surface="ink"] .eyebrow,
+  .header-split[data-surface="ink"] .heading,
+  .header-split[data-surface="ink"] .body p,
+  .header-split[data-surface="ink"] .hero-right-heading,
+  .header-split[data-surface="ink"] .hero-right-subheading,
+  .header-split[data-surface="ink"] .hacks-hero-lead,
+  .header-split[data-surface="ink"] .hacks-hero-body,
+  .header-split[data-surface="ink"] .terms-scope-content .scope-label,
+  .header-split[data-surface="ink"] .terms-scope-content .scope-statement,
+  .header-split[data-surface="ink"] .privacy-scope-content .scope-label,
+  .header-split[data-surface="ink"] .privacy-scope-content .scope-statement {
+    color: var(--text-on-ink);
+  }
+
+  .header-split[data-surface="ink"] .body p,
+  .header-split[data-surface="ink"] .hero-right-subheading,
+  .header-split[data-surface="ink"] .hacks-hero-body {
+    color: var(--text-on-ink-muted);
   }
 
   .header-split-right {

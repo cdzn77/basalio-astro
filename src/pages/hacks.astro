@@ -76,26 +76,26 @@ document.querySelectorAll('video[data-cover]').forEach(v => {
       level="h1"
       surface="ink"
     >
-    <div class="hacks-hero-right">
-      <p class="hacks-hero-lead">Four effects you can paste into your site right now. No plugin, no account, no email.</p>
-      <p class="hacks-hero-body">Paste the code once, then add a class to whichever block you want it on. The class field is in the block settings sidebar, under <strong>Advanced → Additional CSS class(es)</strong>.</p>
-    </div>
-  </HeaderSplit>
+      <div class="hacks-hero-right">
+        <p class="hacks-hero-lead">Four effects you can paste into your site right now. No plugin, no account, no email.</p>
+        <p class="hacks-hero-body">Paste the code once, then add a class to whichever block you want it on. The class field is in the block settings sidebar, under <strong>Advanced → Additional CSS class(es)</strong>.</p>
+      </div>
+    </HeaderSplit>
 
-  <section class="hacks-grid-section">
-    <div class="hacks-grid">
-      {HACKS.map((hack, i) => (
-        <CodeCard
-          name={hack.name}
-          description={hack.desc}
-          lang={hack.lang}
-          code={hack.code}
-          index={i}
-          surface="ink"
-        />
-      ))}
-    </div>
-  </section>
+    <section class="hacks-grid-section">
+      <div class="hacks-grid">
+        {HACKS.map((hack, i) => (
+          <CodeCard
+            name={hack.name}
+            description={hack.desc}
+            lang={hack.lang}
+            code={hack.code}
+            index={i}
+            surface="ink"
+          />
+        ))}
+      </div>
+    </section>
 
     <section class="vault-cta">
       <div class="vault-cta-inner glass">
@@ -117,10 +117,6 @@ document.querySelectorAll('video[data-cover]').forEach(v => {
   .hacks-page {
     background: var(--surface-ink);
     color: var(--text-on-ink);
-  }
-
-  .hacks-grid-section {
-    background: transparent;
   }
 
   .hacks-hero-right {

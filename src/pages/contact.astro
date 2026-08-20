@@ -12,100 +12,110 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
 ---
 
 <BaseLayout title={title} description={description}>
-  <!-- HEADER: Navigation bar -->
-  <Fragment slot="header">
-    <Header />
-  </Fragment>
+  <div class="contact-page" data-surface="ink">
+    <!-- HEADER: Navigation bar -->
+    <Fragment slot="header">
+      <Header />
+    </Fragment>
 
-  <!-- HERO + FORM SECTION: HeaderSplit with form in right slot -->
-  <HeaderSplit
-    eyebrow="Contact"
-    heading="A direct line to the person building it."
-    body="Basalio is a one-person studio. No support tickets disappearing into a queue. Your message lands in the inbox of the developer who wrote the block you are asking about."
-    level="h1"
-    surface="paper"
-  >
-    <div class="contact-form-wrapper">
-      <form
-        name="contact"
-        method="POST"
-        action="/welcome/"
-        data-netlify="true"
-        netlify-honeypot="bot-field"
-        class="contact-form"
-        id="contact-form"
-      >
-        <input type="hidden" name="form-name" value="contact" />
-        <p class="honeypot">
-          <label>Don't fill this out if you're human: <input name="bot-field" /></label>
-        </p>
+    <!-- HERO + FORM SECTION: HeaderSplit with form in right slot -->
+    <HeaderSplit
+      eyebrow="Contact"
+      heading="A direct line to the person building it."
+      body="Basalio is a one-person studio. No support tickets disappearing into a queue. Your message lands in the inbox of the developer who wrote the block you are asking about."
+      level="h1"
+      surface="ink"
+    >
+      <div class="contact-form-wrapper">
+        <form
+          name="contact"
+          method="POST"
+          action="/welcome/"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          class="contact-form"
+          id="contact-form"
+        >
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="honeypot">
+            <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+          </p>
 
-        <div class="form-row">
-          <label class="form-field">
-            <span class="form-label">Name</span>
-            <input type="text" name="name" placeholder="Your name" required autocomplete="name" />
-          </label>
-          <label class="form-field">
-            <span class="form-label">Email</span>
-            <input type="email" name="email" placeholder="you@studio.com" required autocomplete="email" />
-          </label>
-        </div>
-
-        <fieldset class="form-field">
-          <legend class="form-label">Topic</legend>
-          <div class="topic-options">
-            {['General question', 'Founder license', 'Bug report', 'Feature idea', 'Something else'].map((topic, i) => (
-              <label class="topic-option">
-                <input type="radio" name="topic" value={topic} checked={i === 0} />
-                <span>{topic}</span>
-              </label>
-            ))}
+          <div class="form-row">
+            <label class="form-field">
+              <span class="form-label">Name</span>
+              <input type="text" name="name" placeholder="Your name" required autocomplete="name" />
+            </label>
+            <label class="form-field">
+              <span class="form-label">Email</span>
+              <input type="email" name="email" placeholder="you@studio.com" required autocomplete="email" />
+            </label>
           </div>
-        </fieldset>
 
-        <label class="form-field">
-          <span class="form-label">Message</span>
-          <textarea name="message" rows="5" placeholder="What are you building?" required></textarea>
-        </label>
+          <fieldset class="form-field">
+            <legend class="form-label">Topic</legend>
+            <div class="topic-options">
+              {['General question', 'Founder license', 'Bug report', 'Feature idea', 'Something else'].map((topic, i) => (
+                <label class="topic-option">
+                  <input type="radio" name="topic" value={topic} checked={i === 0} />
+                  <span>{topic}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
 
-        <button type="submit" class="submit-button">Send message</button>
-        <p class="form-note">This form sends via Netlify. A copy also goes to hello@basalio.com.</p>
-      </form>
-    </div>
-  </HeaderSplit>
+          <label class="form-field">
+            <span class="form-label">Message</span>
+            <textarea name="message" rows="5" placeholder="What are you building?" required></textarea>
+          </label>
 
-  <!-- RESOURCES SECTION -->
-  <section class="resources-section">
-    <div class="resources-container">
-      <h2 class="resources-heading">Need help right now?</h2>
-      <p class="resources-description">Browse our resources or connect with the community.</p>
+          <button type="submit" class="submit-button">Send message</button>
+          <p class="form-note">This form sends via Netlify. A copy also goes to hello@basalio.com.</p>
+        </form>
+      </div>
+    </HeaderSplit>
 
-      <div class="resources-grid">
-        <div class="resource-card">
-          <h3 class="resource-title">FAQ</h3>
-          <p class="resource-description">Answers to common questions about setup, customization, and pricing.</p>
-          <a href="/pricing/#faq" class="resource-link">View FAQ →</a>
-        </div>
+    <!-- RESOURCES SECTION -->
+    <section class="resources-section">
+      <div class="resources-container">
+        <h2 class="resources-heading">Need help right now?</h2>
+        <p class="resources-description">Browse our resources or connect with the community.</p>
 
-        <div class="resource-card">
-          <h3 class="resource-title">GitHub community</h3>
-          <p class="resource-description">Report bugs, request features, and share your implementations.</p>
-          <a href={socialLinks.github} class="resource-link" target="_blank" rel="noopener noreferrer">Join on GitHub →</a>
+        <div class="resources-grid">
+          <div class="resource-card">
+            <h3 class="resource-title">Support</h3>
+            <p class="resource-description">Troubleshooting guides, installation help, licensing answers, and common fixes.</p>
+            <a href="/support/" class="resource-link">View Support →</a>
+          </div>
+
+          <div class="resource-card">
+            <h3 class="resource-title">GitHub community</h3>
+            <p class="resource-description">Report bugs, request features, and share your implementations.</p>
+            <a href={socialLinks.github} class="resource-link" target="_blank" rel="noopener noreferrer">Join on GitHub →</a>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- FOOTER: Reused from homepage -->
-  <Fragment slot="footer">
-    <Footer />
-  </Fragment>
+    <!-- FOOTER: Reused from homepage -->
+    <Fragment slot="footer">
+      <Footer />
+    </Fragment>
+  </div>
 </BaseLayout>
 
 <style>
+  /* PAGE SURFACE */
+  .contact-page {
+    background: var(--surface-ink);
+    color: var(--text-on-ink);
+  }
+
   /* HERO + FORM SECTION (2-COLUMN LAYOUT) */
   .contact-form-wrapper {
     width: 100%;
+    max-width: 640px;
+    min-width: 500px;
   }
 
   .contact-form {
@@ -141,20 +151,20 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-family: var(--font-sans);
     font-size: 14px;
     font-weight: var(--font-weight-medium);
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     margin: 0;
     padding: 0;
   }
 
-  .form-field input[type="text"],
-  .form-field input[type="email"],
-  .form-field textarea {
+  .contact-page .form-field input[type="text"],
+  .contact-page .form-field input[type="email"],
+  .contact-page .form-field textarea {
     font-family: var(--font-sans);
     font-size: 14px;
     font-weight: var(--font-weight-normal);
-    color: var(--text-on-paper);
-    background: var(--surface-alt);
-    border: 1px solid var(--surface-alt);
+    color: var(--text-on-ink);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 12px 16px;
     border-radius: 6px;
     box-sizing: border-box;
@@ -163,17 +173,16 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     width: 100%;
   }
 
-  .form-field input[type="text"]:focus,
-  .form-field input[type="email"]:focus,
-  .form-field textarea:focus {
-    background: var(--surface-paper);
-    border-color: var(--text-on-paper);
+  .contact-page .form-field input[type="text"]:focus,
+  .contact-page .form-field input[type="email"]:focus,
+  .contact-page .form-field textarea:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--acid);
   }
 
-  .form-field input[type="text"]::placeholder,
-  .form-field input[type="email"]::placeholder,
-  .form-field textarea::placeholder {
-    color: var(--text-on-paper-muted);
+  .contact-page .form-field input::placeholder,
+  .contact-page .form-field textarea::placeholder {
+    color: var(--text-on-ink-muted);
   }
 
   .form-field textarea {
@@ -195,9 +204,9 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-family: var(--font-sans);
     font-size: 14px;
     font-weight: var(--font-weight-normal);
-    color: var(--text-on-paper);
-    background: var(--surface-alt);
-    border: 1px solid var(--surface-alt);
+    color: var(--text-on-ink);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 6px;
     padding: 10px 14px;
     cursor: pointer;
@@ -205,13 +214,13 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
   }
 
   .topic-option:hover {
-    background: var(--surface-paper);
-    border-color: var(--text-on-paper-muted);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
   }
 
   .topic-option input[type="radio"] {
     margin: 0;
-    accent-color: var(--text-on-paper);
+    accent-color: var(--acid);
   }
 
   /* SUBMIT BUTTON */
@@ -225,9 +234,9 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-weight: 500;
     letter-spacing: 2.8px;
     text-transform: uppercase;
-    color: var(--surface-paper);
-    background: var(--text-on-paper);
-    border: 1px solid var(--text-on-paper);
+    color: var(--text-on-acid);
+    background: var(--acid);
+    border: 1px solid var(--acid);
     border-radius: 6px;
     padding: 16px 28px;
     cursor: pointer;
@@ -235,7 +244,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
   }
 
   .submit-button:hover {
-    color: var(--text-on-paper);
+    color: var(--acid);
     background: transparent;
   }
 
@@ -244,7 +253,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-size: 13px;
     font-weight: var(--font-weight-normal);
     line-height: 18px;
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     margin: 0;
     padding: 0;
   }
@@ -253,7 +262,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
   .resources-section {
     width: 100%;
     padding: 0 40px 160px 40px;
-    background: var(--surface-paper);
+    background: transparent;
     box-sizing: border-box;
   }
 
@@ -269,7 +278,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-weight: var(--font-weight-normal);
     letter-spacing: var(--heading-letter-spacing);
     line-height: 1.2;
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     margin: 0 0 12px 0;
     padding: 0;
   }
@@ -279,7 +288,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-size: var(--font-size-body);
     font-weight: var(--font-weight-normal);
     line-height: 24px;
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     margin: 0 0 40px 0;
     padding: 0;
   }
@@ -292,14 +301,14 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
 
   .resource-card {
     padding: 24px;
-    background: var(--surface-alt);
-    border: 1px solid var(--surface-alt);
+    background: rgba(255, 255, 255, 0.045);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 8px;
     transition: border-color 200ms ease, transform 200ms ease;
   }
 
   .resource-card:hover {
-    border-color: var(--stone);
+    border-color: var(--acid);
     transform: translateY(-2px);
   }
 
@@ -307,7 +316,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-family: var(--font-sans);
     font-size: 18px;
     font-weight: var(--font-weight-medium);
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     margin: 0 0 8px 0;
     padding: 0;
   }
@@ -317,7 +326,7 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-size: 14px;
     font-weight: var(--font-weight-normal);
     line-height: 20px;
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     margin: 0 0 16px 0;
     padding: 0;
   }
@@ -326,18 +335,18 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
     font-family: var(--font-sans);
     font-size: 14px;
     font-weight: var(--font-weight-medium);
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     display: inline-block;
     padding: 8px 0;
     min-height: 24px;
     text-decoration: none;
-    border-bottom: 1px solid var(--stone);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     transition: color 200ms ease, border-color 200ms ease;
   }
 
   .resource-link:hover {
-    color: var(--text-on-paper-muted);
-    border-color: var(--text-on-paper);
+    color: var(--acid);
+    border-color: var(--acid);
   }
 
   /* Responsive */
@@ -356,6 +365,10 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
   }
 
   @media (max-width: 640px) {
+    .contact-form-wrapper {
+      min-width: auto;
+    }
+
     .resources-section {
       padding: 0 20px 100px 20px;
     }

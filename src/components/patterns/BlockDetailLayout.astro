@@ -19,13 +19,13 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
 const iconSvg = icons[`/public/assets/icons/blocks/${block.slug}.svg`] as string;
 ---
 
-<div class="block-detail-layout">
+<div class="block-detail-layout" data-surface="ink">
   <HeaderSplit
     eyebrow="Block"
     heading={block.name}
     body={block.description}
     level="h1"
-    surface="paper"
+    surface="ink"
     cta={{ label: 'Get this block - free', href: '/pricing/', variant: 'acid' }}
   >
     <div class="block-detail-hero-right">
@@ -49,7 +49,7 @@ const iconSvg = icons[`/public/assets/icons/blocks/${block.slug}.svg`] as string
   <section class="block-controls-section">
     <div class="block-controls-inner">
       <h2 class="controls-heading">What you can control</h2>
-      <ControlsTable controls={block.controls} />
+      <ControlsTable controls={block.controls} surface="ink" />
     </div>
   </section>
 
@@ -250,6 +250,99 @@ const iconSvg = icons[`/public/assets/icons/blocks/${block.slug}.svg`] as string
   .prev-next-category {
     font-size: 13px;
     color: var(--text-on-paper-muted);
+  }
+
+  .block-detail-layout {
+    background: var(--surface-ink);
+    color: var(--text-on-ink);
+  }
+
+  .block-detail-layout .block-demo-section,
+  .block-detail-layout .block-accessibility-section {
+    background: transparent;
+  }
+
+  .block-detail-layout .block-controls-section {
+    background: transparent;
+  }
+
+  .block-detail-layout .controls-heading {
+    color: var(--text-on-ink);
+  }
+
+  .block-detail-layout .demo-caption {
+    color: var(--text-on-ink-muted);
+  }
+
+  .block-detail-layout .block-detail-category,
+  .block-detail-layout .back-link {
+    color: var(--text-on-ink-muted);
+  }
+
+  .block-detail-layout .back-link {
+    border-bottom-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .block-detail-layout .back-link:hover {
+    border-color: var(--text-on-ink);
+  }
+
+  .block-detail-layout .block-accessibility-inner {
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .block-detail-layout .block-accessibility-inner p,
+  .block-detail-layout .block-accessibility-inner strong {
+    color: var(--text-on-ink);
+  }
+
+  .block-detail-layout .block-accessibility-inner strong {
+    color: var(--text-on-ink);
+  }
+
+  .block-detail-layout .accessibility-icon {
+    background: var(--acid);
+    color: var(--text-on-acid);
+  }
+
+  .block-detail-layout .prev-next-card {
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .block-detail-layout .prev-next-card:hover {
+    border-color: rgba(255, 255, 255, 0.16);
+  }
+
+  .block-detail-layout .prev-next-label,
+  .block-detail-layout .prev-next-category {
+    color: var(--text-on-ink-muted);
+  }
+
+  .block-detail-layout .prev-next-name {
+    color: var(--text-on-ink);
+  }
+
+  .block-demo-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+  }
+
+  .block-demo-inner :global(> *) {
+    width: 100%;
+    max-height: 70vh;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .block-demo-inner :global(> * > *) {
+    width: 100%;
+    height: 100%;
   }
 
   @media (max-width: 768px) {

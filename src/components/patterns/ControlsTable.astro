@@ -3,12 +3,13 @@ import type { ControlRow } from '../../data/blocks';
 
 interface Props {
   controls: ControlRow[];
+  surface?: 'paper' | 'ink';
 }
 
-const { controls } = Astro.props;
+const { controls, surface = 'paper' } = Astro.props;
 ---
 
-<div class="controls-table-wrapper">
+<div class:list={['controls-table-wrapper', { 'controls-table-ink': surface === 'ink' }]}>
   <table class="controls-table">
     <thead>
       <tr>
@@ -82,6 +83,35 @@ const { controls } = Astro.props;
     padding: 3px 6px;
     border-radius: 4px;
     color: var(--text-on-paper);
+  }
+
+  .controls-table-ink {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.045);
+    backdrop-filter: blur(20px) saturate(140%);
+  }
+
+  .controls-table-ink .controls-table thead {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .controls-table-ink .controls-table th {
+    color: var(--text-on-ink-muted);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .controls-table-ink .controls-table td {
+    color: var(--text-on-ink);
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .controls-table-ink .controls-table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .controls-table-ink .controls-table code {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-on-ink);
   }
 
   @media (max-width: 640px) {

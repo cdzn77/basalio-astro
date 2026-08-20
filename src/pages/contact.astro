@@ -12,12 +12,12 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
 ---
 
 <BaseLayout title={title} description={description}>
-  <div class="contact-page" data-surface="ink">
-    <!-- HEADER: Navigation bar -->
-    <Fragment slot="header">
-      <Header />
-    </Fragment>
+  <!-- HEADER: Navigation bar -->
+  <Fragment slot="header">
+    <Header />
+  </Fragment>
 
+  <div class="contact-page" data-surface="ink">
     <!-- HERO + FORM SECTION: HeaderSplit with form in right slot -->
     <HeaderSplit
       eyebrow="Contact"
@@ -96,12 +96,12 @@ const description = "Get in touch with Basalio. Submit a message and we'll get b
         </div>
       </div>
     </section>
-
-    <!-- FOOTER: Reused from homepage -->
-    <Fragment slot="footer">
-      <Footer />
-    </Fragment>
   </div>
+
+  <!-- FOOTER: Reused from homepage -->
+  <Fragment slot="footer">
+    <Footer />
+  </Fragment>
 </BaseLayout>
 
 <style>

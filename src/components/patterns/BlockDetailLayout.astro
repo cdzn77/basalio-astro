@@ -1,0 +1,268 @@
+---
+import type { BlockMeta } from '../../data/blocks';
+import HeaderSplit from './HeaderSplit.astro';
+import ControlsTable from './ControlsTable.astro';
+import Button from '../Button.astro';
+
+interface Props {
+  block: BlockMeta;
+  prev: BlockMeta;
+  next: BlockMeta;
+  index: number;
+}
+
+const { block, prev, next, index } = Astro.props;
+const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+});
+const iconSvg = icons[`/public/assets/icons/blocks/${block.slug}.svg`] as string;
+---
+
+<div class="block-detail-layout">
+  <HeaderSplit
+    eyebrow="Block"
+    heading={block.name}
+    body={block.description}
+    level="h1"
+    surface="paper"
+    cta={{ label: 'Get this block — free', href: '/pricing/', variant: 'acid' }}
+  >
+    <div class="block-detail-hero-right">
+      <div class="block-detail-icon-tile" set:html={iconSvg} aria-hidden="true" />
+      <p class="block-detail-category">{block.categoryLabel} · Block 0{index + 1} / 09</p>
+      <a href="/blocks/" class="back-link">← All blocks</a>
+    </div>
+  </HeaderSplit>
+
+  <section class="block-demo-section" data-surface="alt">
+    <div class="block-demo-inner">
+      <slot name="demo" />
+      <p class="demo-caption">Recreated for the web · ships as a native WordPress block</p>
+    </div>
+  </section>
+
+  <section class="block-controls-section">
+    <div class="block-controls-inner">
+      <h2 class="controls-heading">What you can control</h2>
+      <ControlsTable controls={block.controls} />
+    </div>
+  </section>
+
+  <section class="block-accessibility-section" data-surface="alt">
+    <div class="block-accessibility-inner">
+      <span class="accessibility-icon" aria-hidden="true">✓</span>
+      <p><strong>Accessible:</strong> {block.accessibility}</p>
+    </div>
+  </section>
+
+  <nav class="block-prev-next" aria-label="Block navigation">
+    <a href={`/blocks/${prev.slug}/`} class="prev-next-card prev-next-prev">
+      <span class="prev-next-label">← Previous block</span>
+      <span class="prev-next-name">{prev.name}</span>
+      <span class="prev-next-category">{prev.categoryLabel}</span>
+    </a>
+    <a href={`/blocks/${next.slug}/`} class="prev-next-card prev-next-next">
+      <span class="prev-next-label">Next block →</span>
+      <span class="prev-next-name">{next.name}</span>
+      <span class="prev-next-category">{next.categoryLabel}</span>
+    </a>
+  </nav>
+</div>
+
+<style>
+  .block-detail-layout {
+    width: 100%;
+  }
+
+  .block-detail-hero-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .block-detail-icon-tile {
+    width: 80px;
+    height: 80px;
+    border-radius: 16px;
+    background: var(--acid);
+    display: grid;
+    place-items: center;
+    color: var(--text-on-acid);
+  }
+
+  .block-detail-icon-tile :global(svg) {
+    width: 40px;
+    height: 40px;
+  }
+
+  .block-detail-category {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  .back-link {
+    font-size: 14px;
+    color: var(--text-on-paper);
+    text-decoration: none;
+    border-bottom: 1px solid var(--stone);
+    padding-bottom: 2px;
+    transition: border-color 0.2s ease;
+  }
+
+  .back-link:hover {
+    border-color: var(--text-on-paper);
+  }
+
+  .block-demo-section,
+  .block-controls-section,
+  .block-accessibility-section {
+    width: 100%;
+    padding: 80px 40px;
+    box-sizing: border-box;
+  }
+
+  .block-demo-section {
+    background: var(--surface-alt);
+  }
+
+  .block-demo-inner,
+  .block-controls-inner,
+  .block-accessibility-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+  }
+
+  .demo-caption {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-on-paper-muted);
+    text-align: right;
+    margin: 16px 0 0;
+  }
+
+  .block-controls-section {
+    background: var(--surface-paper);
+  }
+
+  .controls-heading {
+    font-size: 28px;
+    font-weight: var(--font-weight-normal);
+    line-height: 1.2;
+    color: var(--text-on-paper);
+    margin: 0 0 24px;
+  }
+
+  .block-accessibility-section {
+    background: var(--surface-alt);
+  }
+
+  .block-accessibility-inner {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 24px;
+    background: var(--surface-paper);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .accessibility-icon {
+    flex: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--acid);
+    color: var(--text-on-paper);
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    font-weight: var(--font-weight-bold);
+  }
+
+  .block-accessibility-inner p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-on-paper-muted);
+  }
+
+  .block-accessibility-inner strong {
+    color: var(--text-on-paper);
+  }
+
+  .block-prev-next {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    padding: 40px;
+    box-sizing: border-box;
+  }
+
+  .prev-next-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 24px;
+    background: var(--surface-paper);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .prev-next-card:hover {
+    border-color: rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .prev-next-next {
+    text-align: right;
+  }
+
+  .prev-next-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-on-paper-muted);
+  }
+
+  .prev-next-name {
+    font-size: 18px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-on-paper);
+  }
+
+  .prev-next-category {
+    font-size: 13px;
+    color: var(--text-on-paper-muted);
+  }
+
+  @media (max-width: 768px) {
+    .block-demo-section,
+    .block-controls-section,
+    .block-accessibility-section {
+      padding: 60px 20px;
+    }
+
+    .block-prev-next {
+      grid-template-columns: 1fr;
+      padding: 20px;
+    }
+
+    .prev-next-next {
+      text-align: left;
+    }
+  }
+</style>

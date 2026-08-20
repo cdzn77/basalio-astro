@@ -14,12 +14,13 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
     <Header />
   </Fragment>
 
+  <div class="terms-page" data-surface="ink">
   <HeaderSplit
     eyebrow="Legal"
     heading="Terms of Service"
     body="Last updated: July 2026"
     level="h1"
-    surface="alt"
+    surface="ink"
   >
     <div class="terms-scope-content">
       <p class="scope-label">{licenseScope.label}</p>
@@ -109,12 +110,27 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
     </div>
   </section>
 
+  </div>
+
   <Fragment slot="footer">
     <Footer hideNewsletter={true} />
   </Fragment>
 </BaseLayout>
 
 <style>
+  .terms-page {
+    background: var(--surface-ink);
+    color: var(--text-on-ink);
+  }
+
+  .terms-page .scope-label {
+    color: var(--text-on-ink-muted);
+  }
+
+  .terms-page .scope-statement {
+    color: var(--text-on-ink);
+  }
+
   .terms-scope-content {
     display: flex;
     flex-direction: column;
@@ -126,22 +142,20 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
     font-size: 11px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--text-on-paper-muted);
     margin: 0;
   }
 
   .scope-statement {
     font-size: 20px;
-    color: var(--text-on-paper);
     margin: 0;
     line-height: 1.6;
     max-width: 60ch;
   }
 
   .terms-nav-section {
-    background: var(--surface-paper);
+    background: transparent;
     padding: 40px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .terms-nav-inner {
@@ -165,7 +179,7 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
     font-size: 11px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     margin: 0;
   }
 
@@ -179,8 +193,8 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
   .terms-nav-link {
     font-family: var(--font-mono);
     font-size: 12px;
-    color: var(--text-on-paper-muted);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text-on-ink-muted);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 999px;
     padding: 6px 14px;
     transition: border-color 0.15s ease, color 0.15s ease;
@@ -189,7 +203,7 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
 
   .terms-nav-link:hover {
     border-color: var(--acid);
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
   }
 
   .terms-container {
@@ -198,7 +212,7 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
   }
 
   .terms-content {
-    background: var(--surface-paper);
+    background: transparent;
     padding: 60px 40px 80px;
   }
 
@@ -220,19 +234,19 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
     font-size: 20px;
     font-weight: var(--font-weight-semibold);
     margin: 0 0 16px 0;
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     line-height: 1.4;
   }
 
   .section-text {
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     font-size: 15px;
     line-height: 1.7;
     margin: 0 0 12px 0;
   }
 
   .section-list {
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     font-size: 15px;
     line-height: 1.7;
     margin: 0 0 12px 0;
@@ -243,8 +257,12 @@ const description = "Basalio Terms of Service. Legal terms for using the WordPre
     margin-bottom: 8px;
   }
 
+  .section-list li::marker {
+    color: var(--text-on-ink-muted);
+  }
+
   .terms-link {
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     text-decoration: underline;
     text-decoration-color: var(--acid);
     transition: text-decoration-thickness 0.2s ease;

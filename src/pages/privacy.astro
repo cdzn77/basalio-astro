@@ -13,12 +13,13 @@ const description = "Privacy Policy for Basalio. Applies to basalio.com and the 
     <Header />
   </Fragment>
 
+  <div class="privacy-page" data-surface="ink">
   <HeaderSplit
     eyebrow="Legal"
     heading="Privacy Policy"
     body="Effective July 9, 2026. Applies to basalio.com and the Basalio plugin dashboard."
     level="h1"
-    surface="alt"
+    surface="ink"
   >
       <div class="privacy-scope-content">
         <p class="scope-label">Scope</p>
@@ -113,12 +114,27 @@ const description = "Privacy Policy for Basalio. Applies to basalio.com and the 
     </div>
   </section>
 
+  </div>
+
   <Fragment slot="footer">
     <Footer hideNewsletter={true} />
   </Fragment>
 </BaseLayout>
 
 <style>
+  .privacy-page {
+    background: var(--surface-ink);
+    color: var(--text-on-ink);
+  }
+
+  .privacy-page .scope-label {
+    color: var(--text-on-ink-muted);
+  }
+
+  .privacy-page .scope-statement {
+    color: var(--text-on-ink);
+  }
+
   .privacy-container {
     max-width: var(--container-narrow);
     margin: 0 auto;
@@ -135,22 +151,20 @@ const description = "Privacy Policy for Basalio. Applies to basalio.com and the 
     font-size: 11px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--text-on-paper-muted);
     margin: 0;
   }
 
   .scope-statement {
     font-size: 20px;
-    color: var(--text-on-paper);
     margin: 0;
     line-height: 1.6;
     max-width: 60ch;
   }
 
   .privacy-nav-section {
-    background: var(--surface-paper);
+    background: transparent;
     padding: 40px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .privacy-nav-inner {
@@ -174,7 +188,7 @@ const description = "Privacy Policy for Basalio. Applies to basalio.com and the 
     font-size: 11px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     margin: 0;
   }
 
@@ -188,8 +202,8 @@ const description = "Privacy Policy for Basalio. Applies to basalio.com and the 
   .privacy-nav-link {
     font-family: var(--font-mono);
     font-size: 12px;
-    color: var(--text-on-paper-muted);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: var(--text-on-ink-muted);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 999px;
     padding: 6px 14px;
     transition: border-color 0.15s ease, color 0.15s ease;
@@ -198,11 +212,11 @@ const description = "Privacy Policy for Basalio. Applies to basalio.com and the 
 
   .privacy-nav-link:hover {
     border-color: var(--acid);
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
   }
 
   .privacy-content {
-    background: var(--surface-paper);
+    background: transparent;
     padding: 40px;
   }
 
@@ -215,10 +229,10 @@ const description = "Privacy Policy for Basalio. Applies to basalio.com and the 
     padding-top: 0;
   }
 
-  .section-number {
+  .privacy-page .section-number {
     font-family: var(--font-mono);
     font-size: 12px;
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     margin: 0 0 8px 0;
   }
 
@@ -226,19 +240,19 @@ const description = "Privacy Policy for Basalio. Applies to basalio.com and the 
     font-weight: var(--font-weight-semibold);
     font-size: 20px;
     margin: 0 0 14px 0;
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     line-height: 1.4;
   }
 
   .section-text {
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     font-size: 15px;
     line-height: 1.7;
     margin: 0 0 12px 0;
   }
 
   .section-list {
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     font-size: 15px;
     line-height: 1.7;
     margin: 0 0 16px 0;
@@ -249,8 +263,12 @@ const description = "Privacy Policy for Basalio. Applies to basalio.com and the 
     margin-bottom: 8px;
   }
 
-  .section-list a {
-    color: var(--text-on-paper);
+  .section-list li::marker {
+    color: var(--text-on-ink-muted);
+  }
+
+  .privacy-page .section-list a {
+    color: var(--text-on-ink);
     text-decoration: underline;
     text-decoration-color: var(--acid);
     transition: text-decoration-thickness 0.2s ease;

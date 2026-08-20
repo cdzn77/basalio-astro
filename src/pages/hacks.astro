@@ -3,10 +3,64 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+import CodeCard from '../components/patterns/CodeCard.astro';
 import Button from '../components/Button.astro';
 
 const title = "Hacks - Basalio";
 const description = "Four free CSS/JS snippets you can paste into your site.";
+
+const HACKS = [
+  {
+    name: 'Hover-swap project titles',
+    desc: 'Swap the project title for its category on hover — one attribute, no plugin.',
+    lang: 'css',
+    code: `.work-card .title::after {
+  content: attr(data-cat);
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: .35s cubic-bezier(.22,1,.36,1);
+}
+.work-card:hover .title::after { opacity: 1; transform: none; }`,
+  },
+  {
+    name: 'Scroll-linked progress rule',
+    desc: 'A 1px rule that draws itself across the viewport as the case study scrolls.',
+    lang: 'css',
+    code: `.progress-rule {
+  height: 1px;
+  background: currentColor;
+  transform-origin: left;
+  animation: draw linear both;
+  animation-timeline: scroll(root);
+}
+@keyframes draw { from { scale: 0 1 } to { scale: 1 1 } }`,
+  },
+  {
+    name: 'Next-project prefetch hint',
+    desc: 'Prefetch the next case study when its teaser enters the viewport.',
+    lang: 'html',
+    code: `<!-- drop in the case-study footer -->
+<link rel="prefetch"
+      href="/work/next-project"
+      as="document" />
+<!-- pair with the Case Study Transition block
+     for an instant handoff -->`,
+  },
+  {
+    name: 'Respectful autoplay video',
+    desc: 'Autoplay cover video only when motion is allowed and the tab is visible.',
+    lang: 'js',
+    code: `const ok = matchMedia('(prefers-reduced-motion: no-preference)');
+document.querySelectorAll('video[data-cover]').forEach(v => {
+  const sync = () => ok.matches && !document.hidden ? v.play() : v.pause();
+  ok.addEventListener('change', sync);
+  document.addEventListener('visibilitychange', sync);
+  sync();
+});`,
+  },
+];
 ---
 
 <BaseLayout {title} {description}>
@@ -14,479 +68,131 @@ const description = "Four free CSS/JS snippets you can paste into your site.";
     <Header />
   </Fragment>
 
-  <!-- HACKS: HeaderSplit with hack cards in right slot -->
   <HeaderSplit
-    eyebrow="HACKS"
-    heading="Free is the recipe. Pro is the appliance."
-    body="Four effects you can paste into your site right now. No plugin, no account, no email. Three of them are the hand-rolled version of a Basalio block. The comparison is honest: here's what it takes by hand, here's what the block does in one click. The fourth is just a gift."
+    eyebrow="Hacks"
+    heading="Copy-paste craft."
+    body="Four free snippets for portfolio sites — no plugin required. The full vault (five more recipes) ships with the founder license."
     level="h1"
     surface="paper"
   >
-    <div class="hacks-right">
-        <div class="hacks-intro">
-          <h2>Two steps for all of these</h2>
-          <p>Paste the code once, then add a class to whichever block you want it on.</p>
-          <p>The class field is in the block settings sidebar, under <strong>Advanced → Additional CSS class(es)</strong>. Select a block, open the sidebar, scroll to the bottom.</p>
-          <p>For the CSS, use <strong>Appearance → Customize → Additional CSS</strong>. On block themes that don't show the Customizer, it's <strong>Appearance → Editor → Styles → ⋮ → Additional CSS</strong> instead.</p>
-        </div>
-
-        <div class="hack-card">
-          <h2>Reveal on Scroll</h2>
-          <p>Fade in elements as the user scrolls</p>
-          <div class="hack-instructions">
-            <div class="hack-step">
-              <h3>Paste it</h3>
-              <p>A Custom HTML block anywhere on the page - top is fine, it doesn't render anything visible.</p>
-            </div>
-            <div class="hack-step">
-              <h3>Use it</h3>
-              <p>Add <code>b-reveal</code> to any block you want to fade in. Works on images, groups, headings, columns - anything. Add it to several and they'll each reveal as they come into view.</p>
-              <p><em>If your editor splits the paste into separate HTML, CSS, and JavaScript fields, drop the &lt;style&gt; and &lt;script&gt; tags - those editors add their own.</em></p>
-            </div>
-          </div>
-          <div class="code-block-container">
-            <pre><code class="hack-code-block">{`<style>
-.b-reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity .6s ease, transform .6s ease;
-}
-.b-reveal.is-in {
-  opacity: 1;
-  transform: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  .b-reveal,
-  .b-reveal.is-in {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-</style>
-
-<script>
-(function () {
-  var els = document.querySelectorAll('.b-reveal');
-  if (!('IntersectionObserver' in window)) {
-    for (var i = 0; i < els.length; i++) els[i].classList.add('is-in');
-    return;
-  }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-in');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
-  for (var j = 0; j < els.length; j++) io.observe(els[j]);
-})();
-</script>`}</code></pre>
-            <button class="copy-code-btn" title="Copy to clipboard">Copy</button>
-          </div>
-        </div>
-
-        <div class="hack-card">
-          <h2>Color-Peek Image</h2>
-          <p>Reveal color under grayscale on hover</p>
-          <div class="hack-instructions">
-            <div class="hack-step">
-              <h3>Paste it</h3>
-              <p>Additional CSS.</p>
-            </div>
-            <div class="hack-step">
-              <h3>Use it</h3>
-              <p>Add <code>b-peek</code> to an Image block, or to a Group that contains one. The image starts grayscale and returns to full colour on hover - and on keyboard focus, if the image is inside a link.</p>
-            </div>
-          </div>
-          <div class="code-block-container">
-            <pre><code class="hack-code-block">{`.b-peek img {
-  filter: grayscale(1);
-  transition: filter .4s ease;
-}
-
-.b-peek:hover img,
-.b-peek:focus-within img {
-  filter: grayscale(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .b-peek img {
-    transition: none;
-  }
-}`}</code></pre>
-            <button class="copy-code-btn" title="Copy to clipboard">Copy</button>
-          </div>
-        </div>
-
-        <div class="hack-card">
-          <h2>Pin a Panel</h2>
-          <p>Sticky section that unpins at scroll end</p>
-          <div class="hack-instructions">
-            <div class="hack-step">
-              <h3>Paste it</h3>
-              <p>Additional CSS.</p>
-            </div>
-            <div class="hack-step">
-              <h3>Use it</h3>
-              <p>Add <code>b-pin-wrap</code> to a Columns block with exactly two columns. The left column pins while the right one scrolls past it. Put your short content on the left, the long content on the right.</p>
-              <p><em>If nothing pins: something above it has overflow set - many themes do this on the content wrapper, and it silently disables sticky positioning. Inspect the parent elements and look for overflow: hidden.</em></p>
-            </div>
-          </div>
-          <div class="code-block-container">
-            <pre><code class="hack-code-block">{`.b-pin-wrap {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: start;
-}
-
-.b-pin-wrap > :first-child {
-  position: sticky;
-  top: 4rem;
-}
-
-@media (max-width: 782px) {
-  .b-pin-wrap {
-    grid-template-columns: 1fr;
-  }
-  .b-pin-wrap > :first-child {
-    position: static;
-  }
-}`}</code></pre>
-            <button class="copy-code-btn" title="Copy to clipboard">Copy</button>
-          </div>
-        </div>
-
-        <div class="hack-card">
-          <h2>Grain Overlay</h2>
-          <p>SVG filter effect for texture</p>
-          <div class="hack-instructions">
-            <div class="hack-step">
-              <h3>Paste it</h3>
-              <p>Additional CSS.</p>
-            </div>
-            <div class="hack-step">
-              <h3>Use it</h3>
-              <p>Add <code>b-grain</code> to a Group or Cover block that has a background colour or image. The grain sits on top of everything inside it and ignores clicks.</p>
-              <p>Adjust opacity between .08 and .25 to taste. It's nearly invisible on white - works best on mid-tone and dark backgrounds.</p>
-              <p><em>No upsell here. This one's just yours.</em></p>
-            </div>
-          </div>
-          <div class="code-block-container">
-            <pre><code class="hack-code-block">{`.b-grain {
-  position: relative;
-  isolation: isolate;
-}
-
-.b-grain::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  opacity: .18;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='b-noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23b-noise)'/%3E%3C/svg%3E");
-}`}</code></pre>
-            <button class="copy-code-btn" title="Copy to clipboard">Copy</button>
-          </div>
-        </div>
-
-        <div class="hack-cta">
-          <p class="cta-text">Five more recipes are in development. Your founder license includes them as they ship.</p>
-          <p class="cta-subtext">Unlock premium hacks with a founder license.</p>
-          <Button href="/early-access" label="Join the founder list" variant="acid" fontSize="13px" fontWeight="600" letterSpacing="0.05em" />
-        </div>
+    <div class="hacks-hero-right">
+      <p class="hacks-hero-lead">Four effects you can paste into your site right now. No plugin, no account, no email.</p>
+      <p class="hacks-hero-body">Paste the code once, then add a class to whichever block you want it on. The class field is in the block settings sidebar, under <strong>Advanced → Additional CSS class(es)</strong>.</p>
     </div>
   </HeaderSplit>
+
+  <section class="hacks-grid-section">
+    <div class="hacks-grid">
+      {HACKS.map((hack, i) => (
+        <CodeCard
+          name={hack.name}
+          description={hack.desc}
+          lang={hack.lang}
+          code={hack.code}
+          index={i}
+        />
+      ))}
+    </div>
+  </section>
+
+  <section class="vault-cta" data-surface="acid">
+    <div class="vault-cta-inner">
+      <div>
+        <h3 class="vault-title">Five more in the vault.</h3>
+        <p class="vault-body">Specced and in development — founder licenses include all five as they ship, plus one-click versions of every hack.</p>
+      </div>
+      <Button href="/pricing/" label="Unlock the vault" variant="ink" fontSize="14px" fontWeight="600" letterSpacing="0.2em" />
+    </div>
+  </section>
 
   <Fragment slot="footer">
     <Footer />
   </Fragment>
 </BaseLayout>
 
-<script>
-  // Use event delegation to handle copy button clicks
-  document.addEventListener('click', async (e) => {
-    const button = e.target.closest('.copy-code-btn');
-    if (!button) return;
-
-    console.log('Copy button clicked!');
-    e.preventDefault();
-
-    const preElement = button.previousElementSibling;
-    if (!preElement) {
-      console.error('No pre element found before button');
-      return;
-    }
-
-    const codeBlock = preElement.querySelector('code');
-    if (!codeBlock) {
-      console.error('No code element found in pre');
-      return;
-    }
-
-    const text = codeBlock.textContent;
-    console.log(`Code text length: ${text.length}`);
-
-    try {
-      await navigator.clipboard.writeText(text);
-      console.log('Successfully copied to clipboard');
-
-      const originalText = button.textContent;
-      button.textContent = 'Copied!';
-      button.classList.add('copied');
-
-      setTimeout(() => {
-        button.textContent = originalText;
-        button.classList.remove('copied');
-      }, 2000);
-    } catch (err) {
-      console.error('Failed to copy to clipboard:', err);
-      button.textContent = 'Failed!';
-      setTimeout(() => {
-        button.textContent = 'Copy';
-      }, 2000);
-    }
-  });
-</script>
-
 <style>
-  .hacks-right {
-    width: 100%;
-    min-width: 0;
-  }
-
-  .hacks-intro {
-    margin-bottom: 60px;
-    padding-bottom: 40px;
-    border-bottom: 1px solid rgba(10, 10, 10, 0.08);
-  }
-
-  .hacks-intro h2 {
-    font-size: 20px;
-    font-weight: var(--font-weight-bold);
-    line-height: 28px;
-    color: var(--text-on-paper);
-    margin: 0 0 16px 0;
-    padding: 0;
-  }
-
-  .hacks-intro p {
-    font-size: 15px;
-    font-weight: var(--font-weight-normal);
-    line-height: 1.6;
-    color: var(--text-on-paper-muted);
-    margin: 0 0 12px 0;
-    padding: 0;
-  }
-
-  .hacks-intro p:last-child {
-    margin-bottom: 0;
-  }
-
-  .hack-instructions {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin: 24px 0;
-    padding: 20px;
-    background: rgba(10, 10, 10, 0.03);
-    border-radius: 8px;
-    width: fit-content;
-  }
-
-  .hack-step h3 {
-    font-size: 14px;
-    font-weight: var(--font-weight-bold);
-    line-height: 1.4;
-    color: var(--text-on-paper);
-    margin: 0 0 8px 0;
-    padding: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .hack-step p {
-    font-size: 14px;
-    font-weight: var(--font-weight-normal);
-    line-height: 1.6;
-    color: var(--text-on-paper-muted);
-    margin: 0 0 8px 0;
-    padding: 0;
-  }
-
-  .hack-step p:last-child {
-    margin-bottom: 0;
-  }
-
-  .hack-step em {
-    font-style: italic;
-    color: var(--text-on-paper-muted);
-  }
-
-  .hack-step code {
-    background: rgba(10, 10, 10, 0.06);
-    color: var(--text-on-paper);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 13px;
-    font-family: var(--font-mono);
-    display: inline-block;
-    width: fit-content;
-  }
-
-  .hack-card {
+  .hacks-hero-right {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-bottom: 40px;
-    padding-bottom: 40px;
-    padding-right: 60px;
-    border-bottom: 1px solid rgba(10, 10, 10, 0.08);
   }
 
-  .hack-card:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
-
-  .hack-card h2 {
-    font-size: 20px;
+  .hacks-hero-lead {
+    font-size: clamp(18px, 2vw, 24px);
     font-weight: var(--font-weight-bold);
-    line-height: 28px;
-    color: var(--text-on-paper);
-    margin: 0 0 8px 0;
-    padding: 0;
-  }
-
-  .hack-card > p {
-    font-size: 15px;
-    font-weight: var(--font-weight-normal);
-    line-height: 1.6;
-    color: var(--text-on-paper-muted);
-    margin: 0 0 16px 0;
-    padding: 0;
-  }
-
-
-  .code-block-container {
-    position: relative;
-    margin: 16px 0 0 0;
-  }
-
-  .hack-card pre {
-    margin: 0;
-    padding: 20px;
-    padding-right: 60px;
-    background: rgba(10, 10, 10, 0.04);
-    border-radius: 8px;
-    border: 1px solid rgba(10, 10, 10, 0.06);
-    font-size: 11px;
     line-height: 1.4;
-    overflow-x: auto;
-    overflow-y: hidden;
-    max-width: 100%;
-    box-sizing: border-box;
+    color: var(--text-on-paper);
+    margin: 0;
+  }
+
+  .hacks-hero-body {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  .hacks-grid-section {
     width: 100%;
+    background: var(--surface-paper);
+    padding: 80px 40px;
+    box-sizing: border-box;
   }
 
-  .copy-code-btn {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    padding: 8px 16px;
-    min-height: 32px;
+  .hacks-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+  }
+
+  .vault-cta {
+    width: 100%;
     background: var(--acid);
-    color: var(--text-on-paper);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: var(--font-weight-semibold);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
-    z-index: 10;
+    padding: 60px 40px;
+    box-sizing: border-box;
   }
 
-  .copy-code-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-
-  .copy-code-btn:active {
-    transform: translateY(0);
-  }
-
-  .copy-code-btn.copied {
-    background: rgba(10, 10, 10, 0.1);
-    color: var(--text-on-paper-muted);
-  }
-
-  .copy-code-btn:focus-visible {
-    outline: 2px solid var(--text-on-paper);
-    outline-offset: 2px;
-  }
-
-  .hack-card code {
-    font-family: var(--font-mono);
-    color: var(--text-on-paper);
-    display: block;
-    overflow-x: auto;
-    white-space: pre-wrap;
-    word-break: break-word;
-    word-wrap: break-word;
-  }
-
-.hack-cta {
-    margin-top: 60px;
-    padding-top: 40px;
-    border-top: 1px solid rgba(10, 10, 10, 0.08);
+  .vault-cta-inner {
     display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
   }
 
-  .cta-text {
-    font-size: 18px;
-    font-weight: var(--font-weight-bold);
-    line-height: 1.3;
-    color: var(--text-on-paper);
-    margin: 0 0 8px 0;
-    padding: 0;
-  }
-
-  .cta-subtext {
-    font-size: 14px;
+  .vault-title {
+    font-size: 26px;
     font-weight: var(--font-weight-normal);
-    line-height: 1.6;
-    color: var(--text-on-paper-muted);
-    margin: 0 0 16px 0;
-    padding: 0;
+    line-height: 1.2;
+    color: var(--text-on-acid);
+    margin: 0;
   }
 
-  @media (max-width: 1024px) {
-    .hack-card h2 {
-      font-size: 24px;
-    }
+  .vault-body {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--text-on-acid-muted);
+    margin: 8px 0 0;
+    max-width: 440px;
   }
 
   @media (max-width: 768px) {
-    .hack-card h2 {
-      font-size: 20px;
+    .hacks-grid-section {
+      padding: 60px 20px;
     }
 
-    .hack-card p {
-      font-size: 14px;
+    .hacks-grid {
+      grid-template-columns: 1fr;
     }
 
-    .cta-text {
-      font-size: 18px;
+    .vault-cta-inner {
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 </style>

@@ -2,7 +2,6 @@
 import type { BlockMeta } from '../../data/blocks';
 import HeaderSplit from './HeaderSplit.astro';
 import ControlsTable from './ControlsTable.astro';
-import Button from '../Button.astro';
 
 interface Props {
   block: BlockMeta;
@@ -27,7 +26,7 @@ const iconSvg = icons[`/public/assets/icons/blocks/${block.slug}.svg`] as string
     body={block.description}
     level="h1"
     surface="paper"
-    cta={{ label: 'Get this block — free', href: '/pricing/', variant: 'acid' }}
+    cta={{ label: 'Get this block - free', href: '/pricing/', variant: 'acid' }}
   >
     <div class="block-detail-hero-right">
       <div class="block-detail-icon-tile" set:html={iconSvg} aria-hidden="true" />

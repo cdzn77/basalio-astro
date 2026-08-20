@@ -126,7 +126,7 @@ export const blocks: BlockMeta[] = [
     slug: 'filterable-grid',
     name: 'Filterable Grid',
     headline: 'Sort without losing the rhythm.',
-    description: 'Reorder gallery items with animated, keyboard-friendly filtering. Identity, packaging, editorial — visitors cut a portfolio down to the work they care about without a page reload.',
+    description: 'Reorder gallery items with animated, keyboard-friendly filtering. Identity, packaging, editorial: visitors cut a portfolio down to the work they care about without a page reload.',
     category: 'interaction',
     categoryLabel: 'Layout Block',
     demoComponent: 'FilterableGridDemo',

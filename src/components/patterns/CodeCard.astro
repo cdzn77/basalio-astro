@@ -1,0 +1,165 @@
+---
+interface Props {
+  name: string;
+  description: string;
+  lang: string;
+  code: string;
+  index: number;
+}
+
+const { name, description, lang, code, index } = Astro.props;
+const codeId = `hack-code-${index}`;
+---
+
+<article class="code-card">
+  <div class="code-card-header">
+    <div class="code-card-meta">
+      <span class="code-card-index">HACK 0{index + 1}</span>
+      <span class="code-card-lang">{lang}</span>
+    </div>
+    <h2 class="code-card-name">{name}</h2>
+    <p class="code-card-desc">{description}</p>
+  </div>
+  <div class="code-card-body">
+    <pre class="code-card-pre"><code id={codeId}>{code}</code></pre>
+    <button class="copy-code-btn" data-copy-target={codeId} type="button">Copy</button>
+  </div>
+</article>
+
+<script>
+  document.addEventListener('click', async (e) => {
+    const button = (e.target as HTMLElement).closest('.copy-code-btn');
+    if (!button) return;
+    const targetId = button.getAttribute('data-copy-target');
+    const codeEl = targetId ? document.getElementById(targetId) : null;
+    if (!codeEl) return;
+
+    try {
+      await navigator.clipboard.writeText(codeEl.textContent || '');
+      const original = button.textContent;
+      button.textContent = 'Copied!';
+      button.classList.add('copied');
+      setTimeout(() => {
+        button.textContent = original;
+        button.classList.remove('copied');
+      }, 1800);
+    } catch {
+      button.textContent = 'Failed';
+      setTimeout(() => {
+        button.textContent = 'Copy';
+      }, 1800);
+    }
+  });
+</script>
+
+<style>
+  .code-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-paper);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  .code-card-header {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .code-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .code-card-index {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-on-paper-muted);
+  }
+
+  .code-card-lang {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 999px;
+    color: var(--text-on-paper-muted);
+  }
+
+  .code-card-name {
+    font-size: 19px;
+    font-weight: var(--font-weight-semibold);
+    line-height: 1.3;
+    color: var(--text-on-paper);
+    margin: 8px 0 0;
+  }
+
+  .code-card-desc {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+  }
+
+  .code-card-body {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: rgba(10, 10, 10, 0.03);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+
+  .code-card-pre {
+    flex: 1;
+    margin: 0;
+    padding: 20px;
+    padding-right: 70px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-on-paper);
+    overflow-x: auto;
+    white-space: pre;
+    word-wrap: normal;
+  }
+
+  .copy-code-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 8px 14px;
+    background: var(--acid);
+    color: var(--text-on-paper);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 150ms ease, background-color 150ms ease;
+  }
+
+  .copy-code-btn:hover {
+    transform: translateY(-1px);
+  }
+
+  .copy-code-btn.copied {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--text-on-paper-muted);
+  }
+
+  .copy-code-btn:focus-visible {
+    outline: 2px solid var(--text-on-paper);
+    outline-offset: 2px;
+  }
+</style>

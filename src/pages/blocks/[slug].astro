@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import BlockDetailLayout from '../../components/patterns/BlockDetailLayout.astro';
-import { blocks, getBlock, getAdjacentBlocks } from '../../data/blocks';
+import { blocks, getAdjacentBlocks } from '../../data/blocks';
 
 import GridRevealDemo from '../../components/demos/sample/demos/GridRevealDemo.astro';
 import TextRevealDemo from '../../components/demos/sample/demos/TextRevealDemo.astro';
@@ -46,7 +46,7 @@ if (!DemoComponent) {
   throw new Error(`Demo component not found: ${block.demoComponent}`);
 }
 
-const title = `${block.name} — Basalio blocks`;
+const title = `${block.name} - Basalio blocks`;
 const description = block.description;
 ---
 

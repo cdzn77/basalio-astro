@@ -1,706 +1,664 @@
 ---
-// Exact replica of the Ramp Studio template
+// homepage-v1.astro — Sample-blend product showcase
+// Full-viewport hero, block grid, nine live feature demos, comparison,
+// stats, testimonials, FAQ, and founder-pricing CTA.
+
+import '../components/demos/sample/sample-styles.css';
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import PositioningStats from '../components/PositioningStats.astro';
-import BlocksCarousel from '../components/BlocksCarousel.astro';
-import WhoItsFor from '../components/WhoItsFor.astro';
 import Footer from '../components/Footer.astro';
-import PricingCards from '../components/patterns/PricingCards.astro';
-import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+import Button from '../components/Button.astro';
+import FeatureSection from '../components/demos/FeatureSection.astro';
+
+import EditorShot from '../components/demos/sample/EditorShot.astro';
+import Marquee from '../components/demos/sample/Marquee.astro';
+import BlockCardGrid from '../components/demos/sample/BlockCardGrid.astro';
+import GridRevealDemo from '../components/demos/sample/demos/GridRevealDemo.astro';
+import TextRevealDemo from '../components/demos/sample/demos/TextRevealDemo.astro';
+import ScrollSequenceDemo from '../components/demos/sample/demos/ScrollSequenceDemo.astro';
+import PinnedScrollDemo from '../components/demos/sample/demos/PinnedScrollDemo.astro';
+import BeforeAfterDemo from '../components/demos/sample/demos/BeforeAfterDemo.astro';
+import CaseStudyDemo from '../components/demos/sample/demos/CaseStudyDemo.astro';
+import CustomCursorDemo from '../components/demos/sample/demos/CustomCursorDemo.astro';
+import FilterableGridDemo from '../components/demos/sample/demos/FilterableGridDemo.astro';
+import MagneticDemo from '../components/demos/sample/demos/MagneticDemo.astro';
+import ComparisonTable from '../components/demos/sample/ComparisonTable.astro';
+import Stats from '../components/demos/sample/Stats.astro';
+import Testimonials from '../components/demos/sample/Testimonials.astro';
+import Faq from '../components/demos/sample/Faq.astro';
+
+import { pricingTiers, FOUNDER_PRICE, POST_CAP_PRICE, proShipTarget } from '../data/pricing';
 import { getFaqs } from '../data/faq';
-import { FOUNDER_PRICE, POST_CAP_PRICE } from '../data/pricing';
 
-const title = "Basalio - WordPress Portfolio Blocks";
-const description = "Nine curated interaction blocks for portfolio and case-study sites. Built for WordPress, not Framer.";
+const faqs = getFaqs(POST_CAP_PRICE, proShipTarget);
 
-// Hero background configuration (centralized)
-const heroBackground = { type: 'video', src: '/assets/basalio-hero.mp4', poster: '/assets/basalio-hero-poster.webp', scrim: 0 };
-const heroSurface = 'ink';
+const title = 'Basalio | Interaction blocks for WordPress';
+const description = 'Framer-quality interactions, native to WordPress. Nine curated interaction blocks for portfolio and case-study sites.';
 
-// Header uses default paper; observer overrides to ink when hero is visible
-// This ensures no-JS fallback works (paper is safe default for most pages)
-
-// Correct nine block names from src/data/pricing.ts
-const blockNames = [
-  "Grid Reveal",
-  "Case Study Transition",
-  "Text Reveal",
-  "Magnetic Button",
-  "Before/After",
-  "Filterable Grid",
-  "Custom Cursor",
-  "Scroll Sequence",
-  "Pinned Scroll"
-];
-
-// Pricing page data
-const supportEmail = "hello@basalio.com";
-const founderPrice = FOUNDER_PRICE;
-const postCapPrice = POST_CAP_PRICE;
-const proShipTarget = "February 2027";
-const refundWindow = "30";
-
-const buildStatus = [
-  { item: "Nine interaction blocks", status: "LIVE", note: `${blockNames.join(", ")}. In testing, shipping free.` },
-  { item: "Four free Hacks", status: "LIVE", note: "Copy-paste snippets available now on /hacks." },
-  { item: "WordPress.org listing", status: "IN REVIEW", note: "Submission planned after launch." },
-  { item: "Pro control center sidebar", status: "NOT STARTED", note: `Target ship date: ${proShipTarget}. Editor sidebar for live tuning.` },
-  { item: "Full Hacks vault (5 recipes)", status: "IN PROGRESS", note: "Specced, not built. Founder licenses include all five as they ship." },
-  { item: "One-click hack-trailer effects", status: "PLANNED", note: "Follows Pro sidebar launch." },
-  { item: "WordPress version compatibility", status: "ONGOING", note: "Testing against beta and RC releases before launch." }
-];
-
-const faqs = getFaqs(postCapPrice, proShipTarget);
+const paidTier = pricingTiers.find((t) => t.id === 'paid');
+const ctaHref = paidTier?.cta?.href || '/early-access';
+const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
 ---
 
-<BaseLayout title={title} description={description}>
-  <!-- HEADER: Navigation bar (defaults to paper; observer sets to ink when hero visible) -->
+<BaseLayout {title} {description}>
   <Fragment slot="header">
-    <Header />
+    <Header surface="ink" />
   </Fragment>
 
-  <!-- Hero Section -->
-  <Hero
-    eyebrow="A WORDPRESS PLUGIN FOR CREATIVES"
-    teaserText="Give your work a foundation to stand on. Nine curated interaction blocks, from grid reveals to case-study transitions to scroll-tied sequences, built only for portfolio and case-study sites. Nothing you'd need Framer for. Nothing you don't."
-    teaserButton="EXPLORE BLOCKS"
-    teaserLink="/blocks"
-    buttonVariant="acid"
-    background={heroBackground}
-    surface={heroSurface}
-  >
-    <h1 class="hero-heading hero-headline" slot="heading">Framer-quality <span class="accent-word">interactions,</span><br/>native to WordPress.</h1>
-  </Hero>
+  <!-- 1. HERO: Full-viewport dark manifesto with editor shot -->
+  <section class="sample-hero" data-surface="ink">
+    <div class="sample-hero-inner reveal">
+      <div class="sample-hero-glow sample-hero-glow-1" aria-hidden="true"></div>
+      <div class="sample-hero-glow sample-hero-glow-2" aria-hidden="true"></div>
+      <div class="sample-hero-text">
+        <p class="sample-mono-label sample-hero-eyebrow">For WordPress. Not a page builder.</p>
+        <h1 class="sample-hero-headline">Framer-quality interactions, native to WordPress.</h1>
+        <p class="sample-hero-body">Give your work a foundation to stand on. Nine curated interaction blocks, from grid reveals to case-study transitions to scroll-tied sequences, built only for portfolio and case-study sites.</p>
+        <div class="sample-hero-ctas">
+          <Button variant="acid" label="Explore the blocks" href="/blocks" />
+          <a href="/pricing" class="sample-hero-cta-secondary">Pricing</a>
+        </div>
+        <p class="sample-hero-trust">GPL-2.0 · No lock-in · Keyboard-operable by default</p>
+      </div>
+      <div class="sample-hero-shot">
+        <EditorShot />
+      </div>
+    </div>
+  </section>
 
-  <!-- What We Do Section -->
-  <PositioningStats
-    eyebrow="Positioning • 01"
-    introText="Nine curated interaction blocks, built only for portfolio and case-study sites. Each block solves one specific problem. No bloat, no learning curve."
-    services={[
-      { value: 9, description: "Blocks, not 90" },
-      { value: 1, description: "Plugin, zero page-builder lock-in" },
-      { value: 0, description: "Generic presets, only opinionated ones" }
-    ]}
-  />
+  <!-- 2. MARQUEE: Client-name strip -->
+  <section class="sample-marquee-section" data-surface="ink">
+    <div class="sample-marquee-inner reveal">
+      <Marquee items={['Northwind', 'Salt & Pine', 'Meridian', 'Field Notes', 'Atlas & Co', 'Low Tide', 'Fjeld', 'Studio Aar']} />
+    </div>
+  </section>
 
-  <!-- Blocks Section -->
-  <BlocksCarousel
-    sectionLabel="OUR BLOCKS"
-    sectionHeading="Nine blocks. Nothing you don't need."
-    ctaLabel="Explore All"
-    blocks={[
-      {
-        title: "Grid Reveal",
-        description: "Reveal content in a cascading grid pattern as users scroll down the page",
-        link: "/blocks#grid-reveal",
-        slug: "grid-reveal"
-      },
-      {
-        title: "Case Study Transition",
-        description: "Smooth transitions between case studies with parallax and fade effects",
-        link: "/blocks#case-study-transition",
-        slug: "case-study-transition"
-      },
-      {
-        title: "Text Reveal",
-        description: "Reveal text character-by-character or word-by-word as users scroll",
-        link: "/blocks#text-reveal",
-        slug: "text-reveal"
-      },
-      {
-        title: "Magnetic Button",
-        description: "Interactive button that responds to mouse movement with magnetic attraction",
-        link: "/blocks#magnetic-button",
-        slug: "magnetic-button"
-      },
-      {
-        title: "Before/After",
-        description: "Side-by-side image comparison with draggable divider",
-        link: "/blocks#before-after",
-        slug: "before-after"
-      },
-      {
-        title: "Filterable Grid",
-        description: "Grid content that filters and animates on category selection",
-        link: "/blocks#filterable-grid",
-        slug: "filterable-grid"
-      },
-      {
-        title: "Custom Cursor",
-        description: "Replace browser cursor with branded interaction feedback",
-        link: "/blocks#custom-cursor",
-        slug: "custom-cursor"
-      },
-      {
-        title: "Scroll Sequence",
-        description: "Trigger animations based on scroll position for synchronized storytelling",
-        link: "/blocks#scroll-sequence",
-        slug: "scroll-sequence"
-      },
-      {
-        title: "Pinned Scroll",
-        description: "Lock elements in place while content scrolls for immersive narratives",
-        link: "/blocks#pinned-scroll",
-        slug: "pinned-scroll"
+  <!-- 3. BLOCK CARD GRID: Overview of all nine blocks -->
+  <section class="sample-blocks-section" data-surface="ink">
+    <div class="sample-blocks-inner reveal">
+      <div class="sample-blocks-header">
+        <p class="sample-mono-label sample-blocks-eyebrow">The blocks</p>
+        <h2 class="sample-blocks-headline">Nine blocks. Nothing you don't need.</h2>
+        <p class="sample-blocks-description">Each block solves one specific problem. No bloat, no learning curve, and every one is keyboard-operable and reduced-motion aware. That isn't a Pro feature. That's the floor.</p>
+      </div>
+      <BlockCardGrid />
+    </div>
+  </section>
+
+  <!-- 4. FEATURE SECTIONS: Live demos of each block -->
+  <FeatureSection surface="alt" number="01" label="Grid Reveal" headline="Content that cascades into view." body="Reveal work in a cascading grid pattern as visitors scroll." href="/blocks">
+    <GridRevealDemo slot="mockup" />
+  </FeatureSection>
+
+  <FeatureSection surface="ink" number="02" label="Text Reveal" headline="Headlines that assemble themselves." body="Animate type into place with split-line or character-driven reveals." reverse={true} href="/blocks">
+    <TextRevealDemo slot="mockup" />
+  </FeatureSection>
+
+  <FeatureSection surface="acid" number="03" label="Scroll Sequence" headline="A story told one scroll at a time." body="Progress through a timed sequence of frames tied to scroll position." href="/blocks">
+    <ScrollSequenceDemo slot="mockup" />
+  </FeatureSection>
+
+  <FeatureSection surface="paper" number="04" label="Pinned Scroll" headline="Panels that hold their ground." body="Pin key scenes in place while content scrolls past in sticky layers." reverse={true} href="/blocks">
+    <PinnedScrollDemo slot="mockup" />
+  </FeatureSection>
+
+  <FeatureSection surface="alt" number="05" label="Before/After" headline="Two states, one draggable moment." body="Let visitors wipe between before and after views with a clean slider." href="/blocks">
+    <BeforeAfterDemo slot="mockup" />
+  </FeatureSection>
+
+  <FeatureSection surface="ink" number="06" label="Case Study Transition" headline="Seamless project handoffs." body="Morph from overview into detail with a smooth editorial transition." reverse={true} href="/blocks">
+    <CaseStudyDemo slot="mockup" />
+  </FeatureSection>
+
+  <FeatureSection surface="acid" number="07" label="Custom Cursor" headline="A cursor with intention." body="Replace the default pointer with a context-aware follow element." href="/blocks">
+    <CustomCursorDemo slot="mockup" />
+  </FeatureSection>
+
+  <FeatureSection surface="paper" number="08" label="Filterable Grid" headline="Sort without losing the rhythm." body="Reorder gallery items with animated, keyboard-friendly filtering." reverse={true} href="/blocks">
+    <FilterableGridDemo slot="mockup" />
+  </FeatureSection>
+
+  <FeatureSection surface="alt" number="09" label="Magnetic Button" headline="Calls to action that pull people in." body="Add subtle magnetic attraction to buttons on hover and focus." href="/blocks">
+    <MagneticDemo slot="mockup" />
+  </FeatureSection>
+
+  <!-- 5. COMPARISON TABLE: Why Basalio wins -->
+  <section class="sample-comparison-section" data-surface="ink">
+    <div class="sample-comparison-inner reveal">
+      <ComparisonTable />
+    </div>
+  </section>
+
+  <!-- 6. STATS: Editorial proof points -->
+  <section class="sample-stats-section" data-surface="alt">
+    <div class="sample-stats-inner reveal">
+      <Stats items={[
+        { value: 9, label: 'Blocks, not 90' },
+        { value: 1, label: 'Plugin, zero page-builder lock-in' },
+        { value: 0, label: 'Generic presets. Only opinionated ones.' },
+        { value: 100, label: 'Founder licenses at $149, then $249' },
+      ]} />
+    </div>
+  </section>
+
+  <!-- 7. TESTIMONIALS: Early design partners -->
+  <section class="sample-testimonials-section" data-surface="ink">
+    <div class="sample-testimonials-inner reveal">
+      <Testimonials />
+    </div>
+  </section>
+
+  <!-- 8. FAQ: Common questions -->
+  <section class="sample-faq-section" data-surface="paper">
+    <div class="sample-faq-inner reveal">
+      <div class="sample-faq-header">
+        <p class="sample-faq-eyebrow">Questions</p>
+        <h2 class="sample-faq-headline">Asked before you did.</h2>
+      </div>
+      <Faq items={faqs} />
+    </div>
+  </section>
+
+  <!-- 9. FOUNDER PRICING CTA: Ink band so the acid card pops and separates from the acid footer -->
+  <section class="pricing-section" data-surface="ink">
+    <div class="pricing-inner reveal">
+      <div class="pricing-text">
+        <p class="pricing-eyebrow">Founder pricing</p>
+        <h2 class="pricing-headline">Get the Pro control center at founder pricing.</h2>
+        <p class="pricing-body">{paidTier?.leadLine || `Everything in the free version, plus the Pro layer. One payment, unlimited sites, yours permanently, and refundable until the control center ships.`}</p>
+      </div>
+      <div class="pricing-card">
+        <p class="pricing-label">{paidTier?.label || 'FOUNDER · 100 LICENSES'}</p>
+        <p class="pricing-price">{FOUNDER_PRICE}</p>
+        <p class="pricing-billing">one time</p>
+        <p class="pricing-teaser">100 founder licenses at {FOUNDER_PRICE}, then {POST_CAP_PRICE}.</p>
+        <div class="pricing-cta">
+          <Button
+            label={ctaLabel}
+            href={ctaHref}
+            variant="ink"
+            fontSize="clamp(10px, 2.5vw, 14px)"
+            letterSpacing="clamp(1.5px, 0.6vw, 2.8px)"
+          />
+        </div>
+        <p class="pricing-micro">{paidTier?.microLine || '30-day refund, no questions asked.'}</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      const initReveal = () => {
+        const reveals = document.querySelectorAll('.reveal');
+        if (!reveals.length) return;
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          reveals.forEach((el) => el.classList.add('reveal-visible'));
+          return;
+        }
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('reveal-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+        );
+        reveals.forEach((el) => observer.observe(el));
+      };
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initReveal);
+      } else {
+        initReveal();
       }
-    ]}
-    ctaLink="/blocks"
-  />
-
-  <!-- PRICING TIERS SECTION: HeaderSplit with PricingCards component -->
-  <section class="pricing-hero-section" data-surface="paper">
-    <div class="pricing-inner">
-      <HeaderSplit
-        eyebrow="PRICING"
-        heading="There's no catch."
-        body="Nine interaction blocks, complete, free forever on WordPress.org. No locked blocks, no watermarks, no instance limits. What costs money is the control center, which live-tunes every block from the editor sidebar, and the full Hacks vault."
-        cta={{ label: 'SEE THE BREAKDOWN', href: '/pricing', variant: 'acid' }}
-        level="h2"
-        surface="paper"
-      >
-        <PricingCards variant="compact" />
-      </HeaderSplit>
-    </div>
-
-    <!-- DIVIDER LIST: Full width below section -->
-    <div class="pricing-divider-list">
-      <div class="divider-item">
-        <span class="divider-label">FREE FOREVER</span>
-        <span class="divider-text">Nine blocks, complete. Not a trial, not a demo.</span>
-      </div>
-      <div class="divider-item">
-        <span class="divider-label">NO RENEWAL</span>
-        <span class="divider-text">One payment. The license never expires.</span>
-      </div>
-      <div class="divider-item">
-        <span class="divider-label">100 ONLY</span>
-        <span class="divider-text">Founder price, then $249.</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Roles Section -->
-  <section class="testimonials-rounded" data-surface="paper">
-    <WhoItsFor
-      eyebrow="WHO IT'S FOR"
-      sectionHeading="Built for people whose
-work has to move."
-      bodyText="Basalio is nine blocks, not ninety. That only works
-if the nine are the right ones, so they were picked
-for a specific kind of site: the portfolio,
-the case study, the reel."
-      closingLine="If you need a general-purpose animation engine, this isn't it. Nine blocks, opinionated, built for one kind of site."
-    />
-  </section>
-
+    })();
+  </script>
 
   <Fragment slot="footer">
-    <Footer />
+    <Footer hideNewsletter={true} />
   </Fragment>
 </BaseLayout>
 
 <style>
-  .accent-word {
+  /* ---------- HERO ---------- */
+  .sample-hero {
+    position: relative;
+    width: 100%;
+    min-height: auto;
+    background-color: var(--surface-ink);
+    padding: 230px 40px 80px;
+    margin-top: -80px;
+    box-sizing: border-box;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .sample-hero-inner {
+    position: relative;
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+
+  .sample-hero-glow {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    filter: blur(120px);
+    background: radial-gradient(circle, color-mix(in srgb, var(--acid) 55%, transparent), transparent 70%);
+    opacity: 0.45;
+    z-index: 0;
+  }
+
+  .sample-hero-glow-1 {
+    width: min(360px, 60vw);
+    height: min(360px, 60vw);
+    top: -120px;
+    left: -40px;
+  }
+
+  .sample-hero-glow-2 {
+    width: min(320px, 55vw);
+    height: min(320px, 55vw);
+    top: 60px;
+    right: -40px;
+  }
+
+  .sample-hero-text {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .sample-hero-eyebrow {
     color: var(--acid);
   }
 
-
-  /* TESTIMONIALS WRAPPER: Background only (structure from BaseLayout) */
-  .testimonials-rounded {
-    overflow: visible;
-    padding-bottom: 200px;
-    background: var(--surface-paper);
+  .sample-hero-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(40px, 6.5vw, 92px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-ink);
+    margin: 0;
+    text-wrap: balance;
   }
 
-  /* PRICING HERO SECTION */
-  .pricing-hero-section {
-    width: 100%;
-    background: var(--surface-alt);
+  .sample-hero-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-ink-muted);
+    margin: 0;
+    max-width: 620px;
   }
 
-  .pricing-inner {
+  .sample-hero-ctas {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
-    max-width: var(--container-wide);
-    margin: 0 auto;
-    gap: 60px;
-    padding: 80px 40px;
-    box-sizing: border-box;
-  }
-
-  /* PRICING DIVIDER LIST: Full width below cards */
-  .pricing-divider-list {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     align-items: center;
-    width: 100%;
-    max-width: var(--container-wide);
-    margin: 0 auto;
-    padding: 40px 40px;
-    box-sizing: border-box;
-    border-top: 1px solid var(--stone);
-    gap: 40px;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 8px;
   }
 
-  .divider-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .divider-label {
-    font-family: 'Azeret Mono', monospace;
-    font-size: 12px;
-    font-weight: var(--font-weight-medium);
-    letter-spacing: 2.4px;
+  .sample-hero-trust {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--text-on-paper);
+    color: var(--text-on-ink-muted);
     margin: 0;
-    padding: 0;
-    display: block;
   }
 
-  .divider-text {
-    font-size: 15px;
-    font-weight: var(--font-weight-normal);
-    line-height: 1.6;
-    color: var(--text-on-paper-muted);
-    margin: 0;
-    padding: 0;
-    display: block;
-  }
-
-  @media (max-width: 640px) {
-    .pricing-divider-list {
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    .divider-item {
-      width: 100%;
-    }
-  }
-
-  /* BUILD LEDGER SECTION */
-  .ledger-section {
-    width: 100%;
-    background: var(--surface-paper);
-    padding: 80px 40px;
-    box-sizing: border-box;
-  }
-
-  .ledger-container {
-    width: 100%;
-    max-width: var(--container-wide);
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 60px;
-  }
-
-  .ledger-header {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .ledger-eyebrow {
+  .sample-hero-cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 43.6px;
+    padding: 0 24px;
+    border: 1px solid var(--text-on-ink);
+    border-radius: 6px;
+    font-family: var(--font-mono);
     font-size: 14px;
     font-weight: var(--font-weight-medium);
     letter-spacing: 2.8px;
     text-transform: uppercase;
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
+    text-decoration: none;
+    color: var(--text-on-ink);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  .ledger-title {
-    font-size: 40px;
-    font-weight: var(--font-weight-normal);
-    line-height: 48px;
-    letter-spacing: var(--heading-letter-spacing);
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
+  .sample-hero-cta-secondary:hover {
+    background-color: var(--text-on-ink);
+    color: var(--surface-ink);
   }
 
-  .ledger-table {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    border-top: 1px solid var(--surface-alt);
-    border-bottom: 1px solid var(--surface-alt);
-  }
-
-  .ledger-row {
-    display: grid;
-    grid-template-columns: 1.5fr 140px 1fr;
-    gap: 40px;
-    padding: 24px 0;
-    border-bottom: 1px solid var(--surface-alt);
-    align-items: flex-start;
-  }
-
-  .ledger-row:last-child {
-    border-bottom: none;
-  }
-
-  .ledger-item-name {
-    font-size: 15px;
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-  }
-
-  .ledger-status {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  .status-badge {
-    font-size: 11px;
-    font-weight: var(--font-weight-semibold);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 6px 10px;
-    border-radius: 4px;
-    display: inline-block;
-    white-space: nowrap;
-  }
-
-  .ledger-live .status-badge {
-    background: var(--acid);
-    color: var(--text-on-paper);
-  }
-
-  .ledger-in-build .status-badge {
-    border: 1px solid var(--text-on-paper);
-    color: var(--text-on-paper);
-    background: transparent;
-  }
-
-  .ledger-planned .status-badge {
-    background: var(--surface-alt);
-    color: var(--text-on-paper);
-  }
-
-  .ledger-ongoing .status-badge {
-    background: var(--surface-alt);
-    color: var(--text-on-paper);
-  }
-
-  .ledger-in-review .status-badge {
-    border: 1px solid var(--text-on-paper);
-    color: var(--text-on-paper);
-    background: transparent;
-  }
-
-  .ledger-item-note {
-    font-size: 14px;
-    font-weight: var(--font-weight-normal);
-    line-height: 20px;
-    color: var(--text-on-paper-muted);
-    margin: 0;
-    padding: 0;
-  }
-
-  .ledger-footer {
-    font-size: 13px;
-    font-weight: var(--font-weight-normal);
-    line-height: 19.5px;
-    color: rgba(0, 0, 0, 0.5);
-    margin: 20px 0 0 0;
-    padding: 20px 0 0 0;
-    border-top: 1px solid var(--surface-alt);
-  }
-
-  /* RISK REVERSAL SECTION */
-  .risk-section {
+  .sample-hero-shot {
+    position: relative;
+    z-index: 1;
     width: 100%;
-    background: var(--surface-paper);
-    padding: 80px 40px;
+    max-width: min(900px, 90%);
+    margin: 0 auto;
+  }
+
+  /* ---------- MARQUEE ---------- */
+  .sample-marquee-section {
+    width: 100%;
+    background-color: var(--surface-ink);
+    padding: 48px 0;
     box-sizing: border-box;
   }
 
-  .risk-container {
+  .sample-marquee-inner {
     width: 100%;
-    max-width: 800px;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+  }
+
+  /* ---------- BLOCK CARD GRID ---------- */
+  .sample-blocks-section {
+    width: 100%;
+    background-color: var(--surface-ink);
+    padding: 120px 40px;
+    box-sizing: border-box;
+  }
+
+  .sample-blocks-inner {
+    width: 100%;
+    max-width: var(--container-wide);
     margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 48px;
   }
 
-  .risk-title {
-    font-size: 40px;
-    font-weight: var(--font-weight-normal);
-    line-height: 48px;
-    letter-spacing: var(--heading-letter-spacing);
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-  }
-
-  /* Custom pricing cards grid */
-  .pricing-cards-grid {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    width: 100%;
-  }
-
-  /* Individual pricing card */
-  .pricing-card {
-    flex: 1 1 0%;
+  .sample-blocks-header {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 0;
-    background: var(--surface-paper);
-    border-radius: 6px;
-    padding: 24px;
+    gap: 16px;
+    max-width: 640px;
+  }
+
+  .sample-blocks-eyebrow {
+    color: var(--acid);
+  }
+
+  .sample-blocks-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-ink);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .sample-blocks-description {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-ink-muted);
+    margin: 0;
+  }
+
+  /* ---------- COMPARISON ---------- */
+  .sample-comparison-section {
+    width: 100%;
+    background-color: var(--surface-ink);
     box-sizing: border-box;
   }
 
-  .pricing-card-founder {
-    background: var(--acid);
+  .sample-comparison-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
   }
 
-  /* Card header */
-  .card-header {
+  /* ---------- STATS ---------- */
+  .sample-stats-section {
+    width: 100%;
+    background-color: var(--surface-alt);
+    box-sizing: border-box;
+  }
+
+  .sample-stats-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+  }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .sample-testimonials-section {
+    width: 100%;
+    background-color: var(--surface-ink);
+    box-sizing: border-box;
+  }
+
+  .sample-testimonials-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+  }
+
+  /* ---------- FAQ ---------- */
+  .sample-faq-section {
+    width: 100%;
+    background-color: var(--surface-paper);
+    padding: 120px 40px;
+    box-sizing: border-box;
+  }
+
+  .sample-faq-inner {
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    flex: 0 0 auto;
+    gap: 48px;
   }
 
-  /* Card content */
-  .card-content {
-    flex: 1 1 auto;
+  .sample-faq-header {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 16px;
   }
 
-  .card-label {
+  .sample-faq-eyebrow {
+    font-family: var(--font-mono);
     font-size: 11px;
-    font-weight: var(--font-weight-semibold);
-    letter-spacing: 2px;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(0, 0, 0, 0.7);
+    color: var(--text-on-paper-muted);
+    margin: 0;
   }
 
-  .card-name {
-    font-size: 24px;
-    font-weight: var(--font-weight-medium);
-    line-height: 1.2;
+  .sample-faq-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
     color: var(--text-on-paper);
     margin: 0;
-    padding: 0;
+    text-wrap: balance;
   }
 
-  .card-price {
-    font-size: 28px;
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
+  /* ---------- FOUNDER PRICING CTA ---------- */
+  .pricing-section {
+    width: 100%;
+    background-color: var(--surface-ink);
+    padding: 120px 40px;
+    box-sizing: border-box;
   }
 
-  .card-price-block {
+  .pricing-inner {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .pricing-inner > * {
+    min-width: 0;
+  }
+
+  .pricing-text {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 24px;
   }
 
-  .price-main {
-    font-size: 28px;
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-on-paper);
-  }
-
-  .price-note {
-    font-size: 13px;
-    font-weight: var(--font-weight-normal);
-    color: rgba(0, 0, 0, 0.6);
-  }
-
-  .price-after {
-    font-size: 13px;
-    font-weight: var(--font-weight-normal);
-    color: rgba(0, 0, 0, 0.6);
-  }
-
-  /* Card deck */
-  .card-deck {
-    font-size: 15px;
-    font-weight: var(--font-weight-normal);
-    line-height: 22px;
-    color: rgba(0, 0, 0, 0.85);
-    margin: 0 0 20px 0;
-    padding: 0;
-  }
-
-  /* Card features */
-  .card-features {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  .feature-item {
-    font-size: 13px;
-    font-weight: var(--font-weight-normal);
-    line-height: 18px;
-    color: rgba(0, 0, 0, 0.8);
+  .pricing-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-on-ink-muted);
     margin: 0;
-    padding: 12px 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
 
-  .feature-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
+  .pricing-headline {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 72px);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-ink);
+    margin: 0;
+    text-wrap: balance;
   }
 
-  /* Card benefits */
-  .card-benefit {
-    font-size: 13px;
-    font-weight: var(--font-weight-normal);
-    line-height: 18px;
-    color: rgba(0, 0, 0, 0.7);
-    margin: 0 0 10px 0;
-    padding: 0;
+  .pricing-body {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-relaxed);
+    color: var(--text-on-ink-muted);
+    margin: 0;
+    max-width: 560px;
   }
 
-  .card-benefit:last-of-type {
-    margin-bottom: 0;
-  }
-
-  /* Card footnote */
-  .card-footnote {
-    font-size: 12px;
-    font-weight: var(--font-weight-normal);
-    line-height: 16px;
-    color: rgba(0, 0, 0, 0.5);
-    margin: 0 0 20px 0;
-    padding: 0;
-  }
-
-  /* Card footer wrapper */
-  .card-footer {
+  .pricing-card {
+    background-color: var(--acid);
+    border-radius: 8px;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    flex: 0 0 auto;
-    margin-top: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
   }
 
-  /* CTA buttons */
-  .card-cta {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  /* Micro text */
-  .card-micro {
-    font-size: 12px;
-    font-weight: var(--font-weight-normal);
-    line-height: 16px;
-    color: rgba(0, 0, 0, 0.6);
+  .pricing-label {
+    font-family: var(--font-mono);
+    font-size: var(--label-size);
+    font-weight: var(--label-weight);
+    letter-spacing: var(--label-letter-spacing);
+    text-transform: uppercase;
+    color: var(--text-on-acid);
     margin: 0;
-    padding: 0;
-    text-align: left;
   }
 
-  /* Responsive */
+  .pricing-price {
+    font-family: var(--font-sans);
+    font-size: 64px;
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-acid);
+    margin: 0;
+  }
+
+  .pricing-billing {
+    font-size: var(--font-size-body);
+    color: var(--text-on-acid-muted);
+    margin: 0;
+  }
+
+  .pricing-teaser {
+    font-size: var(--font-size-body);
+    font-style: italic;
+    color: var(--text-on-acid-muted);
+    margin: 0 0 12px;
+  }
+
+  .pricing-cta {
+    margin-top: 8px;
+  }
+
+  .pricing-micro {
+    font-size: var(--font-size-14);
+    color: var(--text-on-acid-muted);
+    margin: 8px 0 0;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 1024px) {
-    .pricing-inner {
-      flex-direction: column;
+    .sample-hero-glow-1,
+    .sample-hero-glow-2 {
+      opacity: 0.3;
+    }
+
+    .sample-blocks-inner {
       gap: 40px;
-      padding: 80px 20px;
     }
 
-    .pricing-left {
-      flex: 1 1 100%;
-    }
-
-    .pricing-heading {
-      font-size: 32px;
-      line-height: 40px;
-    }
-
-    .pricing-subhead {
-      font-size: 15px;
-      line-height: 22px;
-    }
-
-    .ledger-row {
+    .pricing-inner {
       grid-template-columns: 1fr;
-      gap: 12px;
+      gap: 48px;
+    }
+
+    .pricing-card {
+      max-width: 480px;
     }
   }
 
   @media (max-width: 768px) {
-    .pricing-inner {
+    .sample-hero {
+      min-height: auto;
+      padding: 180px 20px 60px;
+      margin-top: -80px;
+    }
+
+    .sample-hero-headline {
+      font-size: clamp(32px, 10vw, 48px);
+    }
+
+    .sample-hero-ctas {
       flex-direction: column;
-      gap: 30px;
-      padding: 60px 20px;
+      align-items: flex-start;
     }
 
-    .pricing-heading {
-      font-size: 28px;
-      line-height: 36px;
+    .sample-blocks-section,
+    .sample-faq-section,
+    .pricing-section {
+      padding: 80px 20px;
     }
 
-    .pricing-subhead {
-      font-size: 14px;
-      line-height: 20px;
+    .sample-blocks-headline,
+    .sample-faq-headline,
+    .pricing-headline {
+      font-size: clamp(28px, 8vw, 48px);
     }
 
-    .pricing-cards-grid {
-      flex-direction: column;
+    .pricing-card {
+      padding: 24px;
     }
 
-    .ledger-section,
-    .risk-section {
-      padding: 60px 20px;
-    }
-
-    .ledger-container {
-      gap: 40px;
-    }
-
-    .risk-container {
-      gap: 30px;
-    }
-  }
-
-  /* WCAG 1.4.10 REFLOW: Below 375px, reduce pricing inner padding */
-  @media (max-width: 374px) {
-    .pricing-inner {
-      padding: 60px 20px;
-    }
-
-    .pricing-divider-list {
-      padding: 40px 20px;
+    .pricing-price {
+      font-size: 48px;
     }
   }
 </style>

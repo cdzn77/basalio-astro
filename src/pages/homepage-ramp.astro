@@ -1,0 +1,706 @@
+---
+// Exact replica of the Ramp Studio template
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import PositioningStats from '../components/PositioningStats.astro';
+import BlocksCarousel from '../components/BlocksCarousel.astro';
+import WhoItsFor from '../components/WhoItsFor.astro';
+import Footer from '../components/Footer.astro';
+import PricingCards from '../components/patterns/PricingCards.astro';
+import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+import { getFaqs } from '../data/faq';
+import { FOUNDER_PRICE, POST_CAP_PRICE } from '../data/pricing';
+
+const title = "Basalio - WordPress Portfolio Blocks";
+const description = "Nine curated interaction blocks for portfolio and case-study sites. Built for WordPress, not Framer.";
+
+// Hero background configuration (centralized)
+const heroBackground = { type: 'video', src: '/assets/basalio-hero.mp4', poster: '/assets/basalio-hero-poster.webp', scrim: 0 };
+const heroSurface = 'ink';
+
+// Header uses default paper; observer overrides to ink when hero is visible
+// This ensures no-JS fallback works (paper is safe default for most pages)
+
+// Correct nine block names from src/data/pricing.ts
+const blockNames = [
+  "Grid Reveal",
+  "Case Study Transition",
+  "Text Reveal",
+  "Magnetic Button",
+  "Before/After",
+  "Filterable Grid",
+  "Custom Cursor",
+  "Scroll Sequence",
+  "Pinned Scroll"
+];
+
+// Pricing page data
+const supportEmail = "hello@basalio.com";
+const founderPrice = FOUNDER_PRICE;
+const postCapPrice = POST_CAP_PRICE;
+const proShipTarget = "February 2027";
+const refundWindow = "30";
+
+const buildStatus = [
+  { item: "Nine interaction blocks", status: "LIVE", note: `${blockNames.join(", ")}. In testing, shipping free.` },
+  { item: "Four free Hacks", status: "LIVE", note: "Copy-paste snippets available now on /hacks." },
+  { item: "WordPress.org listing", status: "IN REVIEW", note: "Submission planned after launch." },
+  { item: "Pro control center sidebar", status: "NOT STARTED", note: `Target ship date: ${proShipTarget}. Editor sidebar for live tuning.` },
+  { item: "Full Hacks vault (5 recipes)", status: "IN PROGRESS", note: "Specced, not built. Founder licenses include all five as they ship." },
+  { item: "One-click hack-trailer effects", status: "PLANNED", note: "Follows Pro sidebar launch." },
+  { item: "WordPress version compatibility", status: "ONGOING", note: "Testing against beta and RC releases before launch." }
+];
+
+const faqs = getFaqs(postCapPrice, proShipTarget);
+---
+
+<BaseLayout title={title} description={description}>
+  <!-- HEADER: Navigation bar (defaults to paper; observer sets to ink when hero visible) -->
+  <Fragment slot="header">
+    <Header />
+  </Fragment>
+
+  <!-- Hero Section -->
+  <Hero
+    eyebrow="A WORDPRESS PLUGIN FOR CREATIVES"
+    teaserText="Give your work a foundation to stand on. Nine curated interaction blocks, from grid reveals to case-study transitions to scroll-tied sequences, built only for portfolio and case-study sites. Nothing you'd need Framer for. Nothing you don't."
+    teaserButton="EXPLORE BLOCKS"
+    teaserLink="/blocks"
+    buttonVariant="acid"
+    background={heroBackground}
+    surface={heroSurface}
+  >
+    <h1 class="hero-heading hero-headline" slot="heading">Framer-quality <span class="accent-word">interactions,</span><br/>native to WordPress.</h1>
+  </Hero>
+
+  <!-- What We Do Section -->
+  <PositioningStats
+    eyebrow="Positioning • 01"
+    introText="Nine curated interaction blocks, built only for portfolio and case-study sites. Each block solves one specific problem. No bloat, no learning curve."
+    services={[
+      { value: 9, description: "Blocks, not 90" },
+      { value: 1, description: "Plugin, zero page-builder lock-in" },
+      { value: 0, description: "Generic presets, only opinionated ones" }
+    ]}
+  />
+
+  <!-- Blocks Section -->
+  <BlocksCarousel
+    sectionLabel="OUR BLOCKS"
+    sectionHeading="Nine blocks. Nothing you don't need."
+    ctaLabel="Explore All"
+    blocks={[
+      {
+        title: "Grid Reveal",
+        description: "Reveal content in a cascading grid pattern as users scroll down the page",
+        link: "/blocks#grid-reveal",
+        slug: "grid-reveal"
+      },
+      {
+        title: "Case Study Transition",
+        description: "Smooth transitions between case studies with parallax and fade effects",
+        link: "/blocks#case-study-transition",
+        slug: "case-study-transition"
+      },
+      {
+        title: "Text Reveal",
+        description: "Reveal text character-by-character or word-by-word as users scroll",
+        link: "/blocks#text-reveal",
+        slug: "text-reveal"
+      },
+      {
+        title: "Magnetic Button",
+        description: "Interactive button that responds to mouse movement with magnetic attraction",
+        link: "/blocks#magnetic-button",
+        slug: "magnetic-button"
+      },
+      {
+        title: "Before/After",
+        description: "Side-by-side image comparison with draggable divider",
+        link: "/blocks#before-after",
+        slug: "before-after"
+      },
+      {
+        title: "Filterable Grid",
+        description: "Grid content that filters and animates on category selection",
+        link: "/blocks#filterable-grid",
+        slug: "filterable-grid"
+      },
+      {
+        title: "Custom Cursor",
+        description: "Replace browser cursor with branded interaction feedback",
+        link: "/blocks#custom-cursor",
+        slug: "custom-cursor"
+      },
+      {
+        title: "Scroll Sequence",
+        description: "Trigger animations based on scroll position for synchronized storytelling",
+        link: "/blocks#scroll-sequence",
+        slug: "scroll-sequence"
+      },
+      {
+        title: "Pinned Scroll",
+        description: "Lock elements in place while content scrolls for immersive narratives",
+        link: "/blocks#pinned-scroll",
+        slug: "pinned-scroll"
+      }
+    ]}
+    ctaLink="/blocks"
+  />
+
+  <!-- PRICING TIERS SECTION: HeaderSplit with PricingCards component -->
+  <section class="pricing-hero-section" data-surface="paper">
+    <div class="pricing-inner">
+      <HeaderSplit
+        eyebrow="PRICING"
+        heading="There's no catch."
+        body="Nine interaction blocks, complete, free forever on WordPress.org. No locked blocks, no watermarks, no instance limits. What costs money is the control center, which live-tunes every block from the editor sidebar, and the full Hacks vault."
+        cta={{ label: 'SEE THE BREAKDOWN', href: '/pricing', variant: 'acid' }}
+        level="h2"
+        surface="paper"
+      >
+        <PricingCards variant="compact" />
+      </HeaderSplit>
+    </div>
+
+    <!-- DIVIDER LIST: Full width below section -->
+    <div class="pricing-divider-list">
+      <div class="divider-item">
+        <span class="divider-label">FREE FOREVER</span>
+        <span class="divider-text">Nine blocks, complete. Not a trial, not a demo.</span>
+      </div>
+      <div class="divider-item">
+        <span class="divider-label">NO RENEWAL</span>
+        <span class="divider-text">One payment. The license never expires.</span>
+      </div>
+      <div class="divider-item">
+        <span class="divider-label">100 ONLY</span>
+        <span class="divider-text">Founder price, then $249.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roles Section -->
+  <section class="testimonials-rounded" data-surface="paper">
+    <WhoItsFor
+      eyebrow="WHO IT'S FOR"
+      sectionHeading="Built for people whose
+work has to move."
+      bodyText="Basalio is nine blocks, not ninety. That only works
+if the nine are the right ones, so they were picked
+for a specific kind of site: the portfolio,
+the case study, the reel."
+      closingLine="If you need a general-purpose animation engine, this isn't it. Nine blocks, opinionated, built for one kind of site."
+    />
+  </section>
+
+
+  <Fragment slot="footer">
+    <Footer />
+  </Fragment>
+</BaseLayout>
+
+<style>
+  .accent-word {
+    color: var(--acid);
+  }
+
+
+  /* TESTIMONIALS WRAPPER: Background only (structure from BaseLayout) */
+  .testimonials-rounded {
+    overflow: visible;
+    padding-bottom: 200px;
+    background: var(--surface-paper);
+  }
+
+  /* PRICING HERO SECTION */
+  .pricing-hero-section {
+    width: 100%;
+    background: var(--surface-alt);
+  }
+
+  .pricing-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    gap: 60px;
+    padding: 80px 40px;
+    box-sizing: border-box;
+  }
+
+  /* PRICING DIVIDER LIST: Full width below cards */
+  .pricing-divider-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    padding: 40px 40px;
+    box-sizing: border-box;
+    border-top: 1px solid var(--stone);
+    gap: 40px;
+  }
+
+  .divider-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .divider-label {
+    font-family: 'Azeret Mono', monospace;
+    font-size: 12px;
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    color: var(--text-on-paper);
+    margin: 0;
+    padding: 0;
+    display: block;
+  }
+
+  .divider-text {
+    font-size: 15px;
+    font-weight: var(--font-weight-normal);
+    line-height: 1.6;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+    padding: 0;
+    display: block;
+  }
+
+  @media (max-width: 640px) {
+    .pricing-divider-list {
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .divider-item {
+      width: 100%;
+    }
+  }
+
+  /* BUILD LEDGER SECTION */
+  .ledger-section {
+    width: 100%;
+    background: var(--surface-paper);
+    padding: 80px 40px;
+    box-sizing: border-box;
+  }
+
+  .ledger-container {
+    width: 100%;
+    max-width: var(--container-wide);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+  }
+
+  .ledger-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ledger-eyebrow {
+    font-size: 14px;
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 2.8px;
+    text-transform: uppercase;
+    color: var(--text-on-paper);
+    margin: 0;
+    padding: 0;
+  }
+
+  .ledger-title {
+    font-size: 40px;
+    font-weight: var(--font-weight-normal);
+    line-height: 48px;
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-paper);
+    margin: 0;
+    padding: 0;
+  }
+
+  .ledger-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--surface-alt);
+    border-bottom: 1px solid var(--surface-alt);
+  }
+
+  .ledger-row {
+    display: grid;
+    grid-template-columns: 1.5fr 140px 1fr;
+    gap: 40px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--surface-alt);
+    align-items: flex-start;
+  }
+
+  .ledger-row:last-child {
+    border-bottom: none;
+  }
+
+  .ledger-item-name {
+    font-size: 15px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-on-paper);
+    margin: 0;
+    padding: 0;
+  }
+
+  .ledger-status {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .status-badge {
+    font-size: 11px;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 6px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .ledger-live .status-badge {
+    background: var(--acid);
+    color: var(--text-on-paper);
+  }
+
+  .ledger-in-build .status-badge {
+    border: 1px solid var(--text-on-paper);
+    color: var(--text-on-paper);
+    background: transparent;
+  }
+
+  .ledger-planned .status-badge {
+    background: var(--surface-alt);
+    color: var(--text-on-paper);
+  }
+
+  .ledger-ongoing .status-badge {
+    background: var(--surface-alt);
+    color: var(--text-on-paper);
+  }
+
+  .ledger-in-review .status-badge {
+    border: 1px solid var(--text-on-paper);
+    color: var(--text-on-paper);
+    background: transparent;
+  }
+
+  .ledger-item-note {
+    font-size: 14px;
+    font-weight: var(--font-weight-normal);
+    line-height: 20px;
+    color: var(--text-on-paper-muted);
+    margin: 0;
+    padding: 0;
+  }
+
+  .ledger-footer {
+    font-size: 13px;
+    font-weight: var(--font-weight-normal);
+    line-height: 19.5px;
+    color: rgba(0, 0, 0, 0.5);
+    margin: 20px 0 0 0;
+    padding: 20px 0 0 0;
+    border-top: 1px solid var(--surface-alt);
+  }
+
+  /* RISK REVERSAL SECTION */
+  .risk-section {
+    width: 100%;
+    background: var(--surface-paper);
+    padding: 80px 40px;
+    box-sizing: border-box;
+  }
+
+  .risk-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .risk-title {
+    font-size: 40px;
+    font-weight: var(--font-weight-normal);
+    line-height: 48px;
+    letter-spacing: var(--heading-letter-spacing);
+    color: var(--text-on-paper);
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Custom pricing cards grid */
+  .pricing-cards-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+  }
+
+  /* Individual pricing card */
+  .pricing-card {
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0;
+    background: var(--surface-paper);
+    border-radius: 6px;
+    padding: 24px;
+    box-sizing: border-box;
+  }
+
+  .pricing-card-founder {
+    background: var(--acid);
+  }
+
+  /* Card header */
+  .card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    flex: 0 0 auto;
+  }
+
+  /* Card content */
+  .card-content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .card-label {
+    font-size: 11px;
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  .card-name {
+    font-size: 24px;
+    font-weight: var(--font-weight-medium);
+    line-height: 1.2;
+    color: var(--text-on-paper);
+    margin: 0;
+    padding: 0;
+  }
+
+  .card-price {
+    font-size: 28px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-on-paper);
+    margin: 0;
+    padding: 0;
+  }
+
+  .card-price-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .price-main {
+    font-size: 28px;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-on-paper);
+  }
+
+  .price-note {
+    font-size: 13px;
+    font-weight: var(--font-weight-normal);
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .price-after {
+    font-size: 13px;
+    font-weight: var(--font-weight-normal);
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  /* Card deck */
+  .card-deck {
+    font-size: 15px;
+    font-weight: var(--font-weight-normal);
+    line-height: 22px;
+    color: rgba(0, 0, 0, 0.85);
+    margin: 0 0 20px 0;
+    padding: 0;
+  }
+
+  /* Card features */
+  .card-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .feature-item {
+    font-size: 13px;
+    font-weight: var(--font-weight-normal);
+    line-height: 18px;
+    color: rgba(0, 0, 0, 0.8);
+    margin: 0;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .feature-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  /* Card benefits */
+  .card-benefit {
+    font-size: 13px;
+    font-weight: var(--font-weight-normal);
+    line-height: 18px;
+    color: rgba(0, 0, 0, 0.7);
+    margin: 0 0 10px 0;
+    padding: 0;
+  }
+
+  .card-benefit:last-of-type {
+    margin-bottom: 0;
+  }
+
+  /* Card footnote */
+  .card-footnote {
+    font-size: 12px;
+    font-weight: var(--font-weight-normal);
+    line-height: 16px;
+    color: rgba(0, 0, 0, 0.5);
+    margin: 0 0 20px 0;
+    padding: 0;
+  }
+
+  /* Card footer wrapper */
+  .card-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 0 0 auto;
+    margin-top: 20px;
+  }
+
+  /* CTA buttons */
+  .card-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Micro text */
+  .card-micro {
+    font-size: 12px;
+    font-weight: var(--font-weight-normal);
+    line-height: 16px;
+    color: rgba(0, 0, 0, 0.6);
+    margin: 0;
+    padding: 0;
+    text-align: left;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .pricing-inner {
+      flex-direction: column;
+      gap: 40px;
+      padding: 80px 20px;
+    }
+
+    .pricing-left {
+      flex: 1 1 100%;
+    }
+
+    .pricing-heading {
+      font-size: 32px;
+      line-height: 40px;
+    }
+
+    .pricing-subhead {
+      font-size: 15px;
+      line-height: 22px;
+    }
+
+    .ledger-row {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .pricing-inner {
+      flex-direction: column;
+      gap: 30px;
+      padding: 60px 20px;
+    }
+
+    .pricing-heading {
+      font-size: 28px;
+      line-height: 36px;
+    }
+
+    .pricing-subhead {
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    .pricing-cards-grid {
+      flex-direction: column;
+    }
+
+    .ledger-section,
+    .risk-section {
+      padding: 60px 20px;
+    }
+
+    .ledger-container {
+      gap: 40px;
+    }
+
+    .risk-container {
+      gap: 30px;
+    }
+  }
+
+  /* WCAG 1.4.10 REFLOW: Below 375px, reduce pricing inner padding */
+  @media (max-width: 374px) {
+    .pricing-inner {
+      padding: 60px 20px;
+    }
+
+    .pricing-divider-list {
+      padding: 40px 20px;
+    }
+  }
+</style>

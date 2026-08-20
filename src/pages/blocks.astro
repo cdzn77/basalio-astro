@@ -62,7 +62,7 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
           <h3 class="closing-title">All nine. Free. Forever.</h3>
           <p class="closing-body">No locked blocks, no watermarks, no instance limits. Free is not a trial. It is the product.</p>
         </div>
-        <Button href="/pricing/" label="Get the blocks" variant="ink" fontSize="14px" fontWeight="600" letterSpacing="0.2em" />
+        <Button href="/pricing/" label="Get the blocks" variant="acid" fontSize="14px" fontWeight="600" letterSpacing="0.2em" />
       </div>
     </section>
 
@@ -149,11 +149,11 @@ const icons = import.meta.glob('/public/assets/icons/blocks/*.svg', {
     right: 20px;
     font-family: var(--font-mono);
     font-size: 11px;
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-on-ink-muted);
   }
 
   .block-card:hover .block-number {
-    color: var(--acid);
+    color: var(--text-on-ink-muted);
   }
 
   .block-icon-tile {

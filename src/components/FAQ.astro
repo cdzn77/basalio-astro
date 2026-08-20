@@ -12,19 +12,21 @@ interface Props {
   faqs: FAQItem[];
   heading?: string;
   backgroundColor?: string;
+  surface?: 'paper' | 'ink';
 }
 
 const {
   faqs,
   heading = "FAQ",
-  backgroundColor = "var(--text-on-paper)"
+  backgroundColor = "var(--text-on-paper)",
+  surface = 'paper'
 } = Astro.props;
 
 // Create a data attribute string for client-side JavaScript
 const faqDataJson = JSON.stringify(faqs);
 ---
 
-<section class="faq" style={`background-color: ${backgroundColor};`}>
+<section class:list={['faq', { 'faq-ink': surface === 'ink' }]} style={`background-color: ${backgroundColor};`}>
   <div class="faq-header">
     <h2 class="faq-title">{heading}</h2>
   </div>
@@ -69,6 +71,40 @@ const faqDataJson = JSON.stringify(faqs);
     padding-bottom: 200px;
     position: relative;
     z-index: 2;
+  }
+
+  .faq-ink {
+    background-color: var(--surface-ink) !important;
+  }
+
+  .faq-ink .faq-card {
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .faq-ink .faq-question-text {
+    color: var(--text-on-ink);
+  }
+
+  .faq-ink .faq-icon {
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .faq-ink .faq-icon svg {
+    fill: var(--text-on-ink);
+  }
+
+  .faq-ink .faq-icon:hover {
+    background-color: var(--acid) !important;
+  }
+
+  .faq-ink .faq-icon:hover svg {
+    fill: var(--text-on-paper) !important;
+  }
+
+  .faq-ink .faq-answer {
+    color: var(--text-on-ink-muted) !important;
+    border-top-color: rgba(255, 255, 255, 0.1);
   }
 
   .faq-header {

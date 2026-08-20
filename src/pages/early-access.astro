@@ -16,16 +16,17 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
   </Fragment>
 
   <!-- EARLY ACCESS: HeaderSplit with form in right slot -->
-  <section class="early-access-section">
+  <div class="early-access-page" data-surface="ink">
+    <section class="early-access-section">
     <HeaderSplit
       eyebrow="EARLY ACCESS"
       heading="Get on the list."
       body={`Basalio isn't on WordPress.org yet. The nine blocks are built and in testing; the Pro control center isn't started. When the free plugin lands, you'll be the first to know. If you want a founder license, say so below. The first 100 are ${FOUNDER_PRICE}, one payment, and the price goes up after that.`}
       level="h1"
-      surface="paper"
+      surface="ink"
     >
     <div class="early-access-form-wrapper">
-        <form name="early-access" method="POST" action="/welcome" data-netlify="true" data-netlify-honeypot="bot-field" class="early-access-form">
+        <form name="early-access" method="POST" action="/welcome/" data-netlify="true" data-netlify-honeypot="bot-field" class="early-access-form">
           <!-- Netlify form detection -->
           <input type="hidden" name="form-name" value="early-access" />
 
@@ -96,7 +97,8 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
         </div>
     </div>
     </HeaderSplit>
-  </section>
+    </section>
+  </div>
 
   <Fragment slot="footer">
     <Footer hideNewsletter={true} />
@@ -105,9 +107,14 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
 
 
 <style>
+  .early-access-page {
+    background: var(--surface-ink);
+    color: var(--text-on-ink);
+  }
+
   .early-access-section {
     width: 100%;
-    background: var(--surface-paper);
+    background: transparent;
     padding: 80px 40px;
     box-sizing: border-box;
     padding-bottom: 200px;
@@ -115,6 +122,14 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
 
   .early-access-form-wrapper {
     width: 100%;
+    max-width: 640px;
+    min-width: 500px;
+  }
+
+  @media (max-width: 640px) {
+    .early-access-form-wrapper {
+      min-width: auto;
+    }
   }
 
   .early-access-form {
@@ -133,46 +148,72 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
     gap: 8px;
   }
 
+  .early-access-page .form-label,
+  .early-access-page .form-legend,
+  .early-access-page .radio-label {
+    color: var(--text-on-ink);
+  }
+
   .form-label {
     font-size: 14px;
     font-weight: var(--font-weight-medium);
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     margin: 0;
     padding: 0;
     display: block;
+  }
+
+  .early-access-page .form-input {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-on-ink);
+  }
+
+  .early-access-page .form-input:focus {
+    border-color: var(--acid);
+    box-shadow: 0 0 0 3px rgba(237, 255, 16, 0.15);
+  }
+
+  .early-access-page .form-input::placeholder {
+    color: var(--text-on-ink-muted);
   }
 
   .form-input {
     width: 100%;
     padding: 12px 16px;
     min-height: 43.6px;
-    background: var(--surface-paper);
-    border: 1px solid var(--stone);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     font-family: var(--font-mono);
     font-size: 14px;
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     box-sizing: border-box;
     transition: border-color 200ms ease, box-shadow 200ms ease;
   }
 
   .form-input:focus {
     outline: none;
-    border-color: var(--text-on-paper);
-    box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.05);
+    border-color: var(--acid);
+    box-shadow: 0 0 0 3px rgba(237, 255, 16, 0.15);
   }
 
   .form-input::placeholder {
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
+  }
+
+  .early-access-page .form-hint,
+  .early-access-page .form-disclaimer {
+    color: var(--text-on-ink-muted);
   }
 
   .form-hint {
     font-size: 13px;
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     margin: 0;
     padding: 0;
   }
@@ -191,7 +232,7 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
     font-weight: var(--font-weight-medium);
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     margin: 0;
     padding: 0;
     display: block;
@@ -209,6 +250,10 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
     gap: 12px;
   }
 
+  .early-access-page .radio-input {
+    accent-color: var(--acid);
+  }
+
   .radio-input {
     width: 24px;
     height: 24px;
@@ -216,11 +261,11 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
     min-height: 24px;
     margin-top: 2px;
     cursor: pointer;
-    accent-color: var(--text-on-paper);
+    accent-color: var(--acid);
   }
 
   .radio-input:focus-visible {
-    outline: 2px solid var(--text-on-paper);
+    outline: 2px solid var(--acid);
     outline-offset: 2px;
   }
 
@@ -228,7 +273,7 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
     font-size: 15px;
     font-weight: var(--font-weight-normal);
     line-height: 1.6;
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     cursor: pointer;
     margin: 0;
     padding: 0;
@@ -239,15 +284,28 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
     font-size: 12px;
     font-weight: var(--font-weight-normal);
     line-height: 1.5;
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     margin: 0;
     padding: 0;
     text-align: center;
   }
 
+  .early-access-page .form-success {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .early-access-page .success-heading,
+  .early-access-page .success-body {
+    color: var(--text-on-ink);
+  }
+
+  .early-access-page .success-body {
+    color: var(--text-on-ink-muted);
+  }
+
   .form-success {
     padding: 32px 24px;
-    background: rgba(10, 10, 10, 0.05);
+    background: rgba(255, 255, 255, 0.06);
     border-radius: 8px;
     text-align: center;
   }
@@ -256,7 +314,7 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
     font-size: 20px;
     font-weight: var(--font-weight-semibold);
     line-height: 1.3;
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
     margin: 0 0 12px 0;
     padding: 0;
   }
@@ -265,7 +323,7 @@ const description = "Get on the Basalio founder list. Nine blocks in testing, Pr
     font-size: 15px;
     font-weight: var(--font-weight-normal);
     line-height: 1.6;
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     margin: 0;
     padding: 0;
   }

@@ -9,6 +9,7 @@ import Button from '../components/Button.astro';
 import FAQ from '../components/FAQ.astro';
 import PricingCards from '../components/patterns/PricingCards.astro';
 import HeaderSplit from '../components/patterns/HeaderSplit.astro';
+import StatusLedger from '../components/patterns/StatusLedger.astro';
 import { getFaqs } from '../data/faq';
 import { CHECKOUT_STATE, FOUNDER_PRICE, POST_CAP_PRICE } from '../data/pricing';
 
@@ -70,25 +71,18 @@ const faqs = getFaqs(postCapPrice, proShipTarget);
   <!-- 2. BUILD LEDGER SECTION -->
   <section class="ledger-section">
     <div class="ledger-container">
-      <div class="ledger-header">
-        <p class="ledger-eyebrow">TRANSPARENCY</p>
-        <h2 class="ledger-title">What's built, what isn't</h2>
-        <p class="ledger-description">A founder license is partly a bet on unfinished work. Below is the real status.</p>
-      </div>
-
-      <div class="ledger-table">
-        {buildStatus.map((row) => (
-          <div class="ledger-row">
-            <div class="ledger-item-name">{row.item}</div>
-            <div class={`ledger-status ledger-${row.status.toLowerCase().replace(/\s+/g, '-')}`}>
-              <span class="status-badge">{row.status}</span>
-            </div>
-            <div class="ledger-item-note">{row.note}</div>
-          </div>
-        ))}
-      </div>
-
-      <p class="ledger-footer">Nothing on this page is described as finished when it isn't. If a row moves, this table moves with it.</p>
+      <StatusLedger
+        eyebrow="Transparency"
+        title="What's built, what isn't"
+        description="A founder license is partly a bet on unfinished work. This is the real status. If a row moves, this table moves with it."
+        items={buildStatus.map((row) => ({
+          label: row.item,
+          status: row.status === 'NOT SUBMITTED' ? 'NOT STARTED' : row.status,
+          note: row.note,
+        }))}
+        surface="paper"
+      />
+      <p class="ledger-footer">Nothing on this page is described as finished when it isn't.</p>
     </div>
   </section>
 
@@ -100,8 +94,8 @@ const faqs = getFaqs(postCapPrice, proShipTarget);
           <h2 class="risk-title">If I don't ship it</h2>
           <div class="risk-content">
             <p>Basalio is built by one person. You should know what that means before you pay.</p>
-            <p>The nine blocks are free whether or not you buy anything. They don't depend on me staying in business. The Pro layer does. So: refundable at any time until the Pro control center ships. If it never ships, you never lose your money.</p>
-            <p>Everything is GPL-2.0-or-later. If I disappear tomorrow, the code you have keeps working and stays yours to fork.</p>
+            <p>The nine blocks are free whether or not you buy anything. They don't depend on me staying in business. The Pro layer does. So it's refundable at any time until the Pro control center ships. If it never ships, you never lose your money.</p>
+            <p>Everything is GPL-2.0-or-later. If Basalio disappears tomorrow, the code you have keeps working and stays yours to fork.</p>
           </div>
         </>
       ) : (
@@ -109,7 +103,7 @@ const faqs = getFaqs(postCapPrice, proShipTarget);
           <h2 class="risk-title">30 days to try it</h2>
           <div class="risk-content">
             <p>30-day refund, no questions asked. If it isn't what you expected, tell us and we'll refund it.</p>
-            <p>Everything is GPL-2.0-or-later. If I disappear tomorrow, the code you have keeps working and stays yours to fork.</p>
+            <p>Everything is GPL-2.0-or-later. If Basalio disappears tomorrow, the code you have keeps working and stays yours to fork.</p>
           </div>
         </>
       )}
@@ -177,123 +171,6 @@ const faqs = getFaqs(postCapPrice, proShipTarget);
     display: flex;
     flex-direction: column;
     gap: 60px;
-  }
-
-  .ledger-header {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .ledger-eyebrow {
-    font-size: 14px;
-    font-weight: var(--font-weight-medium);
-    letter-spacing: 2.8px;
-    text-transform: uppercase;
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-  }
-
-  .ledger-title {
-    font-size: 40px;
-    font-weight: var(--font-weight-normal);
-    line-height: 48px;
-    letter-spacing: var(--heading-letter-spacing);
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-  }
-
-  .ledger-description {
-    font-size: var(--font-size-body);
-    font-weight: var(--font-weight-normal);
-    line-height: 24px;
-    color: var(--text-on-paper-muted);
-    margin: 0;
-    padding: 0;
-  }
-
-  .ledger-table {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    border-top: 1px solid var(--surface-alt);
-    border-bottom: 1px solid var(--surface-alt);
-  }
-
-  .ledger-row {
-    display: grid;
-    grid-template-columns: 1.5fr 140px 1fr;
-    gap: 40px;
-    padding: 24px 0;
-    border-bottom: 1px solid var(--surface-alt);
-    align-items: flex-start;
-  }
-
-  .ledger-row:last-child {
-    border-bottom: none;
-  }
-
-  .ledger-item-name {
-    font-size: 15px;
-    font-weight: var(--font-weight-semibold);
-    color: var(--text-on-paper);
-    margin: 0;
-    padding: 0;
-  }
-
-  .ledger-status {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-
-  .status-badge {
-    font-size: 11px;
-    font-weight: var(--font-weight-semibold);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    padding: 6px 10px;
-    border-radius: 4px;
-    display: inline-block;
-    white-space: nowrap;
-  }
-
-  .ledger-live .status-badge {
-    background: var(--acid);
-    color: var(--text-on-paper);
-  }
-
-  .ledger-in-build .status-badge {
-    border: 1px solid var(--text-on-paper);
-    color: var(--text-on-paper);
-    background: transparent;
-  }
-
-  .ledger-planned .status-badge {
-    background: var(--surface-alt);
-    color: var(--text-on-paper);
-  }
-
-  .ledger-ongoing .status-badge {
-    background: var(--surface-alt);
-    color: var(--text-on-paper);
-  }
-
-  .ledger-in-review .status-badge {
-    border: 1px solid var(--text-on-paper);
-    color: var(--text-on-paper);
-    background: transparent;
-  }
-
-  .ledger-item-note {
-    font-size: 14px;
-    font-weight: var(--font-weight-normal);
-    line-height: 20px;
-    color: var(--text-on-paper-muted);
-    margin: 0;
-    padding: 0;
   }
 
   .ledger-footer {
@@ -582,15 +459,6 @@ const faqs = getFaqs(postCapPrice, proShipTarget);
       padding: 60px 20px;
     }
 
-    .ledger-title {
-      font-size: 32px;
-    }
-
-    .ledger-row {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
     .risk-section {
       padding: 60px 20px;
     }
@@ -605,17 +473,6 @@ const faqs = getFaqs(postCapPrice, proShipTarget);
       padding: 40px 20px;
     }
 
-    .ledger-title {
-      font-size: 28px;
-      line-height: 36px;
-    }
-
-    .ledger-row {
-      grid-template-columns: 1fr;
-      gap: 12px;
-      padding: 16px 0;
-    }
-
     .risk-section {
       padding: 40px 20px;
     }
@@ -624,6 +481,5 @@ const faqs = getFaqs(postCapPrice, proShipTarget);
       font-size: 28px;
       line-height: 36px;
     }
-
   }
 </style>

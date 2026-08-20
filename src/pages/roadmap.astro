@@ -55,49 +55,50 @@ const roadmapItems = [
 
 <BaseLayout {title} {description}>
   <Fragment slot="header">
-    <Header />
+    <Header surface="ink" />
   </Fragment>
 
-  <!-- HERO: Light background header with eyebrow, heading, body -->
-  <HeaderSplit
-    eyebrow="Coming Soon"
-    heading="Roadmap"
-    body="Here's what we're building next. Priorities can shift, but we ship what we promise."
-    level="h1"
-    surface="alt"
-  />
+  <div class="roadmap-page" data-surface="ink">
+    <HeaderSplit
+      eyebrow="Coming Soon"
+      heading="Roadmap"
+      body="Here's what we're building next. Priorities can shift, but we ship what we promise."
+      level="h1"
+      surface="ink"
+    />
 
-  <!-- TIMELINE: Roadmap items on light background -->
-  <section class="roadmap-content">
-    <div class="roadmap-container">
-      {roadmapItems.map((item) => (
-        <div class="roadmap-item">
-          <div class={`roadmap-marker roadmap-${item.status.toLowerCase().replace(/\s+/g, '-')}`}>
-            {item.status}
+    <section class="roadmap-content">
+      <div class="roadmap-container">
+        {roadmapItems.map((item) => (
+          <div class="roadmap-item glass">
+            <div class={`roadmap-marker roadmap-${item.status.toLowerCase().replace(/\s+/g, '-')}`}>
+              {item.status}
+            </div>
+            <div class="roadmap-item-content">
+              <h2 class="roadmap-item-title">{item.title}</h2>
+              <p class="roadmap-item-date">{item.date}</p>
+              <p class="roadmap-item-description">{item.description}</p>
+            </div>
           </div>
-          <div class="roadmap-item-content">
-            <h2 class="roadmap-item-title">{item.title}</h2>
-            <p class="roadmap-item-date">{item.date}</p>
-            <p class="roadmap-item-description">{item.description}</p>
-          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="roadmap-notes">
+      <div class="roadmap-container">
+        <div class="notes-inner glass">
+          <h2 class="notes-heading">Notes</h2>
+          <ul class="notes-list">
+            <li><strong>All nine blocks are free forever.</strong> No paywall, no locked features, no watermarks. Free is not a trial or a countdown.</li>
+            <li><strong>Pro tier is optional.</strong> The control center sidebar and the full Hacks vault are the paid features.</li>
+            <li><strong>Dates are best-guesses.</strong> We ship when ready, not on calendars. February 2027 is the target. If it slips, founder licenses stay refundable until it ships.</li>
+            <li><strong>Roadmap changes if users ask.</strong> Open an issue on GitHub or email hello@basalio.com with feature requests. Big asks can shift priorities.</li>
+            <li><strong>Security updates come first.</strong> If a block has a vulnerability, we patch it before roadmap items.</li>
+          </ul>
         </div>
-      ))}
-    </div>
-  </section>
-
-  <!-- NOTES: Explanatory text on light background -->
-  <section class="roadmap-notes">
-    <div class="roadmap-container">
-      <h2 class="notes-heading">Notes</h2>
-      <ul class="notes-list">
-        <li><strong>All nine blocks are free forever.</strong> No paywall, no locked features, no watermarks. Free is not a trial or a countdown.</li>
-        <li><strong>Pro tier is optional.</strong> The control center sidebar and the full Hacks vault are the paid features.</li>
-        <li><strong>Dates are best-guesses.</strong> We ship when ready, not on calendars. February 2027 is the target. If it slips, founder licenses stay refundable until it ships.</li>
-        <li><strong>Roadmap changes if users ask.</strong> Open an issue on GitHub or email hello@basalio.com with feature requests. Big asks can shift priorities.</li>
-        <li><strong>Security updates come first.</strong> If a block has a vulnerability, we patch it before roadmap items.</li>
-      </ul>
-    </div>
-  </section>
+      </div>
+    </section>
+  </div>
 
   <Fragment slot="footer">
     <Footer hideNewsletter={true} />
@@ -105,26 +106,29 @@ const roadmapItems = [
 </BaseLayout>
 
 <style>
+  .roadmap-page {
+    background: var(--surface-ink);
+    color: var(--text-on-ink);
+  }
+
   .roadmap-container {
     max-width: var(--container-narrow);
     margin: 0 auto;
   }
 
   .roadmap-content {
-    background: var(--surface-paper);
-    padding: 60px 40px;
+    background: transparent;
+    padding: 40px 40px 60px;
   }
 
   .roadmap-item {
-    padding-bottom: 40px;
-    margin-bottom: 40px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    padding: 32px;
+    margin-bottom: 20px;
+    border-radius: 20px;
   }
 
   .roadmap-item:last-child {
-    border-bottom: none;
     margin-bottom: 0;
-    padding-bottom: 0;
   }
 
   .roadmap-marker {
@@ -135,7 +139,7 @@ const roadmapItems = [
     text-transform: uppercase;
     padding: 5px 10px;
     border-radius: 4px;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     font-weight: var(--font-weight-semibold);
   }
 
@@ -147,69 +151,71 @@ const roadmapItems = [
 
   .roadmap-in-progress {
     background: transparent;
-    color: var(--text-on-paper);
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: var(--text-on-ink);
+    border: 1px solid rgba(255, 255, 255, 0.35);
   }
 
   .roadmap-planned {
-    background: var(--stone);
-    color: var(--text-on-paper);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-on-ink);
     border: none;
   }
 
-  .roadmap-in-review {
+  .roadmap-in-review,
+  .roadmap-in-testing,
+  .roadmap-not-started,
+  .roadmap-not-submitted {
     background: transparent;
-    color: var(--text-on-paper);
-    border: 1px solid rgba(0, 0, 0, 0.2);
-  }
-
-  .roadmap-not-started {
-    background: transparent;
-    color: var(--text-on-paper);
-    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: var(--text-on-ink-muted);
+    border: 1px solid rgba(255, 255, 255, 0.25);
   }
 
   .roadmap-item-content {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
   }
 
   .roadmap-item-title {
     font-size: 20px;
     font-weight: var(--font-weight-semibold);
     margin: 0;
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
   }
 
   .roadmap-item-date {
     font-family: var(--font-mono);
     font-size: 12px;
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     margin: 0;
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
 
   .roadmap-item-description {
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     font-size: 15px;
     line-height: 1.7;
     margin: 0;
   }
 
   .roadmap-notes {
-    background: var(--surface-paper);
-    padding: 60px 40px;
+    background: transparent;
+    padding: 0 40px 120px;
+  }
+
+  .notes-inner {
+    padding: 40px;
+    border-radius: 20px;
   }
 
   .notes-heading {
-    font-size: 40px;
+    font-size: 32px;
     font-weight: var(--font-weight-normal);
-    line-height: 48px;
+    line-height: 1.2;
     letter-spacing: var(--heading-letter-spacing);
     margin: 0 0 24px 0;
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
   }
 
   .notes-list {
@@ -222,37 +228,47 @@ const roadmapItems = [
   }
 
   .notes-list li {
-    color: var(--text-on-paper-muted);
+    color: var(--text-on-ink-muted);
     font-size: 15px;
     line-height: 1.7;
     margin: 0;
   }
 
   .notes-list li strong {
-    color: var(--text-on-paper);
+    color: var(--text-on-ink);
   }
 
   @media (max-width: 1024px) {
-    .roadmap-content,
-    .roadmap-notes {
-      padding: 40px 30px;
+    .roadmap-content {
+      padding: 30px 30px 50px;
     }
 
-    .notes-heading {
-      font-size: 32px;
-      line-height: 40px;
+    .roadmap-notes {
+      padding: 0 30px 100px;
+    }
+
+    .roadmap-item,
+    .notes-inner {
+      padding: 28px;
     }
   }
 
   @media (max-width: 640px) {
-    .roadmap-content,
+    .roadmap-content {
+      padding: 20px 20px 40px;
+    }
+
     .roadmap-notes {
-      padding: 30px 20px;
+      padding: 0 20px 80px;
+    }
+
+    .roadmap-item,
+    .notes-inner {
+      padding: 24px;
     }
 
     .roadmap-item {
-      padding-bottom: 30px;
-      margin-bottom: 30px;
+      margin-bottom: 16px;
     }
 
     .roadmap-item-title {
@@ -260,8 +276,7 @@ const roadmapItems = [
     }
 
     .notes-heading {
-      font-size: 24px;
-      line-height: 32px;
+      font-size: 26px;
     }
   }
 </style>

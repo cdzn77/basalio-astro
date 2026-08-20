@@ -231,7 +231,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     width: 100%;
     min-height: auto;
     background-color: var(--surface-ink);
-    padding: 230px 40px 80px;
+    padding: 150px 40px 48px;
     margin-top: -80px;
     box-sizing: border-box;
     display: flex;
@@ -275,10 +275,10 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
   .sample-hero-text {
     position: relative;
     z-index: 1;
-    max-width: 900px;
+    max-width: 800px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 18px;
   }
 
   .sample-hero-eyebrow {
@@ -287,7 +287,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
 
   .sample-hero-headline {
     font-family: var(--font-sans);
-    font-size: clamp(40px, 6.5vw, 92px);
+    font-size: clamp(34px, 5vw, 68px);
     font-weight: var(--font-weight-bold);
     line-height: var(--line-height-tight);
     letter-spacing: var(--heading-letter-spacing);
@@ -297,11 +297,11 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
   }
 
   .sample-hero-body {
-    font-size: var(--font-size-body);
-    line-height: var(--line-height-relaxed);
+    font-size: 17px;
+    line-height: 1.55;
     color: var(--text-on-ink-muted);
     margin: 0;
-    max-width: 620px;
+    max-width: 500px;
   }
 
   .sample-hero-ctas {
@@ -309,7 +309,7 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     align-items: center;
     flex-wrap: wrap;
     gap: 16px;
-    margin-top: 8px;
+    margin-top: 2px;
   }
 
   .sample-hero-trust {
@@ -348,8 +348,17 @@ const ctaLabel = paidTier?.cta?.label || 'Join the founder list';
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: min(900px, 90%);
+    max-width: min(960px, 92%);
+    max-height: 42vh;
     margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .sample-hero-shot :global(.sample-editor-shot) {
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
   }
 
   /* ---------- MARQUEE ---------- */
